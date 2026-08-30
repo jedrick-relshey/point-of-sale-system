@@ -63,9 +63,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property bgfront() As System.Drawing.Bitmap
+        Friend ReadOnly Property login() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("bgfront", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("login", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -73,19 +73,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property frontimage() As System.Drawing.Bitmap
+        Friend ReadOnly Property pos_bg() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("frontimage", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property posimage() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("posimage", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("pos_bg", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
