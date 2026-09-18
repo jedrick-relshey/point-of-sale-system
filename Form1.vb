@@ -1,18 +1,23 @@
 ﻿Imports System.Drawing.Drawing2D
 
 Public Class Form1
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-    End Sub
+    Private Sub btn_Login_Click(sender As Object, e As EventArgs) Handles btn_Login.Click
 
-    Private Sub Label8_Click(sender As Object, e As EventArgs) Handles Label8.Click
-
-    End Sub
-
-    Private Sub Guna2TextBox1_TextChanged(sender As Object, e As EventArgs) Handles Guna2TextBox1.TextChanged
+        Dim username As String = txt_Username_Login.Text
+        Dim password As String = txt_Password_Login.Text
 
     End Sub
 
-    Private Sub Guna2GradientButton1_Click(sender As Object, e As EventArgs) Handles Guna2GradientButton1.Click
+    Private Sub btnAdmin_Click(sender As Object, e As EventArgs) Handles btnAdmin.Click
+
+        adminPanel.Visible = True
+
+    End Sub
+
+    Private Sub bckbtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles bckbtn.LinkClicked
+
+        adminPanel.Visible = False
+        loginPanel.Visible = True
 
     End Sub
 End Class
