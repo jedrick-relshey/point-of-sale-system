@@ -140,7 +140,7 @@ Partial Class Form1
         Me.PictureBox1.BackgroundImage = Global.Vb_POS.My.Resources.Resources.image_removebg_preview__13_
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox1.Location = New System.Drawing.Point(328, 14)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(295, 209)
         Me.PictureBox1.TabIndex = 6
@@ -206,7 +206,7 @@ Partial Class Form1
         Me.txt_Username_Login.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txt_Username_Login.IconLeft = Global.Vb_POS.My.Resources.Resources.user__3_
         Me.txt_Username_Login.Location = New System.Drawing.Point(79, 271)
-        Me.txt_Username_Login.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.txt_Username_Login.Margin = New System.Windows.Forms.Padding(5)
         Me.txt_Username_Login.Name = "txt_Username_Login"
         Me.txt_Username_Login.PlaceholderForeColor = System.Drawing.Color.DimGray
         Me.txt_Username_Login.PlaceholderText = "Enter your Username"
@@ -229,7 +229,7 @@ Partial Class Form1
         Me.btn_Login.ForeColor = System.Drawing.Color.White
         Me.btn_Login.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
         Me.btn_Login.Location = New System.Drawing.Point(79, 553)
-        Me.btn_Login.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btn_Login.Margin = New System.Windows.Forms.Padding(4)
         Me.btn_Login.Name = "btn_Login"
         Me.btn_Login.Size = New System.Drawing.Size(451, 64)
         Me.btn_Login.TabIndex = 10
@@ -254,7 +254,7 @@ Partial Class Form1
         Me.txt_Password_Login.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txt_Password_Login.IconLeft = Global.Vb_POS.My.Resources.Resources.lock
         Me.txt_Password_Login.Location = New System.Drawing.Point(79, 401)
-        Me.txt_Password_Login.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.txt_Password_Login.Margin = New System.Windows.Forms.Padding(5)
         Me.txt_Password_Login.Name = "txt_Password_Login"
         Me.txt_Password_Login.PlaceholderForeColor = System.Drawing.Color.DimGray
         Me.txt_Password_Login.PlaceholderText = "Enter your Password"
@@ -291,7 +291,7 @@ Partial Class Form1
         '
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Location = New System.Drawing.Point(80, 543)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(125, 20)
         Me.CheckBox1.TabIndex = 20
@@ -394,7 +394,7 @@ Partial Class Form1
         Me.txt_Password_Admin.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txt_Password_Admin.IconLeft = Global.Vb_POS.My.Resources.Resources.lock
         Me.txt_Password_Admin.Location = New System.Drawing.Point(80, 466)
-        Me.txt_Password_Admin.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.txt_Password_Admin.Margin = New System.Windows.Forms.Padding(5)
         Me.txt_Password_Admin.Name = "txt_Password_Admin"
         Me.txt_Password_Admin.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txt_Password_Admin.PlaceholderForeColor = System.Drawing.Color.DimGray
@@ -422,7 +422,7 @@ Partial Class Form1
         Me.txt_Username_Admin.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txt_Username_Admin.IconLeft = Global.Vb_POS.My.Resources.Resources.user__3_
         Me.txt_Username_Admin.Location = New System.Drawing.Point(80, 336)
-        Me.txt_Username_Admin.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.txt_Username_Admin.Margin = New System.Windows.Forms.Padding(5)
         Me.txt_Username_Admin.Name = "txt_Username_Admin"
         Me.txt_Username_Admin.PlaceholderForeColor = System.Drawing.Color.DimGray
         Me.txt_Username_Admin.PlaceholderText = "Enter your Username"
@@ -445,7 +445,7 @@ Partial Class Form1
         Me.btn_Admin_Login.ForeColor = System.Drawing.Color.White
         Me.btn_Admin_Login.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
         Me.btn_Admin_Login.Location = New System.Drawing.Point(80, 618)
-        Me.btn_Admin_Login.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btn_Admin_Login.Margin = New System.Windows.Forms.Padding(4)
         Me.btn_Admin_Login.Name = "btn_Admin_Login"
         Me.btn_Admin_Login.Size = New System.Drawing.Size(451, 64)
         Me.btn_Admin_Login.TabIndex = 10
@@ -457,7 +457,7 @@ Partial Class Form1
         Me.PictureBox3.BackgroundImage = Global.Vb_POS.My.Resources.Resources.image_removebg_preview__14_
         Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox3.Location = New System.Drawing.Point(140, 22)
-        Me.PictureBox3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox3.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(328, 159)
         Me.PictureBox3.TabIndex = 15
@@ -505,7 +505,7 @@ Partial Class Form1
         Me.btnAdmin.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.btnAdmin.Image = Global.Vb_POS.My.Resources.Resources.protection
         Me.btnAdmin.Location = New System.Drawing.Point(79, 663)
-        Me.btnAdmin.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnAdmin.Margin = New System.Windows.Forms.Padding(4)
         Me.btnAdmin.Name = "btnAdmin"
         Me.btnAdmin.Size = New System.Drawing.Size(451, 64)
         Me.btnAdmin.TabIndex = 21
@@ -515,7 +515,7 @@ Partial Class Form1
         '
         Me.chk_shw_psswrd.AutoSize = True
         Me.chk_shw_psswrd.Location = New System.Drawing.Point(79, 478)
-        Me.chk_shw_psswrd.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.chk_shw_psswrd.Margin = New System.Windows.Forms.Padding(4)
         Me.chk_shw_psswrd.Name = "chk_shw_psswrd"
         Me.chk_shw_psswrd.Size = New System.Drawing.Size(125, 20)
         Me.chk_shw_psswrd.TabIndex = 20
@@ -578,7 +578,7 @@ Partial Class Form1
         Me.PictureBox2.BackgroundImage = Global.Vb_POS.My.Resources.Resources.image_removebg_preview__14_
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox2.Location = New System.Drawing.Point(136, 22)
-        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(328, 159)
         Me.PictureBox2.TabIndex = 15
@@ -617,7 +617,7 @@ Partial Class Form1
         Me.adminPanel.Controls.Add(Me.PictureBox3)
         Me.adminPanel.FillColor = System.Drawing.Color.White
         Me.adminPanel.Location = New System.Drawing.Point(984, 14)
-        Me.adminPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.adminPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.adminPanel.Name = "adminPanel"
         Me.adminPanel.Size = New System.Drawing.Size(608, 800)
         Me.adminPanel.TabIndex = 26
@@ -646,7 +646,7 @@ Partial Class Form1
         Me.loginPanel.Controls.Add(Me.PictureBox2)
         Me.loginPanel.FillColor = System.Drawing.Color.White
         Me.loginPanel.Location = New System.Drawing.Point(984, 14)
-        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.loginPanel.Name = "loginPanel"
         Me.loginPanel.Size = New System.Drawing.Size(608, 800)
         Me.loginPanel.TabIndex = 27
@@ -668,7 +668,7 @@ Partial Class Form1
         Me.Controls.Add(Me.loginPanel)
         Me.Controls.Add(Me.adminPanel)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Form1"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
