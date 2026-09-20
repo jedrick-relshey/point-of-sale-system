@@ -55,10 +55,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -79,6 +81,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.Designer.vb">
+      <DependentUpon>Admin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Cashier.Designer.vb">
       <DependentUpon>Cashier.vb</DependentUpon>
     </Compile>
@@ -96,6 +104,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -109,6 +118,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Admin.resx">
+      <DependentUpon>Admin.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cashier.resx">
       <DependentUpon>Cashier.vb</DependentUpon>
     </EmbeddedResource>
@@ -173,6 +185,51 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8-login-30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\statisctics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\point-of-sale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\inventory.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settings-.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image-removebg-preview %2816%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image-removebg-preview %2816%291.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image-removebg-preview %2817%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
