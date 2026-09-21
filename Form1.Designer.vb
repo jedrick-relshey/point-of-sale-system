@@ -165,12 +165,12 @@ Partial Class Form1
         '
         Me.Label6.AutoSize = True
         Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.Font = New System.Drawing.Font("Calibri", 27.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Font = New System.Drawing.Font("Calibri", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
-        Me.Label6.Location = New System.Drawing.Point(140, 144)
+        Me.Label6.Location = New System.Drawing.Point(164, 144)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(327, 58)
+        Me.Label6.Size = New System.Drawing.Size(279, 49)
         Me.Label6.TabIndex = 7
         Me.Label6.Text = "Welcome Back!"
         '
@@ -178,12 +178,12 @@ Partial Class Form1
         '
         Me.Label7.AutoSize = True
         Me.Label7.BackColor = System.Drawing.Color.Transparent
-        Me.Label7.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.Gray
-        Me.Label7.Location = New System.Drawing.Point(149, 196)
+        Me.Label7.Location = New System.Drawing.Point(181, 193)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(304, 29)
+        Me.Label7.Size = New System.Drawing.Size(259, 24)
         Me.Label7.TabIndex = 8
         Me.Label7.Text = "Please sign in to your account"
         '
@@ -577,10 +577,10 @@ Partial Class Form1
         Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox2.BackgroundImage = Global.Vb_POS.My.Resources.Resources.image_removebg_preview__14_
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox2.Location = New System.Drawing.Point(136, 22)
+        Me.PictureBox2.Location = New System.Drawing.Point(185, 22)
         Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(328, 159)
+        Me.PictureBox2.Size = New System.Drawing.Size(228, 118)
         Me.PictureBox2.TabIndex = 15
         Me.PictureBox2.TabStop = False
         '
