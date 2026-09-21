@@ -320,7 +320,7 @@ Partial Class Form1
         Me.loginPanel.Controls.Add(Me.Label10)
         Me.loginPanel.Controls.Add(Me.Label8)
         Me.loginPanel.FillColor = System.Drawing.Color.White
-        Me.loginPanel.Location = New System.Drawing.Point(550, 32)
+        Me.loginPanel.Location = New System.Drawing.Point(578, 32)
         Me.loginPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.loginPanel.Name = "loginPanel"
         Me.loginPanel.Size = New System.Drawing.Size(500, 660)
