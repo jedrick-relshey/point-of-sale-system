@@ -27,37 +27,24 @@ Partial Class LoginPage
         Me.Guna2ContextMenuStrip1 = New Guna.UI2.WinForms.Guna2ContextMenuStrip()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.txt_Username_Login = New Guna.UI2.WinForms.Guna2TextBox()
-        Me.btn_Login = New Guna.UI2.WinForms.Guna2GradientButton()
-        Me.txt_Password_Login = New Guna.UI2.WinForms.Guna2TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.btnAdmin = New Guna.UI2.WinForms.Guna2GradientButton()
         Me.chk_shw_psswrd = New System.Windows.Forms.CheckBox()
         Me.lblError_Login = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Guna2AnimateWindow1 = New Guna.UI2.WinForms.Guna2AnimateWindow(Me.components)
-        Me.Label11 = New System.Windows.Forms.Label()
         Me.loginPanel = New Guna.UI2.WinForms.Guna2Panel()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label23 = New System.Windows.Forms.Label()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.txt_Password_Admin = New Guna.UI2.WinForms.Guna2TextBox()
-        Me.lblError_Admin = New System.Windows.Forms.Label()
-        Me.txt_Username_Admin = New Guna.UI2.WinForms.Guna2TextBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.btn_Admin_Login = New Guna.UI2.WinForms.Guna2GradientButton()
-        Me.bckbtn = New System.Windows.Forms.LinkLabel()
-        Me.adminPanel = New Guna.UI2.WinForms.Guna2Panel()
+        Me.btn_Login = New Guna.UI2.WinForms.Guna2GradientButton()
+        Me.txt_Username_Login = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.txt_Password_Login = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.Guna2Panel1 = New Guna.UI2.WinForms.Guna2Panel()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Guna2Panel2 = New Guna.UI2.WinForms.Guna2Panel()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.loginPanel.SuspendLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.adminPanel.SuspendLayout()
+        Me.Guna2Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -82,7 +69,7 @@ Partial Class LoginPage
         Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.Font = New System.Drawing.Font("Calibri", 22.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
-        Me.Label6.Location = New System.Drawing.Point(128, 112)
+        Me.Label6.Location = New System.Drawing.Point(538, 107)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(257, 45)
@@ -95,12 +82,123 @@ Partial Class LoginPage
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.Gray
-        Me.Label7.Location = New System.Drawing.Point(126, 157)
+        Me.Label7.Location = New System.Drawing.Point(536, 152)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(259, 24)
         Me.Label7.TabIndex = 8
         Me.Label7.Text = "Please sign in to your account"
+        '
+        'chk_shw_psswrd
+        '
+        Me.chk_shw_psswrd.AutoSize = True
+        Me.chk_shw_psswrd.Location = New System.Drawing.Point(506, 395)
+        Me.chk_shw_psswrd.Margin = New System.Windows.Forms.Padding(4)
+        Me.chk_shw_psswrd.Name = "chk_shw_psswrd"
+        Me.chk_shw_psswrd.Size = New System.Drawing.Size(125, 20)
+        Me.chk_shw_psswrd.TabIndex = 20
+        Me.chk_shw_psswrd.Text = "Show Password"
+        Me.chk_shw_psswrd.UseVisualStyleBackColor = True
+        '
+        'lblError_Login
+        '
+        Me.lblError_Login.AutoSize = True
+        Me.lblError_Login.ForeColor = System.Drawing.Color.Red
+        Me.lblError_Login.Location = New System.Drawing.Point(503, 436)
+        Me.lblError_Login.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblError_Login.Name = "lblError_Login"
+        Me.lblError_Login.Size = New System.Drawing.Size(288, 16)
+        Me.lblError_Login.TabIndex = 19
+        Me.lblError_Login.Text = "Invalid Username or Password. Please try agin."
+        Me.lblError_Login.Visible = False
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.DimGray
+        Me.Label10.Location = New System.Drawing.Point(574, 545)
+        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(221, 16)
+        Me.Label10.TabIndex = 18
+        Me.Label10.Text = "Secure login - your data is protected"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.BackColor = System.Drawing.Color.Transparent
+        Me.Label9.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.Color.Black
+        Me.Label9.Location = New System.Drawing.Point(502, 297)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(89, 24)
+        Me.Label9.TabIndex = 17
+        Me.Label9.Text = "Password"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.BackColor = System.Drawing.Color.Transparent
+        Me.Label8.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.ForeColor = System.Drawing.Color.Black
+        Me.Label8.Location = New System.Drawing.Point(502, 204)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(95, 24)
+        Me.Label8.TabIndex = 16
+        Me.Label8.Text = "Username"
+        '
+        'loginPanel
+        '
+        Me.loginPanel.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.loginPanel.BackColor = System.Drawing.Color.Transparent
+        Me.loginPanel.BorderColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(13, Byte), Integer))
+        Me.loginPanel.BorderRadius = 40
+        Me.loginPanel.BorderThickness = 1
+        Me.loginPanel.Controls.Add(Me.Label9)
+        Me.loginPanel.Controls.Add(Me.btn_Login)
+        Me.loginPanel.Controls.Add(Me.txt_Username_Login)
+        Me.loginPanel.Controls.Add(Me.chk_shw_psswrd)
+        Me.loginPanel.Controls.Add(Me.Label7)
+        Me.loginPanel.Controls.Add(Me.txt_Password_Login)
+        Me.loginPanel.Controls.Add(Me.lblError_Login)
+        Me.loginPanel.Controls.Add(Me.Label6)
+        Me.loginPanel.Controls.Add(Me.Label10)
+        Me.loginPanel.Controls.Add(Me.Label8)
+        Me.loginPanel.FillColor = System.Drawing.Color.White
+        Me.loginPanel.Location = New System.Drawing.Point(218, 56)
+        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4)
+        Me.loginPanel.Name = "loginPanel"
+        Me.loginPanel.ShadowDecoration.BorderRadius = 40
+        Me.loginPanel.ShadowDecoration.Color = System.Drawing.Color.Gray
+        Me.loginPanel.ShadowDecoration.Enabled = True
+        Me.loginPanel.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 7, 7)
+        Me.loginPanel.Size = New System.Drawing.Size(900, 650)
+        Me.loginPanel.TabIndex = 27
+        '
+        'btn_Login
+        '
+        Me.btn_Login.Animated = True
+        Me.btn_Login.BackColor = System.Drawing.Color.Transparent
+        Me.btn_Login.BorderRadius = 12
+        Me.btn_Login.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_Login.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_Login.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_Login.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_Login.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_Login.FillColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(193, Byte), Integer))
+        Me.btn_Login.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.btn_Login.ForeColor = System.Drawing.Color.White
+        Me.btn_Login.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
+        Me.btn_Login.Location = New System.Drawing.Point(506, 465)
+        Me.btn_Login.Margin = New System.Windows.Forms.Padding(4)
+        Me.btn_Login.Name = "btn_Login"
+        Me.btn_Login.Size = New System.Drawing.Size(328, 50)
+        Me.btn_Login.TabIndex = 10
+        Me.btn_Login.Text = "LOGIN"
         '
         'txt_Username_Login
         '
@@ -120,7 +218,7 @@ Partial Class LoginPage
         Me.txt_Username_Login.ForeColor = System.Drawing.Color.Gray
         Me.txt_Username_Login.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txt_Username_Login.IconLeft = Global.Vb_POS.My.Resources.Resources.user__3_
-        Me.txt_Username_Login.Location = New System.Drawing.Point(96, 238)
+        Me.txt_Username_Login.Location = New System.Drawing.Point(506, 233)
         Me.txt_Username_Login.Margin = New System.Windows.Forms.Padding(5)
         Me.txt_Username_Login.Name = "txt_Username_Login"
         Me.txt_Username_Login.PlaceholderForeColor = System.Drawing.Color.DimGray
@@ -128,27 +226,6 @@ Partial Class LoginPage
         Me.txt_Username_Login.SelectedText = ""
         Me.txt_Username_Login.Size = New System.Drawing.Size(328, 50)
         Me.txt_Username_Login.TabIndex = 9
-        '
-        'btn_Login
-        '
-        Me.btn_Login.Animated = True
-        Me.btn_Login.BackColor = System.Drawing.Color.Transparent
-        Me.btn_Login.BorderRadius = 12
-        Me.btn_Login.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_Login.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_Login.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_Login.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_Login.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_Login.FillColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(193, Byte), Integer))
-        Me.btn_Login.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.btn_Login.ForeColor = System.Drawing.Color.White
-        Me.btn_Login.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
-        Me.btn_Login.Location = New System.Drawing.Point(96, 470)
-        Me.btn_Login.Margin = New System.Windows.Forms.Padding(4)
-        Me.btn_Login.Name = "btn_Login"
-        Me.btn_Login.Size = New System.Drawing.Size(328, 50)
-        Me.btn_Login.TabIndex = 10
-        Me.btn_Login.Text = "LOGIN"
         '
         'txt_Password_Login
         '
@@ -168,7 +245,7 @@ Partial Class LoginPage
         Me.txt_Password_Login.ForeColor = System.Drawing.Color.Gray
         Me.txt_Password_Login.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txt_Password_Login.IconLeft = Global.Vb_POS.My.Resources.Resources.lock
-        Me.txt_Password_Login.Location = New System.Drawing.Point(96, 334)
+        Me.txt_Password_Login.Location = New System.Drawing.Point(506, 329)
         Me.txt_Password_Login.Margin = New System.Windows.Forms.Padding(5)
         Me.txt_Password_Login.Name = "txt_Password_Login"
         Me.txt_Password_Login.PlaceholderForeColor = System.Drawing.Color.DimGray
@@ -177,402 +254,94 @@ Partial Class LoginPage
         Me.txt_Password_Login.Size = New System.Drawing.Size(328, 50)
         Me.txt_Password_Login.TabIndex = 11
         '
-        'Label13
+        'Guna2Panel1
         '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.ForeColor = System.Drawing.Color.Gainsboro
-        Me.Label13.Location = New System.Drawing.Point(106, 537)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(129, 18)
-        Me.Label13.TabIndex = 23
-        Me.Label13.Text = "───────────"
+        Me.Guna2Panel1.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2Panel1.BorderColor = System.Drawing.Color.Transparent
+        Me.Guna2Panel1.BorderRadius = 40
+        Me.Guna2Panel1.Controls.Add(Me.Guna2Panel2)
+        Me.Guna2Panel1.Controls.Add(Me.Label3)
+        Me.Guna2Panel1.Controls.Add(Me.Label2)
+        Me.Guna2Panel1.Controls.Add(Me.Label1)
+        Me.Guna2Panel1.Controls.Add(Me.PictureBox1)
+        Me.Guna2Panel1.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.Guna2Panel1.Location = New System.Drawing.Point(218, 56)
+        Me.Guna2Panel1.Name = "Guna2Panel1"
+        Me.Guna2Panel1.Size = New System.Drawing.Size(450, 650)
+        Me.Guna2Panel1.TabIndex = 21
         '
-        'Label12
+        'Label2
         '
-        Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.ForeColor = System.Drawing.Color.DimGray
-        Me.Label12.Location = New System.Drawing.Point(243, 537)
-        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(25, 18)
-        Me.Label12.TabIndex = 22
-        Me.Label12.Text = "Or"
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Verdana", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.LightGray
+        Me.Label2.Location = New System.Drawing.Point(102, 412)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(267, 20)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "BrewHaven Cafe Management"
         '
-        'btnAdmin
+        'Label1
         '
-        Me.btnAdmin.Animated = True
-        Me.btnAdmin.BackColor = System.Drawing.Color.Transparent
-        Me.btnAdmin.BorderColor = System.Drawing.Color.Gainsboro
-        Me.btnAdmin.BorderRadius = 12
-        Me.btnAdmin.BorderThickness = 1
-        Me.btnAdmin.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btnAdmin.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btnAdmin.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btnAdmin.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btnAdmin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btnAdmin.FillColor = System.Drawing.Color.White
-        Me.btnAdmin.FillColor2 = System.Drawing.Color.White
-        Me.btnAdmin.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.btnAdmin.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnAdmin.Image = Global.Vb_POS.My.Resources.Resources.protection
-        Me.btnAdmin.Location = New System.Drawing.Point(96, 568)
-        Me.btnAdmin.Margin = New System.Windows.Forms.Padding(4)
-        Me.btnAdmin.Name = "btnAdmin"
-        Me.btnAdmin.Size = New System.Drawing.Size(328, 50)
-        Me.btnAdmin.TabIndex = 21
-        Me.btnAdmin.Text = "Login as Admin"
-        '
-        'chk_shw_psswrd
-        '
-        Me.chk_shw_psswrd.AutoSize = True
-        Me.chk_shw_psswrd.Location = New System.Drawing.Point(96, 400)
-        Me.chk_shw_psswrd.Margin = New System.Windows.Forms.Padding(4)
-        Me.chk_shw_psswrd.Name = "chk_shw_psswrd"
-        Me.chk_shw_psswrd.Size = New System.Drawing.Size(125, 20)
-        Me.chk_shw_psswrd.TabIndex = 20
-        Me.chk_shw_psswrd.Text = "Show Password"
-        Me.chk_shw_psswrd.UseVisualStyleBackColor = True
-        '
-        'lblError_Login
-        '
-        Me.lblError_Login.AutoSize = True
-        Me.lblError_Login.ForeColor = System.Drawing.Color.Red
-        Me.lblError_Login.Location = New System.Drawing.Point(93, 441)
-        Me.lblError_Login.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.lblError_Login.Name = "lblError_Login"
-        Me.lblError_Login.Size = New System.Drawing.Size(288, 16)
-        Me.lblError_Login.TabIndex = 19
-        Me.lblError_Login.Text = "Invalid Username or Password. Please try agin."
-        Me.lblError_Login.Visible = False
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.ForeColor = System.Drawing.Color.DimGray
-        Me.Label10.Location = New System.Drawing.Point(147, 622)
-        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(221, 16)
-        Me.Label10.TabIndex = 18
-        Me.Label10.Text = "Secure login - your data is protected"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.BackColor = System.Drawing.Color.Transparent
-        Me.Label9.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.ForeColor = System.Drawing.Color.Black
-        Me.Label9.Location = New System.Drawing.Point(92, 302)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(89, 24)
-        Me.Label9.TabIndex = 17
-        Me.Label9.Text = "Password"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.BackColor = System.Drawing.Color.Transparent
-        Me.Label8.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.ForeColor = System.Drawing.Color.Black
-        Me.Label8.Location = New System.Drawing.Point(92, 209)
-        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(95, 24)
-        Me.Label8.TabIndex = 16
-        Me.Label8.Text = "Username"
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.ForeColor = System.Drawing.Color.Gainsboro
-        Me.Label11.Location = New System.Drawing.Point(278, 537)
-        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(129, 18)
-        Me.Label11.TabIndex = 24
-        Me.Label11.Text = "───────────"
-        '
-        'loginPanel
-        '
-        Me.loginPanel.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.loginPanel.BackColor = System.Drawing.Color.Transparent
-        Me.loginPanel.BorderRadius = 40
-        Me.loginPanel.Controls.Add(Me.PictureBox2)
-        Me.loginPanel.Controls.Add(Me.Label9)
-        Me.loginPanel.Controls.Add(Me.Label11)
-        Me.loginPanel.Controls.Add(Me.Label13)
-        Me.loginPanel.Controls.Add(Me.btn_Login)
-        Me.loginPanel.Controls.Add(Me.Label12)
-        Me.loginPanel.Controls.Add(Me.txt_Username_Login)
-        Me.loginPanel.Controls.Add(Me.btnAdmin)
-        Me.loginPanel.Controls.Add(Me.chk_shw_psswrd)
-        Me.loginPanel.Controls.Add(Me.Label7)
-        Me.loginPanel.Controls.Add(Me.txt_Password_Login)
-        Me.loginPanel.Controls.Add(Me.lblError_Login)
-        Me.loginPanel.Controls.Add(Me.Label6)
-        Me.loginPanel.Controls.Add(Me.Label10)
-        Me.loginPanel.Controls.Add(Me.Label8)
-        Me.loginPanel.FillColor = System.Drawing.Color.White
-        Me.loginPanel.Location = New System.Drawing.Point(609, 39)
-        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4)
-        Me.loginPanel.Name = "loginPanel"
-        Me.loginPanel.Size = New System.Drawing.Size(500, 663)
-        Me.loginPanel.TabIndex = 27
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox2.BackgroundImage = Global.Vb_POS.My.Resources.Resources.image_removebg_preview__14_
-        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox2.Location = New System.Drawing.Point(183, 4)
-        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(4)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(145, 104)
-        Me.PictureBox2.TabIndex = 26
-        Me.PictureBox2.TabStop = False
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.BackColor = System.Drawing.Color.Transparent
-        Me.Label21.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label21.ForeColor = System.Drawing.Color.Black
-        Me.Label21.Location = New System.Drawing.Point(82, 208)
-        Me.Label21.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(95, 24)
-        Me.Label21.TabIndex = 16
-        Me.Label21.Text = "Username"
-        '
-        'Label22
-        '
-        Me.Label22.AutoSize = True
-        Me.Label22.BackColor = System.Drawing.Color.Transparent
-        Me.Label22.Font = New System.Drawing.Font("Calibri", 22.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label22.ForeColor = System.Drawing.Color.Black
-        Me.Label22.Location = New System.Drawing.Point(122, 112)
-        Me.Label22.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(257, 45)
-        Me.Label22.TabIndex = 7
-        Me.Label22.Text = "Welcome Back!"
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.BackColor = System.Drawing.Color.Transparent
-        Me.Label20.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.ForeColor = System.Drawing.Color.Black
-        Me.Label20.Location = New System.Drawing.Point(81, 305)
-        Me.Label20.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(89, 24)
-        Me.Label20.TabIndex = 17
-        Me.Label20.Text = "Password"
-        '
-        'Label23
-        '
-        Me.Label23.AutoSize = True
-        Me.Label23.BackColor = System.Drawing.Color.Transparent
-        Me.Label23.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label23.ForeColor = System.Drawing.Color.Gray
-        Me.Label23.Location = New System.Drawing.Point(147, 157)
-        Me.Label23.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(214, 24)
-        Me.Label23.TabIndex = 8
-        Me.Label23.Text = "Login as a Administrator"
-        '
-        'Label19
-        '
-        Me.Label19.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom), System.Windows.Forms.AnchorStyles)
-        Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label19.ForeColor = System.Drawing.Color.DimGray
-        Me.Label19.Location = New System.Drawing.Point(110, 769)
-        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(280, 20)
-        Me.Label19.TabIndex = 18
-        Me.Label19.Text = "Secure login - your data is protected"
-        '
-        'txt_Password_Admin
-        '
-        Me.txt_Password_Admin.Animated = True
-        Me.txt_Password_Admin.BackColor = System.Drawing.Color.Transparent
-        Me.txt_Password_Admin.BorderColor = System.Drawing.Color.Gainsboro
-        Me.txt_Password_Admin.BorderRadius = 10
-        Me.txt_Password_Admin.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.txt_Password_Admin.DefaultText = ""
-        Me.txt_Password_Admin.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.txt_Password_Admin.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
-        Me.txt_Password_Admin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txt_Password_Admin.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txt_Password_Admin.FillColor = System.Drawing.Color.WhiteSmoke
-        Me.txt_Password_Admin.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txt_Password_Admin.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.txt_Password_Admin.ForeColor = System.Drawing.Color.Gray
-        Me.txt_Password_Admin.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txt_Password_Admin.IconLeft = Global.Vb_POS.My.Resources.Resources.lock
-        Me.txt_Password_Admin.Location = New System.Drawing.Point(86, 334)
-        Me.txt_Password_Admin.Margin = New System.Windows.Forms.Padding(5)
-        Me.txt_Password_Admin.Name = "txt_Password_Admin"
-        Me.txt_Password_Admin.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txt_Password_Admin.PlaceholderForeColor = System.Drawing.Color.DimGray
-        Me.txt_Password_Admin.PlaceholderText = "Enter your Password"
-        Me.txt_Password_Admin.SelectedText = ""
-        Me.txt_Password_Admin.Size = New System.Drawing.Size(327, 50)
-        Me.txt_Password_Admin.TabIndex = 11
-        '
-        'lblError_Admin
-        '
-        Me.lblError_Admin.AutoSize = True
-        Me.lblError_Admin.ForeColor = System.Drawing.Color.Red
-        Me.lblError_Admin.Location = New System.Drawing.Point(82, 441)
-        Me.lblError_Admin.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.lblError_Admin.Name = "lblError_Admin"
-        Me.lblError_Admin.Size = New System.Drawing.Size(288, 16)
-        Me.lblError_Admin.TabIndex = 19
-        Me.lblError_Admin.Text = "Invalid Username or Password. Please try agin."
-        Me.lblError_Admin.Visible = False
-        '
-        'txt_Username_Admin
-        '
-        Me.txt_Username_Admin.Animated = True
-        Me.txt_Username_Admin.BackColor = System.Drawing.Color.Transparent
-        Me.txt_Username_Admin.BorderColor = System.Drawing.Color.Gainsboro
-        Me.txt_Username_Admin.BorderRadius = 10
-        Me.txt_Username_Admin.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.txt_Username_Admin.DefaultText = ""
-        Me.txt_Username_Admin.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.txt_Username_Admin.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
-        Me.txt_Username_Admin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txt_Username_Admin.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txt_Username_Admin.FillColor = System.Drawing.Color.WhiteSmoke
-        Me.txt_Username_Admin.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txt_Username_Admin.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.txt_Username_Admin.ForeColor = System.Drawing.Color.Black
-        Me.txt_Username_Admin.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txt_Username_Admin.IconLeft = Global.Vb_POS.My.Resources.Resources.user__3_
-        Me.txt_Username_Admin.Location = New System.Drawing.Point(87, 238)
-        Me.txt_Username_Admin.Margin = New System.Windows.Forms.Padding(5)
-        Me.txt_Username_Admin.Name = "txt_Username_Admin"
-        Me.txt_Username_Admin.PlaceholderForeColor = System.Drawing.Color.DimGray
-        Me.txt_Username_Admin.PlaceholderText = "Enter your Username"
-        Me.txt_Username_Admin.SelectedText = ""
-        Me.txt_Username_Admin.Size = New System.Drawing.Size(327, 50)
-        Me.txt_Username_Admin.TabIndex = 9
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(86, 400)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(4)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(125, 20)
-        Me.CheckBox1.TabIndex = 20
-        Me.CheckBox1.Text = "Show Password"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'btn_Admin_Login
-        '
-        Me.btn_Admin_Login.Animated = True
-        Me.btn_Admin_Login.BackColor = System.Drawing.Color.Transparent
-        Me.btn_Admin_Login.BorderRadius = 12
-        Me.btn_Admin_Login.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_Admin_Login.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_Admin_Login.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_Admin_Login.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_Admin_Login.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_Admin_Login.FillColor = System.Drawing.Color.FromArgb(CType(CType(27, Byte), Integer), CType(CType(44, Byte), Integer), CType(CType(193, Byte), Integer))
-        Me.btn_Admin_Login.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.btn_Admin_Login.ForeColor = System.Drawing.Color.White
-        Me.btn_Admin_Login.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
-        Me.btn_Admin_Login.Location = New System.Drawing.Point(86, 469)
-        Me.btn_Admin_Login.Margin = New System.Windows.Forms.Padding(4)
-        Me.btn_Admin_Login.Name = "btn_Admin_Login"
-        Me.btn_Admin_Login.Size = New System.Drawing.Size(327, 51)
-        Me.btn_Admin_Login.TabIndex = 10
-        Me.btn_Admin_Login.Text = "LOGIN"
-        '
-        'bckbtn
-        '
-        Me.bckbtn.AutoSize = True
-        Me.bckbtn.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.bckbtn.Location = New System.Drawing.Point(366, 550)
-        Me.bckbtn.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.bckbtn.Name = "bckbtn"
-        Me.bckbtn.Size = New System.Drawing.Size(47, 20)
-        Me.bckbtn.TabIndex = 22
-        Me.bckbtn.TabStop = True
-        Me.bckbtn.Text = "Back"
-        '
-        'adminPanel
-        '
-        Me.adminPanel.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.adminPanel.BackColor = System.Drawing.Color.Transparent
-        Me.adminPanel.BorderRadius = 40
-        Me.adminPanel.Controls.Add(Me.PictureBox1)
-        Me.adminPanel.Controls.Add(Me.bckbtn)
-        Me.adminPanel.Controls.Add(Me.btn_Admin_Login)
-        Me.adminPanel.Controls.Add(Me.CheckBox1)
-        Me.adminPanel.Controls.Add(Me.txt_Username_Admin)
-        Me.adminPanel.Controls.Add(Me.lblError_Admin)
-        Me.adminPanel.Controls.Add(Me.txt_Password_Admin)
-        Me.adminPanel.Controls.Add(Me.Label19)
-        Me.adminPanel.Controls.Add(Me.Label23)
-        Me.adminPanel.Controls.Add(Me.Label20)
-        Me.adminPanel.Controls.Add(Me.Label22)
-        Me.adminPanel.Controls.Add(Me.Label21)
-        Me.adminPanel.FillColor = System.Drawing.Color.White
-        Me.adminPanel.Location = New System.Drawing.Point(59, 39)
-        Me.adminPanel.Margin = New System.Windows.Forms.Padding(4)
-        Me.adminPanel.Name = "adminPanel"
-        Me.adminPanel.Size = New System.Drawing.Size(500, 663)
-        Me.adminPanel.TabIndex = 26
-        Me.adminPanel.Visible = False
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Verdana", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.Location = New System.Drawing.Point(99, 365)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(270, 34)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "BrewHaven POS"
         '
         'PictureBox1
         '
-        Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox1.BackgroundImage = Global.Vb_POS.My.Resources.Resources.image_removebg_preview__14_
+        Me.PictureBox1.BackgroundImage = Global.Vb_POS.My.Resources.Resources.cafe_logo
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox1.Location = New System.Drawing.Point(172, 4)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4)
+        Me.PictureBox1.Location = New System.Drawing.Point(152, 225)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(145, 104)
-        Me.PictureBox1.TabIndex = 25
+        Me.PictureBox1.Size = New System.Drawing.Size(152, 137)
+        Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
+        '
+        'Guna2Panel2
+        '
+        Me.Guna2Panel2.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2Panel2.BorderColor = System.Drawing.Color.Transparent
+        Me.Guna2Panel2.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.Guna2Panel2.Location = New System.Drawing.Point(400, 0)
+        Me.Guna2Panel2.Name = "Guna2Panel2"
+        Me.Guna2Panel2.Size = New System.Drawing.Size(50, 650)
+        Me.Guna2Panel2.TabIndex = 29
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Verdana", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.LightGray
+        Me.Label3.Location = New System.Drawing.Point(162, 465)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(121, 16)
+        Me.Label3.TabIndex = 3
+        Me.Label3.Text = "v2.4.1 Build 2026"
         '
         'LoginPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(233, Byte), Integer))
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1282, 803)
+        Me.Controls.Add(Me.Guna2Panel1)
         Me.Controls.Add(Me.loginPanel)
-        Me.Controls.Add(Me.adminPanel)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "LoginPage"
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Login Page"
+        Me.Text = "Login"
         Me.WindowState = System.Windows.Forms.FormWindowState.Minimized
         Me.loginPanel.ResumeLayout(False)
         Me.loginPanel.PerformLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.adminPanel.ResumeLayout(False)
-        Me.adminPanel.PerformLayout()
+        Me.Guna2Panel1.ResumeLayout(False)
+        Me.Guna2Panel1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -589,23 +358,11 @@ Partial Class LoginPage
     Friend WithEvents Label10 As Label
     Friend WithEvents chk_shw_psswrd As CheckBox
     Friend WithEvents lblError_Login As Label
-    Friend WithEvents btnAdmin As Guna.UI2.WinForms.Guna2GradientButton
-    Friend WithEvents Label12 As Label
-    Friend WithEvents Label13 As Label
-    Friend WithEvents Label11 As Label
     Friend WithEvents loginPanel As Guna.UI2.WinForms.Guna2Panel
-    Friend WithEvents Label21 As Label
-    Friend WithEvents Label22 As Label
-    Friend WithEvents Label20 As Label
-    Friend WithEvents Label23 As Label
-    Friend WithEvents Label19 As Label
-    Friend WithEvents txt_Password_Admin As Guna.UI2.WinForms.Guna2TextBox
-    Friend WithEvents lblError_Admin As Label
-    Friend WithEvents txt_Username_Admin As Guna.UI2.WinForms.Guna2TextBox
-    Friend WithEvents CheckBox1 As CheckBox
-    Friend WithEvents btn_Admin_Login As Guna.UI2.WinForms.Guna2GradientButton
-    Friend WithEvents bckbtn As LinkLabel
-    Friend WithEvents adminPanel As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents Guna2Panel1 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents Guna2Panel2 As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label3 As Label
 End Class

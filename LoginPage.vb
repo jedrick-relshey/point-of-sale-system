@@ -10,16 +10,12 @@ Public Class LoginPage
 
     End Sub
 
-    Private Sub btnAdmin_Click(sender As Object, e As EventArgs) Handles btnAdmin.Click
-
-        adminPanel.Visible = True
+    Private Sub btnAdmin_Click(sender As Object, e As EventArgs)
         loginPanel.Visible = False
 
     End Sub
 
-    Private Sub bckbtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles bckbtn.LinkClicked
-
-        adminPanel.Visible = False
+    Private Sub bckbtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
         loginPanel.Visible = True
 
     End Sub
