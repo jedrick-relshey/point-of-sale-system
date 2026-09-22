@@ -2,8 +2,7 @@
 
     Private Sub HideAllPanels()
 
-        pnltest.Visible = False
-        dashboardpanel.Visible = False
+        dashbrd_pnl.Visible = False
 
     End Sub
 
@@ -20,7 +19,7 @@
     Private Sub btn_DashBoard_Click(sender As Object, e As EventArgs) Handles btn_DashBoard.Click
 
         HideAllPanels()
-        dashboardpanel.Visible = True
+        dashbrd_pnl.Visible = True
 
         ResetButtonColors()
 
@@ -32,12 +31,15 @@
     Private Sub btn_Point_Of_Sale_Click(sender As Object, e As EventArgs) Handles btn_Point_Of_Sale.Click
 
         HideAllPanels()
-        pnltest.Visible = True
 
         ResetButtonColors()
 
         btn_Point_Of_Sale.BackColor = Color.MistyRose
         btn_Point_Of_Sale.ForeColor = Color.Black
+
+    End Sub
+
+    Private Sub dashbrd_pnl_Paint(sender As Object, e As PaintEventArgs) Handles dashbrd_pnl.Paint
 
     End Sub
 End Class
