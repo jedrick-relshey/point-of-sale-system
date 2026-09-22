@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.Vb_POS.Form1
+            Me.MainForm = Global.Vb_POS.Cashier
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
