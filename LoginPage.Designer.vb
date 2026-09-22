@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Form1
+Partial Class LoginPage
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LoginPage))
         Me.Guna2ContextMenuStrip1 = New Guna.UI2.WinForms.Guna2ContextMenuStrip()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -253,7 +253,7 @@ Partial Class Form1
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.DimGray
-        Me.Label10.Location = New System.Drawing.Point(148, 631)
+        Me.Label10.Location = New System.Drawing.Point(147, 622)
         Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(221, 16)
@@ -320,10 +320,10 @@ Partial Class Form1
         Me.loginPanel.Controls.Add(Me.Label10)
         Me.loginPanel.Controls.Add(Me.Label8)
         Me.loginPanel.FillColor = System.Drawing.Color.White
-        Me.loginPanel.Location = New System.Drawing.Point(578, 32)
+        Me.loginPanel.Location = New System.Drawing.Point(609, 39)
         Me.loginPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.loginPanel.Name = "loginPanel"
-        Me.loginPanel.Size = New System.Drawing.Size(500, 660)
+        Me.loginPanel.Size = New System.Drawing.Size(500, 663)
         Me.loginPanel.TabIndex = 27
         '
         'PictureBox2
@@ -533,10 +533,10 @@ Partial Class Form1
         Me.adminPanel.Controls.Add(Me.Label22)
         Me.adminPanel.Controls.Add(Me.Label21)
         Me.adminPanel.FillColor = System.Drawing.Color.White
-        Me.adminPanel.Location = New System.Drawing.Point(28, 32)
+        Me.adminPanel.Location = New System.Drawing.Point(59, 39)
         Me.adminPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.adminPanel.Name = "adminPanel"
-        Me.adminPanel.Size = New System.Drawing.Size(500, 660)
+        Me.adminPanel.Size = New System.Drawing.Size(500, 663)
         Me.adminPanel.TabIndex = 26
         Me.adminPanel.Visible = False
         '
@@ -552,21 +552,21 @@ Partial Class Form1
         Me.PictureBox1.TabIndex = 25
         Me.PictureBox1.TabStop = False
         '
-        'Form1
+        'LoginPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(1608, 820)
+        Me.ClientSize = New System.Drawing.Size(1282, 803)
         Me.Controls.Add(Me.loginPanel)
         Me.Controls.Add(Me.adminPanel)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.Name = "Form1"
+        Me.Name = "LoginPage"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Form1"
+        Me.Text = "Login Page"
         Me.WindowState = System.Windows.Forms.FormWindowState.Minimized
         Me.loginPanel.ResumeLayout(False)
         Me.loginPanel.PerformLayout()

@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing.Drawing2D
 
-Public Class Form1
+Public Class LoginPage
     Private Sub btn_Login_Click(sender As Object, e As EventArgs) Handles btn_Login.Click
 
         Dim username As String = txt_Username_Login.Text
