@@ -1,4 +1,5 @@
-﻿Public Class Cashier
+﻿Imports System.Drawing
+Public Class Cashier
 
     Private Sub HideAllPanels()
 
@@ -36,10 +37,6 @@
 
         btn_Point_Of_Sale.BackColor = Color.MistyRose
         btn_Point_Of_Sale.ForeColor = Color.Black
-
-    End Sub
-
-    Private Sub dashbrd_pnl_Paint(sender As Object, e As PaintEventArgs) Handles dashbrd_pnl.Paint
 
     End Sub
 End Class
