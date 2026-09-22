@@ -232,10 +232,23 @@
     <None Include="Resources\image-removebg-preview %2817%29.png" />
   </ItemGroup>
   <ItemGroup>
-  <ItemGroup>
     <None Include="Resources\icons8-dashboard-48.png" />
     <None Include="Resources\cafe-logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-dashboard-481.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-cart-481.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-food-donor-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-box-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-clock-64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

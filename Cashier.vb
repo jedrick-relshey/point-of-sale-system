@@ -40,9 +40,15 @@ Public Class Cashier
 
     End Sub
 
-    Private Sub Guna2Button6_Click(sender As Object, e As EventArgs) Handles Guna2Button6.Click
-        Dim login As New LoginPage()
-        login.Show()
-        Me.Hide()
+    Private Sub dashbrd_pnl_Paint(sender As Object, e As PaintEventArgs) Handles dashbrd_pnl.Paint
+
+    End Sub
+
+    Private Sub Guna2Button7_Click(sender As Object, e As EventArgs) Handles Guna2Button7.Click
+
+    End Sub
+
+    Private Sub Guna2Button1_Click(sender As Object, e As EventArgs) Handles Guna2Button1.Click
+
     End Sub
 End Class
