@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing.Drawing2D
 
-Public Class Form1
+Public Class LoginPage
     Private Sub btn_Login_Click(sender As Object, e As EventArgs) Handles btn_Login.Click
 
         Dim username As String = txt_Username_Login.Text
@@ -8,17 +8,15 @@ Public Class Form1
 
     End Sub
 
-    Private Sub btnAdmin_Click(sender As Object, e As EventArgs) Handles btnAdmin.Click
-
-        adminPanel.Visible = True
+    Private Sub btnAdmin_Click(sender As Object, e As EventArgs)
         loginPanel.Visible = False
 
     End Sub
 
-    Private Sub bckbtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles bckbtn.LinkClicked
-
-        adminPanel.Visible = False
+    Private Sub bckbtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
         loginPanel.Visible = True
 
     End Sub
+
+
 End Class

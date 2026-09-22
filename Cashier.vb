@@ -39,4 +39,10 @@ Public Class Cashier
         btn_Point_Of_Sale.ForeColor = Color.Black
 
     End Sub
+
+    Private Sub Guna2Button6_Click(sender As Object, e As EventArgs) Handles Guna2Button6.Click
+        Dim login As New LoginPage()
+        login.Show()
+        Me.Hide()
+    End Sub
 End Class
