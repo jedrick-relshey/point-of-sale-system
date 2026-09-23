@@ -259,5 +259,11 @@
   <ItemGroup>
     <None Include="Resources\lock-icon-removebg-preview1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-message-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-employees-26.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

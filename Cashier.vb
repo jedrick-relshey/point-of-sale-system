@@ -39,4 +39,8 @@ Public Class Cashier
         btn_Point_Of_Sale.ForeColor = Color.Black
 
     End Sub
+
+    Private Sub dshbrd_Pnl_Paint(sender As Object, e As PaintEventArgs) Handles dshbrd_Pnl.Paint
+
+    End Sub
 End Class

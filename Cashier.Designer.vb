@@ -22,28 +22,20 @@ Partial Class Cashier
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dshbrd_Pnl = New Guna.UI2.WinForms.Guna2Panel()
         Me.Guna2CustomGradientPanel1 = New Guna.UI2.WinForms.Guna2CustomGradientPanel()
         Me.Guna2HtmlLabel7 = New Guna.UI2.WinForms.Guna2HtmlLabel()
-        Me.btn_hstry = New Guna.UI2.WinForms.Guna2Button()
         Me.Guna2HtmlLabel5 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Guna2ImageButton1 = New Guna.UI2.WinForms.Guna2ImageButton()
-        Me.btn_lgout = New Guna.UI2.WinForms.Guna2Button()
-        Me.btn_sttngs = New Guna.UI2.WinForms.Guna2Button()
-        Me.btn_invtry = New Guna.UI2.WinForms.Guna2Button()
-        Me.btn_prdt = New Guna.UI2.WinForms.Guna2Button()
-        Me.btn_Point_Of_Sale = New Guna.UI2.WinForms.Guna2Button()
-        Me.btn_DashBoard = New Guna.UI2.WinForms.Guna2Button()
         Me.Guna2HtmlLabel2 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.dashbrd_pnl = New Guna.UI2.WinForms.Guna2Panel()
         Me.Guna2Button1 = New Guna.UI2.WinForms.Guna2Button()
@@ -79,6 +71,18 @@ Partial Class Cashier
         Me.Items_Ordered_Collums = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Total_Collumns = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Status_Collumns = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Guna2Button2 = New Guna.UI2.WinForms.Guna2Button()
+        Me.Guna2Button3 = New Guna.UI2.WinForms.Guna2Button()
+        Me.Guna2Button4 = New Guna.UI2.WinForms.Guna2Button()
+        Me.Guna2Button6 = New Guna.UI2.WinForms.Guna2Button()
+        Me.btn_hstry = New Guna.UI2.WinForms.Guna2Button()
+        Me.Guna2ImageButton1 = New Guna.UI2.WinForms.Guna2ImageButton()
+        Me.btn_lgout = New Guna.UI2.WinForms.Guna2Button()
+        Me.btn_sttngs = New Guna.UI2.WinForms.Guna2Button()
+        Me.btn_invtry = New Guna.UI2.WinForms.Guna2Button()
+        Me.btn_prdt = New Guna.UI2.WinForms.Guna2Button()
+        Me.btn_Point_Of_Sale = New Guna.UI2.WinForms.Guna2Button()
+        Me.btn_DashBoard = New Guna.UI2.WinForms.Guna2Button()
         Me.dshbrd_Pnl.SuspendLayout()
         Me.dashbrd_pnl.SuspendLayout()
         CType(Me.dgv_Recent_Transactions, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -93,6 +97,10 @@ Partial Class Cashier
         'dshbrd_Pnl
         '
         Me.dshbrd_Pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.dshbrd_Pnl.Controls.Add(Me.Guna2Button2)
+        Me.dshbrd_Pnl.Controls.Add(Me.Guna2Button3)
+        Me.dshbrd_Pnl.Controls.Add(Me.Guna2Button4)
+        Me.dshbrd_Pnl.Controls.Add(Me.Guna2Button6)
         Me.dshbrd_Pnl.Controls.Add(Me.Guna2CustomGradientPanel1)
         Me.dshbrd_Pnl.Controls.Add(Me.Guna2HtmlLabel7)
         Me.dshbrd_Pnl.Controls.Add(Me.btn_hstry)
@@ -119,7 +127,7 @@ Partial Class Cashier
         Me.Guna2CustomGradientPanel1.FillColor2 = System.Drawing.Color.DimGray
         Me.Guna2CustomGradientPanel1.FillColor3 = System.Drawing.Color.DimGray
         Me.Guna2CustomGradientPanel1.FillColor4 = System.Drawing.Color.DimGray
-        Me.Guna2CustomGradientPanel1.Location = New System.Drawing.Point(0, 84)
+        Me.Guna2CustomGradientPanel1.Location = New System.Drawing.Point(0, 105)
         Me.Guna2CustomGradientPanel1.Name = "Guna2CustomGradientPanel1"
         Me.Guna2CustomGradientPanel1.Size = New System.Drawing.Size(199, 1)
         Me.Guna2CustomGradientPanel1.TabIndex = 13
@@ -128,38 +136,12 @@ Partial Class Cashier
         '
         Me.Guna2HtmlLabel7.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Guna2HtmlLabel7.ForeColor = System.Drawing.SystemColors.ButtonFace
+        Me.Guna2HtmlLabel7.ForeColor = System.Drawing.SystemColors.ActiveBorder
         Me.Guna2HtmlLabel7.Location = New System.Drawing.Point(12, 63)
         Me.Guna2HtmlLabel7.Name = "Guna2HtmlLabel7"
         Me.Guna2HtmlLabel7.Size = New System.Drawing.Size(109, 15)
         Me.Guna2HtmlLabel7.TabIndex = 12
         Me.Guna2HtmlLabel7.Text = "CASHIER STATION 1"
-        '
-        'btn_hstry
-        '
-        Me.btn_hstry.Animated = True
-        Me.btn_hstry.BorderColor = System.Drawing.Color.Transparent
-        Me.btn_hstry.BorderRadius = 6
-        Me.btn_hstry.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_hstry.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_hstry.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_hstry.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_hstry.FillColor = System.Drawing.Color.Transparent
-        Me.btn_hstry.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!)
-        Me.btn_hstry.ForeColor = System.Drawing.Color.DarkGray
-        Me.btn_hstry.HoverState.FillColor = System.Drawing.Color.LightGray
-        Me.btn_hstry.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_hstry.Image = Global.Vb_POS.My.Resources.Resources.icons8_clock_64
-        Me.btn_hstry.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_hstry.ImageOffset = New System.Drawing.Point(-5, 0)
-        Me.btn_hstry.ImageSize = New System.Drawing.Size(25, 25)
-        Me.btn_hstry.Location = New System.Drawing.Point(6, 399)
-        Me.btn_hstry.Name = "btn_hstry"
-        Me.btn_hstry.Size = New System.Drawing.Size(188, 42)
-        Me.btn_hstry.TabIndex = 11
-        Me.btn_hstry.Text = "History"
-        Me.btn_hstry.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_hstry.TextOffset = New System.Drawing.Point(-10, 0)
         '
         'Guna2HtmlLabel5
         '
@@ -193,162 +175,6 @@ Partial Class Cashier
         Me.Label1.Size = New System.Drawing.Size(106, 18)
         Me.Label1.TabIndex = 7
         Me.Label1.Text = "Jedrick Miclat"
-        '
-        'Guna2ImageButton1
-        '
-        Me.Guna2ImageButton1.CheckedState.ImageSize = New System.Drawing.Size(64, 64)
-        Me.Guna2ImageButton1.HoverState.ImageSize = New System.Drawing.Size(64, 64)
-        Me.Guna2ImageButton1.Image = Global.Vb_POS.My.Resources.Resources.profile
-        Me.Guna2ImageButton1.ImageOffset = New System.Drawing.Point(0, 0)
-        Me.Guna2ImageButton1.ImageRotate = 0!
-        Me.Guna2ImageButton1.ImageSize = New System.Drawing.Size(30, 30)
-        Me.Guna2ImageButton1.Location = New System.Drawing.Point(9, 770)
-        Me.Guna2ImageButton1.Name = "Guna2ImageButton1"
-        Me.Guna2ImageButton1.PressedState.ImageSize = New System.Drawing.Size(64, 64)
-        Me.Guna2ImageButton1.Size = New System.Drawing.Size(39, 43)
-        Me.Guna2ImageButton1.TabIndex = 1
-        '
-        'btn_lgout
-        '
-        Me.btn_lgout.Animated = True
-        Me.btn_lgout.BorderColor = System.Drawing.Color.Transparent
-        Me.btn_lgout.BorderRadius = 6
-        Me.btn_lgout.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_lgout.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_lgout.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_lgout.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_lgout.FillColor = System.Drawing.Color.Transparent
-        Me.btn_lgout.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_lgout.ForeColor = System.Drawing.Color.DarkGray
-        Me.btn_lgout.HoverState.FillColor = System.Drawing.Color.LightGray
-        Me.btn_lgout.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_lgout.Image = Global.Vb_POS.My.Resources.Resources.logout_icon
-        Me.btn_lgout.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_lgout.ImageSize = New System.Drawing.Size(15, 15)
-        Me.btn_lgout.Location = New System.Drawing.Point(5, 728)
-        Me.btn_lgout.Name = "btn_lgout"
-        Me.btn_lgout.Size = New System.Drawing.Size(217, 36)
-        Me.btn_lgout.TabIndex = 6
-        Me.btn_lgout.Text = "Sign out"
-        Me.btn_lgout.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        '
-        'btn_sttngs
-        '
-        Me.btn_sttngs.Animated = True
-        Me.btn_sttngs.BorderColor = System.Drawing.Color.Transparent
-        Me.btn_sttngs.BorderRadius = 6
-        Me.btn_sttngs.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_sttngs.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_sttngs.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_sttngs.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_sttngs.FillColor = System.Drawing.Color.Transparent
-        Me.btn_sttngs.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_sttngs.ForeColor = System.Drawing.Color.DarkGray
-        Me.btn_sttngs.HoverState.FillColor = System.Drawing.Color.LightGray
-        Me.btn_sttngs.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_sttngs.Image = Global.Vb_POS.My.Resources.Resources.settings_
-        Me.btn_sttngs.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_sttngs.ImageSize = New System.Drawing.Size(15, 15)
-        Me.btn_sttngs.Location = New System.Drawing.Point(5, 686)
-        Me.btn_sttngs.Name = "btn_sttngs"
-        Me.btn_sttngs.Size = New System.Drawing.Size(217, 36)
-        Me.btn_sttngs.TabIndex = 5
-        Me.btn_sttngs.Text = "Settings"
-        Me.btn_sttngs.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        '
-        'btn_invtry
-        '
-        Me.btn_invtry.Animated = True
-        Me.btn_invtry.BorderColor = System.Drawing.Color.Transparent
-        Me.btn_invtry.BorderRadius = 6
-        Me.btn_invtry.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_invtry.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_invtry.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_invtry.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_invtry.FillColor = System.Drawing.Color.Transparent
-        Me.btn_invtry.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!)
-        Me.btn_invtry.ForeColor = System.Drawing.Color.DarkGray
-        Me.btn_invtry.HoverState.FillColor = System.Drawing.Color.LightGray
-        Me.btn_invtry.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_invtry.Image = Global.Vb_POS.My.Resources.Resources.icons8_box_50
-        Me.btn_invtry.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_invtry.ImageSize = New System.Drawing.Size(16, 16)
-        Me.btn_invtry.Location = New System.Drawing.Point(5, 354)
-        Me.btn_invtry.Name = "btn_invtry"
-        Me.btn_invtry.Size = New System.Drawing.Size(188, 42)
-        Me.btn_invtry.TabIndex = 4
-        Me.btn_invtry.Text = "Inventory"
-        Me.btn_invtry.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        '
-        'btn_prdt
-        '
-        Me.btn_prdt.Animated = True
-        Me.btn_prdt.BorderColor = System.Drawing.Color.Transparent
-        Me.btn_prdt.BorderRadius = 6
-        Me.btn_prdt.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_prdt.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_prdt.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_prdt.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_prdt.FillColor = System.Drawing.Color.Transparent
-        Me.btn_prdt.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_prdt.ForeColor = System.Drawing.Color.DarkGray
-        Me.btn_prdt.HoverState.FillColor = System.Drawing.Color.LightGray
-        Me.btn_prdt.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_prdt.Image = Global.Vb_POS.My.Resources.Resources.icons8_food_donor_50
-        Me.btn_prdt.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_prdt.ImageSize = New System.Drawing.Size(17, 17)
-        Me.btn_prdt.Location = New System.Drawing.Point(5, 306)
-        Me.btn_prdt.Name = "btn_prdt"
-        Me.btn_prdt.Size = New System.Drawing.Size(188, 42)
-        Me.btn_prdt.TabIndex = 3
-        Me.btn_prdt.Text = "Product"
-        Me.btn_prdt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        '
-        'btn_Point_Of_Sale
-        '
-        Me.btn_Point_Of_Sale.Animated = True
-        Me.btn_Point_Of_Sale.BorderColor = System.Drawing.Color.Transparent
-        Me.btn_Point_Of_Sale.BorderRadius = 6
-        Me.btn_Point_Of_Sale.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_Point_Of_Sale.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_Point_Of_Sale.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_Point_Of_Sale.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_Point_Of_Sale.FillColor = System.Drawing.Color.Transparent
-        Me.btn_Point_Of_Sale.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!)
-        Me.btn_Point_Of_Sale.ForeColor = System.Drawing.Color.DarkGray
-        Me.btn_Point_Of_Sale.HoverState.FillColor = System.Drawing.Color.LightGray
-        Me.btn_Point_Of_Sale.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_Point_Of_Sale.Image = Global.Vb_POS.My.Resources.Resources.icons8_cart_48
-        Me.btn_Point_Of_Sale.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_Point_Of_Sale.Location = New System.Drawing.Point(5, 258)
-        Me.btn_Point_Of_Sale.Name = "btn_Point_Of_Sale"
-        Me.btn_Point_Of_Sale.Size = New System.Drawing.Size(188, 42)
-        Me.btn_Point_Of_Sale.TabIndex = 2
-        Me.btn_Point_Of_Sale.Text = "Point of Sale"
-        Me.btn_Point_Of_Sale.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        '
-        'btn_DashBoard
-        '
-        Me.btn_DashBoard.Animated = True
-        Me.btn_DashBoard.BorderColor = System.Drawing.Color.Transparent
-        Me.btn_DashBoard.BorderRadius = 6
-        Me.btn_DashBoard.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_DashBoard.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_DashBoard.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_DashBoard.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_DashBoard.FillColor = System.Drawing.Color.Transparent
-        Me.btn_DashBoard.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_DashBoard.ForeColor = System.Drawing.Color.DarkGray
-        Me.btn_DashBoard.HoverState.FillColor = System.Drawing.Color.LightGray
-        Me.btn_DashBoard.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_DashBoard.Image = Global.Vb_POS.My.Resources.Resources.icons8_dashboard_48
-        Me.btn_DashBoard.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_DashBoard.Location = New System.Drawing.Point(5, 210)
-        Me.btn_DashBoard.Name = "btn_DashBoard"
-        Me.btn_DashBoard.Size = New System.Drawing.Size(188, 42)
-        Me.btn_DashBoard.TabIndex = 1
-        Me.btn_DashBoard.Text = "Dashboard"
-        Me.btn_DashBoard.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         '
         'Guna2HtmlLabel2
         '
@@ -398,7 +224,7 @@ Partial Class Cashier
         Me.Guna2Button1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.Guna2Button1.Location = New System.Drawing.Point(821, 47)
         Me.Guna2Button1.Name = "Guna2Button1"
-        Me.Guna2Button1.Size = New System.Drawing.Size(156, 43)
+        Me.Guna2Button1.Size = New System.Drawing.Size(156, 45)
         Me.Guna2Button1.TabIndex = 19
         Me.Guna2Button1.Text = "View Products"
         '
@@ -437,28 +263,28 @@ Partial Class Cashier
         '
         'dgv_Recent_Transactions
         '
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.White
-        Me.dgv_Recent_Transactions.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.White
+        Me.dgv_Recent_Transactions.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle17
         Me.dgv_Recent_Transactions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlDark
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_Recent_Transactions.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle18.BackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.ControlDark
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_Recent_Transactions.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle18
         Me.dgv_Recent_Transactions.ColumnHeadersHeight = 40
         Me.dgv_Recent_Transactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing
         Me.dgv_Recent_Transactions.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Transaction_ID_Columns, Me.Time_Columns, Me.Items_Ordered_Collums, Me.Total_Collumns, Me.Status_Collumns})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_Recent_Transactions.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle24.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle24.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle24.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_Recent_Transactions.DefaultCellStyle = DataGridViewCellStyle24
         Me.dgv_Recent_Transactions.GridColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.dgv_Recent_Transactions.Location = New System.Drawing.Point(35, 258)
         Me.dgv_Recent_Transactions.Name = "dgv_Recent_Transactions"
@@ -488,7 +314,7 @@ Partial Class Cashier
         Me.Guna2Button7.ForeColor = System.Drawing.Color.White
         Me.Guna2Button7.Location = New System.Drawing.Point(675, 47)
         Me.Guna2Button7.Name = "Guna2Button7"
-        Me.Guna2Button7.Size = New System.Drawing.Size(128, 43)
+        Me.Guna2Button7.Size = New System.Drawing.Size(140, 45)
         Me.Guna2Button7.TabIndex = 0
         Me.Guna2Button7.Text = "Go To POS"
         '
@@ -756,47 +582,330 @@ Partial Class Cashier
         '
         'Transaction_ID_Columns
         '
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Transaction_ID_Columns.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Transaction_ID_Columns.DefaultCellStyle = DataGridViewCellStyle19
         Me.Transaction_ID_Columns.HeaderText = "Transaction ID"
         Me.Transaction_ID_Columns.MinimumWidth = 6
         Me.Transaction_ID_Columns.Name = "Transaction_ID_Columns"
         '
         'Time_Columns
         '
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.DimGray
-        Me.Time_Columns.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle20.ForeColor = System.Drawing.Color.DimGray
+        Me.Time_Columns.DefaultCellStyle = DataGridViewCellStyle20
         Me.Time_Columns.HeaderText = "Time"
         Me.Time_Columns.MinimumWidth = 6
         Me.Time_Columns.Name = "Time_Columns"
         '
         'Items_Ordered_Collums
         '
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Items_Ordered_Collums.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle21.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle21.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Items_Ordered_Collums.DefaultCellStyle = DataGridViewCellStyle21
         Me.Items_Ordered_Collums.HeaderText = "Items Ordered"
         Me.Items_Ordered_Collums.MinimumWidth = 6
         Me.Items_Ordered_Collums.Name = "Items_Ordered_Collums"
         '
         'Total_Collumns
         '
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Total_Collumns.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle22.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle22.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Total_Collumns.DefaultCellStyle = DataGridViewCellStyle22
         Me.Total_Collumns.HeaderText = "Total"
         Me.Total_Collumns.MinimumWidth = 6
         Me.Total_Collumns.Name = "Total_Collumns"
         '
         'Status_Collumns
         '
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.DarkGoldenrod
-        Me.Status_Collumns.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle23.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle23.ForeColor = System.Drawing.Color.DarkGoldenrod
+        Me.Status_Collumns.DefaultCellStyle = DataGridViewCellStyle23
         Me.Status_Collumns.HeaderText = "Status"
         Me.Status_Collumns.MinimumWidth = 6
         Me.Status_Collumns.Name = "Status_Collumns"
+        '
+        'Guna2Button2
+        '
+        Me.Guna2Button2.Animated = True
+        Me.Guna2Button2.BorderColor = System.Drawing.Color.Transparent
+        Me.Guna2Button2.BorderRadius = 6
+        Me.Guna2Button2.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button2.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button2.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.Guna2Button2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.Guna2Button2.FillColor = System.Drawing.Color.Transparent
+        Me.Guna2Button2.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2Button2.ForeColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button2.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.Guna2Button2.HoverState.ForeColor = System.Drawing.Color.White
+        Me.Guna2Button2.Image = Global.Vb_POS.My.Resources.Resources.logout_icon
+        Me.Guna2Button2.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.Guna2Button2.ImageOffset = New System.Drawing.Point(-5, 0)
+        Me.Guna2Button2.ImageSize = New System.Drawing.Size(25, 25)
+        Me.Guna2Button2.Location = New System.Drawing.Point(6, 587)
+        Me.Guna2Button2.Name = "Guna2Button2"
+        Me.Guna2Button2.Size = New System.Drawing.Size(188, 42)
+        Me.Guna2Button2.TabIndex = 18
+        Me.Guna2Button2.Text = "Logout"
+        Me.Guna2Button2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.Guna2Button2.TextOffset = New System.Drawing.Point(-10, -1)
+        '
+        'Guna2Button3
+        '
+        Me.Guna2Button3.Animated = True
+        Me.Guna2Button3.BorderColor = System.Drawing.Color.Transparent
+        Me.Guna2Button3.BorderRadius = 6
+        Me.Guna2Button3.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button3.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button3.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.Guna2Button3.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.Guna2Button3.FillColor = System.Drawing.Color.Transparent
+        Me.Guna2Button3.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2Button3.ForeColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button3.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.Guna2Button3.HoverState.ForeColor = System.Drawing.Color.White
+        Me.Guna2Button3.Image = Global.Vb_POS.My.Resources.Resources.settings_
+        Me.Guna2Button3.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.Guna2Button3.ImageSize = New System.Drawing.Size(16, 16)
+        Me.Guna2Button3.Location = New System.Drawing.Point(5, 456)
+        Me.Guna2Button3.Name = "Guna2Button3"
+        Me.Guna2Button3.Size = New System.Drawing.Size(188, 42)
+        Me.Guna2Button3.TabIndex = 17
+        Me.Guna2Button3.Text = "Settings"
+        Me.Guna2Button3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.Guna2Button3.TextOffset = New System.Drawing.Point(-2, 0)
+        '
+        'Guna2Button4
+        '
+        Me.Guna2Button4.Animated = True
+        Me.Guna2Button4.BorderColor = System.Drawing.Color.Transparent
+        Me.Guna2Button4.BorderRadius = 6
+        Me.Guna2Button4.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button4.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button4.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.Guna2Button4.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.Guna2Button4.FillColor = System.Drawing.Color.Transparent
+        Me.Guna2Button4.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2Button4.ForeColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button4.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.Guna2Button4.HoverState.ForeColor = System.Drawing.Color.White
+        Me.Guna2Button4.Image = Global.Vb_POS.My.Resources.Resources.icons8_message_64
+        Me.Guna2Button4.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.Guna2Button4.Location = New System.Drawing.Point(5, 408)
+        Me.Guna2Button4.Name = "Guna2Button4"
+        Me.Guna2Button4.Size = New System.Drawing.Size(188, 42)
+        Me.Guna2Button4.TabIndex = 16
+        Me.Guna2Button4.Text = "Messages"
+        Me.Guna2Button4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.Guna2Button4.TextOffset = New System.Drawing.Point(-5, 0)
+        '
+        'Guna2Button6
+        '
+        Me.Guna2Button6.Animated = True
+        Me.Guna2Button6.BorderColor = System.Drawing.Color.Transparent
+        Me.Guna2Button6.BorderRadius = 6
+        Me.Guna2Button6.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button6.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button6.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.Guna2Button6.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.Guna2Button6.FillColor = System.Drawing.Color.Transparent
+        Me.Guna2Button6.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2Button6.ForeColor = System.Drawing.Color.DarkGray
+        Me.Guna2Button6.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.Guna2Button6.HoverState.ForeColor = System.Drawing.Color.White
+        Me.Guna2Button6.Image = Global.Vb_POS.My.Resources.Resources.icons8_employees_26
+        Me.Guna2Button6.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.Guna2Button6.Location = New System.Drawing.Point(5, 360)
+        Me.Guna2Button6.Name = "Guna2Button6"
+        Me.Guna2Button6.Size = New System.Drawing.Size(188, 42)
+        Me.Guna2Button6.TabIndex = 14
+        Me.Guna2Button6.Text = "Cashiers"
+        Me.Guna2Button6.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.Guna2Button6.TextOffset = New System.Drawing.Point(-3, 0)
+        '
+        'btn_hstry
+        '
+        Me.btn_hstry.Animated = True
+        Me.btn_hstry.BorderColor = System.Drawing.Color.Transparent
+        Me.btn_hstry.BorderRadius = 6
+        Me.btn_hstry.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_hstry.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_hstry.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_hstry.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_hstry.FillColor = System.Drawing.Color.Transparent
+        Me.btn_hstry.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_hstry.ForeColor = System.Drawing.Color.DarkGray
+        Me.btn_hstry.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.btn_hstry.HoverState.ForeColor = System.Drawing.Color.White
+        Me.btn_hstry.Image = Global.Vb_POS.My.Resources.Resources.icons8_clock_64
+        Me.btn_hstry.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_hstry.ImageOffset = New System.Drawing.Point(-5, 0)
+        Me.btn_hstry.ImageSize = New System.Drawing.Size(25, 25)
+        Me.btn_hstry.Location = New System.Drawing.Point(6, 312)
+        Me.btn_hstry.Name = "btn_hstry"
+        Me.btn_hstry.Size = New System.Drawing.Size(188, 42)
+        Me.btn_hstry.TabIndex = 11
+        Me.btn_hstry.Text = "History"
+        Me.btn_hstry.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_hstry.TextOffset = New System.Drawing.Point(-10, 0)
+        '
+        'Guna2ImageButton1
+        '
+        Me.Guna2ImageButton1.CheckedState.ImageSize = New System.Drawing.Size(64, 64)
+        Me.Guna2ImageButton1.HoverState.ImageSize = New System.Drawing.Size(64, 64)
+        Me.Guna2ImageButton1.Image = Global.Vb_POS.My.Resources.Resources.profile
+        Me.Guna2ImageButton1.ImageOffset = New System.Drawing.Point(0, 0)
+        Me.Guna2ImageButton1.ImageRotate = 0!
+        Me.Guna2ImageButton1.ImageSize = New System.Drawing.Size(30, 30)
+        Me.Guna2ImageButton1.Location = New System.Drawing.Point(9, 770)
+        Me.Guna2ImageButton1.Name = "Guna2ImageButton1"
+        Me.Guna2ImageButton1.PressedState.ImageSize = New System.Drawing.Size(64, 64)
+        Me.Guna2ImageButton1.Size = New System.Drawing.Size(39, 43)
+        Me.Guna2ImageButton1.TabIndex = 1
+        '
+        'btn_lgout
+        '
+        Me.btn_lgout.Animated = True
+        Me.btn_lgout.BorderColor = System.Drawing.Color.Transparent
+        Me.btn_lgout.BorderRadius = 6
+        Me.btn_lgout.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_lgout.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_lgout.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_lgout.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_lgout.FillColor = System.Drawing.Color.Transparent
+        Me.btn_lgout.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_lgout.ForeColor = System.Drawing.Color.DarkGray
+        Me.btn_lgout.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.btn_lgout.HoverState.ForeColor = System.Drawing.Color.White
+        Me.btn_lgout.Image = Global.Vb_POS.My.Resources.Resources.logout_icon
+        Me.btn_lgout.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_lgout.ImageSize = New System.Drawing.Size(15, 15)
+        Me.btn_lgout.Location = New System.Drawing.Point(5, 728)
+        Me.btn_lgout.Name = "btn_lgout"
+        Me.btn_lgout.Size = New System.Drawing.Size(217, 36)
+        Me.btn_lgout.TabIndex = 6
+        Me.btn_lgout.Text = "Sign out"
+        Me.btn_lgout.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'btn_sttngs
+        '
+        Me.btn_sttngs.Animated = True
+        Me.btn_sttngs.BorderColor = System.Drawing.Color.Transparent
+        Me.btn_sttngs.BorderRadius = 6
+        Me.btn_sttngs.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_sttngs.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_sttngs.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_sttngs.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_sttngs.FillColor = System.Drawing.Color.Transparent
+        Me.btn_sttngs.Font = New System.Drawing.Font("Segoe UI Variable Display", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_sttngs.ForeColor = System.Drawing.Color.DarkGray
+        Me.btn_sttngs.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.btn_sttngs.HoverState.ForeColor = System.Drawing.Color.White
+        Me.btn_sttngs.Image = Global.Vb_POS.My.Resources.Resources.settings_
+        Me.btn_sttngs.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_sttngs.ImageSize = New System.Drawing.Size(15, 15)
+        Me.btn_sttngs.Location = New System.Drawing.Point(5, 686)
+        Me.btn_sttngs.Name = "btn_sttngs"
+        Me.btn_sttngs.Size = New System.Drawing.Size(217, 36)
+        Me.btn_sttngs.TabIndex = 5
+        Me.btn_sttngs.Text = "Settings"
+        Me.btn_sttngs.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'btn_invtry
+        '
+        Me.btn_invtry.Animated = True
+        Me.btn_invtry.BorderColor = System.Drawing.Color.Transparent
+        Me.btn_invtry.BorderRadius = 6
+        Me.btn_invtry.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_invtry.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_invtry.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_invtry.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_invtry.FillColor = System.Drawing.Color.Transparent
+        Me.btn_invtry.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_invtry.ForeColor = System.Drawing.Color.DarkGray
+        Me.btn_invtry.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.btn_invtry.HoverState.ForeColor = System.Drawing.Color.White
+        Me.btn_invtry.Image = Global.Vb_POS.My.Resources.Resources.icons8_box_50
+        Me.btn_invtry.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_invtry.ImageSize = New System.Drawing.Size(16, 16)
+        Me.btn_invtry.Location = New System.Drawing.Point(5, 267)
+        Me.btn_invtry.Name = "btn_invtry"
+        Me.btn_invtry.Size = New System.Drawing.Size(188, 42)
+        Me.btn_invtry.TabIndex = 4
+        Me.btn_invtry.Text = "Inventory"
+        Me.btn_invtry.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'btn_prdt
+        '
+        Me.btn_prdt.Animated = True
+        Me.btn_prdt.BorderColor = System.Drawing.Color.Transparent
+        Me.btn_prdt.BorderRadius = 6
+        Me.btn_prdt.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_prdt.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_prdt.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_prdt.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_prdt.FillColor = System.Drawing.Color.Transparent
+        Me.btn_prdt.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_prdt.ForeColor = System.Drawing.Color.DarkGray
+        Me.btn_prdt.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.btn_prdt.HoverState.ForeColor = System.Drawing.Color.White
+        Me.btn_prdt.Image = Global.Vb_POS.My.Resources.Resources.icons8_food_donor_50
+        Me.btn_prdt.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_prdt.ImageSize = New System.Drawing.Size(17, 17)
+        Me.btn_prdt.Location = New System.Drawing.Point(5, 219)
+        Me.btn_prdt.Name = "btn_prdt"
+        Me.btn_prdt.Size = New System.Drawing.Size(188, 42)
+        Me.btn_prdt.TabIndex = 3
+        Me.btn_prdt.Text = "Product"
+        Me.btn_prdt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        '
+        'btn_Point_Of_Sale
+        '
+        Me.btn_Point_Of_Sale.Animated = True
+        Me.btn_Point_Of_Sale.BorderColor = System.Drawing.Color.Transparent
+        Me.btn_Point_Of_Sale.BorderRadius = 6
+        Me.btn_Point_Of_Sale.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_Point_Of_Sale.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_Point_Of_Sale.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_Point_Of_Sale.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_Point_Of_Sale.FillColor = System.Drawing.Color.Transparent
+        Me.btn_Point_Of_Sale.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Point_Of_Sale.ForeColor = System.Drawing.Color.DarkGray
+        Me.btn_Point_Of_Sale.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.btn_Point_Of_Sale.HoverState.ForeColor = System.Drawing.Color.White
+        Me.btn_Point_Of_Sale.Image = Global.Vb_POS.My.Resources.Resources.icons8_cart_48
+        Me.btn_Point_Of_Sale.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_Point_Of_Sale.Location = New System.Drawing.Point(5, 171)
+        Me.btn_Point_Of_Sale.Name = "btn_Point_Of_Sale"
+        Me.btn_Point_Of_Sale.Size = New System.Drawing.Size(188, 42)
+        Me.btn_Point_Of_Sale.TabIndex = 2
+        Me.btn_Point_Of_Sale.Text = "Point of Sale"
+        Me.btn_Point_Of_Sale.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_Point_Of_Sale.TextOffset = New System.Drawing.Point(-2, 0)
+        '
+        'btn_DashBoard
+        '
+        Me.btn_DashBoard.Animated = True
+        Me.btn_DashBoard.BorderColor = System.Drawing.Color.Transparent
+        Me.btn_DashBoard.BorderRadius = 6
+        Me.btn_DashBoard.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_DashBoard.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_DashBoard.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_DashBoard.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_DashBoard.FillColor = System.Drawing.Color.Transparent
+        Me.btn_DashBoard.Font = New System.Drawing.Font("Segoe UI Variable Display", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_DashBoard.ForeColor = System.Drawing.Color.DarkGray
+        Me.btn_DashBoard.HoverState.FillColor = System.Drawing.Color.LightGray
+        Me.btn_DashBoard.HoverState.ForeColor = System.Drawing.Color.White
+        Me.btn_DashBoard.Image = Global.Vb_POS.My.Resources.Resources.icons8_dashboard_48
+        Me.btn_DashBoard.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_DashBoard.Location = New System.Drawing.Point(5, 123)
+        Me.btn_DashBoard.Name = "btn_DashBoard"
+        Me.btn_DashBoard.Size = New System.Drawing.Size(188, 42)
+        Me.btn_DashBoard.TabIndex = 1
+        Me.btn_DashBoard.Text = "Dashboard"
+        Me.btn_DashBoard.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btn_DashBoard.TextOffset = New System.Drawing.Point(-2, 0)
         '
         'Cashier
         '
@@ -880,4 +989,8 @@ Partial Class Cashier
     Friend WithEvents Items_Ordered_Collums As DataGridViewTextBoxColumn
     Friend WithEvents Total_Collumns As DataGridViewTextBoxColumn
     Friend WithEvents Status_Collumns As DataGridViewTextBoxColumn
+    Friend WithEvents Guna2Button2 As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Guna2Button3 As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Guna2Button4 As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Guna2Button6 As Guna.UI2.WinForms.Guna2Button
 End Class
