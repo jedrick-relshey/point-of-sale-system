@@ -40,7 +40,7 @@ Public Class Cashier
 
     End Sub
 
-    Private Sub dshbrd_Pnl_Paint(sender As Object, e As PaintEventArgs) Handles dshbrd_Pnl.Paint
+    Private Sub Guna2Panel8_Paint(sender As Object, e As PaintEventArgs) Handles Guna2Panel8.Paint
 
     End Sub
 End Class
