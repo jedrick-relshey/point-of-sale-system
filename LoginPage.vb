@@ -34,7 +34,7 @@ Public Class LoginPage
 
     End Sub
 
-    Private Sub chk_shw_psswrd_CheckedChanged(sender As Object, e As EventArgs) Handles chk_shw_psswrd.CheckedChanged
+    Private Sub chk_shw_psswrd_CheckedChanged(sender As Object, e As EventArgs)
 
     End Sub
 
