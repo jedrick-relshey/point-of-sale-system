@@ -256,9 +256,9 @@ Partial Class Admin
         Me.Guna2HtmlLabel2.Location = New System.Drawing.Point(16, 37)
         Me.Guna2HtmlLabel2.Margin = New System.Windows.Forms.Padding(4)
         Me.Guna2HtmlLabel2.Name = "Guna2HtmlLabel2"
-        Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(211, 32)
+        Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(197, 32)
         Me.Guna2HtmlLabel2.TabIndex = 10
-        Me.Guna2HtmlLabel2.Text = "Forest Roast Cafe"
+        Me.Guna2HtmlLabel2.Text = "BrewHaven Cafe"
         '
         'Label2
         '

@@ -29,7 +29,18 @@ Public Class LoginPage
                         MessageBox.Show("Please enter your username and password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End If
                 Case "admin"
-                    ' Admin login logic here"
+                    If Not (txtUser.Text = "" Or txtPass.Text = "") Then
+                        If txtUser.Text = "admin" And txtPass.Text = "adminpass" Then
+                            MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            Dim admin As New Admin()
+                            admin.Show()
+                            Me.Hide()
+                        Else
+                            MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+                    Else
+                        MessageBox.Show("Please enter your username and password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
             End Select
         Else
             MessageBox.Show("Please select a login role.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
