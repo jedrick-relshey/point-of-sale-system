@@ -13,16 +13,27 @@ Public Class LoginPage
             ElseIf rbAdmin.Checked Then
                 userType = "admin"
             End If
+
+            Select Case userType
+                Case "cashier"
+                    If Not (txtUser.Text = "" Or txtPass.Text = "") Then
+                        If txtUser.Text = "cashier" And txtPass.Text = "cashierpass" Then
+                            MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            Dim cashier As New Cashier()
+                            cashier.Show()
+                            Me.Hide()
+                        Else
+                            MessageBox.Show("Invalid username or password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+                    Else
+                        MessageBox.Show("Please enter your username and password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Case "admin"
+                    ' Admin login logic here"
+            End Select
         Else
             MessageBox.Show("Please select a login role.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
-
-        Select Case userType
-            Case "cashier"
-                ' Cashier login logic here"
-            Case "admin"
-                ' Admin login logic here"
-        End Select
 
     End Sub
 
@@ -36,83 +47,13 @@ Public Class LoginPage
 
     End Sub
 
-    Private Sub Guna2RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles rbAdmin.CheckedChanged
-
-    End Sub
-
-    Private Sub Guna2ContextMenuStrip1_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Guna2ContextMenuStrip1.Opening
-
-    End Sub
-
-    Private Sub Label6_Click(sender As Object, e As EventArgs) Handles Label6.Click
-
-    End Sub
-
-    Private Sub Label7_Click(sender As Object, e As EventArgs) Handles Label7.Click
-
-    End Sub
-
-    Private Sub chk_shw_psswrd_CheckedChanged(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub lblError_Login_Click(sender As Object, e As EventArgs) Handles lblValidation.Click
-
-    End Sub
-
-    Private Sub Label10_Click(sender As Object, e As EventArgs) Handles Label10.Click
-
-    End Sub
-
-    Private Sub Label9_Click(sender As Object, e As EventArgs) Handles Label9.Click
-
-    End Sub
-
-    Private Sub Label8_Click(sender As Object, e As EventArgs) Handles Label8.Click
-
-    End Sub
-
-    Private Sub loginPanel_Paint(sender As Object, e As PaintEventArgs) Handles loginPanel.Paint
-
-    End Sub
-
-    Private Sub Guna2RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles rbCashier.CheckedChanged
-
-    End Sub
-
-    Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
-
-    End Sub
-
-    Private Sub txt_Username_Login_TextChanged(sender As Object, e As EventArgs) Handles txtUser.TextChanged
-
-    End Sub
-
-    Private Sub txt_Password_Login_TextChanged(sender As Object, e As EventArgs) Handles txtPass.TextChanged
-
-    End Sub
-
-    Private Sub Guna2Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Guna2Panel1.Paint
-
-    End Sub
-
-    Private Sub Guna2Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Guna2Panel2.Paint
-
-    End Sub
-
-    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
-
-    End Sub
-
-    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
-
-    End Sub
-
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
-    End Sub
-
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-
+    Private Sub cbShowHidePass_CheckedChanged(sender As Object, e As EventArgs) Handles cbShowHidePass.CheckedChanged
+        If cbShowHidePass.Checked Then
+            txtPass.PasswordChar = ""
+            cbShowHidePass.Text = "Hide Password"
+        Else
+            txtPass.PasswordChar = "*"
+            cbShowHidePass.Text = "Show Password"
+        End If
     End Sub
 End Class
