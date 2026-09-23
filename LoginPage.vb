@@ -1,10 +1,28 @@
 ﻿Imports System.Drawing.Drawing2D
 
 Public Class LoginPage
-    Private Sub btn_Login_Click(sender As Object, e As EventArgs) Handles btn_Login.Click
+    Private Sub btn_Login_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
 
-        Dim username As String = txt_Username_Login.Text
-        Dim password As String = txt_Password_Login.Text
+        Dim username As String = txtUser.Text
+        Dim password As String = txtPass.Text
+        Dim userType As String = ""
+
+        If (rbCashier.Checked Or rbAdmin.Checked) Then
+            If rbCashier.Checked Then
+                userType = "cashier"
+            ElseIf rbAdmin.Checked Then
+                userType = "admin"
+            End If
+        Else
+            MessageBox.Show("Please select a login role.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+        Select Case userType
+            Case "cashier"
+                ' Cashier login logic here"
+            Case "admin"
+                ' Admin login logic here"
+        End Select
 
     End Sub
 
@@ -18,7 +36,7 @@ Public Class LoginPage
 
     End Sub
 
-    Private Sub Guna2RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles Guna2RadioButton2.CheckedChanged
+    Private Sub Guna2RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles rbAdmin.CheckedChanged
 
     End Sub
 
@@ -38,7 +56,7 @@ Public Class LoginPage
 
     End Sub
 
-    Private Sub lblError_Login_Click(sender As Object, e As EventArgs) Handles lblError_Login.Click
+    Private Sub lblError_Login_Click(sender As Object, e As EventArgs) Handles lblValidation.Click
 
     End Sub
 
@@ -58,7 +76,7 @@ Public Class LoginPage
 
     End Sub
 
-    Private Sub Guna2RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles Guna2RadioButton1.CheckedChanged
+    Private Sub Guna2RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles rbCashier.CheckedChanged
 
     End Sub
 
@@ -66,11 +84,11 @@ Public Class LoginPage
 
     End Sub
 
-    Private Sub txt_Username_Login_TextChanged(sender As Object, e As EventArgs) Handles txt_Username_Login.TextChanged
+    Private Sub txt_Username_Login_TextChanged(sender As Object, e As EventArgs) Handles txtUser.TextChanged
 
     End Sub
 
-    Private Sub txt_Password_Login_TextChanged(sender As Object, e As EventArgs) Handles txt_Password_Login.TextChanged
+    Private Sub txt_Password_Login_TextChanged(sender As Object, e As EventArgs) Handles txtPass.TextChanged
 
     End Sub
 
