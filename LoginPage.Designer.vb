@@ -373,6 +373,7 @@ Partial Class LoginPage
         Me.txt_Password_Login.Location = New System.Drawing.Point(508, 321)
         Me.txt_Password_Login.Margin = New System.Windows.Forms.Padding(5)
         Me.txt_Password_Login.Name = "txt_Password_Login"
+        Me.txt_Password_Login.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txt_Password_Login.PlaceholderForeColor = System.Drawing.Color.DimGray
         Me.txt_Password_Login.PlaceholderText = "Enter your Password"
         Me.txt_Password_Login.SelectedText = ""
