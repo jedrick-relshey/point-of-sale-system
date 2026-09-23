@@ -250,5 +250,14 @@
   <ItemGroup>
     <None Include="Resources\icons8-clock-64.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lock-icon-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pfp-icon-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lock-icon-removebg-preview1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
