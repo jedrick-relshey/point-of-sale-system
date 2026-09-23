@@ -51,4 +51,8 @@ Public Class Cashier
     Private Sub Guna2Button1_Click(sender As Object, e As EventArgs) Handles Guna2Button1.Click
 
     End Sub
+
+    Private Sub Guna2Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Guna2Panel2.Paint
+
+    End Sub
 End Class
