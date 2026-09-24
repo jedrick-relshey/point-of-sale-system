@@ -432,6 +432,7 @@ Partial Class Admin
         Me.Controls.Add(Me.dshbrd_Pnl)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Admin"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Admin"
         Me.dshbrd_Pnl.ResumeLayout(False)
         Me.dshbrd_Pnl.PerformLayout()
