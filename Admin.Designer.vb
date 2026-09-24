@@ -264,7 +264,7 @@ Partial Class Admin
         Me.Guna2HtmlLabel2.Location = New System.Drawing.Point(16, 37)
         Me.Guna2HtmlLabel2.Margin = New System.Windows.Forms.Padding(4)
         Me.Guna2HtmlLabel2.Name = "Guna2HtmlLabel2"
-        Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(196, 30)
+        Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(196, 29)
         Me.Guna2HtmlLabel2.TabIndex = 10
         Me.Guna2HtmlLabel2.Text = "BrewHaven Cafe"
         '
@@ -467,7 +467,7 @@ Partial Class Admin
         Me.Guna2Panel1.ShadowDecoration.Color = System.Drawing.Color.Gray
         Me.Guna2Panel1.ShadowDecoration.Enabled = True
         Me.Guna2Panel1.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 5, 5)
-        Me.Guna2Panel1.Size = New System.Drawing.Size(274, 156)
+        Me.Guna2Panel1.Size = New System.Drawing.Size(307, 156)
         Me.Guna2Panel1.TabIndex = 4
         '
         'Guna2Panel2
@@ -477,13 +477,13 @@ Partial Class Admin
         Me.Guna2Panel2.BorderRadius = 20
         Me.Guna2Panel2.BorderThickness = 1
         Me.Guna2Panel2.FillColor = System.Drawing.SystemColors.MenuBar
-        Me.Guna2Panel2.Location = New System.Drawing.Point(612, 129)
+        Me.Guna2Panel2.Location = New System.Drawing.Point(627, 129)
         Me.Guna2Panel2.Name = "Guna2Panel2"
         Me.Guna2Panel2.ShadowDecoration.BorderRadius = 20
         Me.Guna2Panel2.ShadowDecoration.Color = System.Drawing.Color.Gray
         Me.Guna2Panel2.ShadowDecoration.Enabled = True
         Me.Guna2Panel2.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 5, 5)
-        Me.Guna2Panel2.Size = New System.Drawing.Size(274, 156)
+        Me.Guna2Panel2.Size = New System.Drawing.Size(307, 156)
         Me.Guna2Panel2.TabIndex = 5
         '
         'Guna2Panel3
@@ -493,13 +493,13 @@ Partial Class Admin
         Me.Guna2Panel3.BorderRadius = 20
         Me.Guna2Panel3.BorderThickness = 1
         Me.Guna2Panel3.FillColor = System.Drawing.SystemColors.MenuBar
-        Me.Guna2Panel3.Location = New System.Drawing.Point(1231, 129)
+        Me.Guna2Panel3.Location = New System.Drawing.Point(1275, 129)
         Me.Guna2Panel3.Name = "Guna2Panel3"
         Me.Guna2Panel3.ShadowDecoration.BorderRadius = 20
         Me.Guna2Panel3.ShadowDecoration.Color = System.Drawing.Color.Gray
         Me.Guna2Panel3.ShadowDecoration.Enabled = True
         Me.Guna2Panel3.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 5, 5)
-        Me.Guna2Panel3.Size = New System.Drawing.Size(274, 156)
+        Me.Guna2Panel3.Size = New System.Drawing.Size(307, 156)
         Me.Guna2Panel3.TabIndex = 7
         '
         'Guna2Panel4
@@ -509,13 +509,13 @@ Partial Class Admin
         Me.Guna2Panel4.BorderRadius = 20
         Me.Guna2Panel4.BorderThickness = 1
         Me.Guna2Panel4.FillColor = System.Drawing.SystemColors.MenuBar
-        Me.Guna2Panel4.Location = New System.Drawing.Point(917, 129)
+        Me.Guna2Panel4.Location = New System.Drawing.Point(950, 129)
         Me.Guna2Panel4.Name = "Guna2Panel4"
         Me.Guna2Panel4.ShadowDecoration.BorderRadius = 20
         Me.Guna2Panel4.ShadowDecoration.Color = System.Drawing.Color.Gray
         Me.Guna2Panel4.ShadowDecoration.Enabled = True
         Me.Guna2Panel4.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 5, 5)
-        Me.Guna2Panel4.Size = New System.Drawing.Size(274, 156)
+        Me.Guna2Panel4.Size = New System.Drawing.Size(307, 156)
         Me.Guna2Panel4.TabIndex = 6
         '
         'Admin
