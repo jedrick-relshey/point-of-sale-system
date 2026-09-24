@@ -212,12 +212,12 @@ Partial Class Admin
         'Guna2HtmlLabel7
         '
         Me.Guna2HtmlLabel7.BackColor = System.Drawing.Color.Transparent
-        Me.Guna2HtmlLabel7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2HtmlLabel7.Font = New System.Drawing.Font("Verdana", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel7.ForeColor = System.Drawing.SystemColors.ActiveBorder
-        Me.Guna2HtmlLabel7.Location = New System.Drawing.Point(16, 78)
+        Me.Guna2HtmlLabel7.Location = New System.Drawing.Point(16, 72)
         Me.Guna2HtmlLabel7.Margin = New System.Windows.Forms.Padding(4)
         Me.Guna2HtmlLabel7.Name = "Guna2HtmlLabel7"
-        Me.Guna2HtmlLabel7.Size = New System.Drawing.Size(46, 19)
+        Me.Guna2HtmlLabel7.Size = New System.Drawing.Size(46, 18)
         Me.Guna2HtmlLabel7.TabIndex = 12
         Me.Guna2HtmlLabel7.Text = "ADMIN"
         '
@@ -250,13 +250,15 @@ Partial Class Admin
         '
         'Guna2HtmlLabel2
         '
+        Me.Guna2HtmlLabel2.AutoSize = False
+        Me.Guna2HtmlLabel2.AutoSizeHeightOnly = True
         Me.Guna2HtmlLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.Guna2HtmlLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2HtmlLabel2.Font = New System.Drawing.Font("Verdana", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel2.ForeColor = System.Drawing.SystemColors.ButtonFace
         Me.Guna2HtmlLabel2.Location = New System.Drawing.Point(16, 37)
         Me.Guna2HtmlLabel2.Margin = New System.Windows.Forms.Padding(4)
         Me.Guna2HtmlLabel2.Name = "Guna2HtmlLabel2"
-        Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(197, 32)
+        Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(196, 30)
         Me.Guna2HtmlLabel2.TabIndex = 10
         Me.Guna2HtmlLabel2.Text = "BrewHaven Cafe"
         '
@@ -432,6 +434,7 @@ Partial Class Admin
         Me.Controls.Add(Me.dshbrd_Pnl)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Admin"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Admin"
         Me.dshbrd_Pnl.ResumeLayout(False)
         Me.dshbrd_Pnl.PerformLayout()

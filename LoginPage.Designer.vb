@@ -33,18 +33,18 @@ Partial Class LoginPage
         Me.Guna2AnimateWindow1 = New Guna.UI2.WinForms.Guna2AnimateWindow(Me.components)
         Me.loginPanel = New Guna.UI2.WinForms.Guna2Panel()
         Me.cbShowHidePass = New Guna.UI2.WinForms.Guna2CheckBox()
-        Me.rbAdmin = New Guna.UI2.WinForms.Guna2RadioButton()
-        Me.rbCashier = New Guna.UI2.WinForms.Guna2RadioButton()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.btnLogin = New Guna.UI2.WinForms.Guna2GradientButton()
-        Me.txtUser = New Guna.UI2.WinForms.Guna2TextBox()
-        Me.txtPass = New Guna.UI2.WinForms.Guna2TextBox()
         Me.Guna2Panel1 = New Guna.UI2.WinForms.Guna2Panel()
         Me.Guna2Panel2 = New Guna.UI2.WinForms.Guna2Panel()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.rbAdmin = New Guna.UI2.WinForms.Guna2RadioButton()
+        Me.rbCashier = New Guna.UI2.WinForms.Guna2RadioButton()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.btnLogin = New Guna.UI2.WinForms.Guna2GradientButton()
+        Me.txtUser = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.txtPass = New Guna.UI2.WinForms.Guna2TextBox()
         Me.loginPanel.SuspendLayout()
         Me.Guna2Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -152,7 +152,7 @@ Partial Class LoginPage
         Me.loginPanel.Controls.Add(Me.Label8)
         Me.loginPanel.FillColor = System.Drawing.Color.White
         Me.loginPanel.Location = New System.Drawing.Point(87, 52)
-        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.loginPanel.Name = "loginPanel"
         Me.loginPanel.ShadowDecoration.BorderRadius = 40
         Me.loginPanel.ShadowDecoration.Color = System.Drawing.Color.Gray
@@ -180,138 +180,6 @@ Partial Class LoginPage
         Me.cbShowHidePass.UncheckedState.BorderRadius = 0
         Me.cbShowHidePass.UncheckedState.BorderThickness = 0
         Me.cbShowHidePass.UncheckedState.FillColor = System.Drawing.Color.Transparent
-        '
-        'rbAdmin
-        '
-        Me.rbAdmin.AutoSize = True
-        Me.rbAdmin.CheckedState.BorderColor = System.Drawing.Color.Black
-        Me.rbAdmin.CheckedState.BorderThickness = 1
-        Me.rbAdmin.CheckedState.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.rbAdmin.CheckedState.InnerColor = System.Drawing.Color.White
-        Me.rbAdmin.CheckedState.InnerOffset = -4
-        Me.rbAdmin.Font = New System.Drawing.Font("Verdana", 7.8!)
-        Me.rbAdmin.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.rbAdmin.Location = New System.Drawing.Point(613, 462)
-        Me.rbAdmin.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.rbAdmin.Name = "rbAdmin"
-        Me.rbAdmin.Size = New System.Drawing.Size(115, 20)
-        Me.rbAdmin.TabIndex = 23
-        Me.rbAdmin.Text = "Administrator"
-        Me.rbAdmin.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.rbAdmin.UncheckedState.BorderThickness = 1
-        Me.rbAdmin.UncheckedState.FillColor = System.Drawing.Color.Transparent
-        Me.rbAdmin.UncheckedState.InnerColor = System.Drawing.Color.Transparent
-        '
-        'rbCashier
-        '
-        Me.rbCashier.AutoSize = True
-        Me.rbCashier.CheckedState.BorderColor = System.Drawing.Color.Black
-        Me.rbCashier.CheckedState.BorderThickness = 1
-        Me.rbCashier.CheckedState.FillColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(55, Byte), Integer))
-        Me.rbCashier.CheckedState.InnerColor = System.Drawing.Color.White
-        Me.rbCashier.CheckedState.InnerOffset = -4
-        Me.rbCashier.Font = New System.Drawing.Font("Verdana", 7.8!)
-        Me.rbCashier.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.rbCashier.Location = New System.Drawing.Point(509, 462)
-        Me.rbCashier.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.rbCashier.Name = "rbCashier"
-        Me.rbCashier.Size = New System.Drawing.Size(76, 20)
-        Me.rbCashier.TabIndex = 22
-        Me.rbCashier.Text = "Cashier"
-        Me.rbCashier.UncheckedState.BorderColor = System.Drawing.Color.Black
-        Me.rbCashier.UncheckedState.BorderThickness = 1
-        Me.rbCashier.UncheckedState.FillColor = System.Drawing.Color.Transparent
-        Me.rbCashier.UncheckedState.InnerColor = System.Drawing.Color.Transparent
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.Font = New System.Drawing.Font("Verdana", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.Label4.Location = New System.Drawing.Point(509, 433)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(81, 16)
-        Me.Label4.TabIndex = 21
-        Me.Label4.Text = "Login Role"
-        '
-        'btnLogin
-        '
-        Me.btnLogin.Animated = True
-        Me.btnLogin.BackColor = System.Drawing.Color.Transparent
-        Me.btnLogin.BorderRadius = 12
-        Me.btnLogin.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btnLogin.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btnLogin.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btnLogin.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btnLogin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btnLogin.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.btnLogin.FillColor2 = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(99, Byte), Integer))
-        Me.btnLogin.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.btnLogin.ForeColor = System.Drawing.Color.White
-        Me.btnLogin.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
-        Me.btnLogin.Location = New System.Drawing.Point(505, 508)
-        Me.btnLogin.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.btnLogin.Name = "btnLogin"
-        Me.btnLogin.Size = New System.Drawing.Size(328, 50)
-        Me.btnLogin.TabIndex = 10
-        Me.btnLogin.Text = "LOGIN"
-        '
-        'txtUser
-        '
-        Me.txtUser.Animated = True
-        Me.txtUser.BackColor = System.Drawing.Color.Transparent
-        Me.txtUser.BorderColor = System.Drawing.Color.Gainsboro
-        Me.txtUser.BorderRadius = 10
-        Me.txtUser.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.txtUser.DefaultText = ""
-        Me.txtUser.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.txtUser.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
-        Me.txtUser.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txtUser.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txtUser.FillColor = System.Drawing.Color.WhiteSmoke
-        Me.txtUser.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txtUser.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtUser.ForeColor = System.Drawing.Color.Gray
-        Me.txtUser.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txtUser.IconLeft = Global.Vb_POS.My.Resources.Resources.pfp_icon_removebg_preview
-        Me.txtUser.Location = New System.Drawing.Point(508, 225)
-        Me.txtUser.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
-        Me.txtUser.Name = "txtUser"
-        Me.txtUser.PlaceholderForeColor = System.Drawing.Color.DimGray
-        Me.txtUser.PlaceholderText = "Enter your Username"
-        Me.txtUser.SelectedText = ""
-        Me.txtUser.Size = New System.Drawing.Size(328, 50)
-        Me.txtUser.TabIndex = 9
-        '
-        'txtPass
-        '
-        Me.txtPass.Animated = True
-        Me.txtPass.BackColor = System.Drawing.Color.Transparent
-        Me.txtPass.BorderColor = System.Drawing.Color.Gainsboro
-        Me.txtPass.BorderRadius = 10
-        Me.txtPass.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.txtPass.DefaultText = ""
-        Me.txtPass.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.txtPass.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
-        Me.txtPass.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txtPass.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txtPass.FillColor = System.Drawing.Color.WhiteSmoke
-        Me.txtPass.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txtPass.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPass.ForeColor = System.Drawing.Color.Gray
-        Me.txtPass.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txtPass.IconLeft = Global.Vb_POS.My.Resources.Resources.lock_icon_removebg_preview1
-        Me.txtPass.Location = New System.Drawing.Point(508, 321)
-        Me.txtPass.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
-        Me.txtPass.Name = "txtPass"
-        Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPass.PlaceholderForeColor = System.Drawing.Color.DimGray
-        Me.txtPass.PlaceholderText = "Enter your Password"
-        Me.txtPass.SelectedText = ""
-        Me.txtPass.Size = New System.Drawing.Size(328, 50)
-        Me.txtPass.TabIndex = 11
         '
         'Guna2Panel1
         '
@@ -385,6 +253,138 @@ Partial Class LoginPage
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
+        'rbAdmin
+        '
+        Me.rbAdmin.AutoSize = True
+        Me.rbAdmin.CheckedState.BorderColor = System.Drawing.Color.Black
+        Me.rbAdmin.CheckedState.BorderThickness = 1
+        Me.rbAdmin.CheckedState.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.rbAdmin.CheckedState.InnerColor = System.Drawing.Color.White
+        Me.rbAdmin.CheckedState.InnerOffset = -4
+        Me.rbAdmin.Font = New System.Drawing.Font("Verdana", 7.8!)
+        Me.rbAdmin.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.rbAdmin.Location = New System.Drawing.Point(613, 462)
+        Me.rbAdmin.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.rbAdmin.Name = "rbAdmin"
+        Me.rbAdmin.Size = New System.Drawing.Size(115, 20)
+        Me.rbAdmin.TabIndex = 23
+        Me.rbAdmin.Text = "Administrator"
+        Me.rbAdmin.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.rbAdmin.UncheckedState.BorderThickness = 1
+        Me.rbAdmin.UncheckedState.FillColor = System.Drawing.Color.Transparent
+        Me.rbAdmin.UncheckedState.InnerColor = System.Drawing.Color.Transparent
+        '
+        'rbCashier
+        '
+        Me.rbCashier.AutoSize = True
+        Me.rbCashier.CheckedState.BorderColor = System.Drawing.Color.Black
+        Me.rbCashier.CheckedState.BorderThickness = 1
+        Me.rbCashier.CheckedState.FillColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(55, Byte), Integer))
+        Me.rbCashier.CheckedState.InnerColor = System.Drawing.Color.White
+        Me.rbCashier.CheckedState.InnerOffset = -4
+        Me.rbCashier.Font = New System.Drawing.Font("Verdana", 7.8!)
+        Me.rbCashier.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.rbCashier.Location = New System.Drawing.Point(509, 462)
+        Me.rbCashier.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.rbCashier.Name = "rbCashier"
+        Me.rbCashier.Size = New System.Drawing.Size(76, 20)
+        Me.rbCashier.TabIndex = 22
+        Me.rbCashier.Text = "Cashier"
+        Me.rbCashier.UncheckedState.BorderColor = System.Drawing.Color.Black
+        Me.rbCashier.UncheckedState.BorderThickness = 1
+        Me.rbCashier.UncheckedState.FillColor = System.Drawing.Color.Transparent
+        Me.rbCashier.UncheckedState.InnerColor = System.Drawing.Color.Transparent
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.Font = New System.Drawing.Font("Verdana", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.Label4.Location = New System.Drawing.Point(509, 433)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(81, 16)
+        Me.Label4.TabIndex = 21
+        Me.Label4.Text = "Login Role"
+        '
+        'btnLogin
+        '
+        Me.btnLogin.Animated = True
+        Me.btnLogin.BackColor = System.Drawing.Color.Transparent
+        Me.btnLogin.BorderRadius = 12
+        Me.btnLogin.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btnLogin.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btnLogin.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btnLogin.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btnLogin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btnLogin.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.btnLogin.FillColor2 = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(110, Byte), Integer), CType(CType(99, Byte), Integer))
+        Me.btnLogin.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.btnLogin.ForeColor = System.Drawing.Color.White
+        Me.btnLogin.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
+        Me.btnLogin.Location = New System.Drawing.Point(505, 508)
+        Me.btnLogin.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnLogin.Name = "btnLogin"
+        Me.btnLogin.Size = New System.Drawing.Size(328, 50)
+        Me.btnLogin.TabIndex = 10
+        Me.btnLogin.Text = "LOGIN"
+        '
+        'txtUser
+        '
+        Me.txtUser.Animated = True
+        Me.txtUser.BackColor = System.Drawing.Color.Transparent
+        Me.txtUser.BorderColor = System.Drawing.Color.Gainsboro
+        Me.txtUser.BorderRadius = 10
+        Me.txtUser.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.txtUser.DefaultText = ""
+        Me.txtUser.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.txtUser.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
+        Me.txtUser.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.txtUser.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.txtUser.FillColor = System.Drawing.Color.WhiteSmoke
+        Me.txtUser.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.txtUser.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtUser.ForeColor = System.Drawing.Color.Gray
+        Me.txtUser.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.txtUser.IconLeft = Global.Vb_POS.My.Resources.Resources.pfp_icon_removebg_preview
+        Me.txtUser.Location = New System.Drawing.Point(508, 225)
+        Me.txtUser.Margin = New System.Windows.Forms.Padding(5)
+        Me.txtUser.Name = "txtUser"
+        Me.txtUser.PlaceholderForeColor = System.Drawing.Color.DimGray
+        Me.txtUser.PlaceholderText = "Enter your Username"
+        Me.txtUser.SelectedText = ""
+        Me.txtUser.Size = New System.Drawing.Size(328, 50)
+        Me.txtUser.TabIndex = 9
+        '
+        'txtPass
+        '
+        Me.txtPass.Animated = True
+        Me.txtPass.BackColor = System.Drawing.Color.Transparent
+        Me.txtPass.BorderColor = System.Drawing.Color.Gainsboro
+        Me.txtPass.BorderRadius = 10
+        Me.txtPass.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.txtPass.DefaultText = ""
+        Me.txtPass.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.txtPass.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
+        Me.txtPass.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.txtPass.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.txtPass.FillColor = System.Drawing.Color.WhiteSmoke
+        Me.txtPass.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.txtPass.Font = New System.Drawing.Font("Segoe UI", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPass.ForeColor = System.Drawing.Color.Gray
+        Me.txtPass.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.txtPass.IconLeft = Global.Vb_POS.My.Resources.Resources.lock_icon_removebg_preview1
+        Me.txtPass.Location = New System.Drawing.Point(508, 321)
+        Me.txtPass.Margin = New System.Windows.Forms.Padding(5)
+        Me.txtPass.Name = "txtPass"
+        Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txtPass.PlaceholderForeColor = System.Drawing.Color.DimGray
+        Me.txtPass.PlaceholderText = "Enter your Password"
+        Me.txtPass.SelectedText = ""
+        Me.txtPass.Size = New System.Drawing.Size(328, 50)
+        Me.txtPass.TabIndex = 11
+        '
         'LoginPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -394,7 +394,7 @@ Partial Class LoginPage
         Me.ClientSize = New System.Drawing.Size(1082, 753)
         Me.Controls.Add(Me.loginPanel)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "LoginPage"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Login"
