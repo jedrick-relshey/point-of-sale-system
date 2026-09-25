@@ -3,7 +3,7 @@ Public Class Cashier
 
     Private Sub HideAllPanels()
 
-        dashbrd_pnl.Visible = False
+        main_pnl.Visible = False
 
     End Sub
 
@@ -20,7 +20,7 @@ Public Class Cashier
     Private Sub btn_DashBoard_Click(sender As Object, e As EventArgs) Handles btn_DashBoard.Click
 
         HideAllPanels()
-        dashbrd_pnl.Visible = True
+        main_pnl.Visible = True
 
         ResetButtonColors()
 
@@ -54,5 +54,9 @@ Public Class Cashier
         Else
             MessageBox.Show("Logout canceled.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+    End Sub
+
+    Private Sub dgv_Recent_Transactions_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_Recent_Transactions.CellContentClick
+
     End Sub
 End Class
