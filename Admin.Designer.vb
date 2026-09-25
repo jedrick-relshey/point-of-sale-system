@@ -41,6 +41,12 @@ Partial Class Admin
         Me.btn_invtry = New Guna.UI2.WinForms.Guna2Button()
         Me.btn_prdt = New Guna.UI2.WinForms.Guna2Button()
         Me.btn_DashBoard = New Guna.UI2.WinForms.Guna2Button()
+        Me.Guna2HtmlLabel3 = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.Guna2HtmlLabel4 = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.Guna2Panel1 = New Guna.UI2.WinForms.Guna2Panel()
+        Me.Guna2Panel2 = New Guna.UI2.WinForms.Guna2Panel()
+        Me.Guna2Panel3 = New Guna.UI2.WinForms.Guna2Panel()
+        Me.Guna2Panel4 = New Guna.UI2.WinForms.Guna2Panel()
         Me.dshbrd_Pnl.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -212,12 +218,12 @@ Partial Class Admin
         'Guna2HtmlLabel7
         '
         Me.Guna2HtmlLabel7.BackColor = System.Drawing.Color.Transparent
-        Me.Guna2HtmlLabel7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2HtmlLabel7.Font = New System.Drawing.Font("Verdana", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel7.ForeColor = System.Drawing.SystemColors.ActiveBorder
-        Me.Guna2HtmlLabel7.Location = New System.Drawing.Point(16, 78)
+        Me.Guna2HtmlLabel7.Location = New System.Drawing.Point(16, 72)
         Me.Guna2HtmlLabel7.Margin = New System.Windows.Forms.Padding(4)
         Me.Guna2HtmlLabel7.Name = "Guna2HtmlLabel7"
-        Me.Guna2HtmlLabel7.Size = New System.Drawing.Size(46, 19)
+        Me.Guna2HtmlLabel7.Size = New System.Drawing.Size(46, 18)
         Me.Guna2HtmlLabel7.TabIndex = 12
         Me.Guna2HtmlLabel7.Text = "ADMIN"
         '
@@ -250,13 +256,15 @@ Partial Class Admin
         '
         'Guna2HtmlLabel2
         '
+        Me.Guna2HtmlLabel2.AutoSize = False
+        Me.Guna2HtmlLabel2.AutoSizeHeightOnly = True
         Me.Guna2HtmlLabel2.BackColor = System.Drawing.Color.Transparent
-        Me.Guna2HtmlLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2HtmlLabel2.Font = New System.Drawing.Font("Verdana", 13.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel2.ForeColor = System.Drawing.SystemColors.ButtonFace
         Me.Guna2HtmlLabel2.Location = New System.Drawing.Point(16, 37)
         Me.Guna2HtmlLabel2.Margin = New System.Windows.Forms.Padding(4)
         Me.Guna2HtmlLabel2.Name = "Guna2HtmlLabel2"
-        Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(197, 32)
+        Me.Guna2HtmlLabel2.Size = New System.Drawing.Size(196, 29)
         Me.Guna2HtmlLabel2.TabIndex = 10
         Me.Guna2HtmlLabel2.Text = "BrewHaven Cafe"
         '
@@ -424,18 +432,112 @@ Partial Class Admin
         Me.btn_DashBoard.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.btn_DashBoard.TextOffset = New System.Drawing.Point(-2, 0)
         '
+        'Guna2HtmlLabel3
+        '
+        Me.Guna2HtmlLabel3.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2HtmlLabel3.Font = New System.Drawing.Font("Verdana", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2HtmlLabel3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.Guna2HtmlLabel3.Location = New System.Drawing.Point(302, 37)
+        Me.Guna2HtmlLabel3.Name = "Guna2HtmlLabel3"
+        Me.Guna2HtmlLabel3.Size = New System.Drawing.Size(232, 34)
+        Me.Guna2HtmlLabel3.TabIndex = 2
+        Me.Guna2HtmlLabel3.Text = "Welcome back, "
+        '
+        'Guna2HtmlLabel4
+        '
+        Me.Guna2HtmlLabel4.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2HtmlLabel4.Font = New System.Drawing.Font("Verdana", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2HtmlLabel4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.Guna2HtmlLabel4.Location = New System.Drawing.Point(540, 37)
+        Me.Guna2HtmlLabel4.Name = "Guna2HtmlLabel4"
+        Me.Guna2HtmlLabel4.Size = New System.Drawing.Size(100, 34)
+        Me.Guna2HtmlLabel4.TabIndex = 3
+        Me.Guna2HtmlLabel4.Text = "Admin"
+        '
+        'Guna2Panel1
+        '
+        Me.Guna2Panel1.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2Panel1.BorderColor = System.Drawing.Color.DimGray
+        Me.Guna2Panel1.BorderRadius = 20
+        Me.Guna2Panel1.BorderThickness = 1
+        Me.Guna2Panel1.FillColor = System.Drawing.SystemColors.MenuBar
+        Me.Guna2Panel1.Location = New System.Drawing.Point(302, 129)
+        Me.Guna2Panel1.Name = "Guna2Panel1"
+        Me.Guna2Panel1.ShadowDecoration.BorderRadius = 20
+        Me.Guna2Panel1.ShadowDecoration.Color = System.Drawing.Color.Gray
+        Me.Guna2Panel1.ShadowDecoration.Enabled = True
+        Me.Guna2Panel1.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 5, 5)
+        Me.Guna2Panel1.Size = New System.Drawing.Size(307, 156)
+        Me.Guna2Panel1.TabIndex = 4
+        '
+        'Guna2Panel2
+        '
+        Me.Guna2Panel2.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2Panel2.BorderColor = System.Drawing.Color.DimGray
+        Me.Guna2Panel2.BorderRadius = 20
+        Me.Guna2Panel2.BorderThickness = 1
+        Me.Guna2Panel2.FillColor = System.Drawing.SystemColors.MenuBar
+        Me.Guna2Panel2.Location = New System.Drawing.Point(627, 129)
+        Me.Guna2Panel2.Name = "Guna2Panel2"
+        Me.Guna2Panel2.ShadowDecoration.BorderRadius = 20
+        Me.Guna2Panel2.ShadowDecoration.Color = System.Drawing.Color.Gray
+        Me.Guna2Panel2.ShadowDecoration.Enabled = True
+        Me.Guna2Panel2.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 5, 5)
+        Me.Guna2Panel2.Size = New System.Drawing.Size(307, 156)
+        Me.Guna2Panel2.TabIndex = 5
+        '
+        'Guna2Panel3
+        '
+        Me.Guna2Panel3.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2Panel3.BorderColor = System.Drawing.Color.DimGray
+        Me.Guna2Panel3.BorderRadius = 20
+        Me.Guna2Panel3.BorderThickness = 1
+        Me.Guna2Panel3.FillColor = System.Drawing.SystemColors.MenuBar
+        Me.Guna2Panel3.Location = New System.Drawing.Point(1275, 129)
+        Me.Guna2Panel3.Name = "Guna2Panel3"
+        Me.Guna2Panel3.ShadowDecoration.BorderRadius = 20
+        Me.Guna2Panel3.ShadowDecoration.Color = System.Drawing.Color.Gray
+        Me.Guna2Panel3.ShadowDecoration.Enabled = True
+        Me.Guna2Panel3.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 5, 5)
+        Me.Guna2Panel3.Size = New System.Drawing.Size(307, 156)
+        Me.Guna2Panel3.TabIndex = 7
+        '
+        'Guna2Panel4
+        '
+        Me.Guna2Panel4.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2Panel4.BorderColor = System.Drawing.Color.DimGray
+        Me.Guna2Panel4.BorderRadius = 20
+        Me.Guna2Panel4.BorderThickness = 1
+        Me.Guna2Panel4.FillColor = System.Drawing.SystemColors.MenuBar
+        Me.Guna2Panel4.Location = New System.Drawing.Point(950, 129)
+        Me.Guna2Panel4.Name = "Guna2Panel4"
+        Me.Guna2Panel4.ShadowDecoration.BorderRadius = 20
+        Me.Guna2Panel4.ShadowDecoration.Color = System.Drawing.Color.Gray
+        Me.Guna2Panel4.ShadowDecoration.Enabled = True
+        Me.Guna2Panel4.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 5, 5)
+        Me.Guna2Panel4.Size = New System.Drawing.Size(307, 156)
+        Me.Guna2Panel4.TabIndex = 6
+        '
         'Admin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1608, 820)
+        Me.Controls.Add(Me.Guna2Panel3)
+        Me.Controls.Add(Me.Guna2Panel4)
+        Me.Controls.Add(Me.Guna2Panel2)
+        Me.Controls.Add(Me.Guna2Panel1)
+        Me.Controls.Add(Me.Guna2HtmlLabel4)
+        Me.Controls.Add(Me.Guna2HtmlLabel3)
         Me.Controls.Add(Me.dshbrd_Pnl)
         Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "Admin"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Admin"
         Me.dshbrd_Pnl.ResumeLayout(False)
         Me.dshbrd_Pnl.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents Guna2HtmlLabel1 As Guna.UI2.WinForms.Guna2HtmlLabel
@@ -457,4 +559,10 @@ Partial Class Admin
     Friend WithEvents btn_invtry As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btn_prdt As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btn_DashBoard As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents Guna2HtmlLabel3 As Guna.UI2.WinForms.Guna2HtmlLabel
+    Friend WithEvents Guna2HtmlLabel4 As Guna.UI2.WinForms.Guna2HtmlLabel
+    Friend WithEvents Guna2Panel1 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents Guna2Panel2 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents Guna2Panel3 As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents Guna2Panel4 As Guna.UI2.WinForms.Guna2Panel
 End Class
