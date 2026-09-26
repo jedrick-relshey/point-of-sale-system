@@ -1,5 +1,7 @@
 ﻿Imports System.Drawing.Drawing2D
-
+Module GlobalData
+    Public userName
+End Module
 Public Class LoginPage
     Private Sub btn_Login_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
 
@@ -17,7 +19,8 @@ Public Class LoginPage
             Select Case userType
                 Case "cashier"
                     If Not (txtUser.Text = "" Or txtPass.Text = "") Then
-                        If txtUser.Text = "cashier" And txtPass.Text = "cashierpass" Then
+                        If txtUser.Text = "jedrick" And txtPass.Text = "cashier123" Then
+                            GlobalData.userName = txtUser.Text
                             MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Dim cashier As New Cashier()
                             cashier.Show()
@@ -30,7 +33,8 @@ Public Class LoginPage
                     End If
                 Case "admin"
                     If Not (txtUser.Text = "" Or txtPass.Text = "") Then
-                        If txtUser.Text = "admin" And txtPass.Text = "adminpass" Then
+                        If txtUser.Text = "fritz" And txtPass.Text = "admin123" Then
+                            GlobalData.userName = txtUser.Text
                             MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Dim admin As New Admin()
                             admin.Show()

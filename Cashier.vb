@@ -56,7 +56,8 @@ Public Class Cashier
         End If
     End Sub
 
-    Private Sub dgv_Recent_Transactions_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_Recent_Transactions.CellContentClick
-
+    Private Sub Cashier_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        cashierName.Text = GlobalData.userName
+        cashierName.Text = cashierName.Text.ToUpper()
     End Sub
 End Class
