@@ -109,7 +109,8 @@
         pnl_dashboard_system,
         pnlProductInput,
         pnl_Products,
-        pnl_Messages
+        pnl_Messages,
+        pnlCashiers
     }
             panel.Visible = False
         Next
@@ -117,21 +118,23 @@
         panelToShow.Visible = True
 
     End Sub
-
+    'Buttons
     Private Sub btn_dashboardAdmin_Click(sender As Object, e As EventArgs) Handles btn_dashboardAdmin.Click
-        ShowPanel(pnl_dashboard_system)
+        ShowPanel(pnl_dashboard_system) 'button to show dashboard panel
     End Sub
 
     Private Sub btn_Product_Click(sender As Object, e As EventArgs) Handles btn_Product.Click
-        ShowPanel(pnl_Products)
+        ShowPanel(pnl_Products) 'button to show products panel
     End Sub
 
     Private Sub btn_AddProduct_Click(sender As Object, e As EventArgs) Handles btn_AddProduct.Click
         ShowPanel(pnlProductInput)
     End Sub
-
-    Private Sub Guna2Button9_Click(sender As Object, e As EventArgs) Handles Guna2Button9.Click
-        ShowPanel(pnl_Messages)
+    Private Sub btnMessages_Click(sender As Object, e As EventArgs) Handles btnMessages.Click
+        ShowPanel(pnl_Messages) 'button to show messages panel
+    End Sub
+    Private Sub btnCashiers_Click(sender As Object, e As EventArgs) Handles btnCashiers.Click
+        ShowPanel(pnlCashiers) 'button to show cashiers panel)
     End Sub
 
     Private Sub LoadChatMessages()
@@ -184,5 +187,4 @@
         LoadChatMessages()
 
     End Sub
-
 End Class
