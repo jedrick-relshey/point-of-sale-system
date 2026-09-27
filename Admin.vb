@@ -1,4 +1,7 @@
-﻿Public Class Admin
+﻿Module GlobalVariables
+    Public account As String
+End Module
+Public Class Admin
 
     Private Sub btnAdminLogout_Click(sender As Object, e As EventArgs) Handles btnAdminLogout.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to logout?", "Logout Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
@@ -161,7 +164,7 @@
 
     'Admin Load Event
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Me.cashierDataGridView.Rows.Add("Jedrick Miclat", "jedrick", "Active", "09-28-2026")
         LoadChatMessages()
 
     End Sub
