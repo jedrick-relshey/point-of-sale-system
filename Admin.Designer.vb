@@ -22,30 +22,30 @@ Partial Class Admin
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle43 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle44 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle45 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle46 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle47 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle48 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle97 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle98 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle104 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle99 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle100 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle101 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle102 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle103 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle105 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle106 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle107 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle108 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle109 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle115 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle110 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle111 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle112 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle113 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle114 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle116 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle117 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle118 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle119 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle120 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Guna2HtmlLabel14 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2Panel3 = New Guna.UI2.WinForms.Guna2Panel()
         Me.stck_alrts = New Guna.UI2.WinForms.Guna2HtmlLabel()
@@ -144,6 +144,14 @@ Partial Class Admin
         Me.btn_dashboardAdmin = New Guna.UI2.WinForms.Guna2Button()
         Me.adminDashboard = New Guna.UI2.WinForms.Guna2Panel()
         Me.pnl_Messages = New System.Windows.Forms.Panel()
+        Me.pnl_MainChat = New System.Windows.Forms.Panel()
+        Me.Guna2HtmlLabel60 = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.flpAdminMessages = New System.Windows.Forms.FlowLayoutPanel()
+        Me.flpMessagesdsds = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.lbltimerSender = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.btnAdmin = New Guna.UI2.WinForms.Guna2Button()
+        Me.CashierName = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.txtAdminChat = New Guna.UI2.WinForms.Guna2TextBox()
         Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel()
         Me.pnlProductInput = New System.Windows.Forms.Panel()
         Me.Guna2ComboBox7 = New Guna.UI2.WinForms.Guna2ComboBox()
@@ -235,14 +243,6 @@ Partial Class Admin
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.pnl_MainChat = New System.Windows.Forms.Panel()
-        Me.Guna2HtmlLabel60 = New Guna.UI2.WinForms.Guna2HtmlLabel()
-        Me.flpAdminMessages = New System.Windows.Forms.FlowLayoutPanel()
-        Me.flpMessagesdsds = New Guna.UI2.WinForms.Guna2HtmlLabel()
-        Me.lbltimerSender = New Guna.UI2.WinForms.Guna2HtmlLabel()
-        Me.btnAdmin = New Guna.UI2.WinForms.Guna2Button()
-        Me.CashierName = New Guna.UI2.WinForms.Guna2HtmlLabel()
-        Me.txtAdminChat = New Guna.UI2.WinForms.Guna2TextBox()
         Me.Guna2Panel3.SuspendLayout()
         Me.Guna2Panel1.SuspendLayout()
         Me.Guna2ShadowPanel3.SuspendLayout()
@@ -256,6 +256,8 @@ Partial Class Admin
         Me.Navigation.SuspendLayout()
         Me.adminDashboard.SuspendLayout()
         Me.pnl_Messages.SuspendLayout()
+        Me.pnl_MainChat.SuspendLayout()
+        Me.flpAdminMessages.SuspendLayout()
         Me.pnlProductInput.SuspendLayout()
         CType(Me.productImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnl_Products.SuspendLayout()
@@ -269,8 +271,6 @@ Partial Class Admin
         Me.Guna2ShadowPanel7.SuspendLayout()
         Me.Guna2ShadowPanel5.SuspendLayout()
         Me.Guna2Panel10.SuspendLayout()
-        Me.pnl_MainChat.SuspendLayout()
-        Me.flpAdminMessages.SuspendLayout()
         Me.SuspendLayout()
         '
         'Guna2HtmlLabel14
@@ -903,28 +903,28 @@ Partial Class Admin
         '
         'dgv_Recent_Transactions
         '
-        DataGridViewCellStyle25.BackColor = System.Drawing.Color.White
-        Me.dgv_Recent_Transactions.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle25
+        DataGridViewCellStyle97.BackColor = System.Drawing.Color.White
+        Me.dgv_Recent_Transactions.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle97
         Me.dgv_Recent_Transactions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle26.BackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle26.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle26.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        DataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.ControlDark
-        DataGridViewCellStyle26.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        DataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgv_Recent_Transactions.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle26
+        DataGridViewCellStyle98.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle98.BackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle98.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle98.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        DataGridViewCellStyle98.SelectionBackColor = System.Drawing.SystemColors.ControlDark
+        DataGridViewCellStyle98.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        DataGridViewCellStyle98.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgv_Recent_Transactions.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle98
         Me.dgv_Recent_Transactions.ColumnHeadersHeight = 40
         Me.dgv_Recent_Transactions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing
         Me.dgv_Recent_Transactions.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Transaction_ID_Columns, Me.Time_Columns, Me.Items_Ordered_Collums, Me.Total_Collumns, Me.Status_Collumns})
-        DataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle32.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle32.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle32.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle32.SelectionForeColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgv_Recent_Transactions.DefaultCellStyle = DataGridViewCellStyle32
+        DataGridViewCellStyle104.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle104.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle104.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle104.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle104.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle104.SelectionForeColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle104.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgv_Recent_Transactions.DefaultCellStyle = DataGridViewCellStyle104
         Me.dgv_Recent_Transactions.GridColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.dgv_Recent_Transactions.Location = New System.Drawing.Point(47, 318)
         Me.dgv_Recent_Transactions.Margin = New System.Windows.Forms.Padding(4)
@@ -944,44 +944,44 @@ Partial Class Admin
         '
         'Transaction_ID_Columns
         '
-        DataGridViewCellStyle27.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Transaction_ID_Columns.DefaultCellStyle = DataGridViewCellStyle27
+        DataGridViewCellStyle99.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Transaction_ID_Columns.DefaultCellStyle = DataGridViewCellStyle99
         Me.Transaction_ID_Columns.HeaderText = "Transaction ID"
         Me.Transaction_ID_Columns.MinimumWidth = 6
         Me.Transaction_ID_Columns.Name = "Transaction_ID_Columns"
         '
         'Time_Columns
         '
-        DataGridViewCellStyle28.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle28.ForeColor = System.Drawing.Color.DimGray
-        Me.Time_Columns.DefaultCellStyle = DataGridViewCellStyle28
+        DataGridViewCellStyle100.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle100.ForeColor = System.Drawing.Color.DimGray
+        Me.Time_Columns.DefaultCellStyle = DataGridViewCellStyle100
         Me.Time_Columns.HeaderText = "Time"
         Me.Time_Columns.MinimumWidth = 6
         Me.Time_Columns.Name = "Time_Columns"
         '
         'Items_Ordered_Collums
         '
-        DataGridViewCellStyle29.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle29.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Items_Ordered_Collums.DefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle101.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle101.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Items_Ordered_Collums.DefaultCellStyle = DataGridViewCellStyle101
         Me.Items_Ordered_Collums.HeaderText = "Items Ordered"
         Me.Items_Ordered_Collums.MinimumWidth = 6
         Me.Items_Ordered_Collums.Name = "Items_Ordered_Collums"
         '
         'Total_Collumns
         '
-        DataGridViewCellStyle30.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle30.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Total_Collumns.DefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle102.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle102.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Total_Collumns.DefaultCellStyle = DataGridViewCellStyle102
         Me.Total_Collumns.HeaderText = "Total"
         Me.Total_Collumns.MinimumWidth = 6
         Me.Total_Collumns.Name = "Total_Collumns"
         '
         'Status_Collumns
         '
-        DataGridViewCellStyle31.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle31.ForeColor = System.Drawing.Color.DarkGoldenrod
-        Me.Status_Collumns.DefaultCellStyle = DataGridViewCellStyle31
+        DataGridViewCellStyle103.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle103.ForeColor = System.Drawing.Color.DarkGoldenrod
+        Me.Status_Collumns.DefaultCellStyle = DataGridViewCellStyle103
         Me.Status_Collumns.HeaderText = "Status"
         Me.Status_Collumns.MinimumWidth = 6
         Me.Status_Collumns.Name = "Status_Collumns"
@@ -1861,6 +1861,116 @@ Partial Class Admin
         Me.pnl_Messages.Size = New System.Drawing.Size(1007, 666)
         Me.pnl_Messages.TabIndex = 46
         '
+        'pnl_MainChat
+        '
+        Me.pnl_MainChat.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.pnl_MainChat.Controls.Add(Me.Guna2HtmlLabel60)
+        Me.pnl_MainChat.Controls.Add(Me.flpAdminMessages)
+        Me.pnl_MainChat.Controls.Add(Me.btnAdmin)
+        Me.pnl_MainChat.Controls.Add(Me.CashierName)
+        Me.pnl_MainChat.Controls.Add(Me.txtAdminChat)
+        Me.pnl_MainChat.Location = New System.Drawing.Point(396, 80)
+        Me.pnl_MainChat.Name = "pnl_MainChat"
+        Me.pnl_MainChat.Size = New System.Drawing.Size(586, 535)
+        Me.pnl_MainChat.TabIndex = 8
+        '
+        'Guna2HtmlLabel60
+        '
+        Me.Guna2HtmlLabel60.BackColor = System.Drawing.Color.Transparent
+        Me.Guna2HtmlLabel60.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Guna2HtmlLabel60.ForeColor = System.Drawing.Color.DimGray
+        Me.Guna2HtmlLabel60.Location = New System.Drawing.Point(10, 39)
+        Me.Guna2HtmlLabel60.Name = "Guna2HtmlLabel60"
+        Me.Guna2HtmlLabel60.Size = New System.Drawing.Size(59, 15)
+        Me.Guna2HtmlLabel60.TabIndex = 22
+        Me.Guna2HtmlLabel60.Text = "Terminal #1"
+        '
+        'flpAdminMessages
+        '
+        Me.flpAdminMessages.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.flpAdminMessages.BackColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.flpAdminMessages.Controls.Add(Me.flpMessagesdsds)
+        Me.flpAdminMessages.Controls.Add(Me.lbltimerSender)
+        Me.flpAdminMessages.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
+        Me.flpAdminMessages.Location = New System.Drawing.Point(0, 60)
+        Me.flpAdminMessages.Name = "flpAdminMessages"
+        Me.flpAdminMessages.Size = New System.Drawing.Size(586, 408)
+        Me.flpAdminMessages.TabIndex = 6
+        '
+        'flpMessagesdsds
+        '
+        Me.flpMessagesdsds.BackColor = System.Drawing.Color.Transparent
+        Me.flpMessagesdsds.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.flpMessagesdsds.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.flpMessagesdsds.Location = New System.Drawing.Point(3, 3)
+        Me.flpMessagesdsds.Name = "flpMessagesdsds"
+        Me.flpMessagesdsds.Size = New System.Drawing.Size(45, 22)
+        Me.flpMessagesdsds.TabIndex = 23
+        Me.flpMessagesdsds.Text = "Name"
+        '
+        'lbltimerSender
+        '
+        Me.lbltimerSender.BackColor = System.Drawing.Color.Transparent
+        Me.lbltimerSender.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltimerSender.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.lbltimerSender.Location = New System.Drawing.Point(3, 31)
+        Me.lbltimerSender.Name = "lbltimerSender"
+        Me.lbltimerSender.Size = New System.Drawing.Size(25, 15)
+        Me.lbltimerSender.TabIndex = 24
+        Me.lbltimerSender.Text = "timer"
+        '
+        'btnAdmin
+        '
+        Me.btnAdmin.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnAdmin.Animated = True
+        Me.btnAdmin.BorderColor = System.Drawing.Color.Transparent
+        Me.btnAdmin.BorderRadius = 5
+        Me.btnAdmin.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btnAdmin.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btnAdmin.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btnAdmin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btnAdmin.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.btnAdmin.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnAdmin.ForeColor = System.Drawing.Color.White
+        Me.btnAdmin.Location = New System.Drawing.Point(471, 483)
+        Me.btnAdmin.Name = "btnAdmin"
+        Me.btnAdmin.Size = New System.Drawing.Size(105, 42)
+        Me.btnAdmin.TabIndex = 1
+        Me.btnAdmin.Text = "Send"
+        '
+        'CashierName
+        '
+        Me.CashierName.BackColor = System.Drawing.Color.Transparent
+        Me.CashierName.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CashierName.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.CashierName.Location = New System.Drawing.Point(10, 14)
+        Me.CashierName.Name = "CashierName"
+        Me.CashierName.Size = New System.Drawing.Size(59, 27)
+        Me.CashierName.TabIndex = 22
+        Me.CashierName.Text = "Name"
+        '
+        'txtAdminChat
+        '
+        Me.txtAdminChat.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtAdminChat.BorderColor = System.Drawing.Color.Gray
+        Me.txtAdminChat.BorderRadius = 5
+        Me.txtAdminChat.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.txtAdminChat.DefaultText = ""
+        Me.txtAdminChat.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
+        Me.txtAdminChat.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
+        Me.txtAdminChat.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.txtAdminChat.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
+        Me.txtAdminChat.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.txtAdminChat.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAdminChat.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.txtAdminChat.Location = New System.Drawing.Point(10, 484)
+        Me.txtAdminChat.Name = "txtAdminChat"
+        Me.txtAdminChat.PlaceholderForeColor = System.Drawing.Color.DimGray
+        Me.txtAdminChat.PlaceholderText = "Type message..."
+        Me.txtAdminChat.SelectedText = ""
+        Me.txtAdminChat.Size = New System.Drawing.Size(455, 42)
+        Me.txtAdminChat.TabIndex = 0
+        '
         'FlowLayoutPanel3
         '
         Me.FlowLayoutPanel3.BackColor = System.Drawing.SystemColors.ButtonHighlight
@@ -2507,28 +2617,28 @@ Partial Class Admin
         '
         'dgvProducts
         '
-        DataGridViewCellStyle33.BackColor = System.Drawing.Color.White
-        Me.dgvProducts.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle33
+        DataGridViewCellStyle105.BackColor = System.Drawing.Color.White
+        Me.dgvProducts.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle105
         Me.dgvProducts.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle34.BackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle34.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle34.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        DataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.ControlDark
-        DataGridViewCellStyle34.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        DataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvProducts.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle34
+        DataGridViewCellStyle106.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle106.BackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle106.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle106.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        DataGridViewCellStyle106.SelectionBackColor = System.Drawing.SystemColors.ControlDark
+        DataGridViewCellStyle106.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        DataGridViewCellStyle106.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvProducts.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle106
         Me.dgvProducts.ColumnHeadersHeight = 40
         Me.dgvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing
         Me.dgvProducts.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Product, Me.Category, Me.Price, Me.Stock, Me.Description})
-        DataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle35.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle35.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle35.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle35.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle35.SelectionForeColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvProducts.DefaultCellStyle = DataGridViewCellStyle35
+        DataGridViewCellStyle107.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle107.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle107.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle107.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle107.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle107.SelectionForeColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle107.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvProducts.DefaultCellStyle = DataGridViewCellStyle107
         Me.dgvProducts.GridColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.dgvProducts.Location = New System.Drawing.Point(14, 255)
         Me.dgvProducts.Name = "dgvProducts"
@@ -2639,28 +2749,28 @@ Partial Class Admin
         '
         'adminDataGrid
         '
-        DataGridViewCellStyle36.BackColor = System.Drawing.Color.White
-        Me.adminDataGrid.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle36
+        DataGridViewCellStyle108.BackColor = System.Drawing.Color.White
+        Me.adminDataGrid.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle108
         Me.adminDataGrid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        DataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle37.BackColor = System.Drawing.Color.Gainsboro
-        DataGridViewCellStyle37.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle37.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        DataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.ControlDark
-        DataGridViewCellStyle37.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        DataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.adminDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle37
+        DataGridViewCellStyle109.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle109.BackColor = System.Drawing.Color.Gainsboro
+        DataGridViewCellStyle109.Font = New System.Drawing.Font("Calibri", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle109.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        DataGridViewCellStyle109.SelectionBackColor = System.Drawing.SystemColors.ControlDark
+        DataGridViewCellStyle109.SelectionForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        DataGridViewCellStyle109.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.adminDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle109
         Me.adminDataGrid.ColumnHeadersHeight = 40
         Me.adminDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing
         Me.adminDataGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5})
-        DataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle43.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle43.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle43.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle43.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle43.SelectionForeColor = System.Drawing.Color.Silver
-        DataGridViewCellStyle43.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.adminDataGrid.DefaultCellStyle = DataGridViewCellStyle43
+        DataGridViewCellStyle115.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle115.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle115.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle115.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle115.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle115.SelectionForeColor = System.Drawing.Color.Silver
+        DataGridViewCellStyle115.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.adminDataGrid.DefaultCellStyle = DataGridViewCellStyle115
         Me.adminDataGrid.GridColor = System.Drawing.Color.FromArgb(CType(CType(231, Byte), Integer), CType(CType(229, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.adminDataGrid.Location = New System.Drawing.Point(35, 258)
         Me.adminDataGrid.Name = "adminDataGrid"
@@ -2679,44 +2789,44 @@ Partial Class Admin
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle38.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle38
+        DataGridViewCellStyle110.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle110
         Me.DataGridViewTextBoxColumn1.HeaderText = "Transaction ID"
         Me.DataGridViewTextBoxColumn1.MinimumWidth = 6
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle39.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle39.ForeColor = System.Drawing.Color.DimGray
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle39
+        DataGridViewCellStyle111.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle111.ForeColor = System.Drawing.Color.DimGray
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle111
         Me.DataGridViewTextBoxColumn2.HeaderText = "Time"
         Me.DataGridViewTextBoxColumn2.MinimumWidth = 6
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle40.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle40.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle40
+        DataGridViewCellStyle112.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle112.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle112
         Me.DataGridViewTextBoxColumn3.HeaderText = "Items Ordered"
         Me.DataGridViewTextBoxColumn3.MinimumWidth = 6
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
         '
         'DataGridViewTextBoxColumn4
         '
-        DataGridViewCellStyle41.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle41.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle41
+        DataGridViewCellStyle113.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle113.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle113
         Me.DataGridViewTextBoxColumn4.HeaderText = "Total"
         Me.DataGridViewTextBoxColumn4.MinimumWidth = 6
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle42.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle42.ForeColor = System.Drawing.Color.DarkGoldenrod
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle42
+        DataGridViewCellStyle114.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle114.ForeColor = System.Drawing.Color.DarkGoldenrod
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle114
         Me.DataGridViewTextBoxColumn5.HeaderText = "Status"
         Me.DataGridViewTextBoxColumn5.MinimumWidth = 6
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
@@ -2923,8 +3033,8 @@ Partial Class Admin
         '
         'clmns_ProductName
         '
-        DataGridViewCellStyle44.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.clmns_ProductName.DefaultCellStyle = DataGridViewCellStyle44
+        DataGridViewCellStyle116.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.clmns_ProductName.DefaultCellStyle = DataGridViewCellStyle116
         Me.clmns_ProductName.HeaderText = "Product"
         Me.clmns_ProductName.MinimumWidth = 6
         Me.clmns_ProductName.Name = "clmns_ProductName"
@@ -2932,9 +3042,9 @@ Partial Class Admin
         '
         'clmns_Category
         '
-        DataGridViewCellStyle45.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle45.ForeColor = System.Drawing.Color.DimGray
-        Me.clmns_Category.DefaultCellStyle = DataGridViewCellStyle45
+        DataGridViewCellStyle117.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle117.ForeColor = System.Drawing.Color.DimGray
+        Me.clmns_Category.DefaultCellStyle = DataGridViewCellStyle117
         Me.clmns_Category.HeaderText = "Category"
         Me.clmns_Category.MinimumWidth = 6
         Me.clmns_Category.Name = "clmns_Category"
@@ -2942,9 +3052,9 @@ Partial Class Admin
         '
         'clmns_Price
         '
-        DataGridViewCellStyle46.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle46.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.clmns_Price.DefaultCellStyle = DataGridViewCellStyle46
+        DataGridViewCellStyle118.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle118.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.clmns_Price.DefaultCellStyle = DataGridViewCellStyle118
         Me.clmns_Price.HeaderText = "Price"
         Me.clmns_Price.MinimumWidth = 6
         Me.clmns_Price.Name = "clmns_Price"
@@ -2952,9 +3062,9 @@ Partial Class Admin
         '
         'clmns_Stock
         '
-        DataGridViewCellStyle47.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle47.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.clmns_Stock.DefaultCellStyle = DataGridViewCellStyle47
+        DataGridViewCellStyle119.Font = New System.Drawing.Font("Arial", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle119.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.clmns_Stock.DefaultCellStyle = DataGridViewCellStyle119
         Me.clmns_Stock.HeaderText = "Stock"
         Me.clmns_Stock.MinimumWidth = 6
         Me.clmns_Stock.Name = "clmns_Stock"
@@ -2962,9 +3072,9 @@ Partial Class Admin
         '
         'clmns_Actions
         '
-        DataGridViewCellStyle48.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle48.ForeColor = System.Drawing.Color.DarkGoldenrod
-        Me.clmns_Actions.DefaultCellStyle = DataGridViewCellStyle48
+        DataGridViewCellStyle120.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle120.ForeColor = System.Drawing.Color.DarkGoldenrod
+        Me.clmns_Actions.DefaultCellStyle = DataGridViewCellStyle120
         Me.clmns_Actions.HeaderText = "Actions"
         Me.clmns_Actions.MinimumWidth = 6
         Me.clmns_Actions.Name = "clmns_Actions"
@@ -3074,116 +3184,6 @@ Partial Class Admin
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 0
         '
-        'pnl_MainChat
-        '
-        Me.pnl_MainChat.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.pnl_MainChat.Controls.Add(Me.Guna2HtmlLabel60)
-        Me.pnl_MainChat.Controls.Add(Me.flpAdminMessages)
-        Me.pnl_MainChat.Controls.Add(Me.btnAdmin)
-        Me.pnl_MainChat.Controls.Add(Me.CashierName)
-        Me.pnl_MainChat.Controls.Add(Me.txtAdminChat)
-        Me.pnl_MainChat.Location = New System.Drawing.Point(396, 80)
-        Me.pnl_MainChat.Name = "pnl_MainChat"
-        Me.pnl_MainChat.Size = New System.Drawing.Size(586, 535)
-        Me.pnl_MainChat.TabIndex = 8
-        '
-        'Guna2HtmlLabel60
-        '
-        Me.Guna2HtmlLabel60.BackColor = System.Drawing.Color.Transparent
-        Me.Guna2HtmlLabel60.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Guna2HtmlLabel60.ForeColor = System.Drawing.Color.DimGray
-        Me.Guna2HtmlLabel60.Location = New System.Drawing.Point(10, 39)
-        Me.Guna2HtmlLabel60.Name = "Guna2HtmlLabel60"
-        Me.Guna2HtmlLabel60.Size = New System.Drawing.Size(59, 15)
-        Me.Guna2HtmlLabel60.TabIndex = 22
-        Me.Guna2HtmlLabel60.Text = "Terminal #1"
-        '
-        'flpAdminMessages
-        '
-        Me.flpAdminMessages.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.flpAdminMessages.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.flpAdminMessages.Controls.Add(Me.flpMessagesdsds)
-        Me.flpAdminMessages.Controls.Add(Me.lbltimerSender)
-        Me.flpAdminMessages.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.flpAdminMessages.Location = New System.Drawing.Point(0, 60)
-        Me.flpAdminMessages.Name = "flpAdminMessages"
-        Me.flpAdminMessages.Size = New System.Drawing.Size(586, 408)
-        Me.flpAdminMessages.TabIndex = 6
-        '
-        'flpMessagesdsds
-        '
-        Me.flpMessagesdsds.BackColor = System.Drawing.Color.Transparent
-        Me.flpMessagesdsds.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.flpMessagesdsds.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.flpMessagesdsds.Location = New System.Drawing.Point(3, 3)
-        Me.flpMessagesdsds.Name = "flpMessagesdsds"
-        Me.flpMessagesdsds.Size = New System.Drawing.Size(45, 22)
-        Me.flpMessagesdsds.TabIndex = 23
-        Me.flpMessagesdsds.Text = "Name"
-        '
-        'lbltimerSender
-        '
-        Me.lbltimerSender.BackColor = System.Drawing.Color.Transparent
-        Me.lbltimerSender.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbltimerSender.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.lbltimerSender.Location = New System.Drawing.Point(3, 31)
-        Me.lbltimerSender.Name = "lbltimerSender"
-        Me.lbltimerSender.Size = New System.Drawing.Size(25, 15)
-        Me.lbltimerSender.TabIndex = 24
-        Me.lbltimerSender.Text = "timer"
-        '
-        'btnAdmin
-        '
-        Me.btnAdmin.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnAdmin.Animated = True
-        Me.btnAdmin.BorderColor = System.Drawing.Color.Transparent
-        Me.btnAdmin.BorderRadius = 5
-        Me.btnAdmin.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btnAdmin.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btnAdmin.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btnAdmin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btnAdmin.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.btnAdmin.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnAdmin.ForeColor = System.Drawing.Color.White
-        Me.btnAdmin.Location = New System.Drawing.Point(471, 483)
-        Me.btnAdmin.Name = "btnAdmin"
-        Me.btnAdmin.Size = New System.Drawing.Size(105, 42)
-        Me.btnAdmin.TabIndex = 1
-        Me.btnAdmin.Text = "Send"
-        '
-        'CashierName
-        '
-        Me.CashierName.BackColor = System.Drawing.Color.Transparent
-        Me.CashierName.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CashierName.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.CashierName.Location = New System.Drawing.Point(10, 14)
-        Me.CashierName.Name = "CashierName"
-        Me.CashierName.Size = New System.Drawing.Size(59, 27)
-        Me.CashierName.TabIndex = 22
-        Me.CashierName.Text = "Name"
-        '
-        'txtAdminChat
-        '
-        Me.txtAdminChat.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtAdminChat.BorderColor = System.Drawing.Color.Gray
-        Me.txtAdminChat.BorderRadius = 5
-        Me.txtAdminChat.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.txtAdminChat.DefaultText = ""
-        Me.txtAdminChat.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
-        Me.txtAdminChat.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
-        Me.txtAdminChat.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txtAdminChat.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer), CType(CType(138, Byte), Integer))
-        Me.txtAdminChat.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txtAdminChat.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtAdminChat.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txtAdminChat.Location = New System.Drawing.Point(10, 484)
-        Me.txtAdminChat.Name = "txtAdminChat"
-        Me.txtAdminChat.PlaceholderForeColor = System.Drawing.Color.DimGray
-        Me.txtAdminChat.PlaceholderText = "Type message response to Maria..."
-        Me.txtAdminChat.SelectedText = ""
-        Me.txtAdminChat.Size = New System.Drawing.Size(455, 42)
-        Me.txtAdminChat.TabIndex = 0
-        '
         'Admin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3218,6 +3218,10 @@ Partial Class Admin
         Me.adminDashboard.ResumeLayout(False)
         Me.adminDashboard.PerformLayout()
         Me.pnl_Messages.ResumeLayout(False)
+        Me.pnl_MainChat.ResumeLayout(False)
+        Me.pnl_MainChat.PerformLayout()
+        Me.flpAdminMessages.ResumeLayout(False)
+        Me.flpAdminMessages.PerformLayout()
         Me.pnlProductInput.ResumeLayout(False)
         Me.pnlProductInput.PerformLayout()
         CType(Me.productImage, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3241,10 +3245,6 @@ Partial Class Admin
         Me.Guna2ShadowPanel5.PerformLayout()
         Me.Guna2Panel10.ResumeLayout(False)
         Me.Guna2Panel10.PerformLayout()
-        Me.pnl_MainChat.ResumeLayout(False)
-        Me.pnl_MainChat.PerformLayout()
-        Me.flpAdminMessages.ResumeLayout(False)
-        Me.flpAdminMessages.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

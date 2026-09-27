@@ -141,19 +141,13 @@
         For Each chat As ChatMessage In DataStore.ChatMessages
 
             If chat.Receiver = "Admin" Then
-
                 Dim messageLabel As New Label()
-
                 messageLabel.AutoSize = True
                 messageLabel.MaximumSize = New Size(flpAdminMessages.ClientSize.Width - 20, 0)
-
                 messageLabel.Text = chat.Sender & ": " & chat.Message
-
                 messageLabel.Padding = New Padding(10)
                 messageLabel.Margin = New Padding(5)
-
                 messageLabel.Font = New Font("Segoe UI", 10, FontStyle.Regular)
-
                 flpAdminMessages.Controls.Add(messageLabel)
 
             End If
@@ -169,5 +163,26 @@
 
     End Sub
 
+    'Admin Send Button Click Event
+    Private Sub btnAdminSend_Click(sender As Object, e As EventArgs) Handles btnAdmin.Click
+
+        If String.IsNullOrWhiteSpace(txtAdminChat.Text) Then
+            Return
+        End If
+
+        Dim newMessage As New ChatMessage With {
+            .Sender = "Admin",
+            .Receiver = "Cashier",
+            .Message = txtAdminChat.Text.Trim(),
+            .TimeSent = DateTime.Now
+        }
+
+        DataStore.ChatMessages.Add(newMessage)
+
+        txtAdminChat.Clear()
+
+        LoadChatMessages()
+
+    End Sub
 
 End Class
