@@ -4,6 +4,7 @@ Public Class Cashier
     Private Sub HideAllPanels()
 
         main_pnl.Visible = False
+        pnl_CashierMessages.Visible = False
 
     End Sub
 
@@ -56,8 +57,37 @@ Public Class Cashier
         End If
     End Sub
 
-    Private Sub Cashier_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        cashierName.Text = GlobalData.userName
-        cashierName.Text = cashierName.Text.ToUpper()
+    Private Sub btn_CashierMessages_Click(sender As Object, e As EventArgs) Handles btn_CashierMessages.Click
+
+        pnl_CashierMessages.Visible = True
+
     End Sub
+
+    Private Sub btnSend_Click(sender As Object, e As EventArgs) Handles btnSend.Click
+
+        'Check kung walang laman ang message
+        If String.IsNullOrWhiteSpace(txtChat.Text) Then
+            Return
+        End If
+
+        'Create new chat message
+        Dim newMessage As New ChatMessage With {
+        .Sender = "Cashier",
+        .Receiver = "Admin",
+        .Message = txtChat.Text.Trim(),
+        .TimeSent = DateTime.Now
+    }
+
+        'Store the message
+        DataStore.ChatMEssages.Add(newMessage)
+
+        'Clear textbox
+        txtChat.Clear()
+
+    End Sub
+
+    'Private Sub Cashier_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    '    cashierNAme.Text = GlobalData.userName
+    '    cashierName.Text = cashierName.Text.ToUpper()
+    'End Sub
 End Class

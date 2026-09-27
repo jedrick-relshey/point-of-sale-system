@@ -1,4 +1,5 @@
 ﻿Public Class Admin
+
     Private Sub btnAdminLogout_Click(sender As Object, e As EventArgs) Handles btnAdminLogout.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to logout?", "Logout Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
@@ -39,7 +40,6 @@
         txtProductName,
         txtProductPrice,
         txtProductStock,
-        txtCategory,
         txtProductDescription
     }
 
@@ -95,4 +95,79 @@
         Next
 
     End Sub
+
+    Private Sub btnChooseImage_Click(sender As Object, e As EventArgs) Handles btnChooseImage.Click
+        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            productImage.Image = Image.FromFile(OpenFileDialog1.FileName)
+        End If
+    End Sub
+
+    'Dashboard Panel
+    Private Sub ShowPanel(panelToShow As Panel)
+
+        For Each panel As Panel In {
+        pnl_dashboard_system,
+        pnlProductInput,
+        pnl_Products,
+        pnl_Messages
+    }
+            panel.Visible = False
+        Next
+
+        panelToShow.Visible = True
+
+    End Sub
+
+    Private Sub btn_dashboardAdmin_Click(sender As Object, e As EventArgs) Handles btn_dashboardAdmin.Click
+        ShowPanel(pnl_dashboard_system)
+    End Sub
+
+    Private Sub btn_Product_Click(sender As Object, e As EventArgs) Handles btn_Product.Click
+        ShowPanel(pnl_Products)
+    End Sub
+
+    Private Sub btn_AddProduct_Click(sender As Object, e As EventArgs) Handles btn_AddProduct.Click
+        ShowPanel(pnlProductInput)
+    End Sub
+
+    Private Sub Guna2Button9_Click(sender As Object, e As EventArgs) Handles Guna2Button9.Click
+        ShowPanel(pnl_Messages)
+    End Sub
+
+    Private Sub LoadChatMessages()
+
+        flpAdminMessages.Controls.Clear()
+
+        For Each chat As ChatMessage In DataStore.ChatMessages
+
+            If chat.Receiver = "Admin" Then
+
+                Dim messageLabel As New Label()
+
+                messageLabel.AutoSize = True
+                messageLabel.MaximumSize = New Size(flpAdminMessages.ClientSize.Width - 20, 0)
+
+                messageLabel.Text = chat.Sender & ": " & chat.Message
+
+                messageLabel.Padding = New Padding(10)
+                messageLabel.Margin = New Padding(5)
+
+                messageLabel.Font = New Font("Segoe UI", 10, FontStyle.Regular)
+
+                flpAdminMessages.Controls.Add(messageLabel)
+
+            End If
+
+        Next
+
+    End Sub
+
+    'Admin Load Event
+    Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        LoadChatMessages()
+
+    End Sub
+
+
 End Class

@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing.Drawing2D
 Module GlobalData
-    Public userName
+    Public userName As String = ""
 End Module
 Public Class LoginPage
     Private Sub btn_Login_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
