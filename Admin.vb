@@ -191,4 +191,11 @@ Public Class Admin
 
     End Sub
 
+    Private Sub btnRegisterNewCashier_Click(sender As Object, e As EventArgs) Handles btnRegisterNewCashier.Click
+        Dim registerCashierForm As New RegisterNewCashierForm()
+
+        registerCashierForm.ShowDialog(Me)
+        'registerCashierForm.Show()
+        'Me.Hide()
+    End Sub
 End Class
