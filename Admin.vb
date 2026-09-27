@@ -187,4 +187,5 @@
         LoadChatMessages()
 
     End Sub
+
 End Class
