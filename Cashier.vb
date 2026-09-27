@@ -41,10 +41,6 @@ Public Class Cashier
 
     End Sub
 
-    Private Sub Guna2Panel8_Paint(sender As Object, e As PaintEventArgs) Handles Guna2Panel8.Paint
-
-    End Sub
-
     Private Sub btnCashierLogout_Click(sender As Object, e As EventArgs) Handles btnCashierLogout.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to logout?", "Logout Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
@@ -60,6 +56,7 @@ Public Class Cashier
     Private Sub btn_CashierMessages_Click(sender As Object, e As EventArgs) Handles btn_CashierMessages.Click
 
         pnl_CashierMessages.Visible = True
+        LoadCashierChat()
 
     End Sub
 
@@ -84,10 +81,46 @@ Public Class Cashier
         'Clear textbox
         txtChat.Clear()
 
+        'refresh chat
+        LoadCashierChat()
+
     End Sub
 
     'Private Sub Cashier_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     '    cashierNAme.Text = GlobalData.userName
     '    cashierName.Text = cashierName.Text.ToUpper()
     'End Sub
+
+    Private Sub LoadCashierChat()
+
+        flpMessages.Controls.Clear()
+
+        For Each chat As ChatMessage In DataStore.ChatMessages
+
+            Dim messageLabel As New Label()
+
+            messageLabel.Text = chat.Message
+            messageLabel.AutoSize = True
+            messageLabel.MaximumSize = New Size(flpMessages.ClientSize.Width - 40, 0)
+
+            messageLabel.Padding = New Padding(10)
+            messageLabel.Margin = New Padding(5)
+            messageLabel.Font = New Font("Segoe UI", 10, FontStyle.Regular)
+
+            'Cashier = right side
+            If chat.Sender = "Cashier" Then
+                messageLabel.TextAlign = ContentAlignment.MiddleRight
+                messageLabel.Anchor = AnchorStyles.Right
+
+                'Admin = left side
+            ElseIf chat.Sender = "Admin" Then
+                messageLabel.TextAlign = ContentAlignment.MiddleLeft
+                messageLabel.Anchor = AnchorStyles.Left
+            End If
+
+            flpMessages.Controls.Add(messageLabel)
+
+        Next
+
+    End Sub
 End Class
