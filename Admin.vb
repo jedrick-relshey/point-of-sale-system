@@ -206,4 +206,8 @@
         'Me.Hide()
         displayCashiers()
     End Sub
+
+    Private Sub Navigation_Paint(sender As Object, e As PaintEventArgs) Handles Navigation.Paint
+
+    End Sub
 End Class
