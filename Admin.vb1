@@ -153,7 +153,6 @@
         ShowPanel(pnl_History) 'button to show history panel
     End Sub
 
-    'Function is the chat box
     Private Sub LoadChatMessages()
 
         flpAdminMessages.Controls.Clear()

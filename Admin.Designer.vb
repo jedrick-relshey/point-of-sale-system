@@ -141,6 +141,10 @@ Partial Class Admin
         Me.btn_Product = New Guna.UI2.WinForms.Guna2Button()
         Me.btn_dashboardAdmin = New Guna.UI2.WinForms.Guna2Button()
         Me.adminDashboard = New Guna.UI2.WinForms.Guna2Panel()
+        Me.pnl_History = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.pnl_Settings = New System.Windows.Forms.Panel()
+        Me.Setting = New System.Windows.Forms.Label()
         Me.pnl_Inventory = New System.Windows.Forms.Panel()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.pnl_Products = New Guna.UI2.WinForms.Guna2Panel()
@@ -271,10 +275,6 @@ Partial Class Admin
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.pnl_Settings = New System.Windows.Forms.Panel()
-        Me.Setting = New System.Windows.Forms.Label()
-        Me.pnl_History = New System.Windows.Forms.Panel()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.Guna2Panel3.SuspendLayout()
         Me.Guna2Panel1.SuspendLayout()
         Me.Guna2ShadowPanel3.SuspendLayout()
@@ -287,6 +287,8 @@ Partial Class Admin
         Me.Guna2ShadowPanel1.SuspendLayout()
         Me.Navigation.SuspendLayout()
         Me.adminDashboard.SuspendLayout()
+        Me.pnl_History.SuspendLayout()
+        Me.pnl_Settings.SuspendLayout()
         Me.pnl_Inventory.SuspendLayout()
         Me.pnl_Products.SuspendLayout()
         CType(Me.dgvProducts, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -309,8 +311,6 @@ Partial Class Admin
         Me.flpAdminMessages.SuspendLayout()
         Me.Guna2Panel10.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.pnl_Settings.SuspendLayout()
-        Me.pnl_History.SuspendLayout()
         Me.SuspendLayout()
         '
         'Guna2HtmlLabel14
@@ -1789,19 +1789,65 @@ Partial Class Admin
         'adminDashboard
         '
         Me.adminDashboard.AutoScroll = True
-        Me.adminDashboard.Controls.Add(Me.pnl_History)
-        Me.adminDashboard.Controls.Add(Me.pnl_Settings)
-        Me.adminDashboard.Controls.Add(Me.pnl_Inventory)
         Me.adminDashboard.Controls.Add(Me.pnl_Products)
         Me.adminDashboard.Controls.Add(Me.pnlCashiers)
         Me.adminDashboard.Controls.Add(Me.pnl_dashboard_system)
         Me.adminDashboard.Controls.Add(Me.pnlProductInput)
         Me.adminDashboard.Controls.Add(Me.pnl_Messages)
+        Me.adminDashboard.Controls.Add(Me.pnl_History)
+        Me.adminDashboard.Controls.Add(Me.pnl_Settings)
+        Me.adminDashboard.Controls.Add(Me.pnl_Inventory)
         Me.adminDashboard.Location = New System.Drawing.Point(199, 0)
         Me.adminDashboard.Margin = New System.Windows.Forms.Padding(2)
         Me.adminDashboard.Name = "adminDashboard"
         Me.adminDashboard.Size = New System.Drawing.Size(1007, 639)
         Me.adminDashboard.TabIndex = 2
+        '
+        'pnl_History
+        '
+        Me.pnl_History.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnl_History.AutoScroll = True
+        Me.pnl_History.Controls.Add(Me.Label4)
+        Me.pnl_History.Location = New System.Drawing.Point(0, 0)
+        Me.pnl_History.Name = "pnl_History"
+        Me.pnl_History.Size = New System.Drawing.Size(1007, 639)
+        Me.pnl_History.TabIndex = 52
+        Me.pnl_History.Visible = False
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(413, 222)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(86, 25)
+        Me.Label4.TabIndex = 0
+        Me.Label4.Text = "History"
+        '
+        'pnl_Settings
+        '
+        Me.pnl_Settings.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnl_Settings.AutoScroll = True
+        Me.pnl_Settings.Controls.Add(Me.Setting)
+        Me.pnl_Settings.Location = New System.Drawing.Point(0, 0)
+        Me.pnl_Settings.Name = "pnl_Settings"
+        Me.pnl_Settings.Size = New System.Drawing.Size(1007, 639)
+        Me.pnl_Settings.TabIndex = 51
+        Me.pnl_Settings.Visible = False
+        '
+        'Setting
+        '
+        Me.Setting.AutoSize = True
+        Me.Setting.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Setting.Location = New System.Drawing.Point(413, 222)
+        Me.Setting.Name = "Setting"
+        Me.Setting.Size = New System.Drawing.Size(98, 25)
+        Me.Setting.TabIndex = 0
+        Me.Setting.Text = "Settings"
         '
         'pnl_Inventory
         '
@@ -3617,52 +3663,6 @@ Partial Class Admin
         Me.DataGridView1.Size = New System.Drawing.Size(240, 150)
         Me.DataGridView1.TabIndex = 0
         '
-        'pnl_Settings
-        '
-        Me.pnl_Settings.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnl_Settings.AutoScroll = True
-        Me.pnl_Settings.Controls.Add(Me.Setting)
-        Me.pnl_Settings.Location = New System.Drawing.Point(0, 0)
-        Me.pnl_Settings.Name = "pnl_Settings"
-        Me.pnl_Settings.Size = New System.Drawing.Size(1007, 639)
-        Me.pnl_Settings.TabIndex = 51
-        Me.pnl_Settings.Visible = False
-        '
-        'Setting
-        '
-        Me.Setting.AutoSize = True
-        Me.Setting.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Setting.Location = New System.Drawing.Point(413, 222)
-        Me.Setting.Name = "Setting"
-        Me.Setting.Size = New System.Drawing.Size(98, 25)
-        Me.Setting.TabIndex = 0
-        Me.Setting.Text = "Settings"
-        '
-        'pnl_History
-        '
-        Me.pnl_History.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnl_History.AutoScroll = True
-        Me.pnl_History.Controls.Add(Me.Label4)
-        Me.pnl_History.Location = New System.Drawing.Point(0, 0)
-        Me.pnl_History.Name = "pnl_History"
-        Me.pnl_History.Size = New System.Drawing.Size(1007, 639)
-        Me.pnl_History.TabIndex = 52
-        Me.pnl_History.Visible = False
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(413, 222)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(86, 25)
-        Me.Label4.TabIndex = 0
-        Me.Label4.Text = "History"
-        '
         'Admin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3696,6 +3696,10 @@ Partial Class Admin
         Me.Navigation.PerformLayout()
         Me.adminDashboard.ResumeLayout(False)
         Me.adminDashboard.PerformLayout()
+        Me.pnl_History.ResumeLayout(False)
+        Me.pnl_History.PerformLayout()
+        Me.pnl_Settings.ResumeLayout(False)
+        Me.pnl_Settings.PerformLayout()
         Me.pnl_Inventory.ResumeLayout(False)
         Me.pnl_Inventory.PerformLayout()
         Me.pnl_Products.ResumeLayout(False)
@@ -3735,10 +3739,6 @@ Partial Class Admin
         Me.Guna2Panel10.ResumeLayout(False)
         Me.Guna2Panel10.PerformLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.pnl_Settings.ResumeLayout(False)
-        Me.pnl_Settings.PerformLayout()
-        Me.pnl_History.ResumeLayout(False)
-        Me.pnl_History.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

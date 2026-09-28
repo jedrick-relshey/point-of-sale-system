@@ -53,16 +53,6 @@ Public Class Cashier
         End If
     End Sub
 
-    Private Sub showpanel(panelToShow As Panel)
-
-        For Each panel As Panel In {
-                dashbrd_pnl,
-                pnl_PointOfSale,
-                pnl_CashierMessages
-
-                }
-    End Sub
-
     Private Sub btn_CashierMessages_Click(sender As Object, e As EventArgs) Handles btn_CashierMessages.Click
 
         pnl_CashierMessages.Visible = True
@@ -107,30 +97,61 @@ Public Class Cashier
 
         For Each chat As ChatMessage In DataStore.ChatMessages
 
+            'Main message panel
+            Dim messagePanel As New RoundedPanel()
+
+            messagePanel.Width = flpMessages.ClientSize.Width - 90
+            messagePanel.Height = 90
+            messagePanel.Margin = New Padding(5)
+            messagePanel.Padding = New Padding(10)
+            messagePanel.BackColor = Color.FromArgb(62, 39, 35)
+
+            'Sender
+            Dim senderLabel As New Label()
+
+            senderLabel.Text = chat.Sender
+            senderLabel.AutoSize = True
+            senderLabel.Location = New Point(10, 8)
+            senderLabel.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+            senderLabel.ForeColor = Color.White
+
+            'Message
             Dim messageLabel As New Label()
 
             messageLabel.Text = chat.Message
-            messageLabel.AutoSize = True
-            messageLabel.MaximumSize = New Size(flpMessages.ClientSize.Width - 40, 0)
-
-            messageLabel.Padding = New Padding(10)
-            messageLabel.Margin = New Padding(5)
+            messageLabel.AutoSize = False
+            messageLabel.Width = messagePanel.Width - 20
+            messageLabel.Height = 40
+            messageLabel.Location = New Point(10, 28)
             messageLabel.Font = New Font("Segoe UI", 10, FontStyle.Regular)
+            messageLabel.ForeColor = Color.White
 
-            'Cashier = right side
-            If chat.Sender = "Cashier" Then
-                messageLabel.TextAlign = ContentAlignment.MiddleRight
-                messageLabel.Anchor = AnchorStyles.Right
+            'Time
+            Dim timeLabel As New Label()
 
-                'Admin = left side
-            ElseIf chat.Sender = "Admin" Then
-                messageLabel.TextAlign = ContentAlignment.MiddleLeft
-                messageLabel.Anchor = AnchorStyles.Left
-            End If
+            timeLabel.Text = chat.TimeSent.ToString("hh:mm tt")
+            timeLabel.AutoSize = True
+            timeLabel.Location = New Point(10, 68)
+            timeLabel.Font = New Font("Segoe UI", 8, FontStyle.Regular)
+            timeLabel.ForeColor = Color.LightGray
 
-            flpMessages.Controls.Add(messageLabel)
+            'Add controls
+            messagePanel.Controls.Add(senderLabel)
+            messagePanel.Controls.Add(messageLabel)
+            messagePanel.Controls.Add(timeLabel)
+
+            'Add message panel
+            flpMessages.Controls.Add(messagePanel)
 
         Next
 
+        'Scroll to latest
+        If flpMessages.Controls.Count > 0 Then
+            flpMessages.ScrollControlIntoView(
+            flpMessages.Controls(flpMessages.Controls.Count - 1)
+        )
+        End If
+
     End Sub
+
 End Class

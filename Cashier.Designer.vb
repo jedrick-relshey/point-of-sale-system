@@ -82,6 +82,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel6 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2Button1 = New Guna.UI2.WinForms.Guna2Button()
         Me.Guna2HtmlLabel8 = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_PointOfSale = New Guna.UI2.WinForms.Guna2Panel()
         Me.txt_Search = New Guna.UI2.WinForms.Guna2TextBox()
         Me.Guna2Panel5 = New Guna.UI2.WinForms.Guna2Panel()
@@ -116,7 +117,6 @@ Partial Class Cashier
         Me.Guna2HtmlLabel11 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2HtmlLabel10 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2HtmlLabel9 = New Guna.UI2.WinForms.Guna2HtmlLabel()
-        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dshbrd_Pnl.SuspendLayout()
         Me.main_pnl.SuspendLayout()
         Me.pnl_CashierMessages.SuspendLayout()
@@ -137,6 +137,8 @@ Partial Class Cashier
         '
         'dshbrd_Pnl
         '
+        Me.dshbrd_Pnl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.dshbrd_Pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.dshbrd_Pnl.Controls.Add(Me.btnCashierLogout)
         Me.dshbrd_Pnl.Controls.Add(Me.Guna2Button3)
@@ -149,7 +151,6 @@ Partial Class Cashier
         Me.dshbrd_Pnl.Controls.Add(Me.btn_prdt)
         Me.dshbrd_Pnl.Controls.Add(Me.btn_Point_Of_Sale)
         Me.dshbrd_Pnl.Controls.Add(Me.btn_DashBoard)
-        Me.dshbrd_Pnl.Dock = System.Windows.Forms.DockStyle.Left
         Me.dshbrd_Pnl.Location = New System.Drawing.Point(0, 0)
         Me.dshbrd_Pnl.Name = "dshbrd_Pnl"
         Me.dshbrd_Pnl.Size = New System.Drawing.Size(199, 666)
@@ -198,7 +199,7 @@ Partial Class Cashier
         Me.Guna2Button3.Image = Global.Vb_POS.My.Resources.Resources.settings_
         Me.Guna2Button3.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.Guna2Button3.ImageSize = New System.Drawing.Size(16, 16)
-        Me.Guna2Button3.Location = New System.Drawing.Point(5, 456)
+        Me.Guna2Button3.Location = New System.Drawing.Point(5, 408)
         Me.Guna2Button3.Name = "Guna2Button3"
         Me.Guna2Button3.Size = New System.Drawing.Size(188, 42)
         Me.Guna2Button3.TabIndex = 17
@@ -222,7 +223,7 @@ Partial Class Cashier
         Me.btn_CashierMessages.HoverState.ForeColor = System.Drawing.Color.White
         Me.btn_CashierMessages.Image = Global.Vb_POS.My.Resources.Resources.icons8_message_64
         Me.btn_CashierMessages.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btn_CashierMessages.Location = New System.Drawing.Point(5, 408)
+        Me.btn_CashierMessages.Location = New System.Drawing.Point(5, 360)
         Me.btn_CashierMessages.Name = "btn_CashierMessages"
         Me.btn_CashierMessages.Size = New System.Drawing.Size(188, 42)
         Me.btn_CashierMessages.TabIndex = 16
@@ -403,10 +404,10 @@ Partial Class Cashier
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.main_pnl.BackColor = System.Drawing.Color.WhiteSmoke
         Me.main_pnl.BorderColor = System.Drawing.Color.Black
-        Me.main_pnl.Controls.Add(Me.Panel1)
-        Me.main_pnl.Controls.Add(Me.dashbrd_pnl)
-        Me.main_pnl.Controls.Add(Me.pnl_PointOfSale)
         Me.main_pnl.Controls.Add(Me.pnl_CashierMessages)
+        Me.main_pnl.Controls.Add(Me.dashbrd_pnl)
+        Me.main_pnl.Controls.Add(Me.Panel1)
+        Me.main_pnl.Controls.Add(Me.pnl_PointOfSale)
         Me.main_pnl.Location = New System.Drawing.Point(199, 0)
         Me.main_pnl.Name = "main_pnl"
         Me.main_pnl.Size = New System.Drawing.Size(1007, 666)
@@ -414,6 +415,9 @@ Partial Class Cashier
         '
         'pnl_CashierMessages
         '
+        Me.pnl_CashierMessages.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl_CashierMessages.AutoSize = True
         Me.pnl_CashierMessages.Controls.Add(Me.FlowLayoutPanel3)
         Me.pnl_CashierMessages.Controls.Add(Me.pnl_MainChat)
@@ -547,6 +551,9 @@ Partial Class Cashier
         '
         'dashbrd_pnl
         '
+        Me.dashbrd_pnl.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dashbrd_pnl.AutoSize = True
         Me.dashbrd_pnl.Controls.Add(Me.Guna2ShadowPanel3)
         Me.dashbrd_pnl.Controls.Add(Me.Guna2ShadowPanel1)
@@ -560,7 +567,6 @@ Partial Class Cashier
         Me.dashbrd_pnl.Controls.Add(Me.Guna2HtmlLabel6)
         Me.dashbrd_pnl.Controls.Add(Me.Guna2Button1)
         Me.dashbrd_pnl.Controls.Add(Me.Guna2HtmlLabel8)
-        Me.dashbrd_pnl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dashbrd_pnl.Location = New System.Drawing.Point(0, 0)
         Me.dashbrd_pnl.Name = "dashbrd_pnl"
         Me.dashbrd_pnl.Size = New System.Drawing.Size(1007, 666)
@@ -919,8 +925,21 @@ Partial Class Cashier
         Me.Guna2HtmlLabel8.TabIndex = 18
         Me.Guna2HtmlLabel8.Text = "Cashier"
         '
+        'Panel1
+        '
+        Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1007, 666)
+        Me.Panel1.TabIndex = 22
+        '
         'pnl_PointOfSale
         '
+        Me.pnl_PointOfSale.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnl_PointOfSale.AutoSize = True
         Me.pnl_PointOfSale.BackColor = System.Drawing.SystemColors.Menu
         Me.pnl_PointOfSale.Controls.Add(Me.txt_Search)
@@ -933,12 +952,14 @@ Partial Class Cashier
         Me.pnl_PointOfSale.Controls.Add(Me.btn_All)
         Me.pnl_PointOfSale.Location = New System.Drawing.Point(0, 0)
         Me.pnl_PointOfSale.Name = "pnl_PointOfSale"
-        Me.pnl_PointOfSale.Size = New System.Drawing.Size(1010, 666)
+        Me.pnl_PointOfSale.Size = New System.Drawing.Size(1013, 669)
         Me.pnl_PointOfSale.TabIndex = 22
         Me.pnl_PointOfSale.Visible = False
         '
         'txt_Search
         '
+        Me.txt_Search.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txt_Search.BorderColor = System.Drawing.Color.Gray
         Me.txt_Search.BorderRadius = 15
         Me.txt_Search.Cursor = System.Windows.Forms.Cursors.IBeam
@@ -962,6 +983,7 @@ Partial Class Cashier
         '
         'Guna2Panel5
         '
+        Me.Guna2Panel5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Guna2Panel5.BackColor = System.Drawing.Color.MintCream
         Me.Guna2Panel5.BorderColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.Guna2Panel5.BorderThickness = 1
@@ -978,9 +1000,9 @@ Partial Class Cashier
         Me.Guna2Panel5.Controls.Add(Me.Guna2HtmlLabel19)
         Me.Guna2Panel5.Controls.Add(Me.Guna2HtmlLabel18)
         Me.Guna2Panel5.Controls.Add(Me.Guna2HtmlLabel17)
-        Me.Guna2Panel5.Location = New System.Drawing.Point(616, 388)
+        Me.Guna2Panel5.Location = New System.Drawing.Point(619, 388)
         Me.Guna2Panel5.Name = "Guna2Panel5"
-        Me.Guna2Panel5.Size = New System.Drawing.Size(391, 246)
+        Me.Guna2Panel5.Size = New System.Drawing.Size(388, 246)
         Me.Guna2Panel5.TabIndex = 23
         '
         'Guna2HtmlLabel25
@@ -1154,13 +1176,13 @@ Partial Class Cashier
         '
         'Guna2Panel6
         '
+        Me.Guna2Panel6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Guna2Panel6.BackColor = System.Drawing.SystemColors.ScrollBar
         Me.Guna2Panel6.BorderColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.Guna2Panel6.BorderThickness = 1
         Me.Guna2Panel6.Controls.Add(Me.Guna2Panel7)
         Me.Guna2Panel6.Controls.Add(Me.Guna2HtmlLabel16)
         Me.Guna2Panel6.Controls.Add(Me.Guna2HtmlLabel15)
-        Me.Guna2Panel6.Dock = System.Windows.Forms.DockStyle.Right
         Me.Guna2Panel6.Location = New System.Drawing.Point(619, 0)
         Me.Guna2Panel6.Name = "Guna2Panel6"
         Me.Guna2Panel6.Size = New System.Drawing.Size(391, 666)
@@ -1168,12 +1190,14 @@ Partial Class Cashier
         '
         'Guna2Panel7
         '
+        Me.Guna2Panel7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Guna2Panel7.BackColor = System.Drawing.Color.MintCream
         Me.Guna2Panel7.BorderColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(55, Byte), Integer), CType(CType(1, Byte), Integer))
         Me.Guna2Panel7.BorderThickness = 1
-        Me.Guna2Panel7.Location = New System.Drawing.Point(0, 79)
+        Me.Guna2Panel7.Location = New System.Drawing.Point(-3, 79)
         Me.Guna2Panel7.Name = "Guna2Panel7"
-        Me.Guna2Panel7.Size = New System.Drawing.Size(391, 309)
+        Me.Guna2Panel7.Size = New System.Drawing.Size(394, 309)
         Me.Guna2Panel7.TabIndex = 22
         '
         'Guna2HtmlLabel16
@@ -1385,13 +1409,6 @@ Partial Class Cashier
         Me.Guna2HtmlLabel9.Size = New System.Drawing.Size(134, 17)
         Me.Guna2HtmlLabel9.TabIndex = 20
         Me.Guna2HtmlLabel9.Text = "CASHIER WORKSPACE"
-        '
-        'Panel1
-        '
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1007, 666)
-        Me.Panel1.TabIndex = 22
         '
         'Cashier
         '

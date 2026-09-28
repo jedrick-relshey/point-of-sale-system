@@ -5,5 +5,4 @@
 
     'Message Store
     Public ChatMessages As New List(Of ChatMessage)
-
 End Module
