@@ -53,6 +53,16 @@ Public Class Cashier
         End If
     End Sub
 
+    Private Sub showpanel(panelToShow As Panel)
+
+        For Each panel As Panel In {
+                dashbrd_pnl,
+                pnl_PointOfSale,
+                pnl_CashierMessages
+
+                }
+    End Sub
+
     Private Sub btn_CashierMessages_Click(sender As Object, e As EventArgs) Handles btn_CashierMessages.Click
 
         pnl_CashierMessages.Visible = True

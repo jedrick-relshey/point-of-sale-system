@@ -102,7 +102,7 @@
         End If
     End Sub
 
-    'Dashboard Panel
+    'Dashboard Panel and buttons
     Private Sub ShowPanel(panelToShow As Panel)
 
         For Each panel As Panel In {
@@ -110,7 +110,10 @@
         pnlProductInput,
         pnl_Products,
         pnl_Messages,
-        pnlCashiers
+        pnlCashiers,
+        pnl_Inventory,
+        pnl_Settings,
+        pnl_History
     }
             panel.Visible = False
         Next
@@ -118,6 +121,7 @@
         panelToShow.Visible = True
 
     End Sub
+
     'Buttons
     Private Sub btn_dashboardAdmin_Click(sender As Object, e As EventArgs) Handles btn_dashboardAdmin.Click
         ShowPanel(pnl_dashboard_system) 'button to show dashboard panel
@@ -135,6 +139,18 @@
     End Sub
     Private Sub btnCashiers_Click(sender As Object, e As EventArgs) Handles btnCashiers.Click
         ShowPanel(pnlCashiers) 'button to show cashiers panel)
+    End Sub
+
+    Private Sub btnInventory_Click(sender As Object, e As EventArgs) Handles btnInventory.Click
+        ShowPanel(pnl_Inventory) 'button to show inventory panel)
+    End Sub
+
+    Private Sub Guna2Button5_Click(sender As Object, e As EventArgs) Handles Guna2Button5.Click
+        ShowPanel(pnl_Settings) 'button to show settings panel) 
+    End Sub
+
+    Private Sub btnHistory_Click(sender As Object, e As EventArgs) Handles btnHistory.Click
+        ShowPanel(pnl_History) 'button to show history panel
     End Sub
 
     Private Sub LoadChatMessages()
@@ -205,9 +221,5 @@
         'registerCashierForm.Show()
         'Me.Hide()
         displayCashiers()
-    End Sub
-
-    Private Sub Navigation_Paint(sender As Object, e As PaintEventArgs) Handles Navigation.Paint
-
     End Sub
 End Class
