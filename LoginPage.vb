@@ -1,7 +1,5 @@
 ﻿Imports System.Drawing.Drawing2D
-Module GlobalData
-    Public userName As String = ""
-End Module
+Imports System.Security.Principal
 Public Class LoginPage
     Private Sub btn_Login_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
 
@@ -19,7 +17,15 @@ Public Class LoginPage
             Select Case userType
                 Case "cashier"
                     If Not (txtUser.Text = "" Or txtPass.Text = "") Then
-                        If txtUser.Text = "jedrick" And txtPass.Text = "cashier123" Then
+                        For i As Integer = 0 To GlobalData.registerAccount.Count - 1
+                            For j As Integer = 0 To GlobalData.registerAccount(i).Length - 1
+                                If txtUser.Text = GlobalData.registerAccount(i)(1) And txtPass.Text = GlobalData.registerAccount(i)(2) Then
+                                    username = GlobalData.registerAccount(i)(1)
+                                    password = GlobalData.registerAccount(i)(2)
+                                End If
+                            Next
+                        Next
+                        If txtUser.Text = "jedrick" And txtPass.Text = "cashier123" Or txtUser.Text = username And txtPass.Text = password Then
                             GlobalData.userName = txtUser.Text
                             MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Dim cashier As New Cashier()

@@ -1,7 +1,4 @@
-﻿Module GlobalVariables
-    Public account As String
-End Module
-Public Class Admin
+﻿Public Class Admin
 
     Private Sub btnAdminLogout_Click(sender As Object, e As EventArgs) Handles btnAdminLogout.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to logout?", "Logout Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
@@ -161,10 +158,20 @@ Public Class Admin
         Next
 
     End Sub
+    Private Sub displayCashiers()
+        Dim currentDateTime As DateTime = DateTime.Now
+
+        For Each account As String() In GlobalData.registerAccount
+
+            Me.cashierDataGridView.Rows.Add(account(0), account(1), "Active", currentDateTime.ToString("d"))
+        Next
+
+    End Sub
+
 
     'Admin Load Event
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.cashierDataGridView.Rows.Add("Jedrick Miclat", "jedrick", "Active", "09-28-2026")
+        Me.cashierDataGridView.Rows.Add("Jedrick Miclat", "jedrick", "Active", "09/28/2026")
         LoadChatMessages()
 
     End Sub
@@ -197,5 +204,6 @@ Public Class Admin
         registerCashierForm.ShowDialog(Me)
         'registerCashierForm.Show()
         'Me.Hide()
+        displayCashiers()
     End Sub
 End Class
