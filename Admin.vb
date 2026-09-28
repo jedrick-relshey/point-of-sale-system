@@ -160,21 +160,83 @@
 
         For Each chat As ChatMessage In DataStore.ChatMessages
 
-            If chat.Receiver = "Admin" Then
-                Dim messageLabel As New Label()
-                messageLabel.AutoSize = True
-                messageLabel.MaximumSize = New Size(flpAdminMessages.ClientSize.Width - 20, 0)
-                messageLabel.Text = chat.Sender & ": " & chat.Message
-                messageLabel.Padding = New Padding(10)
-                messageLabel.Margin = New Padding(5)
-                messageLabel.Font = New Font("Segoe UI", 10, FontStyle.Regular)
-                flpAdminMessages.Controls.Add(messageLabel)
+            'Main message bubble
+            Dim messagePanel As New RoundedPanel()
+
+            messagePanel.Width = flpAdminMessages.ClientSize.Width - 120
+            messagePanel.BorderRadius = 15
+            messagePanel.AutoSize = True
+            messagePanel.Padding = New Padding(10)
+            messagePanel.Margin = New Padding(5)
+
+            'Sender
+            Dim senderLabel As New Label()
+
+            senderLabel.Text = chat.Sender
+            senderLabel.AutoSize = True
+            senderLabel.Font = New Font("Segoe UI", 9, FontStyle.Bold)
+
+            'Message
+            Dim messageLabel As New Label()
+
+
+            messageLabel.Text = chat.Message
+            messageLabel.AutoSize = True
+            messageLabel.MaximumSize = New Size(350, 0)
+            messageLabel.Font = New Font("Segoe UI", 10)
+
+            'Time
+            Dim timeLabel As New Label()
+
+            timeLabel.Text = chat.TimeSent.ToString("hh:mm tt")
+            timeLabel.AutoSize = True
+            timeLabel.Font = New Font("Segoe UI", 8)
+
+            'Colors
+            If chat.Sender = "Admin" Then
+
+                messagePanel.BackColor = Color.FromKnownColor(KnownColor.ControlLight)
+
+                senderLabel.ForeColor = Color.FromArgb(62, 39, 35)
+                messageLabel.ForeColor = Color.FromArgb(62, 39, 35)
+                timeLabel.ForeColor = Color.Gray
+
+            Else
+
+                messagePanel.BackColor = Color.FromArgb(62, 39, 35)
+
+                senderLabel.ForeColor = Color.White
+                messageLabel.ForeColor = Color.White
+                timeLabel.ForeColor = Color.LightGray
 
             End If
 
+            'Add controls
+            messagePanel.Controls.Add(timeLabel)
+            messagePanel.Controls.Add(messageLabel)
+            messagePanel.Controls.Add(senderLabel)
+
+            'Arrange vertically
+            timeLabel.Dock = DockStyle.Top
+            messageLabel.Dock = DockStyle.Top
+            senderLabel.Dock = DockStyle.Top
+
+            'Add bubble
+            flpAdminMessages.Controls.Add(messagePanel)
+
         Next
 
+        'Scroll to latest message
+        If flpAdminMessages.Controls.Count > 0 Then
+
+            flpAdminMessages.ScrollControlIntoView(
+            flpAdminMessages.Controls(flpAdminMessages.Controls.Count - 1)
+        )
+
+        End If
+
     End Sub
+
     Private Sub displayCashiers()
         Dim currentDateTime As DateTime = DateTime.Now
 

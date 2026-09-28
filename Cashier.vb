@@ -100,7 +100,7 @@ Public Class Cashier
             'Main message panel
             Dim messagePanel As New RoundedPanel()
 
-            messagePanel.Width = flpMessages.ClientSize.Width - 90
+            messagePanel.Width = flpMessages.ClientSize.Width - 120
             messagePanel.Height = 90
             messagePanel.Margin = New Padding(5)
             messagePanel.Padding = New Padding(10)
