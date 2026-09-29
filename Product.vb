@@ -5,5 +5,7 @@
     Public Property Stock As Integer
     Public Property Description As String
     Public Property Image As Image
+    Public Property Category As String
+    Public Property Status As String
 
 End Class

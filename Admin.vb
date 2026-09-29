@@ -19,61 +19,109 @@
         Dim price As Decimal
         Dim stock As Integer
 
-        Decimal.TryParse(txtProductPrice.Text, price)
-        Integer.TryParse(txtProductStock.Text, stock)
+        Decimal.TryParse(txtProductPrice.Text.Trim(), price)
+        Integer.TryParse(txtProductStock.Text.Trim(), stock)
 
-        Dim newProduct As New Product()
+        Dim newProduct As New Product With {
+        .Name = txtProductName.Text.Trim(),
+        .Price = price,
+        .Stock = stock,
+        .Category = cmb_Category.Text.Trim(),
+        .Description = txtProductDescription.Text.Trim(),
+        .Image = productImage.Image
+    }
 
-        newProduct.Name = txtProductName.Text
-        newProduct.Price = price
-        newProduct.Stock = stock
-        newProduct.Description = txtProductDescription.Text
+        If stock > 0 Then
+            newProduct.Status = "Available"
+        Else
+            newProduct.Status = "Unavailable"
+        End If
 
         DataStore.Products.Add(newProduct)
 
         LoadProducts()
+
+        MessageBox.Show(
+        "Product saved successfully.",
+        "Product",
+        MessageBoxButtons.OK,
+        MessageBoxIcon.Information
+    )
+
     End Sub
+
 
     Private Function ValidateProduct() As Boolean
 
-        Dim textBoxes() As Control = {
-        txtProductName,
-        txtProductPrice,
-        txtProductStock,
-        txtProductDescription
-    }
-
-        Dim errorLabels() As Control = {
-        lblProductNameError,
-        lblPriceError,
-        lblStockError,
-        lblCategoryError,
-        lblDescriptionError
-    }
-
         Dim valid As Boolean = True
 
-        For i As Integer = 0 To textBoxes.Length - 1
+        lblProductNameError.Visible = False
+        lblPriceError.Visible = False
+        lblStockError.Visible = False
+        lblCategoryError.Visible = False
+        lblDescriptionError.Visible = False
 
-            errorLabels(i).Visible = False
+        If String.IsNullOrWhiteSpace(txtProductName.Text) Then
+            lblProductNameError.Text = "This field is required."
+            lblProductNameError.Visible = True
+            valid = False
+        End If
 
-            If textBoxes(i).Text.Trim() = "" Then
-                errorLabels(i).Text = "This field is required."
-                errorLabels(i).Visible = True
-                valid = False
+        Dim price As Decimal
 
-            ElseIf i = 1 AndAlso Not Decimal.TryParse(textBoxes(i).Text, Nothing) Then
-                errorLabels(i).Text = "Enter a valid price."
-                errorLabels(i).Visible = True
-                valid = False
+        If String.IsNullOrWhiteSpace(txtProductPrice.Text) Then
 
-            ElseIf i = 2 AndAlso Not Integer.TryParse(textBoxes(i).Text, Nothing) Then
-                errorLabels(i).Text = "Enter a valid stock."
-                errorLabels(i).Visible = True
-                valid = False
-            End If
+            lblPriceError.Text = "This field is required."
+            lblPriceError.Visible = True
+            valid = False
 
-        Next
+        ElseIf Not Decimal.TryParse(txtProductPrice.Text.Trim(), price) Then
+
+            lblPriceError.Text = "Enter a valid price."
+            lblPriceError.Visible = True
+            valid = False
+
+        ElseIf price < 0 Then
+
+            lblPriceError.Text = "Price cannot be negative."
+            lblPriceError.Visible = True
+            valid = False
+
+        End If
+
+        Dim stock As Integer
+
+        If String.IsNullOrWhiteSpace(txtProductStock.Text) Then
+
+            lblStockError.Text = "This field is required."
+            lblStockError.Visible = True
+            valid = False
+
+        ElseIf Not Integer.TryParse(txtProductStock.Text.Trim(), stock) Then
+
+            lblStockError.Text = "Enter a valid stock."
+            lblStockError.Visible = True
+            valid = False
+
+        ElseIf stock < 0 Then
+
+            lblStockError.Text = "Stock cannot be negative."
+            lblStockError.Visible = True
+            valid = False
+
+        End If
+
+        If String.IsNullOrWhiteSpace(cmb_Category.Text) Then
+            lblCategoryError.Text = "This field is required."
+            lblCategoryError.Visible = True
+            valid = False
+        End If
+
+        If String.IsNullOrWhiteSpace(txtProductDescription.Text) Then
+            lblDescriptionError.Text = "This field is required."
+            lblDescriptionError.Visible = True
+            valid = False
+        End If
 
         Return valid
 
@@ -90,13 +138,12 @@
             dgvProducts.Rows(row).Cells("Product").Value = item.Name
             dgvProducts.Rows(row).Cells("Price").Value = item.Price
             dgvProducts.Rows(row).Cells("Stock").Value = item.Stock
-            dgvProducts.Rows(row).Cells("Description").Value = item.Description
 
         Next
 
     End Sub
 
-    Private Sub btnChooseImage_Click(sender As Object, e As EventArgs) Handles btnChooseImage.Click
+    Private Sub btnChooseImage_Click(sender As Object, e As EventArgs)
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
             productImage.Image = Image.FromFile(OpenFileDialog1.FileName)
         End If
@@ -107,7 +154,6 @@
 
         For Each panel As Panel In {
         pnl_dashboard_system,
-        pnlProductInput,
         pnl_Products,
         pnl_Messages,
         pnlCashiers,
@@ -131,9 +177,6 @@
         ShowPanel(pnl_Products) 'button to show products panel
     End Sub
 
-    Private Sub btn_AddProduct_Click(sender As Object, e As EventArgs) Handles btn_AddProduct.Click
-        ShowPanel(pnlProductInput)
-    End Sub
     Private Sub btnMessages_Click(sender As Object, e As EventArgs) Handles btnMessages.Click
         ShowPanel(pnl_Messages) 'button to show messages panel
     End Sub
