@@ -26,7 +26,7 @@
         .Name = txtProductName.Text.Trim(),
         .Price = price,
         .Stock = stock,
-        .Category = cmb_Category.Text.Trim(),
+        .Category = txtCategory.Text.Trim(),
         .Description = txtProductDescription.Text.Trim(),
         .Image = productImage.Image
     }
@@ -39,17 +39,198 @@
 
         DataStore.Products.Add(newProduct)
 
-        LoadProducts()
+        LoadFilterOptions()
+        FilterProducts()
 
-        MessageBox.Show(
-        "Product saved successfully.",
-        "Product",
-        MessageBoxButtons.OK,
-        MessageBoxIcon.Information
-    )
+        txtProductName.Clear()
+        txtProductPrice.Clear()
+        txtProductStock.Clear()
+        txtCategory.Clear()
+        txtProductDescription.Clear()
+
+        productImage.Image = Nothing
+    End Sub
+
+    'Loads the filter options for product type, inventory status, and product status into the respective combo boxes. It also preserves the current selections if they exist in the new list of options.
+    Private Sub LoadFilterOptions()
+
+        Dim currentProductType As String = cmb_ProductType.Text
+        Dim currentInventory As String = cmb_Inventory.Text
+        Dim currentStatus As String = cmb_Status.Text
+
+        cmb_ProductType.Items.Clear()
+        cmb_Inventory.Items.Clear()
+        cmb_Status.Items.Clear()
+
+        cmb_ProductType.Items.Add("All")
+
+        Dim categories As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+        For Each item As Product In DataStore.Products
+
+            If Not String.IsNullOrWhiteSpace(item.Category) Then
+                categories.Add(item.Category)
+            End If
+
+        Next
+
+        For Each category As String In categories
+            cmb_ProductType.Items.Add(category)
+        Next
+
+
+        'Inventory choices
+        cmb_Inventory.Items.Add("All")
+        cmb_Inventory.Items.Add("In Stock")
+        cmb_Inventory.Items.Add("Low Stock")
+        cmb_Inventory.Items.Add("Out of Stock")
+
+
+        'Status choices
+        cmb_Status.Items.Add("All")
+
+        Dim statuses As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+        For Each item As Product In DataStore.Products
+
+            If Not String.IsNullOrWhiteSpace(item.Status) Then
+                statuses.Add(item.Status)
+            End If
+
+        Next
+
+        For Each status As String In statuses
+            cmb_Status.Items.Add(status)
+        Next
+
+
+        'Restore previous selections
+        If cmb_ProductType.Items.Contains(currentProductType) Then
+            cmb_ProductType.SelectedItem = currentProductType
+        Else
+            cmb_ProductType.SelectedIndex = 0
+        End If
+
+        If cmb_Inventory.Items.Contains(currentInventory) Then
+            cmb_Inventory.SelectedItem = currentInventory
+        Else
+            cmb_Inventory.SelectedIndex = 0
+        End If
+
+        If cmb_Status.Items.Contains(currentStatus) Then
+            cmb_Status.SelectedItem = currentStatus
+        Else
+            cmb_Status.SelectedIndex = 0
+        End If
 
     End Sub
 
+    Private Sub FilterProducts()
+
+        dgvProducts.Rows.Clear()
+
+        Dim searchText As String = txtSearch.Text.Trim().ToLower()
+        Dim selectedType As String = cmb_ProductType.Text
+        Dim selectedInventory As String = cmb_Inventory.Text
+        Dim selectedStatus As String = cmb_Status.Text
+
+        For Each item As Product In DataStore.Products
+
+            'SEARCH FILTER
+            If searchText <> "" Then
+
+                Dim productName As String = item.Name.ToLower()
+                Dim category As String = item.Category.ToLower()
+                Dim description As String = item.Description.ToLower()
+
+                If Not productName.Contains(searchText) AndAlso
+               Not category.Contains(searchText) AndAlso
+               Not description.Contains(searchText) Then
+
+                    Continue For
+
+                End If
+
+            End If
+
+
+            'PRODUCT TYPE FILTER
+            If selectedType <> "" AndAlso
+           selectedType <> "All" AndAlso
+           Not item.Category.Equals(selectedType, StringComparison.OrdinalIgnoreCase) Then
+
+                Continue For
+
+            End If
+
+
+            'INVENTORY FILTER
+            If selectedInventory = "In Stock" AndAlso item.Stock <= 0 Then
+
+                Continue For
+
+            ElseIf selectedInventory = "Low Stock" AndAlso
+               (item.Stock <= 0 OrElse item.Stock > 5) Then
+
+                Continue For
+
+            ElseIf selectedInventory = "Out of Stock" AndAlso item.Stock > 0 Then
+
+                Continue For
+
+            End If
+
+
+            'STATUS FILTER
+            If selectedStatus <> "" AndAlso
+           selectedStatus <> "All" AndAlso
+           Not item.Status.Equals(selectedStatus, StringComparison.OrdinalIgnoreCase) Then
+
+                Continue For
+
+            End If
+
+
+            'ADD MATCHING PRODUCT
+            Dim row As Integer = dgvProducts.Rows.Add()
+
+            dgvProducts.Rows(row).Cells("Product").Value = item.Name
+            dgvProducts.Rows(row).Cells("Price").Value = item.Price
+            dgvProducts.Rows(row).Cells("Stock").Value = item.Stock
+            dgvProducts.Rows(row).Cells("Category").Value = item.Category
+            dgvProducts.Rows(row).Cells("Status").Value = item.Status
+
+        Next
+    End Sub
+
+    Private Sub cmb_ProductType_SelectedIndexChanged(
+        sender As Object,
+        e As EventArgs
+    ) Handles cmb_ProductType.SelectedIndexChanged
+
+        FilterProducts()
+
+    End Sub
+
+
+    Private Sub cmb_Inventory_SelectedIndexChanged(
+        sender As Object,
+        e As EventArgs
+    ) Handles cmb_Inventory.SelectedIndexChanged
+
+        FilterProducts()
+
+    End Sub
+
+
+    Private Sub cmb_Status_SelectedIndexChanged(
+        sender As Object,
+        e As EventArgs
+    ) Handles cmb_Status.SelectedIndexChanged
+
+        FilterProducts()
+
+    End Sub
 
     Private Function ValidateProduct() As Boolean
 
@@ -111,7 +292,7 @@
 
         End If
 
-        If String.IsNullOrWhiteSpace(cmb_Category.Text) Then
+        If String.IsNullOrWhiteSpace(txtCategory.Text) Then
             lblCategoryError.Text = "This field is required."
             lblCategoryError.Visible = True
             valid = False
@@ -124,24 +305,7 @@
         End If
 
         Return valid
-
     End Function
-
-    Private Sub LoadProducts()
-
-        dgvProducts.Rows.Clear()
-
-        For Each item In DataStore.Products
-
-            Dim row As Integer = dgvProducts.Rows.Add()
-
-            dgvProducts.Rows(row).Cells("Product").Value = item.Name
-            dgvProducts.Rows(row).Cells("Price").Value = item.Price
-            dgvProducts.Rows(row).Cells("Stock").Value = item.Stock
-
-        Next
-
-    End Sub
 
     Private Sub btnChooseImage_Click(sender As Object, e As EventArgs)
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
@@ -297,6 +461,9 @@
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadChatMessages()
         displayCashiers()
+
+        LoadFilterOptions()
+        FilterProducts()
     End Sub
 
     'Admin Send Button Click Event
@@ -329,4 +496,7 @@
         End Using
     End Sub
 
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        FilterProducts()
+    End Sub
 End Class

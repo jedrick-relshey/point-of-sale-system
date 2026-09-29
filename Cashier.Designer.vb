@@ -44,8 +44,8 @@ Partial Class Cashier
         Me.btn_DashBoard = New Guna.UI2.WinForms.Guna2Button()
         Me.Guna2HtmlLabel2 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.main_pnl = New Guna.UI2.WinForms.Guna2Panel()
-        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnl_PointOfSale = New Guna.UI2.WinForms.Guna2Panel()
+        Me.fl_Menu = New System.Windows.Forms.FlowLayoutPanel()
         Me.txt_Search = New Guna.UI2.WinForms.Guna2TextBox()
         Me.Guna2Panel5 = New Guna.UI2.WinForms.Guna2Panel()
         Me.Guna2HtmlLabel25 = New Guna.UI2.WinForms.Guna2HtmlLabel()
@@ -66,6 +66,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel16 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2HtmlLabel15 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.btn_IcedCoffee = New Guna.UI2.WinForms.Guna2Button()
+        Me.btn_Non_Coffee = New Guna.UI2.WinForms.Guna2Button()
         Me.btn_Specialty = New Guna.UI2.WinForms.Guna2Button()
         Me.btn_hotCoffee = New Guna.UI2.WinForms.Guna2Button()
         Me.btn_All = New Guna.UI2.WinForms.Guna2Button()
@@ -107,6 +108,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel6 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2Button1 = New Guna.UI2.WinForms.Guna2Button()
         Me.Guna2HtmlLabel8 = New Guna.UI2.WinForms.Guna2HtmlLabel()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dashboard_lbl = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2Panel1 = New Guna.UI2.WinForms.Guna2Panel()
         Me.Guna2Panel4 = New Guna.UI2.WinForms.Guna2Panel()
@@ -116,8 +118,6 @@ Partial Class Cashier
         Me.Guna2HtmlLabel11 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2HtmlLabel10 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2HtmlLabel9 = New Guna.UI2.WinForms.Guna2HtmlLabel()
-        Me.fl_Menu = New System.Windows.Forms.FlowLayoutPanel()
-        Me.btn_Non_Coffee = New Guna.UI2.WinForms.Guna2Button()
         Me.dshbrd_Pnl.SuspendLayout()
         Me.main_pnl.SuspendLayout()
         Me.pnl_PointOfSale.SuspendLayout()
@@ -414,16 +414,6 @@ Partial Class Cashier
         Me.main_pnl.Size = New System.Drawing.Size(1007, 666)
         Me.main_pnl.TabIndex = 4
         '
-        'Panel1
-        '
-        Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1007, 666)
-        Me.Panel1.TabIndex = 22
-        '
         'pnl_PointOfSale
         '
         Me.pnl_PointOfSale.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -445,6 +435,13 @@ Partial Class Cashier
         Me.pnl_PointOfSale.Size = New System.Drawing.Size(1013, 669)
         Me.pnl_PointOfSale.TabIndex = 22
         Me.pnl_PointOfSale.Visible = False
+        '
+        'fl_Menu
+        '
+        Me.fl_Menu.Location = New System.Drawing.Point(27, 134)
+        Me.fl_Menu.Name = "fl_Menu"
+        Me.fl_Menu.Size = New System.Drawing.Size(549, 481)
+        Me.fl_Menu.TabIndex = 25
         '
         'txt_Search
         '
@@ -729,6 +726,24 @@ Partial Class Cashier
         Me.btn_IcedCoffee.Size = New System.Drawing.Size(114, 39)
         Me.btn_IcedCoffee.TabIndex = 4
         Me.btn_IcedCoffee.Text = "Iced Coffee"
+        '
+        'btn_Non_Coffee
+        '
+        Me.btn_Non_Coffee.BorderColor = System.Drawing.Color.Gray
+        Me.btn_Non_Coffee.BorderRadius = 4
+        Me.btn_Non_Coffee.BorderThickness = 1
+        Me.btn_Non_Coffee.DisabledState.BorderColor = System.Drawing.Color.DarkGray
+        Me.btn_Non_Coffee.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
+        Me.btn_Non_Coffee.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
+        Me.btn_Non_Coffee.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
+        Me.btn_Non_Coffee.FillColor = System.Drawing.Color.White
+        Me.btn_Non_Coffee.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_Non_Coffee.ForeColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(18, Byte), Integer), CType(CType(1, Byte), Integer))
+        Me.btn_Non_Coffee.Location = New System.Drawing.Point(462, 85)
+        Me.btn_Non_Coffee.Name = "btn_Non_Coffee"
+        Me.btn_Non_Coffee.Size = New System.Drawing.Size(114, 39)
+        Me.btn_Non_Coffee.TabIndex = 3
+        Me.btn_Non_Coffee.Text = "Non-Coffee"
         '
         'btn_Specialty
         '
@@ -1296,6 +1311,16 @@ Partial Class Cashier
         Me.Guna2HtmlLabel8.TabIndex = 18
         Me.Guna2HtmlLabel8.Text = "Cashier"
         '
+        'Panel1
+        '
+        Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1007, 666)
+        Me.Panel1.TabIndex = 22
+        '
         'dashboard_lbl
         '
         Me.dashboard_lbl.BackColor = System.Drawing.Color.Transparent
@@ -1393,31 +1418,6 @@ Partial Class Cashier
         Me.Guna2HtmlLabel9.Size = New System.Drawing.Size(134, 17)
         Me.Guna2HtmlLabel9.TabIndex = 20
         Me.Guna2HtmlLabel9.Text = "CASHIER WORKSPACE"
-        '
-        'fl_Menu
-        '
-        Me.fl_Menu.Location = New System.Drawing.Point(27, 134)
-        Me.fl_Menu.Name = "fl_Menu"
-        Me.fl_Menu.Size = New System.Drawing.Size(549, 481)
-        Me.fl_Menu.TabIndex = 25
-        '
-        'btn_Non_Coffee
-        '
-        Me.btn_Non_Coffee.BorderColor = System.Drawing.Color.Gray
-        Me.btn_Non_Coffee.BorderRadius = 4
-        Me.btn_Non_Coffee.BorderThickness = 1
-        Me.btn_Non_Coffee.DisabledState.BorderColor = System.Drawing.Color.DarkGray
-        Me.btn_Non_Coffee.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
-        Me.btn_Non_Coffee.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
-        Me.btn_Non_Coffee.DisabledState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer), CType(CType(141, Byte), Integer))
-        Me.btn_Non_Coffee.FillColor = System.Drawing.Color.White
-        Me.btn_Non_Coffee.Font = New System.Drawing.Font("Calibri", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_Non_Coffee.ForeColor = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(18, Byte), Integer), CType(CType(1, Byte), Integer))
-        Me.btn_Non_Coffee.Location = New System.Drawing.Point(462, 85)
-        Me.btn_Non_Coffee.Name = "btn_Non_Coffee"
-        Me.btn_Non_Coffee.Size = New System.Drawing.Size(114, 39)
-        Me.btn_Non_Coffee.TabIndex = 3
-        Me.btn_Non_Coffee.Text = "Non-Coffee"
         '
         'Cashier
         '
