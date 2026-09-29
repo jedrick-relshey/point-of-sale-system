@@ -1,5 +1,9 @@
 ﻿Public Class Admin
 
+    Private isLoadingProducts As Boolean = True
+    Private editingProduct As Product = Nothing
+    Private isLoading As Boolean = True
+
     Private Sub btnAdminLogout_Click(sender As Object, e As EventArgs) Handles btnAdminLogout.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to logout?", "Logout Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
@@ -22,22 +26,45 @@
         Decimal.TryParse(txtProductPrice.Text.Trim(), price)
         Integer.TryParse(txtProductStock.Text.Trim(), stock)
 
-        Dim newProduct As New Product With {
-        .Name = txtProductName.Text.Trim(),
-        .Price = price,
-        .Stock = stock,
-        .Category = txtCategory.Text.Trim(),
-        .Description = txtProductDescription.Text.Trim(),
-        .Image = productImage.Image
-    }
+        If editingProduct Is Nothing Then
 
-        If stock > 0 Then
-            newProduct.Status = "Available"
+            'NEW PRODUCT
+            Dim newProduct As New Product With {
+            .Name = txtProductName.Text.Trim(),
+            .Price = price,
+            .Stock = stock,
+            .Category = txtCategory.Text.Trim(),
+            .Description = txtProductDescription.Text.Trim(),
+            .Image = productImage.Image
+        }
+
+            If stock > 0 Then
+                newProduct.Status = "Available"
+            Else
+                newProduct.Status = "Unavailable"
+            End If
+
+            DataStore.Products.Add(newProduct)
+
         Else
-            newProduct.Status = "Unavailable"
+
+            'EDIT EXISTING PRODUCT
+            editingProduct.Name = txtProductName.Text.Trim()
+            editingProduct.Price = price
+            editingProduct.Stock = stock
+            editingProduct.Category = txtCategory.Text.Trim()
+            editingProduct.Description = txtProductDescription.Text.Trim()
+            editingProduct.Image = productImage.Image
+
+            If stock > 0 Then
+                editingProduct.Status = "Available"
+            Else
+                editingProduct.Status = "Unavailable"
+            End If
+
         End If
 
-        DataStore.Products.Add(newProduct)
+        editingProduct = Nothing
 
         LoadFilterOptions()
         FilterProducts()
@@ -127,6 +154,8 @@
 
     Private Sub FilterProducts()
 
+        If isLoading AndAlso dgvProducts.Columns.Count = 0 Then Exit Sub
+
         dgvProducts.Rows.Clear()
 
         Dim searchText As String = txtSearch.Text.Trim().ToLower()
@@ -153,7 +182,6 @@
 
             End If
 
-
             'PRODUCT TYPE FILTER
             If selectedType <> "" AndAlso
            selectedType <> "All" AndAlso
@@ -162,7 +190,6 @@
                 Continue For
 
             End If
-
 
             'INVENTORY FILTER
             If selectedInventory = "In Stock" AndAlso item.Stock <= 0 Then
@@ -180,7 +207,6 @@
 
             End If
 
-
             'STATUS FILTER
             If selectedStatus <> "" AndAlso
            selectedStatus <> "All" AndAlso
@@ -190,23 +216,112 @@
 
             End If
 
-
-            'ADD MATCHING PRODUCT
+            'ADD ROW
             Dim row As Integer = dgvProducts.Rows.Add()
 
+            dgvProducts.Rows(row).Cells("dgvImage").Value = item.Image
             dgvProducts.Rows(row).Cells("Product").Value = item.Name
             dgvProducts.Rows(row).Cells("Price").Value = item.Price
-            dgvProducts.Rows(row).Cells("Stock").Value = item.Stock
             dgvProducts.Rows(row).Cells("Category").Value = item.Category
+            dgvProducts.Rows(row).Cells("Stock").Value = item.Stock
             dgvProducts.Rows(row).Cells("Status").Value = item.Status
+            dgvProducts.Rows(row).Cells("Actions").Value = "Edit | Delete"
+
+            'SAVE THE ACTUAL PRODUCT IN THE ROW
+            dgvProducts.Rows(row).Tag = item
 
         Next
+
+    End Sub
+
+    Private Sub dgvProducts_CellClick(
+    sender As Object,
+    e As DataGridViewCellEventArgs
+) Handles dgvProducts.CellClick
+
+        If e.RowIndex < 0 Then Exit Sub
+
+        If e.ColumnIndex = dgvProducts.Columns("Actions").Index Then
+
+            Dim product As Product =
+            TryCast(dgvProducts.Rows(e.RowIndex).Tag, Product)
+
+            If product Is Nothing Then Exit Sub
+
+            Dim cellWidth As Integer =
+            dgvProducts.Columns("Actions").Width
+
+            Dim mouseX As Integer =
+            dgvProducts.PointToClient(Cursor.Position).X
+
+            Dim cellLeft As Integer =
+            dgvProducts.GetCellDisplayRectangle(
+                e.ColumnIndex,
+                e.RowIndex,
+                True
+            ).Left
+
+            Dim clickPosition As Integer = mouseX - cellLeft
+
+            If clickPosition < cellWidth / 2 Then
+
+                EditProduct(product)
+
+            Else
+
+                DeleteProduct(product)
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DeleteProduct(product As Product)
+
+        Dim result As DialogResult = MessageBox.Show(
+        "Are you sure you want to delete """ & product.Name & """?",
+        "Delete Product",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Warning
+    )
+
+        If result = DialogResult.No Then Exit Sub
+
+        DataStore.Products.Remove(product)
+
+        LoadFilterOptions()
+        FilterProducts()
+
+        MessageBox.Show(
+        "Product deleted successfully.",
+        "Product",
+        MessageBoxButtons.OK,
+        MessageBoxIcon.Information
+    )
+
+    End Sub
+
+    Private Sub EditProduct(product As Product)
+
+        editingProduct = product
+
+        txtProductName.Text = product.Name
+        txtProductPrice.Text = product.Price.ToString()
+        txtProductStock.Text = product.Stock.ToString()
+        txtCategory.Text = product.Category
+        txtProductDescription.Text = product.Description
+
+        productImage.Image = product.Image
+
     End Sub
 
     Private Sub cmb_ProductType_SelectedIndexChanged(
         sender As Object,
         e As EventArgs
     ) Handles cmb_ProductType.SelectedIndexChanged
+
+        If isLoadingProducts Then Exit Sub
 
         FilterProducts()
 
@@ -218,6 +333,8 @@
         e As EventArgs
     ) Handles cmb_Inventory.SelectedIndexChanged
 
+        If isLoadingProducts Then Exit Sub
+
         FilterProducts()
 
     End Sub
@@ -227,6 +344,8 @@
         sender As Object,
         e As EventArgs
     ) Handles cmb_Status.SelectedIndexChanged
+
+        If isLoadingProducts Then Exit Sub
 
         FilterProducts()
 
@@ -307,11 +426,15 @@
         Return valid
     End Function
 
-    Private Sub btnChooseImage_Click(sender As Object, e As EventArgs)
+    Private Sub btnChooseImage_Click(sender As Object, e As EventArgs) Handles btnChooseImage.Click
+
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
             productImage.Image = Image.FromFile(OpenFileDialog1.FileName)
         End If
+
     End Sub
+
+
 
     'Dashboard Panel and buttons
     Private Sub ShowPanel(panelToShow As Panel)
@@ -436,11 +559,9 @@
 
         'Scroll to latest message
         If flpAdminMessages.Controls.Count > 0 Then
-
             flpAdminMessages.ScrollControlIntoView(
             flpAdminMessages.Controls(flpAdminMessages.Controls.Count - 1)
         )
-
         End If
 
     End Sub
@@ -453,22 +574,22 @@
 
             cashierDataGridView.Rows.Add(account(0), account(1), "Active", currentDateTime.ToString("d"))
         Next
-
     End Sub
-
 
     'Admin Load Event
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadChatMessages()
         displayCashiers()
-
         LoadFilterOptions()
         FilterProducts()
+
+        isLoadingProducts = False
+        isLoading = False
+
     End Sub
 
     'Admin Send Button Click Event
     Private Sub btnAdminSend_Click(sender As Object, e As EventArgs) Handles btnAdmin.Click
-
         If String.IsNullOrWhiteSpace(txtAdminChat.Text) Then
             Return
         End If
@@ -481,11 +602,8 @@
         }
 
         DataStore.ChatMessages.Add(newMessage)
-
         txtAdminChat.Clear()
-
         LoadChatMessages()
-
     End Sub
 
     Private Sub btnRegisterNewCashier_Click(sender As Object, e As EventArgs) Handles btnRegisterNewCashier.Click
