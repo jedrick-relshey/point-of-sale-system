@@ -7,7 +7,7 @@ Public Class RegisterNewCashierForm
     Private Sub Guna2Button1_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to cancel registration?", "Cancel Registration", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result.Equals(DialogResult.Yes) Then
-            Me.Hide()
+            Me.Close()
         End If
     End Sub
 
@@ -22,10 +22,16 @@ Public Class RegisterNewCashierForm
         If (fullName = "" Or user = "" Or password = "" Or confirmPassword = "") Then
             MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Else
+            If user.Equals("jedrick", StringComparison.OrdinalIgnoreCase) OrElse
+       GlobalData.registerAccount.Any(Function(a) a(1).Equals(user, StringComparison.OrdinalIgnoreCase)) Then
+                MessageBox.Show("That username is already taken.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
             If (password = confirmPassword) Then
                 MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 GlobalData.registerAccount.Add(account)
-                Me.Hide()
+                Me.DialogResult = DialogResult.OK
+                Me.Close()
             Else
                 MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If

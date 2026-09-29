@@ -139,6 +139,7 @@
     End Sub
     Private Sub btnCashiers_Click(sender As Object, e As EventArgs) Handles btnCashiers.Click
         ShowPanel(pnlCashiers) 'button to show cashiers panel)
+        displayCashiers()      ' always show the latest list
     End Sub
 
     Private Sub btnInventory_Click(sender As Object, e As EventArgs) Handles btnInventory.Click
@@ -239,10 +240,11 @@
 
     Private Sub displayCashiers()
         Dim currentDateTime As DateTime = DateTime.Now
-
+        cashierDataGridView.Rows.Clear()
+        cashierDataGridView.Rows.Add("Jedrick Miclat", "jedrick", "Active", "09/28/2026")
         For Each account As String() In GlobalData.registerAccount
 
-            Me.cashierDataGridView.Rows.Add(account(0), account(1), "Active", currentDateTime.ToString("d"))
+            cashierDataGridView.Rows.Add(account(0), account(1), "Active", currentDateTime.ToString("d"))
         Next
 
     End Sub
@@ -250,9 +252,8 @@
 
     'Admin Load Event
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.cashierDataGridView.Rows.Add("Jedrick Miclat", "jedrick", "Active", "09/28/2026")
         LoadChatMessages()
-
+        displayCashiers()
     End Sub
 
     'Admin Send Button Click Event
@@ -278,11 +279,11 @@
     End Sub
 
     Private Sub btnRegisterNewCashier_Click(sender As Object, e As EventArgs) Handles btnRegisterNewCashier.Click
-        Dim registerCashierForm As New RegisterNewCashierForm()
-
-        registerCashierForm.ShowDialog(Me)
-        'registerCashierForm.Show()
-        'Me.Hide()
-        displayCashiers()
+        Using registerCashierForm As New RegisterNewCashierForm()
+            If registerCashierForm.ShowDialog(Me) = DialogResult.OK Then
+                displayCashiers()
+            End If
+        End Using
     End Sub
+
 End Class
