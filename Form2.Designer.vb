@@ -148,6 +148,7 @@ Partial Class RegisterNewCashierForm
         Me.txtRegPass.Location = New System.Drawing.Point(93, 353)
         Me.txtRegPass.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.txtRegPass.Name = "txtRegPass"
+        Me.txtRegPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtRegPass.PlaceholderText = ""
         Me.txtRegPass.SelectedText = ""
         Me.txtRegPass.Size = New System.Drawing.Size(343, 48)
@@ -181,6 +182,7 @@ Partial Class RegisterNewCashierForm
         Me.txtRegConfirmPass.Location = New System.Drawing.Point(93, 440)
         Me.txtRegConfirmPass.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.txtRegConfirmPass.Name = "txtRegConfirmPass"
+        Me.txtRegConfirmPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtRegConfirmPass.PlaceholderText = ""
         Me.txtRegConfirmPass.SelectedText = ""
         Me.txtRegConfirmPass.Size = New System.Drawing.Size(343, 48)

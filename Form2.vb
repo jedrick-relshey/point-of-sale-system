@@ -31,4 +31,16 @@ Public Class RegisterNewCashierForm
             End If
         End If
     End Sub
+
+    Private Sub cbShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles cbShowPass.CheckedChanged
+        If cbShowPass.Checked Then
+            txtRegPass.PasswordChar = ""
+            txtRegConfirmPass.PasswordChar = ""
+            cbShowPass.Text = "Hide Password"
+        Else
+            txtRegPass.PasswordChar = "*"
+            txtRegConfirmPass.PasswordChar = "*"
+            cbShowPass.Text = "Show Password"
+        End If
+    End Sub
 End Class
