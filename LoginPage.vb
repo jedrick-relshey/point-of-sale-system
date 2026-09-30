@@ -77,4 +77,36 @@ Public Class LoginPage
             cbShowHidePass.Text = "Show Password"
         End If
     End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        Dim forgotPass As New ForgotPassword()
+        Dim userName As String = ""
+
+        For i As Integer = 0 To GlobalData.registerAccount.Count - 1
+            For j As Integer = 0 To GlobalData.registerAccount(i).Length - 1
+                If txtUser.Text = GlobalData.registerAccount(i)(1) Then
+                    userName = GlobalData.registerAccount(i)(1)
+                End If
+            Next
+        Next
+        If txtUser.Text = "" Then
+            MessageBox.Show("Please enter your credentials.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Else
+            If rbCashier.Checked Then
+                If txtUser.Text = userName Or txtUser.Text = "jedrick" Then
+                    forgotPass.ShowDialog(Me)
+                Else
+                    MessageBox.Show("Username not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            ElseIf rbAdmin.Checked Then
+                If txtUser.Text = "fritz" Then
+                    forgotPass.ShowDialog(Me)
+                Else
+                    MessageBox.Show("Username not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Else
+                MessageBox.Show("Please select a role first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        End If
+    End Sub
 End Class

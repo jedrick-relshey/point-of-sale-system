@@ -75,7 +75,7 @@ Partial Class RegisterNewCashierForm
         Me.txtRegFullName.Location = New System.Drawing.Point(93, 167)
         Me.txtRegFullName.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.txtRegFullName.Name = "txtRegFullName"
-        Me.txtRegFullName.PlaceholderText = ""
+        Me.txtRegFullName.PlaceholderText = "Enter your full name"
         Me.txtRegFullName.SelectedText = ""
         Me.txtRegFullName.Size = New System.Drawing.Size(343, 48)
         Me.txtRegFullName.TabIndex = 2
@@ -115,7 +115,7 @@ Partial Class RegisterNewCashierForm
         Me.txtRegUser.Location = New System.Drawing.Point(93, 261)
         Me.txtRegUser.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.txtRegUser.Name = "txtRegUser"
-        Me.txtRegUser.PlaceholderText = ""
+        Me.txtRegUser.PlaceholderText = "Enter your username"
         Me.txtRegUser.SelectedText = ""
         Me.txtRegUser.Size = New System.Drawing.Size(343, 48)
         Me.txtRegUser.TabIndex = 5
@@ -149,7 +149,7 @@ Partial Class RegisterNewCashierForm
         Me.txtRegPass.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.txtRegPass.Name = "txtRegPass"
         Me.txtRegPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtRegPass.PlaceholderText = ""
+        Me.txtRegPass.PlaceholderText = "Enter your password"
         Me.txtRegPass.SelectedText = ""
         Me.txtRegPass.Size = New System.Drawing.Size(343, 48)
         Me.txtRegPass.TabIndex = 7
@@ -183,7 +183,7 @@ Partial Class RegisterNewCashierForm
         Me.txtRegConfirmPass.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
         Me.txtRegConfirmPass.Name = "txtRegConfirmPass"
         Me.txtRegConfirmPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtRegConfirmPass.PlaceholderText = ""
+        Me.txtRegConfirmPass.PlaceholderText = "Confirm your password"
         Me.txtRegConfirmPass.SelectedText = ""
         Me.txtRegConfirmPass.Size = New System.Drawing.Size(343, 48)
         Me.txtRegConfirmPass.TabIndex = 9
@@ -239,6 +239,7 @@ Partial Class RegisterNewCashierForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(233, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(548, 683)
         Me.Controls.Add(Me.cbShowPass)
         Me.Controls.Add(Me.btnRegister)
