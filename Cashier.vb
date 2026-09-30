@@ -13,7 +13,6 @@ Public Class Cashier
 
         btn_DashBoard.BackColor = Color.Transparent
         btn_Point_Of_Sale.BackColor = Color.Transparent
-        btn_prdt.BackColor = Color.Transparent
         btn_invtry.BackColor = Color.Transparent
         btn_hstry.BackColor = Color.Transparent
 

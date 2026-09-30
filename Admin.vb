@@ -476,10 +476,6 @@
         ShowPanel(pnl_Inventory) 'button to show inventory panel)
     End Sub
 
-    Private Sub Guna2Button5_Click(sender As Object, e As EventArgs) Handles Guna2Button5.Click
-        ShowPanel(pnl_Settings) 'button to show settings panel) 
-    End Sub
-
     Private Sub btnHistory_Click(sender As Object, e As EventArgs) Handles btnHistory.Click
         ShowPanel(pnl_History) 'button to show history panel
     End Sub
