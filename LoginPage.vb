@@ -16,6 +16,12 @@ Public Class LoginPage
 
             Select Case userType
                 Case "cashier"
+                    Dim cashierFullName As String = "Jedrick Miclat"
+                    username = "jedrick"
+                    password = "cashier123"
+                    Dim cashierAccount() As String = {cashierFullName, username, password}
+                    GlobalData.registerAccount.Add(cashierAccount)
+
                     If Not (txtUser.Text = "" Or txtPass.Text = "") Then
                         For i As Integer = 0 To GlobalData.registerAccount.Count - 1
                             For j As Integer = 0 To GlobalData.registerAccount(i).Length - 1
@@ -25,7 +31,8 @@ Public Class LoginPage
                                 End If
                             Next
                         Next
-                        If txtUser.Text = "jedrick" And txtPass.Text = "cashier123" Or txtUser.Text = username And txtPass.Text = password Then
+
+                        If txtUser.Text = username And txtPass.Text = password Then
                             GlobalData.userName = txtUser.Text
                             MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Dim cashier As New Cashier()
@@ -38,8 +45,14 @@ Public Class LoginPage
                         MessageBox.Show("Please enter your username and password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End If
                 Case "admin"
+                    Dim adminFullName As String = "Justine Fritz Bucong"
+                    username = "fritz"
+                    password = "admin123"
+                    Dim adminAccount() As String = {adminFullName, username, password}
+                    GlobalData.adminAccount.Add(adminAccount)
+
                     If Not (txtUser.Text = "" Or txtPass.Text = "") Then
-                        If txtUser.Text = "fritz" And txtPass.Text = "admin123" Then
+                        If txtUser.Text = username And txtPass.Text = password Then
                             GlobalData.userName = txtUser.Text
                             MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             Dim admin As New Admin()
@@ -109,4 +122,6 @@ Public Class LoginPage
             End If
         End If
     End Sub
+
+
 End Class

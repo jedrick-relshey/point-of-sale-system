@@ -1,6 +1,7 @@
 ﻿Module GlobalData
     Public userName As String = ""
     Public registerAccount As New List(Of String())
+    Public AdminAccount As New List(Of String())
 End Module
 Public Class RegisterNewCashierForm
 
@@ -49,4 +50,5 @@ Public Class RegisterNewCashierForm
             cbShowPass.Text = "Show Password"
         End If
     End Sub
+
 End Class

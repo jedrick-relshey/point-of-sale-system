@@ -568,7 +568,9 @@
         cashierDataGridView.Rows.Add("Jedrick Miclat", "jedrick", "Active", "09/28/2026")
         For Each account As String() In GlobalData.registerAccount
 
-            cashierDataGridView.Rows.Add(account(0), account(1), "Active", currentDateTime.ToString("d"))
+            If account(0) <> "Jedrick Miclat" Then
+                cashierDataGridView.Rows.Add(account(0), account(1), "Active", currentDateTime.ToString("MM/dd/yyyy"))
+            End If
         Next
     End Sub
 

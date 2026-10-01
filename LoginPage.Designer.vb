@@ -32,21 +32,21 @@ Partial Class LoginPage
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Guna2AnimateWindow1 = New Guna.UI2.WinForms.Guna2AnimateWindow(Me.components)
         Me.loginPanel = New Guna.UI2.WinForms.Guna2Panel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.cbShowHidePass = New Guna.UI2.WinForms.Guna2CheckBox()
         Me.Guna2Panel1 = New Guna.UI2.WinForms.Guna2Panel()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Guna2Panel2 = New Guna.UI2.WinForms.Guna2Panel()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.rbAdmin = New Guna.UI2.WinForms.Guna2RadioButton()
         Me.rbCashier = New Guna.UI2.WinForms.Guna2RadioButton()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.btnLogin = New Guna.UI2.WinForms.Guna2GradientButton()
         Me.txtUser = New Guna.UI2.WinForms.Guna2TextBox()
         Me.txtPass = New Guna.UI2.WinForms.Guna2TextBox()
-        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.loginPanel.SuspendLayout()
         Me.Guna2Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -165,6 +165,28 @@ Partial Class LoginPage
         Me.loginPanel.Size = New System.Drawing.Size(1150, 650)
         Me.loginPanel.TabIndex = 27
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(748, 537)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(129, 18)
+        Me.Label5.TabIndex = 26
+        Me.Label5.Text = "Forgot password?"
+        '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.AutoSize = True
+        Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LinkLabel1.LinkColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.LinkLabel1.Location = New System.Drawing.Point(887, 537)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(84, 18)
+        Me.LinkLabel1.TabIndex = 25
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "Click here"
+        '
         'cbShowHidePass
         '
         Me.cbShowHidePass.AutoSize = True
@@ -190,11 +212,11 @@ Partial Class LoginPage
         Me.Guna2Panel1.BackColor = System.Drawing.Color.Transparent
         Me.Guna2Panel1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.Guna2Panel1.BorderRadius = 40
+        Me.Guna2Panel1.Controls.Add(Me.PictureBox1)
         Me.Guna2Panel1.Controls.Add(Me.Guna2Panel2)
         Me.Guna2Panel1.Controls.Add(Me.Label3)
         Me.Guna2Panel1.Controls.Add(Me.Label2)
         Me.Guna2Panel1.Controls.Add(Me.Label1)
-        Me.Guna2Panel1.Controls.Add(Me.PictureBox1)
         Me.Guna2Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Guna2Panel1.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.Guna2Panel1.Location = New System.Drawing.Point(0, 0)
@@ -202,6 +224,17 @@ Partial Class LoginPage
         Me.Guna2Panel1.Name = "Guna2Panel1"
         Me.Guna2Panel1.Size = New System.Drawing.Size(575, 650)
         Me.Guna2Panel1.TabIndex = 21
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackgroundImage = Global.Vb_POS.My.Resources.Resources.cafe_logo
+        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox1.Location = New System.Drawing.Point(220, 229)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(152, 137)
+        Me.PictureBox1.TabIndex = 30
+        Me.PictureBox1.TabStop = False
         '
         'Guna2Panel2
         '
@@ -246,17 +279,6 @@ Partial Class LoginPage
         Me.Label1.Size = New System.Drawing.Size(270, 34)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "BrewHaven POS"
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BackgroundImage = Global.Vb_POS.My.Resources.Resources.cafe_logo
-        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox1.Location = New System.Drawing.Point(202, 231)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(152, 137)
-        Me.PictureBox1.TabIndex = 0
-        Me.PictureBox1.TabStop = False
         '
         'rbAdmin
         '
@@ -390,28 +412,6 @@ Partial Class LoginPage
         Me.txtPass.Size = New System.Drawing.Size(328, 50)
         Me.txtPass.TabIndex = 11
         '
-        'LinkLabel1
-        '
-        Me.LinkLabel1.AutoSize = True
-        Me.LinkLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LinkLabel1.LinkColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.LinkLabel1.Location = New System.Drawing.Point(887, 537)
-        Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(84, 18)
-        Me.LinkLabel1.TabIndex = 25
-        Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "Click here"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(748, 537)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(129, 18)
-        Me.Label5.TabIndex = 26
-        Me.Label5.Text = "Forgot password?"
-        '
         'LoginPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -447,7 +447,6 @@ Partial Class LoginPage
     Friend WithEvents loginPanel As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents Guna2Panel1 As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents Guna2Panel2 As Guna.UI2.WinForms.Guna2Panel
-    Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
@@ -457,4 +456,5 @@ Partial Class LoginPage
     Friend WithEvents cbShowHidePass As Guna.UI2.WinForms.Guna2CheckBox
     Friend WithEvents Label5 As Label
     Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents PictureBox1 As PictureBox
 End Class

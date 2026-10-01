@@ -129,6 +129,7 @@ Partial Class ForgotPassword
         '
         'btnChangePass
         '
+        Me.btnChangePass.BorderRadius = 5
         Me.btnChangePass.DisabledState.BorderColor = System.Drawing.Color.DarkGray
         Me.btnChangePass.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray
         Me.btnChangePass.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer), CType(CType(169, Byte), Integer))
