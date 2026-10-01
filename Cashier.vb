@@ -24,7 +24,10 @@ Public Class Cashier
 
     End Sub
 
-    Private Sub btn_DashBoard_Click(sender As Object, e As EventArgs) Handles btn_DashBoard.Click
+    Private Sub btn_DashBoard_Click(
+    sender As Object,
+    e As EventArgs
+    ) Handles btn_DashBoard.Click
 
         HideAllPanels()
         main_pnl.Visible = True
@@ -33,6 +36,8 @@ Public Class Cashier
 
         btn_DashBoard.BackColor = Color.MistyRose
         btn_DashBoard.ForeColor = Color.Black
+
+        RefreshCashierData()
 
     End Sub
 
@@ -83,6 +88,88 @@ Public Class Cashier
             )
 
         End If
+
+    End Sub
+
+    '========================================
+    ' TRANSACTION DISPLAY
+    '========================================
+
+    Private Sub LoadTransactions()
+
+        dgv_Recent_Transactions.Rows.Clear()
+
+        For Each transaction As POS_Transaction In DataStore.Transactions
+
+            Dim itemsText As String = ""
+
+            For Each item As TransactionItem In transaction.Items
+
+                If itemsText <> "" Then
+                    itemsText &= ", "
+                End If
+
+                itemsText &= item.ProductName &
+                         " x" &
+                         item.Quantity
+
+            Next
+
+            dgv_Recent_Transactions.Rows.Add(
+            transaction.TransactionID,
+            transaction.TransactionDate.ToString("hh:mm tt"),
+            itemsText,
+            transaction.PaymentMethod,
+            "₱" & transaction.Total.ToString("N2"),
+            transaction.Status
+        )
+
+        Next
+
+    End Sub
+
+    '========================================
+    ' TRANSACTION UPDATE EVENT
+    '========================================
+
+    Private Sub Cashier_TransactionsChanged(
+    sender As Object,
+    e As EventArgs
+    )
+
+        RefreshCashierData()
+
+    End Sub
+
+    '========================================
+    ' CASHIER DASHBOARD KPI
+    '========================================
+
+    Private Sub RefreshCashierDashboard()
+
+        lbl_AverageOrder_Cashier.Text =
+        "₱" & DataStore.GetTodayAverageOrder().ToString("N2")
+
+        lbl_Today_Cashier.Text =
+        "₱" & DataStore.GetTodaySales().ToString("N2")
+
+        lbl_LowStock_Cashier.Text =
+        DataStore.GetLowStockCount().ToString()
+
+        lbl_TotalOrders_Cashier.Text =
+        DataStore.GetTodayOrderCount().ToString()
+
+    End Sub
+
+
+    '========================================
+    ' REFRESH CASHIER DATA
+    '========================================
+
+    Private Sub RefreshCashierData()
+
+        LoadTransactions()
+        RefreshCashierDashboard()
 
     End Sub
 
@@ -386,12 +473,10 @@ Public Class Cashier
 
         fl_MenuProduct.Controls.Clear()
 
-
         For Each item As KeyValuePair(Of Product, Integer) In cart
 
             Dim product As Product = item.Key
             Dim quantity As Integer = item.Value
-
 
             '========================================
             ' CART ITEM PANEL
@@ -399,8 +484,8 @@ Public Class Cashier
 
             Dim itemPanel As New Panel()
 
-            itemPanel.Width = fl_MenuProduct.ClientSize.Width - 10
-            itemPanel.Height = 55
+            itemPanel.Width = fl_MenuProduct.ClientSize.Width - 25
+            itemPanel.Height = 65
             itemPanel.Margin = New Padding(3)
             itemPanel.BackColor = Color.White
 
@@ -412,32 +497,36 @@ Public Class Cashier
             Dim nameLabel As New Label()
 
             nameLabel.Text = product.Name
-            nameLabel.Width = 100
+            nameLabel.Width = 120
             nameLabel.Height = 25
             nameLabel.Location = New Point(5, 5)
+
             nameLabel.Font = New Font(
             "Segoe UI",
             9,
             FontStyle.Bold
         )
+
             nameLabel.ForeColor = Color.FromArgb(62, 39, 35)
 
 
             '========================================
-            ' PRICE
+            ' PRODUCT PRICE
             '========================================
 
             Dim priceLabel As New Label()
 
             priceLabel.Text = "₱" & product.Price.ToString("N2")
-            priceLabel.Width = 70
+            priceLabel.Width = 80
             priceLabel.Height = 20
-            priceLabel.Location = New Point(5, 30)
+            priceLabel.Location = New Point(5, 32)
+
             priceLabel.Font = New Font(
             "Segoe UI",
             8,
             FontStyle.Regular
         )
+
             priceLabel.ForeColor = Color.Gray
 
 
@@ -450,7 +539,7 @@ Public Class Cashier
             minusButton.Text = "-"
             minusButton.Width = 28
             minusButton.Height = 28
-            minusButton.Location = New Point(115, 12)
+            minusButton.Location = New Point(125, 18)
             minusButton.Tag = product
 
             minusButton.FlatStyle = FlatStyle.Flat
@@ -466,8 +555,10 @@ Public Class Cashier
             quantityLabel.Text = quantity.ToString()
             quantityLabel.Width = 30
             quantityLabel.Height = 28
-            quantityLabel.Location = New Point(145, 12)
+            quantityLabel.Location = New Point(155, 18)
+
             quantityLabel.TextAlign = ContentAlignment.MiddleCenter
+
             quantityLabel.Font = New Font(
             "Segoe UI",
             9,
@@ -484,7 +575,7 @@ Public Class Cashier
             plusButton.Text = "+"
             plusButton.Width = 28
             plusButton.Height = 28
-            plusButton.Location = New Point(175, 12)
+            plusButton.Location = New Point(187, 18)
             plusButton.Tag = product
 
             plusButton.FlatStyle = FlatStyle.Flat
@@ -500,17 +591,48 @@ Public Class Cashier
             itemTotalLabel.Text =
             "₱" & (product.Price * quantity).ToString("N2")
 
-            itemTotalLabel.Width = 85
+            itemTotalLabel.Width = 80
             itemTotalLabel.Height = 25
-            itemTotalLabel.Location = New Point(210, 14)
+            itemTotalLabel.Location = New Point(220, 19)
+
             itemTotalLabel.TextAlign = ContentAlignment.MiddleRight
+
             itemTotalLabel.Font = New Font(
             "Segoe UI",
             9,
             FontStyle.Bold
         )
+
             itemTotalLabel.ForeColor =
             Color.FromArgb(62, 39, 35)
+
+
+            '========================================
+            ' DELETE BUTTON
+            '========================================
+
+            Dim deleteButton As New Button()
+
+            deleteButton.Text = "X"
+            deleteButton.Width = 28
+            deleteButton.Height = 28
+            deleteButton.Location = New Point(
+            itemPanel.Width - 35,
+            18
+        )
+
+            deleteButton.Tag = product
+
+            deleteButton.FlatStyle = FlatStyle.Flat
+            deleteButton.FlatAppearance.BorderSize = 0
+
+            deleteButton.Font = New Font(
+            "Segoe UI",
+            8,
+            FontStyle.Bold
+        )
+
+            deleteButton.ForeColor = Color.DarkRed
 
 
             '========================================
@@ -527,6 +649,15 @@ Public Class Cashier
                 IncreaseQuantity(product)
             End Sub
 
+            AddHandler deleteButton.Click,
+            Sub()
+                DeleteCartItem(product)
+            End Sub
+
+
+            '========================================
+            ' ADD CONTROLS
+            '========================================
 
             itemPanel.Controls.Add(nameLabel)
             itemPanel.Controls.Add(priceLabel)
@@ -534,13 +665,23 @@ Public Class Cashier
             itemPanel.Controls.Add(quantityLabel)
             itemPanel.Controls.Add(plusButton)
             itemPanel.Controls.Add(itemTotalLabel)
+            itemPanel.Controls.Add(deleteButton)
 
             fl_MenuProduct.Controls.Add(itemPanel)
 
         Next
 
-
         UpdateTotals()
+
+    End Sub
+
+    Private Sub DeleteCartItem(product As Product)
+
+        If Not cart.ContainsKey(product) Then Exit Sub
+
+        cart.Remove(product)
+
+        UpdateCartDisplay()
 
     End Sub
 
@@ -691,7 +832,7 @@ Public Class Cashier
     Private Sub btn_chkout_Click(
     sender As Object,
     e As EventArgs
-) Handles btn_chkout.Click
+    ) Handles btn_chkout.Click
 
         '========================================
         ' CHECK CART
@@ -801,6 +942,39 @@ Public Class Cashier
 
         Next
 
+        '========================================
+        ' CREATE TRANSACTION
+        '========================================
+
+        Dim newTransaction As New POS_Transaction With {
+        .TransactionDate = DateTime.Now,
+        .Cashier = GlobalData.userName,
+        .PaymentMethod = "Cash",
+        .Total = total,
+        .Status = "Completed"
+        }
+
+        '========================================
+        ' SAVE ORDER ITEMS
+        '========================================
+
+        For Each item As KeyValuePair(Of Product, Integer) In cart
+
+            Dim transactionItem As New TransactionItem With {
+        .ProductName = item.Key.Name,
+        .Quantity = item.Value,
+        .Price = item.Key.Price
+        }
+
+            newTransaction.Items.Add(transactionItem)
+
+        Next
+
+        '========================================
+        ' SAVE TRANSACTION TO SHARED DATASTORE
+        '========================================
+
+        DataStore.AddTransaction(newTransaction)
 
         '========================================
         ' SHOW CHANGE
@@ -811,7 +985,6 @@ Public Class Cashier
 
         lbl_Change.Text =
         "₱" & change.ToString("N2")
-
 
         '========================================
         ' CLEAR CART
@@ -826,7 +999,6 @@ Public Class Cashier
         lbl_Total.Text = "₱0.00"
 
         txt_Cash_Receive.Clear()
-
 
         '========================================
         ' REFRESH PRODUCT MENU
@@ -912,6 +1084,20 @@ Public Class Cashier
     e As EventArgs
     ) Handles MyBase.Load
 
+        'PRODUCT MENU
+        fl_Menu.FlowDirection = FlowDirection.LeftToRight
+        fl_Menu.WrapContents = True
+        fl_Menu.AutoScroll = True
+
+        'CART
+        fl_MenuProduct.FlowDirection = FlowDirection.TopDown
+        fl_MenuProduct.WrapContents = False
+        fl_MenuProduct.AutoScroll = True
+
+        'TRANSACTION UPDATE EVENT
+        AddHandler DataStore.TransactionsChanged,
+        AddressOf Cashier_TransactionsChanged
+
         LoadProducts()
 
         fl_MenuProduct.Controls.Clear()
@@ -921,6 +1107,9 @@ Public Class Cashier
         lbl_Total.Text = "₱0.00"
 
         lbl_Change.Text = "₱0.00"
+
+        'LOAD DASHBOARD DATA
+        RefreshCashierData()
 
     End Sub
 

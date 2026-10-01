@@ -78,6 +78,89 @@
         productImage.Image = Nothing
     End Sub
 
+    '========================================
+    ' ADMIN TRANSACTION DISPLAY
+    '========================================
+
+    Private Sub LoadAdminTransactions()
+
+        adminDataGrid.Rows.Clear()
+
+        For Each transaction As POS_Transaction In DataStore.Transactions
+
+            Dim itemsText As String = ""
+
+            For Each item As TransactionItem In transaction.Items
+
+                If itemsText <> "" Then
+                    itemsText &= ", "
+                End If
+
+                itemsText &= item.ProductName &
+                         " x" &
+                         item.Quantity
+
+            Next
+
+            adminDataGrid.Rows.Add(
+            transaction.TransactionID,
+            transaction.TransactionDate.ToString("hh:mm tt"),
+            transaction.Cashier,
+            itemsText,
+            "₱" & transaction.Total.ToString("N2"),
+            transaction.Status
+        )
+
+        Next
+
+    End Sub
+
+
+    '========================================
+    ' ADMIN KPI
+    '========================================
+
+    Private Sub RefreshAdminDashboard()
+
+        lbl_Average_Order.Text =
+        "₱" & DataStore.GetTodayAverageOrder().ToString("N2")
+
+        lbl_TodaySales.Text =
+        "₱" & DataStore.GetTodaySales().ToString("N2")
+
+        lbl_TotalOrders.Text =
+        DataStore.GetTodayOrderCount().ToString()
+
+        lbl_LowStock.Text =
+        DataStore.GetLowStockCount().ToString()
+
+    End Sub
+
+
+    '========================================
+    ' REFRESH ADMIN DATA
+    '========================================
+
+    Private Sub RefreshAdminData()
+
+        LoadAdminTransactions()
+        RefreshAdminDashboard()
+
+    End Sub
+
+    '========================================
+    ' TRANSACTION UPDATE EVENT
+    '========================================
+
+    Private Sub Admin_TransactionsChanged(
+    sender As Object,
+    e As EventArgs
+    )
+
+        RefreshAdminData()
+
+    End Sub
+
     'Loads the filter options for product type, inventory status, and product status into the respective combo boxes. It also preserves the current selections if they exist in the new list of options.
     Private Sub LoadFilterOptions()
 
@@ -445,7 +528,6 @@
         pnl_Messages,
         pnlCashiers,
         pnl_Inventory,
-        pnl_Settings,
         pnl_History
     }
             panel.Visible = False
@@ -456,8 +538,15 @@
     End Sub
 
     'Buttons
-    Private Sub btn_dashboardAdmin_Click(sender As Object, e As EventArgs) Handles btn_dashboardAdmin.Click
-        ShowPanel(pnl_dashboard_system) 'button to show dashboard panel
+    Private Sub btn_dashboardAdmin_Click(
+    sender As Object,
+    e As EventArgs
+    ) Handles btn_dashboardAdmin.Click
+
+        ShowPanel(pnl_dashboard_system)
+
+        RefreshAdminData()
+
     End Sub
 
     Private Sub btn_Product_Click(sender As Object, e As EventArgs) Handles btn_Product.Click
@@ -576,6 +665,7 @@
 
     'Admin Load Event
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         LoadChatMessages()
         displayCashiers()
         LoadFilterOptions()
@@ -583,6 +673,13 @@
 
         isLoadingProducts = False
         isLoading = False
+
+        'TRANSACTION UPDATE EVENT
+        AddHandler DataStore.TransactionsChanged,
+        AddressOf Admin_TransactionsChanged
+
+        'LOAD DASHBOARD DATA
+        RefreshAdminData()
 
     End Sub
 
