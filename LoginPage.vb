@@ -49,7 +49,7 @@ Public Class LoginPage
                     username = "fritz"
                     password = "admin123"
                     Dim adminAccount() As String = {adminFullName, username, password}
-                    GlobalData.adminAccount.Add(adminAccount)
+                    GlobalData.AdminAccount.Add(adminAccount)
 
                     If Not (txtUser.Text = "" Or txtPass.Text = "") Then
                         If txtUser.Text = username And txtPass.Text = password Then
