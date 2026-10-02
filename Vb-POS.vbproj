@@ -93,6 +93,7 @@
     <Compile Include="Admin.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="BrewUi.vb" />
     <Compile Include="Cashier.Designer.vb">
       <DependentUpon>Cashier.vb</DependentUpon>
     </Compile>
@@ -112,6 +113,7 @@
     </Compile>
     <Compile Include="HistoryView.vb">
     </Compile>
+    <Compile Include="InventoryView.vb" />
     <Compile Include="LoginPage.vb">
       <SubType>Form</SubType>
     </Compile>

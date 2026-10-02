@@ -156,7 +156,7 @@ Partial Class LoginPage
         Me.loginPanel.Controls.Add(Me.Label8)
         Me.loginPanel.FillColor = System.Drawing.Color.White
         Me.loginPanel.Location = New System.Drawing.Point(205, 55)
-        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4)
         Me.loginPanel.Name = "loginPanel"
         Me.loginPanel.ShadowDecoration.BorderRadius = 40
         Me.loginPanel.ShadowDecoration.Color = System.Drawing.Color.Gray
@@ -351,7 +351,7 @@ Partial Class LoginPage
         Me.btnLogin.ForeColor = System.Drawing.Color.White
         Me.btnLogin.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
         Me.btnLogin.Location = New System.Drawing.Point(693, 487)
-        Me.btnLogin.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnLogin.Margin = New System.Windows.Forms.Padding(4)
         Me.btnLogin.Name = "btnLogin"
         Me.btnLogin.Size = New System.Drawing.Size(328, 50)
         Me.btnLogin.TabIndex = 10
@@ -363,6 +363,7 @@ Partial Class LoginPage
         Me.txtUser.BackColor = System.Drawing.Color.Transparent
         Me.txtUser.BorderColor = System.Drawing.Color.Gainsboro
         Me.txtUser.BorderRadius = 10
+        Me.txtUser.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtUser.DefaultText = ""
         Me.txtUser.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.txtUser.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
@@ -375,7 +376,7 @@ Partial Class LoginPage
         Me.txtUser.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txtUser.IconLeft = Global.Vb_POS.My.Resources.Resources.pfp_icon_removebg_preview
         Me.txtUser.Location = New System.Drawing.Point(697, 191)
-        Me.txtUser.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.txtUser.Margin = New System.Windows.Forms.Padding(5)
         Me.txtUser.Name = "txtUser"
         Me.txtUser.PlaceholderForeColor = System.Drawing.Color.DimGray
         Me.txtUser.PlaceholderText = "Enter your Username"
@@ -389,6 +390,7 @@ Partial Class LoginPage
         Me.txtPass.BackColor = System.Drawing.Color.Transparent
         Me.txtPass.BorderColor = System.Drawing.Color.Gainsboro
         Me.txtPass.BorderRadius = 10
+        Me.txtPass.Cursor = System.Windows.Forms.Cursors.IBeam
         Me.txtPass.DefaultText = ""
         Me.txtPass.DisabledState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer), CType(CType(208, Byte), Integer))
         Me.txtPass.DisabledState.FillColor = System.Drawing.Color.FromArgb(CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(226, Byte), Integer))
@@ -401,7 +403,7 @@ Partial Class LoginPage
         Me.txtPass.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txtPass.IconLeft = Global.Vb_POS.My.Resources.Resources.lock_icon_removebg_preview1
         Me.txtPass.Location = New System.Drawing.Point(697, 287)
-        Me.txtPass.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.txtPass.Margin = New System.Windows.Forms.Padding(5)
         Me.txtPass.Name = "txtPass"
         Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPass.PlaceholderForeColor = System.Drawing.Color.DimGray
@@ -420,7 +422,7 @@ Partial Class LoginPage
         Me.ClientSize = New System.Drawing.Size(1581, 753)
         Me.Controls.Add(Me.loginPanel)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "LoginPage"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Login"
