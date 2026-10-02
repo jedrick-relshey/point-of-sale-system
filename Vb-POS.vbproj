@@ -81,6 +81,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.Cashiers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin.Counterly.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Admin.Designer.vb">
       <DependentUpon>Admin.vb</DependentUpon>
     </Compile>
@@ -93,23 +99,18 @@
     <Compile Include="Cashier.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChatMessage.vb" />
-    <Compile Include="ClassAdmin.vb" />
-    <Compile Include="DataStore.vb" />
-    <Compile Include="ForgotPassword.Designer.vb">
-      <DependentUpon>ForgotPassword.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ForgotPassword.vb">
+    <Compile Include="CafeUi.vb" />
+    <Compile Include="CashierDialog.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ChatMessage.vb" />
+    <Compile Include="ClassAdmin.vb" />
+    <Compile Include="CounterlyUi.vb" />
+    <Compile Include="DataStore.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.vb">
-      <DependentUpon>Form2.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form2.vb">
-      <SubType>Form</SubType>
+    <Compile Include="HistoryView.vb">
     </Compile>
     <Compile Include="LoginPage.vb">
       <SubType>Form</SubType>
@@ -118,6 +119,10 @@
       <DependentUpon>LoginPage.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Models.Designer.vb">
+      <DependentUpon>Models.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Models.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -134,9 +139,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Product.vb" />
     <Compile Include="RoundedPanel.vb">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TransactionDetailForm.Designer.vb">
+      <DependentUpon>TransactionDetailForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TransactionDetailForm.vb">
+      <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -146,20 +156,20 @@
     <EmbeddedResource Include="Cashier.resx">
       <DependentUpon>Cashier.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ForgotPassword.resx">
-      <DependentUpon>ForgotPassword.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoginPage.resx">
       <DependentUpon>LoginPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models.resx">
+      <DependentUpon>Models.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransactionDetailForm.resx">
+      <DependentUpon>TransactionDetailForm.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

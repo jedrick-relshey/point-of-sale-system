@@ -9,38 +9,13 @@ Public Class RegisterNewCashierForm
         End If
     End Sub
     Public Sub SaveCashierAccounts()
-
-        Dim lines As New List(Of String)
-
-        For Each acc As String() In GlobalData.registerAccount
-
-            Dim line As String =
-            acc(0) & "|" & acc(1) & "|" & acc(2) & "|cashier"
-
-            lines.Add(line)
-
-        Next
-
-        IO.File.WriteAllLines(GlobalData.CashierFilePath, lines)
-
+        GlobalData.SaveAccounts()
     End Sub
+
     Public Sub SaveAllAccounts()
-
-        Dim lines As New List(Of String)
-
-        ' CASHIERS
-        For Each acc As String() In GlobalData.registerAccount
-            lines.Add("cashier|" & acc(0) & "|" & acc(1) & "|" & acc(2))
-        Next
-
-        ' ADMINS
-        For Each acc As String() In GlobalData.AdminAccount
-            lines.Add("admin|" & acc(0) & "|" & acc(1) & "|" & acc(2))
-        Next
-
-        IO.File.WriteAllLines(GlobalData.CashierFilePath, lines)
-
+        GlobalData.SaveAccounts()
     End Sub
+
     Private Sub Guna2Button3_Click(sender As Object, e As EventArgs) Handles btnRegister.Click
         Dim fullName As String = txtRegFullName.Text.Trim()
         Dim user As String = txtRegUser.Text.Trim()
@@ -73,23 +48,7 @@ Public Class RegisterNewCashierForm
         Me.Close()
     End Sub
     Public Sub SaveCashierAccountsToFile()
-
-        Dim lines As New List(Of String)
-
-        '========================
-        ' CASHIERS
-        '========================
-        For Each acc As String() In GlobalData.registerAccount
-
-            Dim line As String =
-                "cashier|" & acc(0) & "|" & acc(1) & "|" & acc(2)
-
-            lines.Add(line)
-
-        Next
-
-        IO.File.WriteAllLines(CashierFilePath, lines)
-
+        GlobalData.SaveAccounts()
     End Sub
 
     Private Sub cbShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles cbShowPass.CheckedChanged

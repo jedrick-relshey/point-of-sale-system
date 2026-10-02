@@ -1,5 +1,8 @@
 ﻿Public Class Product
 
+    ' unique id: used to name the saved picture file (Data\Images\<Id>.png)
+    Public Property Id As String = Guid.NewGuid().ToString("N")
+
     Public Property Name As String
     Public Property Price As Decimal
     Public Property Stock As Integer
