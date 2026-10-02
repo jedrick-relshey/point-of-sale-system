@@ -1,8 +1,5 @@
-﻿Module GlobalData
-    Public userName As String = ""
-    Public registerAccount As New List(Of String())
-    Public AdminAccount As New List(Of String())
-End Module
+﻿Imports System.Security.Principal
+
 Public Class RegisterNewCashierForm
 
     Private Sub Guna2Button1_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -11,32 +8,88 @@ Public Class RegisterNewCashierForm
             Me.Close()
         End If
     End Sub
+    Public Sub SaveCashierAccounts()
 
+        Dim lines As New List(Of String)
+
+        For Each acc As String() In GlobalData.registerAccount
+
+            Dim line As String =
+            acc(0) & "|" & acc(1) & "|" & acc(2) & "|cashier"
+
+            lines.Add(line)
+
+        Next
+
+        IO.File.WriteAllLines(GlobalData.CashierFilePath, lines)
+
+    End Sub
+    Public Sub SaveAllAccounts()
+
+        Dim lines As New List(Of String)
+
+        ' CASHIERS
+        For Each acc As String() In GlobalData.registerAccount
+            lines.Add("cashier|" & acc(0) & "|" & acc(1) & "|" & acc(2))
+        Next
+
+        ' ADMINS
+        For Each acc As String() In GlobalData.AdminAccount
+            lines.Add("admin|" & acc(0) & "|" & acc(1) & "|" & acc(2))
+        Next
+
+        IO.File.WriteAllLines(GlobalData.CashierFilePath, lines)
+
+    End Sub
     Private Sub Guna2Button3_Click(sender As Object, e As EventArgs) Handles btnRegister.Click
-        Dim fullName As String = txtRegFullName.Text
-        Dim user As String = txtRegUser.Text
-        Dim password As String = txtRegPass.Text
-        Dim confirmPassword As String = txtRegConfirmPass.Text
+        Dim fullName As String = txtRegFullName.Text.Trim()
+        Dim user As String = txtRegUser.Text.Trim()
+        Dim password As String = txtRegPass.Text.Trim()
+        Dim confirmPassword As String = txtRegConfirmPass.Text.Trim()
 
-        Dim account() As String = {fullName, user, password}
-
-        If (fullName = "" Or user = "" Or password = "" Or confirmPassword = "") Then
-            MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Else
-            If user.Equals("jedrick", StringComparison.OrdinalIgnoreCase) OrElse
-       GlobalData.registerAccount.Any(Function(a) a(1).Equals(user, StringComparison.OrdinalIgnoreCase)) Then
-                MessageBox.Show("That username is already taken.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return
-            End If
-            If (password = confirmPassword) Then
-                MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                GlobalData.registerAccount.Add(account)
-                Me.DialogResult = DialogResult.OK
-                Me.Close()
-            Else
-                MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
+        If fullName = "" Or user = "" Or password = "" Or confirmPassword = "" Then
+            MessageBox.Show("Please fill in all fields.")
+            Exit Sub
         End If
+
+        ' CHECK DUPLICATE
+        If GlobalData.registerAccount.Any(Function(a) a(1).ToLower() = user.ToLower()) Then
+            MessageBox.Show("Username already exists.")
+            Exit Sub
+        End If
+
+        If password <> confirmPassword Then
+            MessageBox.Show("Passwords do not match.")
+            Exit Sub
+        End If
+
+        GlobalData.registerAccount.Add(New String() {fullName, user, password})
+
+        SaveAllAccounts()
+
+        MessageBox.Show("Registration successful!")
+
+        Me.DialogResult = DialogResult.OK
+        Me.Close()
+    End Sub
+    Public Sub SaveCashierAccountsToFile()
+
+        Dim lines As New List(Of String)
+
+        '========================
+        ' CASHIERS
+        '========================
+        For Each acc As String() In GlobalData.registerAccount
+
+            Dim line As String =
+                "cashier|" & acc(0) & "|" & acc(1) & "|" & acc(2)
+
+            lines.Add(line)
+
+        Next
+
+        IO.File.WriteAllLines(CashierFilePath, lines)
+
     End Sub
 
     Private Sub cbShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles cbShowPass.CheckedChanged

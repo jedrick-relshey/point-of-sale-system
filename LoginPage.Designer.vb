@@ -73,10 +73,9 @@ Partial Class LoginPage
         Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.Font = New System.Drawing.Font("Calibri", 22.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
-        Me.Label6.Location = New System.Drawing.Point(729, 73)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label6.Location = New System.Drawing.Point(547, 59)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(257, 45)
+        Me.Label6.Size = New System.Drawing.Size(209, 37)
         Me.Label6.TabIndex = 7
         Me.Label6.Text = "Welcome Back!"
         '
@@ -86,10 +85,9 @@ Partial Class LoginPage
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.Font = New System.Drawing.Font("Calibri", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.Gray
-        Me.Label7.Location = New System.Drawing.Point(726, 119)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label7.Location = New System.Drawing.Point(544, 97)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(259, 24)
+        Me.Label7.Size = New System.Drawing.Size(203, 19)
         Me.Label7.TabIndex = 8
         Me.Label7.Text = "Please sign in to your account"
         '
@@ -98,10 +96,9 @@ Partial Class LoginPage
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.DimGray
-        Me.Label10.Location = New System.Drawing.Point(748, 620)
-        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label10.Location = New System.Drawing.Point(561, 504)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(221, 16)
+        Me.Label10.Size = New System.Drawing.Size(177, 13)
         Me.Label10.TabIndex = 18
         Me.Label10.Text = "Secure login - your data is protected"
         '
@@ -111,10 +108,9 @@ Partial Class LoginPage
         Me.Label9.BackColor = System.Drawing.Color.Transparent
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.Label9.Location = New System.Drawing.Point(690, 264)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label9.Location = New System.Drawing.Point(518, 214)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(76, 20)
+        Me.Label9.Size = New System.Drawing.Size(59, 15)
         Me.Label9.TabIndex = 17
         Me.Label9.Text = "Password"
         '
@@ -124,10 +120,9 @@ Partial Class LoginPage
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.Label8.Location = New System.Drawing.Point(690, 168)
-        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label8.Location = New System.Drawing.Point(518, 136)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(80, 20)
+        Me.Label8.Size = New System.Drawing.Size(64, 15)
         Me.Label8.TabIndex = 16
         Me.Label8.Text = "Username"
         '
@@ -155,23 +150,23 @@ Partial Class LoginPage
         Me.loginPanel.Controls.Add(Me.Label10)
         Me.loginPanel.Controls.Add(Me.Label8)
         Me.loginPanel.FillColor = System.Drawing.Color.White
-        Me.loginPanel.Location = New System.Drawing.Point(206, 55)
-        Me.loginPanel.Margin = New System.Windows.Forms.Padding(4)
+        Me.loginPanel.Location = New System.Drawing.Point(154, 45)
         Me.loginPanel.Name = "loginPanel"
         Me.loginPanel.ShadowDecoration.BorderRadius = 40
         Me.loginPanel.ShadowDecoration.Color = System.Drawing.Color.Gray
         Me.loginPanel.ShadowDecoration.Enabled = True
         Me.loginPanel.ShadowDecoration.Shadow = New System.Windows.Forms.Padding(0, 0, 7, 7)
-        Me.loginPanel.Size = New System.Drawing.Size(1150, 650)
+        Me.loginPanel.Size = New System.Drawing.Size(862, 528)
         Me.loginPanel.TabIndex = 27
         '
         'Label5
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(747, 550)
+        Me.Label5.Location = New System.Drawing.Point(560, 447)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(127, 20)
+        Me.Label5.Size = New System.Drawing.Size(100, 15)
         Me.Label5.TabIndex = 26
         Me.Label5.Text = "Forgot password?"
         '
@@ -180,9 +175,10 @@ Partial Class LoginPage
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LinkLabel1.LinkColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.LinkLabel1.Location = New System.Drawing.Point(877, 550)
+        Me.LinkLabel1.Location = New System.Drawing.Point(658, 447)
+        Me.LinkLabel1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(76, 20)
+        Me.LinkLabel1.Size = New System.Drawing.Size(62, 15)
         Me.LinkLabel1.TabIndex = 25
         Me.LinkLabel1.TabStop = True
         Me.LinkLabel1.Text = "Click here"
@@ -196,10 +192,10 @@ Partial Class LoginPage
         Me.cbShowHidePass.CheckedState.FillColor = System.Drawing.Color.FromArgb(CType(CType(93, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(55, Byte), Integer))
         Me.cbShowHidePass.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbShowHidePass.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.cbShowHidePass.Location = New System.Drawing.Point(697, 346)
-        Me.cbShowHidePass.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.cbShowHidePass.Location = New System.Drawing.Point(523, 281)
+        Me.cbShowHidePass.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.cbShowHidePass.Name = "cbShowHidePass"
-        Me.cbShowHidePass.Size = New System.Drawing.Size(132, 24)
+        Me.cbShowHidePass.Size = New System.Drawing.Size(108, 19)
         Me.cbShowHidePass.TabIndex = 24
         Me.cbShowHidePass.Text = "Show Password"
         Me.cbShowHidePass.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(125, Byte), Integer), CType(CType(137, Byte), Integer), CType(CType(149, Byte), Integer))
@@ -220,19 +216,19 @@ Partial Class LoginPage
         Me.Guna2Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Guna2Panel1.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.Guna2Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Guna2Panel1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Guna2Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Guna2Panel1.Name = "Guna2Panel1"
-        Me.Guna2Panel1.Size = New System.Drawing.Size(575, 650)
+        Me.Guna2Panel1.Size = New System.Drawing.Size(431, 528)
         Me.Guna2Panel1.TabIndex = 21
         '
         'PictureBox1
         '
         Me.PictureBox1.BackgroundImage = Global.Vb_POS.My.Resources.Resources.cafe_logo
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox1.Location = New System.Drawing.Point(220, 229)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.PictureBox1.Location = New System.Drawing.Point(165, 186)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(152, 137)
+        Me.PictureBox1.Size = New System.Drawing.Size(114, 111)
         Me.PictureBox1.TabIndex = 30
         Me.PictureBox1.TabStop = False
         '
@@ -241,10 +237,10 @@ Partial Class LoginPage
         Me.Guna2Panel2.BackColor = System.Drawing.Color.Transparent
         Me.Guna2Panel2.BorderColor = System.Drawing.Color.Transparent
         Me.Guna2Panel2.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.Guna2Panel2.Location = New System.Drawing.Point(524, 0)
-        Me.Guna2Panel2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Guna2Panel2.Location = New System.Drawing.Point(393, 0)
+        Me.Guna2Panel2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Guna2Panel2.Name = "Guna2Panel2"
-        Me.Guna2Panel2.Size = New System.Drawing.Size(51, 650)
+        Me.Guna2Panel2.Size = New System.Drawing.Size(38, 528)
         Me.Guna2Panel2.TabIndex = 29
         '
         'Label3
@@ -252,9 +248,10 @@ Partial Class LoginPage
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Verdana", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.LightGray
-        Me.Label3.Location = New System.Drawing.Point(220, 469)
+        Me.Label3.Location = New System.Drawing.Point(165, 381)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(121, 16)
+        Me.Label3.Size = New System.Drawing.Size(107, 13)
         Me.Label3.TabIndex = 3
         Me.Label3.Text = "v2.4.1 Build 2026"
         '
@@ -263,9 +260,10 @@ Partial Class LoginPage
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Verdana", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.LightGray
-        Me.Label2.Location = New System.Drawing.Point(157, 416)
+        Me.Label2.Location = New System.Drawing.Point(118, 338)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(267, 20)
+        Me.Label2.Size = New System.Drawing.Size(216, 17)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "BrewHaven Cafe Management"
         '
@@ -274,9 +272,10 @@ Partial Class LoginPage
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Verdana", 16.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(156, 370)
+        Me.Label1.Location = New System.Drawing.Point(117, 301)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(270, 34)
+        Me.Label1.Size = New System.Drawing.Size(214, 26)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "BrewHaven POS"
         '
@@ -290,10 +289,10 @@ Partial Class LoginPage
         Me.rbAdmin.CheckedState.InnerOffset = -4
         Me.rbAdmin.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbAdmin.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.rbAdmin.Location = New System.Drawing.Point(802, 431)
-        Me.rbAdmin.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.rbAdmin.Location = New System.Drawing.Point(602, 350)
+        Me.rbAdmin.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.rbAdmin.Name = "rbAdmin"
-        Me.rbAdmin.Size = New System.Drawing.Size(121, 24)
+        Me.rbAdmin.Size = New System.Drawing.Size(98, 19)
         Me.rbAdmin.TabIndex = 23
         Me.rbAdmin.Text = "Administrator"
         Me.rbAdmin.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
@@ -311,10 +310,10 @@ Partial Class LoginPage
         Me.rbCashier.CheckedState.InnerOffset = -4
         Me.rbCashier.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbCashier.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.rbCashier.Location = New System.Drawing.Point(698, 431)
-        Me.rbCashier.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.rbCashier.Location = New System.Drawing.Point(524, 350)
+        Me.rbCashier.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.rbCashier.Name = "rbCashier"
-        Me.rbCashier.Size = New System.Drawing.Size(78, 24)
+        Me.rbCashier.Size = New System.Drawing.Size(64, 19)
         Me.rbCashier.TabIndex = 22
         Me.rbCashier.Text = "Cashier"
         Me.rbCashier.UncheckedState.BorderColor = System.Drawing.Color.Black
@@ -328,10 +327,9 @@ Partial Class LoginPage
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
-        Me.Label4.Location = New System.Drawing.Point(693, 399)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label4.Location = New System.Drawing.Point(520, 324)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(83, 20)
+        Me.Label4.Size = New System.Drawing.Size(65, 15)
         Me.Label4.TabIndex = 21
         Me.Label4.Text = "Login Role"
         '
@@ -350,10 +348,9 @@ Partial Class LoginPage
         Me.btnLogin.Font = New System.Drawing.Font("Segoe UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
         Me.btnLogin.ForeColor = System.Drawing.Color.White
         Me.btnLogin.Image = Global.Vb_POS.My.Resources.Resources.icons8_login_30
-        Me.btnLogin.Location = New System.Drawing.Point(693, 487)
-        Me.btnLogin.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnLogin.Location = New System.Drawing.Point(520, 396)
         Me.btnLogin.Name = "btnLogin"
-        Me.btnLogin.Size = New System.Drawing.Size(328, 50)
+        Me.btnLogin.Size = New System.Drawing.Size(246, 41)
         Me.btnLogin.TabIndex = 10
         Me.btnLogin.Text = "LOGIN"
         '
@@ -375,13 +372,13 @@ Partial Class LoginPage
         Me.txtUser.ForeColor = System.Drawing.Color.Gray
         Me.txtUser.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txtUser.IconLeft = Global.Vb_POS.My.Resources.Resources.pfp_icon_removebg_preview
-        Me.txtUser.Location = New System.Drawing.Point(697, 191)
-        Me.txtUser.Margin = New System.Windows.Forms.Padding(5)
+        Me.txtUser.Location = New System.Drawing.Point(523, 155)
+        Me.txtUser.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.txtUser.Name = "txtUser"
         Me.txtUser.PlaceholderForeColor = System.Drawing.Color.DimGray
         Me.txtUser.PlaceholderText = "Enter your Username"
         Me.txtUser.SelectedText = ""
-        Me.txtUser.Size = New System.Drawing.Size(328, 50)
+        Me.txtUser.Size = New System.Drawing.Size(246, 41)
         Me.txtUser.TabIndex = 9
         '
         'txtPass
@@ -402,26 +399,26 @@ Partial Class LoginPage
         Me.txtPass.ForeColor = System.Drawing.Color.Gray
         Me.txtPass.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txtPass.IconLeft = Global.Vb_POS.My.Resources.Resources.lock_icon_removebg_preview1
-        Me.txtPass.Location = New System.Drawing.Point(697, 287)
-        Me.txtPass.Margin = New System.Windows.Forms.Padding(5)
+        Me.txtPass.Location = New System.Drawing.Point(523, 233)
+        Me.txtPass.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.txtPass.Name = "txtPass"
         Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPass.PlaceholderForeColor = System.Drawing.Color.DimGray
         Me.txtPass.PlaceholderText = "Enter your Password"
         Me.txtPass.SelectedText = ""
-        Me.txtPass.Size = New System.Drawing.Size(328, 50)
+        Me.txtPass.Size = New System.Drawing.Size(246, 41)
         Me.txtPass.TabIndex = 11
         '
         'LoginPage
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AcceptButton = Me.btnLogin
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(233, Byte), Integer))
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(1582, 753)
+        Me.ClientSize = New System.Drawing.Size(1186, 612)
         Me.Controls.Add(Me.loginPanel)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.Name = "LoginPage"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Login"
