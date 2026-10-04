@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>Vb_POS.My.MyApplication</StartupObject>
     <RootNamespace>Vb_POS</RootNamespace>
-    <AssemblyName>Vb-POS</AssemblyName>
+    <AssemblyName>git</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Vb-POS.xml</DocumentationFile>
+    <DocumentationFile>git.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Vb-POS.xml</DocumentationFile>
+    <DocumentationFile>git.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -104,8 +104,6 @@
     <Compile Include="CashierDialog.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChatMessage.vb" />
-    <Compile Include="ClassAdmin.vb" />
     <Compile Include="CounterlyUi.vb" />
     <Compile Include="DataStore.vb" />
     <Compile Include="Form1.vb">
@@ -310,6 +308,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\backgroundimage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-notification-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-cafe-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Paint-LightGray-Q.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
