@@ -10,19 +10,15 @@ Imports Guna.UI2.WinForms
 ' Cashier_Designer.vb so it shows in the Design view. This file only fills in what has to be code:
 ' drawn icons, the banner text, product cards, cart rows and the checkout logic.
 '   btn_chkout  = "Continue to Payment"  (pays with the selected tile: tileCash / tileCard)
-'   Panel1      = Inventory screen (filled in code)
-'   pnl_History = Transaction history (filled by HistoryView)
+'   Panel1      = Inventory screen (read-only; layout in the designer, rows in code)
+'   pnl_History = Order history  (layout in the designer, rows/receipt in code)
 Public Class Cashier
 
     Private cart As New Dictionary(Of Product, Integer)
     Private selectedCategory As String = "All"
 
-    Private history As HistoryView
     Private isProcessing As Boolean = False
     Private closingForLogout As Boolean = False
-
-    Private invGrid As DataGridView
-    Private invSearch As Guna2TextBox
 
     Private ReadOnly originalFore As New Dictionary(Of Guna2Button, Color)
     Private ReadOnly originalFill As New Dictionary(Of Guna2Button, Color)
@@ -78,7 +74,7 @@ Public Class Cashier
             originalFill(b) = b.FillColor
         Next
 
-        BuildInventoryUi()
+        SetupInventory()
         SetupHistory()
         BuildMessagingLayout()
 
@@ -99,7 +95,7 @@ Public Class Cashier
         RemoveHandler DataStore.TransactionsChanged, AddressOf Cashier_TransactionsChanged
         RemoveHandler DataStore.ProductsChanged, AddressOf Cashier_ProductsChanged
         RemoveHandler DataStore.MessagesChanged, AddressOf Cashier_MessagesChanged
-        If history IsNot Nothing Then history.Dispose()
+        If catBarImage IsNot Nothing Then catBarImage.Dispose()
         DisposeCardImages()
         DisposeCartThumbs()
         If profilePhoto IsNot Nothing Then profilePhoto.Dispose()
@@ -130,6 +126,12 @@ Public Class Cashier
         Next
         target.BringToFront()
 
+        If target Is pnl_PointOfSale Then
+            AttachTopBar(pnl_PointOfSale, 20 + Guna2Panel6.Width)
+        ElseIf target Is Panel1 OrElse target Is pnl_History Then
+            AttachTopBar(target, 20)
+        End If
+
         For Each b As Guna2Button In navButtons
             b.FillColor = originalFill(b)
             b.ForeColor = originalFore(b)
@@ -159,7 +161,7 @@ Public Class Cashier
 
     Private Sub btn_hstry_Click(sender As Object, e As EventArgs) Handles btn_hstry.Click
         ShowCashierPanel(pnl_History, btn_hstry)
-        history.Reload()
+        RefreshHistory()
     End Sub
 
     Private Sub btn_CashierMessages_Click(sender As Object, e As EventArgs) Handles btn_CashierMessages.Click
@@ -172,6 +174,7 @@ Public Class Cashier
     '=================================================================
     Private Sub Cashier_TransactionsChanged(sender As Object, e As EventArgs)
         RefreshCashierData()
+        RefreshHistory()
     End Sub
 
     Private Sub Cashier_ProductsChanged(sender As Object, e As EventArgs)
@@ -219,41 +222,6 @@ Public Class Cashier
         RefreshCashierDashboard()
     End Sub
 
-    '=================================================================
-    ' HISTORY (shared HistoryView - read-only for cashiers)
-    '=================================================================
-    Private Sub SetupHistory()
-        Guna2TextBox1.PlaceholderText = "Search ID, cashier, product..."
-        pnl_History.BackColor = CafeUi.Cream
-        Label4.Font = New Font("Segoe UI", 18.0F, FontStyle.Bold)
-        Label4.ForeColor = CafeUi.Coffee
-        Label4.Location = New Point(31, 18)
-        Label15.Font = New Font("Segoe UI", 9.5F)
-        Label15.ForeColor = Color.FromArgb(105, 79, 70)
-        Label15.Location = New Point(36, 54)
-        Guna2Panel15.Location = New Point(34, 105)
-        Guna2Panel15.Size = New Size(934, 498)
-        Guna2Panel15.FillColor = Color.White
-        Guna2Panel15.BorderColor = Color.FromArgb(190, 164, 154)
-        Guna2Panel15.BorderThickness = 1
-        Guna2DataGridView1.Location = New Point(1, 42)
-        Guna2DataGridView1.Size = New Size(Guna2Panel15.Width - 2, Guna2Panel15.Height - 95)
-        Guna2DataGridView1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        For Each c As Control In Guna2Panel15.Controls
-            If c IsNot Label16 AndAlso c IsNot Guna2DataGridView1 Then c.Visible = False
-        Next
-        Label16.Location = New Point(14, 11)
-        Label16.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
-        Label16.ForeColor = CafeUi.Coffee
-
-        history = New HistoryView(Me,
-                                  pnl_History, New Point(36, 94),
-                                  Guna2DataGridView1, Guna2TextBox1,
-                                  Guna2ComboBox1, Guna2ComboBox2,
-                                  Guna2Panel15, New Point(14, 466),
-                                  False)
-    End Sub
-
     Private Sub BuildMessagingLayout()
         CafeUi.StyleMessaging(pnl_CashierMessages, FlowLayoutPanel3, pnl_MainChat,
                               flpMessages, CashierName, Guna2HtmlLabel60,
@@ -263,71 +231,730 @@ Public Class Cashier
     End Sub
 
     '=================================================================
-    ' INVENTORY (read-only view for the cashier; built in code in Panel1)
+    ' HISTORY  (layout is in Cashier_Designer.vb  |  rows, totals, receipt: here)
     '=================================================================
-    Private Sub BuildInventoryUi()
+    Private histList As New List(Of POS_Transaction)
+    Private selectedTrx As POS_Transaction
+    Private suppressHist As Boolean = False
 
-        Panel1.Controls.Add(New Label With {
-            .Text = "Inventory", .AutoSize = True, .Location = New Point(31, 30),
-            .Font = New Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold), .ForeColor = brown})
-        Panel1.Controls.Add(New Label With {
-            .Text = "Live stock levels. Ask the administrator to restock low items.",
-            .AutoSize = True, .Location = New Point(33, 64),
-            .Font = New Font("Segoe UI", 9.5F), .ForeColor = Color.FromArgb(110, 90, 85)})
+    Private Sub SetupHistory()
 
-        invSearch = New Guna2TextBox With {
-            .PlaceholderText = "Search stock...",
-            .Location = New Point(740, 28), .Size = New Size(228, 36), .BorderRadius = 6,
-            .Font = New Font("Segoe UI", 9.5F)
-        }
-        Panel1.Controls.Add(invSearch)
-        AddHandler invSearch.TextChanged, Sub(s As Object, ev As EventArgs) RefreshCashierInventory()
+        StyleGrid(histGrid, 42)
+        histGrid.Columns.Add(MakeCol("colHOrder", "Order", 80, 0, True))
+        histGrid.Columns.Add(MakeCol("colHTime", "Date & time", 118, 0, False))
+        histGrid.Columns.Add(MakeCol("colHCashier", "Cashier", 0, 60, False))
+        histGrid.Columns.Add(MakeCol("colHItems", "Items", 0, 140, False))
+        histGrid.Columns.Add(MakeCol("colHPay", "Payment", 62, 0, False))
+        histGrid.Columns.Add(MakeCol("colHTotal", "Total", 84, 0, True))
+        histGrid.Columns.Add(MakeCol("colHStatus", "Status", 96, 0, False))
 
-        invGrid = New DataGridView With {
-            .Location = New Point(35, 100), .Size = New Size(934, 500),
-            .AllowUserToAddRows = False, .AllowUserToDeleteRows = False, .AllowUserToResizeRows = False,
-            .ReadOnly = True, .RowHeadersVisible = False,
-            .SelectionMode = DataGridViewSelectionMode.FullRowSelect, .MultiSelect = False,
-            .BackgroundColor = Color.White, .BorderStyle = BorderStyle.FixedSingle,
-            .EnableHeadersVisualStyles = False, .GridColor = Color.Gainsboro,
-            .RowTemplate = New DataGridViewRow With {.Height = 46},
-            .ColumnHeadersHeight = 36,
-            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        }
-        invGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(216, 203, 199)
-        invGrid.ColumnHeadersDefaultCellStyle.ForeColor = brown
-        invGrid.ColumnHeadersDefaultCellStyle.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
-        invGrid.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.FromArgb(216, 203, 199)
-        invGrid.DefaultCellStyle.Font = New Font("Segoe UI", 10.0F)
-        invGrid.DefaultCellStyle.ForeColor = brown
-        invGrid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(240, 233, 230)
-        invGrid.DefaultCellStyle.SelectionForeColor = brown
+        Guna2ComboBox1.Items.AddRange(New Object() {"All statuses", TransactionStatus.Completed, TransactionStatus.Refunded, TransactionStatus.Voided})
+        Guna2ComboBox1.SelectedIndex = 0
+        Guna2ComboBox2.Items.AddRange(New Object() {"All payments", PaymentMethods.Cash, PaymentMethods.Card})
+        Guna2ComboBox2.SelectedIndex = 0
+        dtpHistory.Value = DateTime.Today
 
-        invGrid.Columns.Add(New DataGridViewImageColumn With {.Name = "colCInvPic", .HeaderText = "Pic", .Width = 60, .ImageLayout = DataGridViewImageCellLayout.Zoom})
-        invGrid.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "colCInvName", .HeaderText = "Product Name", .AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill, .FillWeight = 160})
-        invGrid.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "colCInvPrice", .HeaderText = "Price", .Width = 110})
-        invGrid.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "colCInvStock", .HeaderText = "Current Stock", .Width = 120})
-        invGrid.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "colCInvMin", .HeaderText = "Min. Stock", .Width = 100})
-        invGrid.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "colCInvStatus", .HeaderText = "Status", .Width = 130})
-        invGrid.Columns.Add(New DataGridViewTextBoxColumn With {.Name = "colCInvUpdated", .HeaderText = "Last Updated", .Width = 160})
-        Panel1.Controls.Add(invGrid)
+        AddHandler pnl_History.Resize, Sub(s As Object, ev As EventArgs) LayoutKpiRows()
+        LayoutKpiRows()
+        RefreshHistory()
     End Sub
 
+    Private Sub HistoryFilter_Changed(sender As Object, e As EventArgs) Handles Guna2TextBox1.TextChanged, Guna2ComboBox1.SelectedIndexChanged, Guna2ComboBox2.SelectedIndexChanged, dtpHistory.ValueChanged
+        RefreshHistory()
+    End Sub
+
+    Private Sub btnHistNewOrder_Click(sender As Object, e As EventArgs) Handles btnHistNewOrder.Click
+        btn_Point_Of_Sale.PerformClick()
+    End Sub
+
+    Private Function FilteredTransactions() As List(Of POS_Transaction)
+        Dim q As String = Guna2TextBox1.Text.Trim()
+        Dim statusFilter As String = If(Guna2ComboBox1.SelectedIndex > 0, Guna2ComboBox1.Text, "")
+        Dim payFilter As String = If(Guna2ComboBox2.SelectedIndex > 0, Guna2ComboBox2.Text, "")
+        Dim result As New List(Of POS_Transaction)
+
+        For Each t As POS_Transaction In DataStore.Transactions
+            If statusFilter <> "" AndAlso Not String.Equals(t.Status, statusFilter, StringComparison.OrdinalIgnoreCase) Then Continue For
+            If payFilter <> "" AndAlso Not String.Equals(t.PaymentMethod, payFilter, StringComparison.OrdinalIgnoreCase) Then Continue For
+            If dtpHistory.Checked AndAlso t.TransactionDate.Date <> dtpHistory.Value.Date Then Continue For
+            If q <> "" Then
+                Dim hay As String = t.TransactionID & " " & t.Cashier & " " & t.PaymentMethod & " " & DataStore.BuildItemsText(t)
+                If hay.IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 Then Continue For
+            End If
+            result.Add(t)
+        Next
+        result.Sort(Function(a, b) b.TransactionDate.CompareTo(a.TransactionDate))
+        Return result
+    End Function
+
+    Private Sub RefreshHistory()
+        If histGrid Is Nothing OrElse histGrid.Columns.Count = 0 Then Return
+
+        Dim keepId As String = If(selectedTrx IsNot Nothing, selectedTrx.TransactionID, "")
+        histList = FilteredTransactions()
+
+        suppressHist = True
+        histGrid.Rows.Clear()
+        Dim salesTotal As Decimal = 0D, netTotal As Decimal = 0D, taxTotal As Decimal = 0D, refundTotal As Decimal = 0D
+        Dim orderCount As Integer = 0, refundCount As Integer = 0
+
+        For Each t As POS_Transaction In histList
+            Dim timeText As String = If(t.TransactionDate.Date = DateTime.Today,
+                                        "Today, " & t.TransactionDate.ToString("hh:mm tt"),
+                                        t.TransactionDate.ToString("MMM d, hh:mm tt"))
+            Dim idx As Integer = histGrid.Rows.Add(t.TransactionID, timeText, t.Cashier, DataStore.BuildItemsText(t),
+                                                   t.PaymentMethod, Peso(t.Total), t.Status)
+            histGrid.Rows(idx).Tag = t
+
+            If String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then
+                salesTotal += t.Total
+                netTotal += t.Subtotal
+                taxTotal += t.Tax
+                orderCount += 1
+            ElseIf String.Equals(t.Status, TransactionStatus.Refunded, StringComparison.OrdinalIgnoreCase) Then
+                refundTotal += t.Total
+                refundCount += 1
+            End If
+        Next
+        suppressHist = False
+
+        lblHK1T.Text = "Total sales"
+        lblHK1V.Text = Peso(salesTotal)
+        lblHK1S.Text = orderCount.ToString() & If(orderCount = 1, " order", " orders")
+        lblHK2V.Text = Peso(netTotal)
+        lblHK2S.Text = "Before tax"
+        lblHK3V.Text = Peso(refundTotal)
+        lblHK3S.Text = refundCount.ToString() & If(refundCount = 1, " transaction", " transactions")
+        lblHK4V.Text = Peso(taxTotal)
+        lblHK4S.Text = (DataStore.PosSettings.TaxRate * 100D).ToString("0.##") & "% rate"
+
+        lblHistCount.Text = histList.Count.ToString() & If(histList.Count = 1, " record", " records")
+        lblHistShowing.Text = "Showing " & histList.Count.ToString() & " of " & DataStore.Transactions.Count.ToString() & " transactions"
+
+        If histList.Count > 0 Then
+            Dim target As Integer = 0
+            For i As Integer = 0 To histList.Count - 1
+                If histList(i).TransactionID = keepId Then target = i : Exit For
+            Next
+            histGrid.ClearSelection()
+            histGrid.Rows(target).Selected = True
+            histGrid.CurrentCell = histGrid.Rows(target).Cells(0)
+            RenderDetail(histList(target))
+        Else
+            RenderDetail(Nothing)
+        End If
+    End Sub
+
+    Private Sub histGrid_SelectionChanged(sender As Object, e As EventArgs) Handles histGrid.SelectionChanged
+        If suppressHist OrElse histGrid.SelectedRows.Count = 0 Then Return
+        RenderDetail(TryCast(histGrid.SelectedRows(0).Tag, POS_Transaction))
+    End Sub
+
+    Private Sub histGrid_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles histGrid.CellPainting
+        If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Return
+        If histGrid.Columns(e.ColumnIndex).Name <> "colHStatus" Then Return
+        Dim status As String = Convert.ToString(e.Value)
+        e.PaintBackground(e.CellBounds, True)
+        DrawPill(e.Graphics, e.CellBounds, status, PillBack(status), PillFore(status))
+        e.Paint(e.CellBounds, DataGridViewPaintParts.Border)
+        e.Handled = True
+    End Sub
+
+    '---------------- receipt panel ----------------
+    Private Sub RenderDetail(t As POS_Transaction)
+        selectedTrx = t
+        Dim has As Boolean = (t IsNot Nothing)
+        lblDetEmpty.Visible = Not has
+        For Each c As Control In New Control() {lblDetTitle, btnDetStatus, lblDetDate, btnDetPrint, lblDetSecA, lblDetCashierCap,
+                                                lblDetCashier, lblDetPayCap, lblDetPay, lblDetSecB, flDetItems, lblDetSubCap,
+                                                lblDetSub, lblDetTaxCap, lblDetTax, lblDetCash, pnlDetTotal, lblDetReceipt}
+            c.Visible = has
+        Next
+
+        flDetItems.SuspendLayout()
+        For i As Integer = flDetItems.Controls.Count - 1 To 0 Step -1
+            Dim old As Control = flDetItems.Controls(i)
+            flDetItems.Controls.RemoveAt(i)
+            old.Dispose()
+        Next
+        If Not has Then
+            flDetItems.ResumeLayout()
+            Return
+        End If
+
+        lblDetTitle.Text = "Order #" & t.TransactionID
+        btnDetStatus.Text = t.Status
+        btnDetStatus.FillColor = PillBack(t.Status)
+        btnDetStatus.BorderColor = PillBack(t.Status)
+        btnDetStatus.ForeColor = PillFore(t.Status)
+        btnDetStatus.HoverState.FillColor = PillBack(t.Status)
+        btnDetStatus.HoverState.ForeColor = PillFore(t.Status)
+        lblDetDate.Text = t.TransactionDate.ToString("MMMM d, yyyy  -  hh:mm tt")
+        lblDetCashier.Text = t.Cashier
+        lblDetPay.Text = t.PaymentMethod
+        lblDetSub.Text = Peso(t.Subtotal)
+        lblDetTax.Text = Peso(t.Tax)
+        lblDetTotal.Text = Peso(t.Total)
+        lblDetCash.Text = If(t.PaymentMethod = PaymentMethods.Cash,
+                             "Cash received " & Peso(t.CashReceived) & "   |   Change " & Peso(t.ChangeGiven), "")
+        lblDetReceipt.Text = "Receipt ID  " & t.TransactionID
+
+        Dim rowW As Integer = Math.Max(150, flDetItems.ClientSize.Width - 4)
+        For Each item As TransactionItem In t.Items
+            Dim row As New Panel With {.Width = rowW, .Height = 30, .Margin = New Padding(0, 0, 0, 2), .BackColor = CardFill}
+            row.Controls.Add(New Label With {.Text = item.Quantity.ToString(), .AutoSize = False, .Size = New Size(22, 22),
+                .Location = New Point(0, 4), .TextAlign = ContentAlignment.MiddleCenter, .BackColor = Color.FromArgb(243, 232, 222),
+                .ForeColor = Ink, .Font = New Font("Segoe UI", 8.0F, FontStyle.Bold)})
+            row.Controls.Add(New Label With {.Text = item.ProductName, .AutoSize = False, .AutoEllipsis = True,
+                .Size = New Size(rowW - 30 - 74, 22), .Location = New Point(30, 4), .TextAlign = ContentAlignment.MiddleLeft,
+                .BackColor = CardFill, .ForeColor = Ink, .Font = New Font("Segoe UI", 8.5F)})
+            row.Controls.Add(New Label With {.Text = Peso(item.LineTotal), .AutoSize = False, .Size = New Size(74, 22),
+                .Location = New Point(rowW - 74, 4), .TextAlign = ContentAlignment.MiddleRight,
+                .BackColor = CardFill, .ForeColor = Ink, .Font = New Font("Segoe UI", 8.5F, FontStyle.Bold)})
+            flDetItems.Controls.Add(row)
+        Next
+        flDetItems.ResumeLayout()
+    End Sub
+
+    Private Sub btnDetPrint_Click(sender As Object, e As EventArgs) Handles btnDetPrint.Click
+        If selectedTrx Is Nothing Then Return
+        Dim lines As List(Of String) = BuildReceiptLines(selectedTrx)
+
+        Using doc As New System.Drawing.Printing.PrintDocument()
+            AddHandler doc.PrintPage, Sub(s As Object, ev As System.Drawing.Printing.PrintPageEventArgs)
+                                          Using f As New Font("Consolas", 9.5F)
+                                              Dim y As Single = ev.MarginBounds.Top
+                                              For Each ln As String In lines
+                                                  ev.Graphics.DrawString(ln, f, Brushes.Black, CSng(ev.MarginBounds.Left), y)
+                                                  y += f.GetHeight(ev.Graphics) + 2.0F
+                                              Next
+                                          End Using
+                                          ev.HasMorePages = False
+                                      End Sub
+            Using dlg As New PrintPreviewDialog()
+                dlg.Document = doc
+                dlg.Width = 720
+                dlg.Height = 820
+                dlg.ShowDialog(Me)
+            End Using
+        End Using
+    End Sub
+
+    Private Function BuildReceiptLines(t As POS_Transaction) As List(Of String)
+        Const w As Integer = 40
+        Dim lines As New List(Of String)
+        Dim centered As Func(Of String, String) = Function(s As String) s.PadLeft((w + s.Length) \ 2).PadRight(w)
+        Dim pair As Func(Of String, String, String) =
+            Function(l As String, r As String)
+                Dim room As Integer = Math.Max(1, w - r.Length - 1)
+                If l.Length > room Then l = l.Substring(0, room)
+                Return l.PadRight(room + 1) & r
+            End Function
+        Dim rule As String = New String("-"c, w)
+
+        lines.Add(centered("FOREST ROAST CAFE"))
+        lines.Add(centered("Official Receipt"))
+        lines.Add(rule)
+        lines.Add("Receipt: " & t.TransactionID)
+        lines.Add("Date:    " & t.TransactionDate.ToString("MMM d, yyyy hh:mm tt"))
+        lines.Add("Cashier: " & t.Cashier)
+        lines.Add(rule)
+        For Each item As TransactionItem In t.Items
+            lines.Add(pair(item.Quantity.ToString() & "x " & item.ProductName, Peso(item.LineTotal)))
+        Next
+        lines.Add(rule)
+        lines.Add(pair("Subtotal", Peso(t.Subtotal)))
+        lines.Add(pair("Tax", Peso(t.Tax)))
+        lines.Add(pair("TOTAL", Peso(t.Total)))
+        lines.Add(rule)
+        lines.Add(pair("Payment", t.PaymentMethod))
+        If t.PaymentMethod = PaymentMethods.Cash Then
+            lines.Add(pair("Cash received", Peso(t.CashReceived)))
+            lines.Add(pair("Change", Peso(t.ChangeGiven)))
+        End If
+        lines.Add(pair("Status", t.Status))
+        lines.Add(rule)
+        lines.Add(centered("Thank you! Please come again."))
+        Return lines
+    End Function
+
+    Private Sub btnHistExport_Click(sender As Object, e As EventArgs) Handles btnHistExport.Click
+        Dim rows As New List(Of String())
+        For Each t As POS_Transaction In histList
+            rows.Add(New String() {t.TransactionID, t.TransactionDate.ToString("yyyy-MM-dd HH:mm"), t.Cashier, DataStore.BuildItemsText(t),
+                                   t.PaymentMethod, t.Subtotal.ToString("0.00"), t.Tax.ToString("0.00"), t.Total.ToString("0.00"), t.Status})
+        Next
+        SaveCsv("transactions", New String() {"Order", "Date", "Cashier", "Items", "Payment", "Subtotal", "Tax", "Total", "Status"}, rows)
+    End Sub
+
+    '=================================================================
+    ' INVENTORY  (read-only for cashiers: no add / adjust / purchase order)
+    '=================================================================
+    Private invBusy As Boolean = False
+    Private catBarImage As Bitmap
+    Private invShown As New List(Of Product)
+
+    Private Shared ReadOnly CatColors As Color() = {
+        Color.FromArgb(193, 106, 58), Color.FromArgb(222, 196, 172), Color.FromArgb(176, 126, 48),
+        Color.FromArgb(92, 122, 84), Color.FromArgb(120, 104, 96)}
+
+    Private Sub SetupInventory()
+
+        StyleGrid(invGrid, 54)
+        invGrid.Columns.Add(MakeCol("colInvItem", "Item", 0, 150, False))
+        invGrid.Columns.Add(MakeCol("colInvSku", "SKU", 70, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvCat", "Category", 92, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvStock", "Current stock", 112, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvMin", "Reorder", 62, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvPrice", "Price", 78, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvStatus", "Status", 100, 0, False))
+
+        cboInvStatus.Items.AddRange(New Object() {"All statuses", StockStatus.InStock, StockStatus.LowStock, StockStatus.OutOfStock})
+        cboInvStatus.SelectedIndex = 0
+        cboInvCategory.Items.Add("All categories")
+        cboInvCategory.SelectedIndex = 0
+
+        AddHandler Panel1.Resize, Sub(s As Object, ev As EventArgs) LayoutKpiRows()
+        LayoutKpiRows()
+        RefreshCashierInventory()
+    End Sub
+
+    Private Sub InventoryFilter_Changed(sender As Object, e As EventArgs) Handles txtInvSearch.TextChanged, cboInvCategory.SelectedIndexChanged, cboInvStatus.SelectedIndexChanged
+        If Not invBusy Then RefreshCashierInventory()
+    End Sub
+
+    Private Shared Function CategoryOf(p As Product) As String
+        Return If(String.IsNullOrWhiteSpace(p.Category), "Uncategorized", p.Category.Trim())
+    End Function
+
     Private Sub RefreshCashierInventory()
-        If invGrid Is Nothing Then Return
-        Dim q As String = invSearch.Text.Trim()
-        invGrid.Rows.Clear()
+        If invGrid Is Nothing OrElse invGrid.Columns.Count = 0 Then Return
+
+        ' ---- category filter list (kept in sync with the catalog) ----
+        Dim cats As New List(Of String)
         For Each p As Product In DataStore.Products
-            If q <> "" AndAlso p.Name.IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 Then Continue For
+            Dim cn As String = CategoryOf(p)
+            If Not cats.Contains(cn) Then cats.Add(cn)
+        Next
+        cats.Sort()
+        Dim same As Boolean = (cboInvCategory.Items.Count = cats.Count + 1)
+        If same Then
+            For i As Integer = 0 To cats.Count - 1
+                If cboInvCategory.Items(i + 1).ToString() <> cats(i) Then same = False : Exit For
+            Next
+        End If
+        If Not same Then
+            invBusy = True
+            Dim keep As String = cboInvCategory.Text
+            cboInvCategory.Items.Clear()
+            cboInvCategory.Items.Add("All categories")
+            For Each cn As String In cats
+                cboInvCategory.Items.Add(cn)
+            Next
+            Dim keepIdx As Integer = cboInvCategory.Items.IndexOf(keep)
+            cboInvCategory.SelectedIndex = If(keepIdx >= 0, keepIdx, 0)
+            invBusy = False
+        End If
+
+        Dim q As String = txtInvSearch.Text.Trim()
+        Dim catFilter As String = If(cboInvCategory.SelectedIndex > 0, cboInvCategory.Text, "")
+        Dim statusFilter As String = If(cboInvStatus.SelectedIndex > 0, cboInvStatus.Text, "")
+
+        invGrid.Rows.Clear()
+        invShown.Clear()
+        Dim totalValue As Decimal = 0D
+        Dim lowCount As Integer = 0, outCount As Integer = 0
+
+        For Each p As Product In DataStore.Products
             Dim st As String = DataStore.GetProductStockStatus(p)
-            Dim updated As String = If(p.LastUpdated.Date = DateTime.Today,
-                                       "Today, " & p.LastUpdated.ToString("hh:mm tt"),
-                                       p.LastUpdated.ToString("MMM d, hh:mm tt"))
-            Dim idx As Integer = invGrid.Rows.Add(p.Image, p.Name, Peso(p.Price), p.Stock, DataStore.GetMinStock(p), st, updated)
-            invGrid.Rows(idx).Cells("colCInvStatus").Style.ForeColor = StatusColor(st)
-            invGrid.Rows(idx).Cells("colCInvStatus").Style.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+            totalValue += p.Price * p.Stock
+            If st = StockStatus.LowStock Then lowCount += 1
+            If st = StockStatus.OutOfStock Then outCount += 1
+
+            If catFilter <> "" AndAlso CategoryOf(p) <> catFilter Then Continue For
+            If statusFilter <> "" AndAlso st <> statusFilter Then Continue For
+            If q <> "" Then
+                Dim hay As String = p.Name & " " & p.Id & " " & CategoryOf(p)
+                If hay.IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 Then Continue For
+            End If
+
+            Dim idx As Integer = invGrid.Rows.Add(p.Name, p.Id, CategoryOf(p), p.Stock, DataStore.GetMinStock(p), Peso(p.Price), st)
+            invGrid.Rows(idx).Tag = p
+            invShown.Add(p)
         Next
         invGrid.ClearSelection()
+
+        lblIK1V.Text = DataStore.Products.Count.ToString()
+        lblIK1S.Text = cats.Count.ToString() & If(cats.Count = 1, " category", " categories")
+        lblIK2V.Text = Peso(totalValue)
+        lblIK2S.Text = "At selling price"
+        lblIK3V.Text = lowCount.ToString()
+        lblIK3S.Text = "Needs reorder"
+        lblIK4V.Text = outCount.ToString()
+        lblIK4S.Text = "Action required"
+        lblInvCount.Text = invShown.Count.ToString() & If(invShown.Count = 1, " item", " items")
+        lblInvShowing.Text = "Showing " & invShown.Count.ToString() & " of " & DataStore.Products.Count.ToString() & " items"
+
+        BuildCategorySummary(totalValue)
+        BuildAttentionList()
+    End Sub
+
+    Private Sub BuildCategorySummary(totalValue As Decimal)
+
+        Dim items As New Dictionary(Of String, Integer)
+        Dim vals As New Dictionary(Of String, Decimal)
+        For Each p As Product In DataStore.Products
+            Dim key As String = CategoryOf(p)
+            If Not items.ContainsKey(key) Then
+                items(key) = 0
+                vals(key) = 0D
+            End If
+            items(key) += 1
+            vals(key) += p.Price * p.Stock
+        Next
+
+        Dim keys As New List(Of String)(vals.Keys)
+        keys.Sort(Function(a, b) vals(b).CompareTo(vals(a)))
+
+        Dim names As New List(Of String), counts As New List(Of Integer), amounts As New List(Of Decimal)
+        For i As Integer = 0 To keys.Count - 1
+            If keys.Count > 5 AndAlso i >= 4 Then
+                If names.Count = 4 Then
+                    names.Add("Other") : counts.Add(0) : amounts.Add(0D)
+                End If
+                counts(4) += items(keys(i))
+                amounts(4) += vals(keys(i))
+            Else
+                names.Add(keys(i)) : counts.Add(items(keys(i))) : amounts.Add(vals(keys(i)))
+            End If
+        Next
+
+        lblInvCatTotal.Text = Peso(totalValue) & " total"
+
+        ' stacked bar
+        Dim bar As New Bitmap(picInvCatBar.Width, picInvCatBar.Height)
+        Using g As Graphics = Graphics.FromImage(bar)
+            g.SmoothingMode = SmoothingMode.AntiAlias
+            g.Clear(CardFill)
+            Dim whole As Decimal = 0D
+            For Each a As Decimal In amounts
+                whole += a
+            Next
+            Using clip As GraphicsPath = RoundRectPath(New Rectangle(0, 0, bar.Width - 1, bar.Height - 1), 4, False)
+                g.SetClip(clip)
+                g.Clear(Color.FromArgb(240, 232, 224))
+                If whole > 0D Then
+                    Dim x As Integer = 0
+                    For i As Integer = 0 To amounts.Count - 1
+                        Dim w As Integer = If(i = amounts.Count - 1, bar.Width - x, CInt(Math.Round(CDbl(amounts(i) / whole) * bar.Width)))
+                        Using b As New SolidBrush(CatColors(i Mod CatColors.Length))
+                            g.FillRectangle(b, x, 0, w, bar.Height)
+                        End Using
+                        x += w
+                    Next
+                End If
+            End Using
+        End Using
+        Dim oldBar As Bitmap = catBarImage
+        catBarImage = bar
+        picInvCatBar.Image = bar
+        If oldBar IsNot Nothing Then oldBar.Dispose()
+
+        ' legend rows
+        flInvCat.SuspendLayout()
+        For i As Integer = flInvCat.Controls.Count - 1 To 0 Step -1
+            Dim old As Control = flInvCat.Controls(i)
+            flInvCat.Controls.RemoveAt(i)
+            old.Dispose()
+        Next
+        For i As Integer = 0 To names.Count - 1
+            Dim row As New Panel With {.Size = New Size(flInvCat.ClientSize.Width - 4, 24), .Margin = New Padding(0, 0, 0, 2), .BackColor = CardFill}
+            row.Controls.Add(New Label With {.Text = ChrW(&H25CF), .AutoSize = False, .Size = New Size(16, 22), .Location = New Point(0, 1),
+                .ForeColor = CatColors(i Mod CatColors.Length), .BackColor = CardFill, .Font = New Font("Segoe UI", 9.0F),
+                .TextAlign = ContentAlignment.MiddleLeft})
+            row.Controls.Add(New Label With {.Text = names(i), .AutoSize = False, .AutoEllipsis = True, .Size = New Size(112, 22), .Location = New Point(16, 1),
+                .ForeColor = Ink, .BackColor = CardFill, .Font = New Font("Segoe UI", 8.5F), .TextAlign = ContentAlignment.MiddleLeft})
+            row.Controls.Add(New Label With {.Text = counts(i).ToString() & If(counts(i) = 1, " item", " items"), .AutoSize = False,
+                .Size = New Size(56, 22), .Location = New Point(128, 1), .ForeColor = Muted, .BackColor = CardFill,
+                .Font = New Font("Segoe UI", 7.5F), .TextAlign = ContentAlignment.MiddleRight})
+            row.Controls.Add(New Label With {.Text = Peso(amounts(i)), .AutoSize = False, .Size = New Size(76, 22),
+                .Location = New Point(row.Width - 76, 1), .ForeColor = Ink, .BackColor = CardFill,
+                .Font = New Font("Segoe UI", 8.5F, FontStyle.Bold), .TextAlign = ContentAlignment.MiddleRight})
+            flInvCat.Controls.Add(row)
+        Next
+        flInvCat.ResumeLayout()
+    End Sub
+
+    Private Sub BuildAttentionList()
+
+        Dim need As New List(Of Product)
+        For Each p As Product In DataStore.Products
+            If DataStore.GetProductStockStatus(p) <> StockStatus.InStock Then need.Add(p)
+        Next
+        need.Sort(Function(a, b) a.Stock.CompareTo(b.Stock))
+
+        lblInvAttnCount.Text = need.Count.ToString() & If(need.Count = 1, " item", " items")
+
+        flInvAttn.SuspendLayout()
+        For i As Integer = flInvAttn.Controls.Count - 1 To 0 Step -1
+            Dim old As Control = flInvAttn.Controls(i)
+            flInvAttn.Controls.RemoveAt(i)
+            old.Dispose()
+        Next
+
+        Dim rowW As Integer = Math.Max(150, flInvAttn.ClientSize.Width - 4)
+        If need.Count = 0 Then
+            flInvAttn.Controls.Add(New Label With {.Text = "All items are well stocked.", .AutoSize = False,
+                .Size = New Size(rowW, 40), .ForeColor = Muted, .BackColor = CardFill, .Font = New Font("Segoe UI", 9.0F),
+                .TextAlign = ContentAlignment.MiddleCenter})
+        End If
+
+        For Each p As Product In need
+            Dim isOut As Boolean = (p.Stock <= 0)
+            Dim back As Color = If(isOut, Color.FromArgb(250, 226, 222), Color.FromArgb(250, 236, 212))
+            Dim fore As Color = If(isOut, Color.FromArgb(176, 72, 48), Color.FromArgb(170, 105, 30))
+            Dim card As New Guna2Panel With {.Size = New Size(rowW, 46), .Margin = New Padding(0, 0, 0, 8), .BorderRadius = 10,
+                .FillColor = back, .BackColor = CardFill}
+            card.Controls.Add(New Label With {.Text = p.Name, .AutoSize = False, .AutoEllipsis = True, .Size = New Size(rowW - 100, 18),
+                .Location = New Point(12, 6), .ForeColor = Ink, .BackColor = back, .Font = New Font("Segoe UI", 8.5F, FontStyle.Bold)})
+            card.Controls.Add(New Label With {.Text = "Reorder at " & DataStore.GetMinStock(p).ToString(), .AutoSize = False,
+                .Size = New Size(rowW - 100, 16), .Location = New Point(12, 25), .ForeColor = Muted, .BackColor = back,
+                .Font = New Font("Segoe UI", 7.5F)})
+            card.Controls.Add(New Label With {.Text = If(isOut, "Out of stock", p.Stock.ToString() & " left"), .AutoSize = False,
+                .Size = New Size(90, 18), .Location = New Point(rowW - 100, 14), .ForeColor = fore, .BackColor = back,
+                .TextAlign = ContentAlignment.MiddleRight, .Font = New Font("Segoe UI", 8.0F, FontStyle.Bold)})
+            flInvAttn.Controls.Add(card)
+        Next
+        flInvAttn.ResumeLayout()
+    End Sub
+
+    Private Sub invGrid_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles invGrid.CellPainting
+        If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Return
+        Dim p As Product = TryCast(invGrid.Rows(e.RowIndex).Tag, Product)
+        If p Is Nothing Then Return
+        Dim col As String = invGrid.Columns(e.ColumnIndex).Name
+        If col <> "colInvItem" AndAlso col <> "colInvStock" AndAlso col <> "colInvStatus" Then Return
+
+        e.PaintBackground(e.CellBounds, True)
+        Dim g As Graphics = e.Graphics
+        g.SmoothingMode = SmoothingMode.AntiAlias
+        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
+        Dim cb As Rectangle = e.CellBounds
+        Dim st As String = DataStore.GetProductStockStatus(p)
+
+        Select Case col
+            Case "colInvItem"
+                Using thumb As Bitmap = MakeThumb(p.Image, 38)
+                    g.DrawImage(thumb, cb.X + 12, cb.Y + (cb.Height - 38) \ 2)
+                End Using
+                Using sf As New StringFormat With {.Trimming = StringTrimming.EllipsisCharacter, .FormatFlags = StringFormatFlags.NoWrap},
+                      nameFont As New Font("Segoe UI", 9.0F, FontStyle.Bold),
+                      descFont As New Font("Segoe UI", 7.5F),
+                      inkB As New SolidBrush(Ink), mutedB As New SolidBrush(Muted)
+                    Dim textW As Single = cb.Width - 62
+                    g.DrawString(p.Name, nameFont, inkB, New RectangleF(cb.X + 58, cb.Y + 10, textW, 18), sf)
+                    g.DrawString(If(String.IsNullOrWhiteSpace(p.Description), CategoryOf(p), p.Description), descFont, mutedB,
+                                 New RectangleF(cb.X + 58, cb.Y + 29, textW, 16), sf)
+                End Using
+
+            Case "colInvStock"
+                Dim minStock As Integer = DataStore.GetMinStock(p)
+                Using f As New Font("Segoe UI", 9.0F, FontStyle.Bold), inkB As New SolidBrush(Ink)
+                    g.DrawString(p.Stock.ToString(), f, inkB, cb.X + 10, cb.Y + 11)
+                End Using
+                Dim track As New Rectangle(cb.X + 10, cb.Y + 33, Math.Min(86, cb.Width - 22), 6)
+                Using tp As GraphicsPath = RoundRectPath(track, 3, False), tb As New SolidBrush(Color.FromArgb(238, 230, 222))
+                    g.FillPath(tb, tp)
+                End Using
+                Dim ratio As Double = If(minStock <= 0, 1.0, Math.Min(1.0, p.Stock / (minStock * 3.0)))
+                Dim fillW As Integer = CInt(track.Width * ratio)
+                If p.Stock > 0 AndAlso fillW < 6 Then fillW = 6
+                If fillW > 0 Then
+                    Dim barColor As Color = If(st = StockStatus.InStock, Color.FromArgb(92, 122, 84),
+                                               If(st = StockStatus.LowStock, Color.FromArgb(205, 130, 40), Color.FromArgb(198, 60, 50)))
+                    Using fp As GraphicsPath = RoundRectPath(New Rectangle(track.X, track.Y, fillW, track.Height), 3, False),
+                          fb As New SolidBrush(barColor)
+                        g.FillPath(fb, fp)
+                    End Using
+                End If
+
+            Case "colInvStatus"
+                DrawPill(g, cb, st, PillBack(st), PillFore(st))
+        End Select
+
+        e.Paint(e.CellBounds, DataGridViewPaintParts.Border)
+        e.Handled = True
+    End Sub
+
+    Private Sub btnInvExport_Click(sender As Object, e As EventArgs) Handles btnInvExport.Click
+        Dim rows As New List(Of String())
+        For Each p As Product In invShown
+            rows.Add(New String() {p.Id, p.Name, CategoryOf(p), p.Stock.ToString(), DataStore.GetMinStock(p).ToString(),
+                                   p.Price.ToString("0.00"), DataStore.GetProductStockStatus(p)})
+        Next
+        SaveCsv("inventory", New String() {"SKU", "Item", "Category", "Stock", "Reorder level", "Price", "Status"}, rows)
+    End Sub
+
+    '=================================================================
+    ' SHARED PIECES FOR THE HISTORY + INVENTORY PAGES
+    '=================================================================
+    Private Sub StyleGrid(g As DataGridView, rowHeight As Integer)
+        g.EnableHeadersVisualStyles = False
+        g.BorderStyle = BorderStyle.None
+        g.BackgroundColor = CardFill
+        g.GridColor = Color.FromArgb(240, 230, 220)
+        g.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
+        g.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
+        g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        g.ColumnHeadersHeight = 34
+        g.RowTemplate.Height = rowHeight
+        g.RowHeadersVisible = False
+        g.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        g.MultiSelect = False
+        g.AllowUserToResizeColumns = False
+
+        With g.ColumnHeadersDefaultCellStyle
+            .BackColor = Color.FromArgb(243, 232, 222)
+            .ForeColor = Muted
+            .Font = New Font("Segoe UI", 8.5F)
+            .SelectionBackColor = Color.FromArgb(243, 232, 222)
+            .SelectionForeColor = Muted
+            .Alignment = DataGridViewContentAlignment.MiddleLeft
+            .Padding = New Padding(10, 0, 0, 0)
+        End With
+        With g.DefaultCellStyle
+            .BackColor = CardFill
+            .ForeColor = Ink
+            .Font = New Font("Segoe UI", 8.75F)
+            .SelectionBackColor = Color.FromArgb(242, 224, 210)
+            .SelectionForeColor = Ink
+            .Padding = New Padding(10, 0, 0, 0)
+        End With
+    End Sub
+
+    Private Function MakeCol(name As String, header As String, width As Integer, fillWeight As Integer, bold As Boolean) As DataGridViewTextBoxColumn
+        Dim col As New DataGridViewTextBoxColumn With {.Name = name, .HeaderText = header, .SortMode = DataGridViewColumnSortMode.NotSortable}
+        If fillWeight > 0 Then
+            col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            col.FillWeight = fillWeight
+            col.MinimumWidth = 60
+        Else
+            col.Width = width
+        End If
+        If bold Then col.DefaultCellStyle.Font = New Font("Segoe UI", 8.75F, FontStyle.Bold)
+        Return col
+    End Function
+
+    Private Shared Function PillBack(status As String) As Color
+        Select Case status
+            Case TransactionStatus.Completed, StockStatus.InStock
+                Return Color.FromArgb(225, 236, 225)
+            Case TransactionStatus.Refunded, StockStatus.OutOfStock
+                Return Color.FromArgb(250, 226, 222)
+            Case StockStatus.LowStock
+                Return Color.FromArgb(250, 235, 210)
+            Case Else
+                Return Color.FromArgb(236, 230, 224)
+        End Select
+    End Function
+
+    Private Shared Function PillFore(status As String) As Color
+        Select Case status
+            Case TransactionStatus.Completed, StockStatus.InStock
+                Return Color.FromArgb(70, 110, 70)
+            Case TransactionStatus.Refunded, StockStatus.OutOfStock
+                Return Color.FromArgb(176, 72, 48)
+            Case StockStatus.LowStock
+                Return Color.FromArgb(170, 105, 30)
+            Case Else
+                Return Color.FromArgb(110, 95, 88)
+        End Select
+    End Function
+
+    Private Shared Sub DrawPill(g As Graphics, cell As Rectangle, text As String, back As Color, fore As Color)
+        g.SmoothingMode = SmoothingMode.AntiAlias
+        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
+        Using f As New Font("Segoe UI", 8.0F, FontStyle.Bold)
+            Dim sz As SizeF = g.MeasureString(text, f)
+            Dim w As Integer = CInt(sz.Width) + 18
+            Dim h As Integer = 22
+            Dim r As New Rectangle(cell.X + 10, cell.Y + (cell.Height - h) \ 2, w, h)
+            Using path As GraphicsPath = RoundRectPath(r, 10, False), b As New SolidBrush(back), tb As New SolidBrush(fore)
+                g.FillPath(b, path)
+                g.DrawString(text, f, tb, r.X + 9, r.Y + (h - sz.Height) / 2.0F + 1.0F)
+            End Using
+        End Using
+    End Sub
+
+    Private Sub LayoutKpiRows()
+        LayoutKpiRow(pnl_History, New Control() {pnlHK1, pnlHK2, pnlHK3, pnlHK4})
+        LayoutKpiRow(Panel1, New Control() {pnlIK1, pnlIK2, pnlIK3, pnlIK4})
+    End Sub
+
+    Private Sub LayoutKpiRow(host As Control, cards As Control())
+        Const gap As Integer = 14
+        Dim w As Integer = (host.ClientSize.Width - 40 - gap * 3) \ 4
+        If w < 120 Then Return
+        For i As Integer = 0 To cards.Length - 1
+            cards(i).SetBounds(20 + i * (w + gap), cards(i).Top, w, cards(i).Height)
+        Next
+    End Sub
+
+    ''' <summary>The bell + profile chip + dropdown are shared: move them to whichever page is showing.</summary>
+    Private Sub AttachTopBar(host As Control, rightMargin As Integer)
+        pnlProfileMenu.Visible = False
+        If pnlUserChip.Parent IsNot host Then
+            host.Controls.Add(pnlUserChip)
+            host.Controls.Add(btnBell)
+            host.Controls.Add(pnlProfileMenu)
+        End If
+        pnlUserChip.Left = host.ClientSize.Width - rightMargin - pnlUserChip.Width
+        pnlUserChip.Top = 12
+        btnBell.Left = pnlUserChip.Left - 10 - btnBell.Width
+        btnBell.Top = 12
+        pnlProfileMenu.Left = pnlUserChip.Left
+        pnlProfileMenu.Top = 56
+        For Each c As Control In New Control() {pnlUserChip, btnBell, pnlProfileMenu}
+            c.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        Next
+        pnlUserChip.BringToFront()
+        btnBell.BringToFront()
+        pnlProfileMenu.BringToFront()
+    End Sub
+
+    Private Shared Function CsvCell(value As String) As String
+        If value Is Nothing Then Return ""
+        If value.IndexOfAny(New Char() {","c, """"c, ControlChars.Cr, ControlChars.Lf}) >= 0 Then
+            Return """" & value.Replace("""", """""") & """"
+        End If
+        Return value
+    End Function
+
+    Private Sub SaveCsv(defaultName As String, headers As String(), rows As List(Of String()))
+        Using dlg As New SaveFileDialog()
+            dlg.Filter = "CSV file (*.csv)|*.csv"
+            dlg.FileName = defaultName & "_" & DateTime.Now.ToString("yyyyMMdd_HHmm") & ".csv"
+            If dlg.ShowDialog(Me) <> DialogResult.OK Then Return
+            Try
+                Dim sb As New System.Text.StringBuilder()
+                Dim cells As New List(Of String)
+                For Each h As String In headers
+                    cells.Add(CsvCell(h))
+                Next
+                sb.AppendLine(String.Join(",", cells.ToArray()))
+                For Each r As String() In rows
+                    cells.Clear()
+                    For Each v As String In r
+                        cells.Add(CsvCell(v))
+                    Next
+                    sb.AppendLine(String.Join(",", cells.ToArray()))
+                Next
+                System.IO.File.WriteAllText(dlg.FileName, sb.ToString(), New System.Text.UTF8Encoding(True))
+                MessageBox.Show("Saved " & rows.Count.ToString() & " rows.", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Export", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
     End Sub
 
     '=================================================================
@@ -854,7 +1481,7 @@ Public Class Cashier
         Using g As Graphics = Graphics.FromImage(bmp)
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.InterpolationMode = InterpolationMode.HighQualityBicubic
-            g.Clear(CardFill)
+            g.Clear(Color.Transparent)
             Using path As GraphicsPath = RoundRectPath(New Rectangle(0, 0, size - 1, size - 1), 9, False)
                 g.SetClip(path)
                 g.Clear(PhotoBg)

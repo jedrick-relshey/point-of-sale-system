@@ -333,5 +333,8 @@
   <ItemGroup>
     <None Include="Resources\icons8-border-all-48.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-cart-24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

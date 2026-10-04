@@ -924,5 +924,4 @@ Public Class Admin
                             "Restock", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
-
 End Class
