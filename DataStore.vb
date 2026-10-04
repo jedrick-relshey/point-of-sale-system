@@ -145,7 +145,18 @@ Public Module DataStore
             For Each line In File.ReadAllLines(path, Encoding.UTF8)
                 Dim f = Fields(line) : Dim price As Decimal : Dim stock As Integer
                 If f.Length >= 5 AndAlso Decimal.TryParse(f(2), NumberStyles.Number, CultureInfo.InvariantCulture, price) AndAlso Integer.TryParse(f(3), stock) Then
-                    Products.Add(New Product With {.Id=f(0), .Name=f(1), .Price=price, .Stock=stock, .Category=f(4), .Status=If(stock > 0, "Available", "Unavailable")})
+                    ' columns: Id|Name|Price|Stock|Category|Description|ImagePath|LastUpdated  (last 3 are optional: old files still load)
+                    Dim p As New Product With {.Id = f(0), .Name = f(1), .Price = price, .Stock = stock, .Category = f(4), .Status = If(stock > 0, "Available", "Unavailable")}
+                    If f.Length >= 6 Then p.Description = f(5)
+                    If f.Length >= 7 Then p.ImagePath = f(6)
+                    Dim stamp As DateTime
+                    If f.Length >= 8 AndAlso DateTime.TryParse(f(7), CultureInfo.InvariantCulture, DateTimeStyles.None, stamp) Then
+                        p.LastUpdated = stamp
+                    Else
+                        p.LastUpdated = DateTime.Now
+                    End If
+                    LoadProductImage(p)
+                    Products.Add(p)
                 End If
             Next
         Else
@@ -155,7 +166,7 @@ Public Module DataStore
     End Sub
 
     Public Sub SaveProducts()
-        File.WriteAllLines(FilePathOf("products.txt"), Products.Select(Function(p) String.Join("|", SafeField(p.Id), SafeField(p.Name), p.Price.ToString(CultureInfo.InvariantCulture), p.Stock, SafeField(p.Category))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("products.txt"), Products.Select(Function(p) String.Join("|", SafeField(p.Id), SafeField(p.Name), p.Price.ToString(CultureInfo.InvariantCulture), p.Stock, SafeField(p.Category), SafeField(p.Description), SafeField(p.ImagePath), p.LastUpdated.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture))).ToArray(), Encoding.UTF8)
     End Sub
 
     Public Sub LoadCashiers()
@@ -163,10 +174,10 @@ Public Module DataStore
         If File.Exists(path) Then
             For Each line In File.ReadAllLines(path, Encoding.UTF8)
                 Dim f = Fields(line)
-                If f.Length >= 3 Then Cashiers.Add(New CashierAccount With {.Username=f(0), .PasswordHash=f(1), .FullName=f(2), .Id="CSH-" & (Cashiers.Count+1).ToString("D3"), .Status=AccountStatus.Active})
+                If f.Length >= 3 Then Cashiers.Add(New CashierAccount With {.Username = f(0), .PasswordHash = f(1), .FullName = f(2), .Id = "CSH-" & (Cashiers.Count + 1).ToString("D3"), .Status = AccountStatus.Active})
             Next
         Else
-            Cashiers.Add(New CashierAccount With {.Id="CSH-001", .FullName="Jedrick Miclat", .Username="jedrick", .PasswordHash="cashier123", .Status=AccountStatus.Active})
+            Cashiers.Add(New CashierAccount With {.Id = "CSH-001", .FullName = "Jedrick Miclat", .Username = "jedrick", .PasswordHash = "cashier123", .Status = AccountStatus.Active})
             SaveCashiers()
         End If
     End Sub
@@ -180,10 +191,10 @@ Public Module DataStore
         If File.Exists(path) Then
             For Each line In File.ReadAllLines(path, Encoding.UTF8)
                 Dim f = Fields(line)
-                If f.Length >= 3 Then Admins.Add(New AdminAccount With {.Username=f(0), .PasswordHash=f(1), .FullName=f(2), .Id="ADM-" & (Admins.Count+1).ToString("D3"), .Status=AccountStatus.Active})
+                If f.Length >= 3 Then Admins.Add(New AdminAccount With {.Username = f(0), .PasswordHash = f(1), .FullName = f(2), .Id = "ADM-" & (Admins.Count + 1).ToString("D3"), .Status = AccountStatus.Active})
             Next
         Else
-            Admins.Add(New AdminAccount With {.Id="ADM-001", .FullName="Justine Fritz Bucong", .Username="fritz", .PasswordHash="admin123", .Status=AccountStatus.Active})
+            Admins.Add(New AdminAccount With {.Id = "ADM-001", .FullName = "Justine Fritz Bucong", .Username = "fritz", .PasswordHash = "admin123", .Status = AccountStatus.Active})
             SaveAdmins()
         End If
     End Sub
@@ -199,11 +210,11 @@ Public Module DataStore
             For Each line In File.ReadAllLines(ordersPath, Encoding.UTF8)
                 Dim f = Fields(line) : Dim dt As DateTime : Dim total As Decimal
                 If f.Length >= 4 AndAlso DateTime.TryParse(f(2), CultureInfo.InvariantCulture, DateTimeStyles.None, dt) AndAlso Decimal.TryParse(f(3), NumberStyles.Number, CultureInfo.InvariantCulture, total) Then
-                    Dim t As New POS_Transaction With {.TransactionID=f(0), .Cashier=f(1), .CashierUsername=f(1), .TransactionDate=dt, .Total=total, .Subtotal=total, .Status=TransactionStatus.Completed}
+                    Dim t As New POS_Transaction With {.TransactionID = f(0), .Cashier = f(1), .CashierUsername = f(1), .TransactionDate = dt, .Total = total, .Subtotal = total, .Status = TransactionStatus.Completed}
                     If File.Exists(itemPath) Then
                         For Each il In File.ReadAllLines(itemPath, Encoding.UTF8)
                             Dim it = Fields(il) : Dim qty As Integer : Dim price As Decimal
-                            If it.Length >= 5 AndAlso it(0)=t.TransactionID AndAlso Integer.TryParse(it(2), qty) AndAlso Decimal.TryParse(it(3), NumberStyles.Number, CultureInfo.InvariantCulture, price) Then t.Items.Add(New TransactionItem With {.ProductName=it(1), .Quantity=qty, .Price=price})
+                            If it.Length >= 5 AndAlso it(0) = t.TransactionID AndAlso Integer.TryParse(it(2), qty) AndAlso Decimal.TryParse(it(3), NumberStyles.Number, CultureInfo.InvariantCulture, price) Then t.Items.Add(New TransactionItem With {.ProductName = it(1), .Quantity = qty, .Price = price})
                         Next
                     End If
                     Transactions.Add(t)
@@ -224,7 +235,7 @@ Public Module DataStore
         If Not File.Exists(path) Then Return
         For Each line In File.ReadAllLines(path, Encoding.UTF8)
             Dim f = Fields(line) : Dim sent As DateTime
-            If f.Length >= 4 AndAlso DateTime.TryParse(f(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, sent) Then ChatMessages.Add(New ChatMessage With {.Sender=f(0), .Receiver=f(1), .Message=f(2), .TimeSent=sent})
+            If f.Length >= 4 AndAlso DateTime.TryParse(f(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, sent) Then ChatMessages.Add(New ChatMessage With {.Sender = f(0), .Receiver = f(1), .Message = f(2), .TimeSent = sent})
         Next
     End Sub
 
@@ -238,7 +249,7 @@ Public Module DataStore
         If Not File.Exists(path) Then Return
         For Each line In File.ReadAllLines(path, Encoding.UTF8)
             Dim f = Fields(line) : Dim oldPrice As Decimal : Dim newPrice As Decimal : Dim changed As DateTime
-            If f.Length >= 6 AndAlso Decimal.TryParse(f(2), NumberStyles.Number, CultureInfo.InvariantCulture, oldPrice) AndAlso Decimal.TryParse(f(3), NumberStyles.Number, CultureInfo.InvariantCulture, newPrice) AndAlso DateTime.TryParse(f(5), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, changed) Then PriceLogs.Add(New PriceChangeLog With {.ProductId=f(0), .ProductName=f(1), .OldPrice=oldPrice, .NewPrice=newPrice, .ChangedBy=f(4), .ChangedDate=changed})
+            If f.Length >= 6 AndAlso Decimal.TryParse(f(2), NumberStyles.Number, CultureInfo.InvariantCulture, oldPrice) AndAlso Decimal.TryParse(f(3), NumberStyles.Number, CultureInfo.InvariantCulture, newPrice) AndAlso DateTime.TryParse(f(5), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, changed) Then PriceLogs.Add(New PriceChangeLog With {.ProductId = f(0), .ProductName = f(1), .OldPrice = oldPrice, .NewPrice = newPrice, .ChangedBy = f(4), .ChangedDate = changed})
         Next
     End Sub
 
@@ -342,6 +353,15 @@ Public Module DataStore
     End Function
 
     Private Sub LoadProductImage(p As Product)
+        ' older products.txt files did not store the picture name: look for the file saved as product_<number>.*
+        If String.IsNullOrWhiteSpace(p.ImagePath) Then
+            Try
+                Dim found As String() = Directory.GetFiles(ImageFolder, "product_" & NumberFromId(p.Id).ToString("D3") & ".*")
+                If found.Length > 0 Then p.ImagePath = Path.GetFileName(found(0))
+            Catch
+            End Try
+        End If
+
         If String.IsNullOrWhiteSpace(p.ImagePath) Then
             p.Image = Nothing
         Else
@@ -462,8 +482,8 @@ Public Module DataStore
             If oldPrice <> p.Price Then
                 PriceLogs.Add(New PriceChangeLog With {
                     .ProductId = p.Id, .ProductName = p.Name,
-                    .oldPrice = oldPrice, .NewPrice = p.Price,
-                    .changedBy = changedBy, .ChangedDate = DateTime.Now})
+                    .OldPrice = oldPrice, .NewPrice = p.Price,
+                    .ChangedBy = changedBy, .ChangedDate = DateTime.Now})
                 SavePriceLogs()
             End If
 
@@ -553,10 +573,10 @@ Public Module DataStore
 
         Dim acc As New CashierAccount With {
             .Id = "CSH-" & PosSettings.NextCashierNumber.ToString("D3"),
-            .fullName = fullName.Trim(),
-            .username = username.Trim(),
+            .FullName = fullName.Trim(),
+            .Username = username.Trim(),
             .PasswordHash = password,
-            .status = status,
+            .Status = status,
             .DateAdded = DateTime.Now
         }
         PosSettings.NextCashierNumber += 1
@@ -776,12 +796,12 @@ Public Module DataStore
         Dim trx As New POS_Transaction With {
             .TransactionDate = DateTime.Now,
             .Cashier = cashierName,
-            .cashierUsername = cashierUsername,
-            .paymentMethod = paymentMethod,
-            .subtotal = subtotal,
-            .tax = tax,
-            .total = total,
-            .cashReceived = If(paymentMethod = PaymentMethods.Cash, cashReceived, 0D),
+            .CashierUsername = cashierUsername,
+            .PaymentMethod = paymentMethod,
+            .Subtotal = subtotal,
+            .Tax = tax,
+            .Total = total,
+            .CashReceived = If(paymentMethod = PaymentMethods.Cash, cashReceived, 0D),
             .ChangeGiven = If(paymentMethod = PaymentMethods.Cash, cashReceived - total, 0D),
             .Status = TransactionStatus.Completed
         }

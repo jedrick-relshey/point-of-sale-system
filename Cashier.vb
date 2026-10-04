@@ -38,6 +38,7 @@ Public Class Cashier
     Private Shared ReadOnly CardFill As Color = Color.FromArgb(255, 252, 248)
     Private Shared ReadOnly CardBorder As Color = Color.FromArgb(234, 222, 210)
     Private Shared ReadOnly PageBg As Color = Color.FromArgb(248, 243, 235)
+    Private Shared ReadOnly PhotoBg As Color = Color.FromArgb(244, 236, 226)
 
     Private Const BannerTitle As String = "Forest Roast Cafe"
     Private Const BannerSubtitle As String = "Freshly brewed. Crafted for your day."
@@ -785,6 +786,14 @@ Public Class Cashier
         Return bmp
     End Function
 
+    ''' <summary>Fits the WHOLE picture inside dest (no zoom, no cropping); the leftover space is the background colour.</summary>
+    Private Shared Sub DrawContain(g As Graphics, img As Image, dest As Rectangle)
+        Dim scale As Single = Math.Min(dest.Width / CSng(img.Width), dest.Height / CSng(img.Height))
+        Dim w As Integer = Math.Max(1, CInt(img.Width * scale))
+        Dim h As Integer = Math.Max(1, CInt(img.Height * scale))
+        g.DrawImage(img, New Rectangle(dest.X + (dest.Width - w) \ 2, dest.Y + (dest.Height - h) \ 2, w, h))
+    End Sub
+
     Private Shared Sub DrawCover(g As Graphics, img As Image, dest As Rectangle)
         Dim scale As Single = Math.Max(dest.Width / CSng(img.Width), dest.Height / CSng(img.Height))
         Dim sw As Single = dest.Width / scale
@@ -819,11 +828,8 @@ Public Class Cashier
             g.Clear(CardFill)
             Using path As GraphicsPath = RoundRectPath(New Rectangle(0, 0, w - 1, h), 11, True)
                 g.SetClip(path)
-                If src IsNot Nothing Then
-                    DrawCover(g, src, New Rectangle(0, 0, w, h))
-                Else
-                    g.Clear(Color.FromArgb(238, 226, 214))
-                End If
+                g.Clear(PhotoBg)
+                If src IsNot Nothing Then DrawContain(g, src, New Rectangle(0, 0, w, h))
             End Using
             g.ResetClip()
             If badge <> "" Then
@@ -851,11 +857,8 @@ Public Class Cashier
             g.Clear(CardFill)
             Using path As GraphicsPath = RoundRectPath(New Rectangle(0, 0, size - 1, size - 1), 9, False)
                 g.SetClip(path)
-                If src IsNot Nothing Then
-                    DrawCover(g, src, New Rectangle(0, 0, size, size))
-                Else
-                    g.Clear(Color.FromArgb(238, 226, 214))
-                End If
+                g.Clear(PhotoBg)
+                If src IsNot Nothing Then DrawContain(g, src, New Rectangle(0, 0, size, size))
             End Using
         End Using
         Return bmp

@@ -318,5 +318,20 @@
   <ItemGroup>
     <None Include="Resources\Paint-LightGray-Q.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-iced-coffee-40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-confectionery-30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-cafe-30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-select-all-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-border-all-48.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
