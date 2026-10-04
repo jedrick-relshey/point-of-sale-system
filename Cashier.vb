@@ -123,14 +123,14 @@ Public Class Cashier
         main_pnl.Visible = True
         ClosePopups(Nothing, EventArgs.Empty)
 
-        For Each c As Control In {pnl_PointOfSale, pnl_CashierMessages, dashbrd_pnl, Panel1, pnl_History}
+        For Each c As Control In {pnl_PointOfSale, pnl_CashierMessages, dashbrd_pnl, Inventory, pnl_History}
             c.Visible = (c Is target)
         Next
         target.BringToFront()
 
         If target Is pnl_PointOfSale Then
             AttachTopBar(pnl_PointOfSale, 20 + Guna2Panel6.Width)
-        ElseIf target Is dashbrd_pnl OrElse target Is Panel1 OrElse target Is pnl_History Then
+        ElseIf target Is dashbrd_pnl OrElse target Is Inventory OrElse target Is pnl_History Then
             AttachTopBar(target, 20)
         End If
 
@@ -157,7 +157,7 @@ Public Class Cashier
     End Sub
 
     Private Sub btn_invtry_Click(sender As Object, e As EventArgs) Handles btn_invtry.Click
-        ShowCashierPanel(Panel1, btn_invtry)
+        ShowCashierPanel(Inventory, btn_invtry)
         RefreshCashierInventory()
     End Sub
 
@@ -887,7 +887,7 @@ Public Class Cashier
         cboInvCategory.Items.Add("All categories")
         cboInvCategory.SelectedIndex = 0
 
-        AddHandler Panel1.Resize, Sub(s As Object, ev As EventArgs) LayoutKpiRows()
+        AddHandler Inventory.Resize, Sub(s As Object, ev As EventArgs) LayoutKpiRows()
         LayoutKpiRows()
         RefreshCashierInventory()
     End Sub
@@ -1261,7 +1261,7 @@ Public Class Cashier
 
     Private Sub LayoutKpiRows()
         LayoutKpiRow(pnl_History, New Control() {pnlHK1, pnlHK2, pnlHK3, pnlHK4})
-        LayoutKpiRow(Panel1, New Control() {pnlIK1, pnlIK2, pnlIK3, pnlIK4})
+        LayoutKpiRow(Inventory, New Control() {pnlIK1, pnlIK2, pnlIK3, pnlIK4})
     End Sub
 
     Private Sub LayoutKpiRow(host As Control, cards As Control())
@@ -2323,5 +2323,4 @@ Public Class Cashier
             flpMessages.ScrollControlIntoView(flpMessages.Controls(flpMessages.Controls.Count - 1))
         End If
     End Sub
-
 End Class
