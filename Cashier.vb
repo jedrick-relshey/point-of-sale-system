@@ -98,6 +98,7 @@ Public Class Cashier
         RemoveHandler DataStore.MessagesChanged, AddressOf Cashier_MessagesChanged
         If catBarImage IsNot Nothing Then catBarImage.Dispose()
         If trendImage IsNot Nothing Then trendImage.Dispose()
+        If dimImage IsNot Nothing Then dimImage.Dispose()
         DisposeCardImages()
         DisposeCartThumbs()
         If profilePhoto IsNot Nothing Then profilePhoto.Dispose()
@@ -123,14 +124,14 @@ Public Class Cashier
         main_pnl.Visible = True
         ClosePopups(Nothing, EventArgs.Empty)
 
-        For Each c As Control In {pnl_PointOfSale, pnl_CashierMessages, dashbrd_pnl, Inventory, pnl_History}
+        For Each c As Control In {pnl_PointOfSale, pnl_CashierMessages, dashbrd_pnl, Panel1, pnl_History}
             c.Visible = (c Is target)
         Next
         target.BringToFront()
 
         If target Is pnl_PointOfSale Then
             AttachTopBar(pnl_PointOfSale, 20 + Guna2Panel6.Width)
-        ElseIf target Is dashbrd_pnl OrElse target Is Inventory OrElse target Is pnl_History Then
+        ElseIf target Is dashbrd_pnl OrElse target Is Panel1 OrElse target Is pnl_History Then
             AttachTopBar(target, 20)
         End If
 
@@ -157,7 +158,7 @@ Public Class Cashier
     End Sub
 
     Private Sub btn_invtry_Click(sender As Object, e As EventArgs) Handles btn_invtry.Click
-        ShowCashierPanel(Inventory, btn_invtry)
+        ShowCashierPanel(Panel1, btn_invtry)
         RefreshCashierInventory()
     End Sub
 
@@ -176,6 +177,7 @@ Public Class Cashier
     '=================================================================
     Private Sub Cashier_TransactionsChanged(sender As Object, e As EventArgs)
         RefreshCashierData()
+        RefreshOrderNumber()
         RefreshHistory()
     End Sub
 
@@ -288,10 +290,10 @@ Public Class Cashier
         Dim rows As New List(Of String())
         For Each t As POS_Transaction In DataStore.Transactions
             If t.TransactionDate.Date <> DateTime.Today Then Continue For
-            rows.Add(New String() {t.TransactionID, t.TransactionDate.ToString("yyyy-MM-dd HH:mm"), t.Cashier, DataStore.BuildItemsText(t),
-                                   t.PaymentMethod, t.Subtotal.ToString("0.00"), t.Tax.ToString("0.00"), t.Total.ToString("0.00"), t.Status})
+            rows.Add(New String() {t.TransactionID, t.TransactionDate.ToString("yyyy-MM-dd HH:mm"), t.Cashier, t.CustomerName, t.TableName, DataStore.BuildItemsText(t),
+                                   t.PaymentMethod, t.CardType, t.Subtotal.ToString("0.00"), t.Tax.ToString("0.00"), t.Total.ToString("0.00"), t.Status})
         Next
-        SaveCsv("daily_report", New String() {"Order", "Date", "Cashier", "Items", "Payment", "Subtotal", "Tax", "Total", "Status"}, rows)
+        SaveCsv("daily_report", New String() {"Order", "Date", "Cashier", "Customer", "Table", "Items", "Payment", "Card", "Subtotal", "Tax", "Total", "Status"}, rows)
     End Sub
 
     Private Function StatsFor(day As DateTime) As DayStats
@@ -615,7 +617,7 @@ Public Class Cashier
         StyleGrid(histGrid, 42)
         histGrid.Columns.Add(MakeCol("colHOrder", "Order", 80, 0, True))
         histGrid.Columns.Add(MakeCol("colHTime", "Date & time", 118, 0, False))
-        histGrid.Columns.Add(MakeCol("colHCashier", "Cashier", 0, 60, False))
+        histGrid.Columns.Add(MakeCol("colHCashier", "Customer", 0, 60, False))
         histGrid.Columns.Add(MakeCol("colHItems", "Items", 0, 140, False))
         histGrid.Columns.Add(MakeCol("colHPay", "Payment", 62, 0, False))
         histGrid.Columns.Add(MakeCol("colHTotal", "Total", 84, 0, True))
@@ -651,7 +653,7 @@ Public Class Cashier
             If payFilter <> "" AndAlso Not String.Equals(t.PaymentMethod, payFilter, StringComparison.OrdinalIgnoreCase) Then Continue For
             If dtpHistory.Checked AndAlso t.TransactionDate.Date <> dtpHistory.Value.Date Then Continue For
             If q <> "" Then
-                Dim hay As String = t.TransactionID & " " & t.Cashier & " " & t.PaymentMethod & " " & DataStore.BuildItemsText(t)
+                Dim hay As String = t.TransactionID & " " & t.Cashier & " " & t.CustomerName & " " & t.TableName & " " & t.CardType & " " & t.PaymentMethod & " " & DataStore.BuildItemsText(t)
                 If hay.IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 Then Continue For
             End If
             result.Add(t)
@@ -675,7 +677,7 @@ Public Class Cashier
             Dim timeText As String = If(t.TransactionDate.Date = DateTime.Today,
                                         "Today, " & t.TransactionDate.ToString("hh:mm tt"),
                                         t.TransactionDate.ToString("MMM d, hh:mm tt"))
-            Dim idx As Integer = histGrid.Rows.Add(t.TransactionID, timeText, t.Cashier, DataStore.BuildItemsText(t),
+            Dim idx As Integer = histGrid.Rows.Add(t.TransactionID, timeText, If(String.IsNullOrWhiteSpace(t.CustomerName), "Walk-in", t.CustomerName), DataStore.BuildItemsText(t),
                                                    t.PaymentMethod, Peso(t.Total), t.Status)
             histGrid.Rows(idx).Tag = t
 
@@ -762,9 +764,9 @@ Public Class Cashier
         btnDetStatus.ForeColor = PillFore(t.Status)
         btnDetStatus.HoverState.FillColor = PillBack(t.Status)
         btnDetStatus.HoverState.ForeColor = PillFore(t.Status)
-        lblDetDate.Text = t.TransactionDate.ToString("MMMM d, yyyy  -  hh:mm tt")
+        lblDetDate.Text = t.TransactionDate.ToString("MMMM d, yyyy  -  hh:mm tt") & If(t.TableName <> "", "  -  " & t.TableName, "")
         lblDetCashier.Text = t.Cashier
-        lblDetPay.Text = t.PaymentMethod
+        lblDetPay.Text = If(t.PaymentMethod = PaymentMethods.Card AndAlso t.CardType <> "", "Card (" & t.CardType & ")", t.PaymentMethod)
         lblDetSub.Text = Peso(t.Subtotal)
         lblDetTax.Text = Peso(t.Tax)
         lblDetTotal.Text = Peso(t.Total)
@@ -831,6 +833,8 @@ Public Class Cashier
         lines.Add("Receipt: " & t.TransactionID)
         lines.Add("Date:    " & t.TransactionDate.ToString("MMM d, yyyy hh:mm tt"))
         lines.Add("Cashier: " & t.Cashier)
+        If t.CustomerName <> "" Then lines.Add("Customer: " & t.CustomerName)
+        If t.TableName <> "" Then lines.Add("Table:    " & t.TableName)
         lines.Add(rule)
         For Each item As TransactionItem In t.Items
             lines.Add(pair(item.Quantity.ToString() & "x " & item.ProductName, Peso(item.LineTotal)))
@@ -840,7 +844,7 @@ Public Class Cashier
         lines.Add(pair("Tax", Peso(t.Tax)))
         lines.Add(pair("TOTAL", Peso(t.Total)))
         lines.Add(rule)
-        lines.Add(pair("Payment", t.PaymentMethod))
+        lines.Add(pair("Payment", If(t.PaymentMethod = PaymentMethods.Card AndAlso t.CardType <> "", "Card - " & t.CardType, t.PaymentMethod)))
         If t.PaymentMethod = PaymentMethods.Cash Then
             lines.Add(pair("Cash received", Peso(t.CashReceived)))
             lines.Add(pair("Change", Peso(t.ChangeGiven)))
@@ -854,10 +858,10 @@ Public Class Cashier
     Private Sub btnHistExport_Click(sender As Object, e As EventArgs) Handles btnHistExport.Click
         Dim rows As New List(Of String())
         For Each t As POS_Transaction In histList
-            rows.Add(New String() {t.TransactionID, t.TransactionDate.ToString("yyyy-MM-dd HH:mm"), t.Cashier, DataStore.BuildItemsText(t),
-                                   t.PaymentMethod, t.Subtotal.ToString("0.00"), t.Tax.ToString("0.00"), t.Total.ToString("0.00"), t.Status})
+            rows.Add(New String() {t.TransactionID, t.TransactionDate.ToString("yyyy-MM-dd HH:mm"), t.Cashier, t.CustomerName, t.TableName, DataStore.BuildItemsText(t),
+                                   t.PaymentMethod, t.CardType, t.Subtotal.ToString("0.00"), t.Tax.ToString("0.00"), t.Total.ToString("0.00"), t.Status})
         Next
-        SaveCsv("transactions", New String() {"Order", "Date", "Cashier", "Items", "Payment", "Subtotal", "Tax", "Total", "Status"}, rows)
+        SaveCsv("transactions", New String() {"Order", "Date", "Cashier", "Customer", "Table", "Items", "Payment", "Card", "Subtotal", "Tax", "Total", "Status"}, rows)
     End Sub
 
     '=================================================================
@@ -887,7 +891,7 @@ Public Class Cashier
         cboInvCategory.Items.Add("All categories")
         cboInvCategory.SelectedIndex = 0
 
-        AddHandler Inventory.Resize, Sub(s As Object, ev As EventArgs) LayoutKpiRows()
+        AddHandler Panel1.Resize, Sub(s As Object, ev As EventArgs) LayoutKpiRows()
         LayoutKpiRows()
         RefreshCashierInventory()
     End Sub
@@ -1261,7 +1265,7 @@ Public Class Cashier
 
     Private Sub LayoutKpiRows()
         LayoutKpiRow(pnl_History, New Control() {pnlHK1, pnlHK2, pnlHK3, pnlHK4})
-        LayoutKpiRow(Inventory, New Control() {pnlIK1, pnlIK2, pnlIK3, pnlIK4})
+        LayoutKpiRow(Panel1, New Control() {pnlIK1, pnlIK2, pnlIK3, pnlIK4})
     End Sub
 
     Private Sub LayoutKpiRow(host As Control, cards As Control())
@@ -1488,6 +1492,14 @@ Public Class Cashier
 
         AddHandler fl_Menu.SizeChanged, AddressOf FlMenu_SizeChanged
 
+        cboTable.Items.Add("Take-out")
+        For n As Integer = 1 To 12
+            cboTable.Items.Add("Table " & n.ToString())
+        Next
+        cboTable.SelectedIndex = 0
+        RefreshOrderNumber()
+        AddHandler pnl_PointOfSale.Resize, Sub(s As Object, ev As EventArgs) CenterCardModal()
+
         ' clicking on empty areas closes the profile dropdown / card chooser
         For Each host As Control In New Control() {pnl_PointOfSale, fl_Menu, topimage, fl_MenuProduct}
             AddHandler host.Click, AddressOf ClosePopups
@@ -1542,7 +1554,7 @@ Public Class Cashier
             pnlProfileMenu.Visible = False
         Else
             LoadCurrentProfile()
-            pnlCardSelect.Visible = False
+            pnlCardDim.Visible = False
             pnlProfileMenu.Visible = True
             pnlProfileMenu.BringToFront()
         End If
@@ -1550,7 +1562,7 @@ Public Class Cashier
 
     Private Sub ClosePopups(sender As Object, e As EventArgs)
         pnlProfileMenu.Visible = False
-        pnlCardSelect.Visible = False
+        pnlCardDim.Visible = False
     End Sub
 
     Private Sub btnMenuSettings_Click(sender As Object, e As EventArgs) Handles btnMenuSettings.Click
@@ -1607,6 +1619,12 @@ Public Class Cashier
         End Using
     End Sub
 
+    ''' <summary>Shows the id the next sale will get (read-only).</summary>
+    Private Sub RefreshOrderNumber()
+        If txtOrderNo Is Nothing Then Return
+        txtOrderNo.Text = "#" & DataStore.PeekNextTransactionId()
+    End Sub
+
     Private Sub FlMenu_SizeChanged(sender As Object, e As EventArgs)
         LayoutCategoryTiles()
         If menuReady AndAlso fl_Menu.Width <> lastMenuWidth Then LoadProducts()
@@ -1634,7 +1652,7 @@ Public Class Cashier
 
     Private Sub tileCash_Click(sender As Object, e As EventArgs) Handles tileCash.Click
         selectedPayment = PaymentMethods.Cash
-        pnlCardSelect.Visible = False
+        pnlCardDim.Visible = False
         ResetCardSelection()
         UpdatePaymentTiles()
     End Sub
@@ -1645,38 +1663,83 @@ Public Class Cashier
         ShowCardChooser()
     End Sub
 
-    '---------------- card chooser popup ----------------
+    '---------------- card chooser: centered modal over a dimmed page ----------------
+    Private dimImage As Bitmap
+    Private pendingCardType As String = ""
+
     Private Sub ShowCardChooser()
         pnlProfileMenu.Visible = False
+        pendingCardType = selectedCardType
         HighlightCardChoice()
-        pnlCardSelect.Visible = True
-        pnlCardSelect.BringToFront()
+        lblCardAmt.Text = lbl_Total.Text
+        lblCardModalSub.Text = "Choose the card the customer is paying with"
+        lblCardModalSub.ForeColor = Muted
+
+        ' dim the page: take a picture of it and darken it
+        pnlCardDim.Visible = False
+        Dim old As Bitmap = dimImage
+        Try
+            Dim bmp As New Bitmap(pnl_PointOfSale.ClientSize.Width, pnl_PointOfSale.ClientSize.Height)
+            pnl_PointOfSale.DrawToBitmap(bmp, New Rectangle(0, 0, bmp.Width, bmp.Height))
+            Using g As Graphics = Graphics.FromImage(bmp), shade As New SolidBrush(Color.FromArgb(150, 40, 28, 22))
+                g.FillRectangle(shade, 0, 0, bmp.Width, bmp.Height)
+            End Using
+            dimImage = bmp
+            pnlCardDim.BackgroundImageLayout = ImageLayout.Stretch
+            pnlCardDim.BackgroundImage = bmp
+        Catch ex As Exception
+            dimImage = Nothing
+            pnlCardDim.BackgroundImage = Nothing
+        End Try
+        If old IsNot Nothing Then old.Dispose()
+
+        CenterCardModal()
+        pnlCardDim.Visible = True
+        pnlCardDim.BringToFront()
     End Sub
 
-    Private Sub CardOption_Click(sender As Object, e As EventArgs) Handles btnCardDebit.Click, btnCardCredit.Click, btnCardPrepaid.Click
+    Private Sub CenterCardModal()
+        If pnlCardModal Is Nothing OrElse pnlCardDim Is Nothing Then Return
+        pnlCardModal.Left = Math.Max(0, (pnlCardDim.ClientSize.Width - pnlCardModal.Width) \ 2)
+        pnlCardModal.Top = Math.Max(0, (pnlCardDim.ClientSize.Height - 31 - pnlCardModal.Height) \ 2)
+    End Sub
+
+    Private Sub CardOption_Click(sender As Object, e As EventArgs) Handles btnCardDebit.Click, btnCardCredit.Click, btnCardVisa.Click, btnCardMastercard.Click, btnCardJcb.Click, btnCardAmex.Click
         Dim b As Guna2Button = TryCast(sender, Guna2Button)
         If b Is Nothing Then Return
-        selectedCardType = b.Text
-        tileCard.Text = selectedCardType
+        pendingCardType = b.Text
+        lblCardModalSub.Text = "Choose the card the customer is paying with"
+        lblCardModalSub.ForeColor = Muted
         HighlightCardChoice()
-        pnlCardSelect.Visible = False
     End Sub
 
-    Private Sub btnCardClose_Click(sender As Object, e As EventArgs) Handles btnCardClose.Click
-        pnlCardSelect.Visible = False
+    Private Sub btnCardConfirm_Click(sender As Object, e As EventArgs) Handles btnCardConfirm.Click
+        If pendingCardType = "" Then
+            lblCardModalSub.Text = "Please choose a card first."
+            lblCardModalSub.ForeColor = Color.FromArgb(176, 72, 48)
+            Return
+        End If
+        selectedCardType = pendingCardType
+        tileCard.Text = selectedCardType
+        pnlCardDim.Visible = False
+    End Sub
+
+    Private Sub btnCardClose_Click(sender As Object, e As EventArgs) Handles btnCardClose.Click, pnlCardDim.Click
+        pnlCardDim.Visible = False
     End Sub
 
     Private Sub HighlightCardChoice()
-        For Each b As Guna2Button In New Guna2Button() {btnCardDebit, btnCardCredit, btnCardPrepaid}
-            Dim chosen As Boolean = (b.Text = selectedCardType)
-            b.FillColor = If(chosen, AccentSoft, CardFill)
+        For Each b As Guna2Button In New Guna2Button() {btnCardDebit, btnCardCredit, btnCardVisa, btnCardMastercard, btnCardJcb, btnCardAmex}
+            Dim chosen As Boolean = (b.Text = pendingCardType)
+            b.FillColor = If(chosen, AccentSoft, Color.White)
             b.BorderColor = If(chosen, Accent, CardBorder)
-            b.Font = New Font("Segoe UI", 9.5F, If(chosen, FontStyle.Bold, FontStyle.Regular))
+            b.BorderThickness = If(chosen, 2, 1)
         Next
     End Sub
 
     Private Sub ResetCardSelection()
         selectedCardType = ""
+        pendingCardType = ""
         tileCard.Text = "Card"
     End Sub
 
@@ -1940,63 +2003,64 @@ Public Class Cashier
 
             Dim row As New Panel()
             row.Width = itemW
-            row.Height = 72
-            row.Margin = New Padding(16, 2, 0, 8)
+            row.Height = 64
+            row.Margin = New Padding(16, 2, 0, 6)
             row.BackColor = CardFill
 
-            Dim thumb As Bitmap = MakeThumb(product.Image, 56)
+            Dim thumb As Bitmap = MakeThumb(product.Image, 52)
             cartThumbs.Add(thumb)
             Dim pic As New PictureBox()
             pic.Image = thumb
-            pic.Size = New Size(56, 56)
-            pic.Location = New Point(0, 4)
+            pic.Size = New Size(52, 52)
+            pic.Location = New Point(0, 6)
             pic.BackColor = CardFill
 
             Dim nameLabel As New Label()
             nameLabel.Text = product.Name
             nameLabel.AutoEllipsis = True
-            nameLabel.Size = New Size(itemW - 66 - 80, 18)
-            nameLabel.Location = New Point(66, 4)
+            nameLabel.Size = New Size(itemW - 62 - 76, 18)
+            nameLabel.Location = New Point(62, 2)
             nameLabel.Font = New Font("Segoe UI Semibold", 9.5F)
             nameLabel.ForeColor = Ink
             nameLabel.BackColor = CardFill
 
             Dim itemTotalLabel As New Label()
             itemTotalLabel.Text = Peso(product.Price * quantity)
-            itemTotalLabel.Size = New Size(80, 18)
-            itemTotalLabel.Location = New Point(itemW - 80, 4)
+            itemTotalLabel.Size = New Size(76, 18)
+            itemTotalLabel.Location = New Point(itemW - 76, 2)
             itemTotalLabel.TextAlign = ContentAlignment.MiddleRight
             itemTotalLabel.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
             itemTotalLabel.ForeColor = Ink
             itemTotalLabel.BackColor = CardFill
 
-            Dim priceLabel As New Label()
-            priceLabel.Text = Peso(product.Price) & " each"
-            priceLabel.Size = New Size(itemW - 66, 15)
-            priceLabel.Location = New Point(66, 23)
-            priceLabel.Font = New Font("Segoe UI", 8.0F)
-            priceLabel.ForeColor = Muted
-            priceLabel.BackColor = CardFill
+            Dim noteLabel As New Label()
+            noteLabel.Text = If(String.IsNullOrWhiteSpace(product.Description), CategoryOf(product), product.Description)
+            noteLabel.AutoEllipsis = True
+            noteLabel.Size = New Size(itemW - 62, 14)
+            noteLabel.Location = New Point(62, 20)
+            noteLabel.Font = New Font("Segoe UI", 7.5F)
+            noteLabel.ForeColor = Muted
+            noteLabel.BackColor = CardFill
 
             Dim minusButton As New Guna2Button()
             minusButton.Text = "-"
-            minusButton.Size = New Size(28, 28)
-            minusButton.Location = New Point(66, 40)
-            minusButton.BorderThickness = 1
-            minusButton.BorderColor = Color.FromArgb(226, 190, 165)
+            minusButton.Size = New Size(24, 24)
+            minusButton.Location = New Point(62, 36)
             minusButton.BorderRadius = 6
-            minusButton.FillColor = AccentSoft
+            minusButton.FillColor = Color.White
+            minusButton.BorderThickness = 1
+            minusButton.BorderColor = CardBorder
             minusButton.ForeColor = Ink
-            minusButton.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
-            minusButton.HoverState.FillColor = Accent
-            minusButton.HoverState.ForeColor = Color.White
+            minusButton.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+            minusButton.HoverState.FillColor = AccentSoft
+            minusButton.HoverState.ForeColor = Ink
             minusButton.Cursor = Cursors.Hand
             minusButton.BackColor = CardFill
 
             Dim quantityLabel As New Label()
             quantityLabel.Text = quantity.ToString()
-            quantityLabel.Size = New Size(28, 28)
-            quantityLabel.Location = New Point(95, 40)
+            quantityLabel.Size = New Size(26, 24)
+            quantityLabel.Location = New Point(88, 36)
             quantityLabel.TextAlign = ContentAlignment.MiddleCenter
             quantityLabel.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
             quantityLabel.ForeColor = Ink
@@ -2004,12 +2068,12 @@ Public Class Cashier
 
             Dim plusButton As New Guna2Button()
             plusButton.Text = "+"
-            plusButton.Size = New Size(28, 28)
-            plusButton.Location = New Point(124, 40)
-            plusButton.BorderThickness = 1
-            plusButton.BorderColor = Color.FromArgb(226, 190, 165)
+            plusButton.Size = New Size(24, 24)
+            plusButton.Location = New Point(116, 36)
             plusButton.BorderRadius = 6
             plusButton.FillColor = AccentSoft
+            plusButton.BorderThickness = 1
+            plusButton.BorderColor = Color.FromArgb(226, 190, 165)
             plusButton.ForeColor = Ink
             plusButton.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
             plusButton.HoverState.FillColor = Accent
@@ -2020,7 +2084,7 @@ Public Class Cashier
             Dim deleteButton As New Label()
             deleteButton.Text = "Remove"
             deleteButton.Size = New Size(64, 18)
-            deleteButton.Location = New Point(itemW - 64, 46)
+            deleteButton.Location = New Point(itemW - 64, 40)
             deleteButton.TextAlign = ContentAlignment.MiddleRight
             deleteButton.Font = New Font("Segoe UI", 8.0F, FontStyle.Bold)
             deleteButton.ForeColor = Color.FromArgb(176, 72, 48)
@@ -2034,7 +2098,7 @@ Public Class Cashier
             row.Controls.Add(pic)
             row.Controls.Add(nameLabel)
             row.Controls.Add(itemTotalLabel)
-            row.Controls.Add(priceLabel)
+            row.Controls.Add(noteLabel)
             row.Controls.Add(minusButton)
             row.Controls.Add(quantityLabel)
             row.Controls.Add(plusButton)
@@ -2189,7 +2253,8 @@ Public Class Cashier
             Dim errorMessage As String = ""
             Dim trx As POS_Transaction = DataStore.CreateSale(
                 CurrentSession.FullName, CurrentSession.Username,
-                lines, method, cashReceived, errorMessage)
+                lines, method, cashReceived, errorMessage,
+                txtCustomer.Text.Trim(), cboTable.Text, selectedCardType)
 
             If trx Is Nothing Then
                 MessageBox.Show(errorMessage, "Checkout", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -2201,11 +2266,16 @@ Public Class Cashier
             Dim cardUsed As String = selectedCardType
             ClearCart()
             LoadProducts()
+            txtCustomer.Clear()
+            If cboTable.Items.Count > 0 Then cboTable.SelectedIndex = 0
+            RefreshOrderNumber()
 
             Dim info As String = "Checkout successful!" & vbCrLf & vbCrLf &
                                  "Transaction: " & trx.TransactionID & vbCrLf &
                                  "Payment: " & trx.PaymentMethod & vbCrLf &
                                  "Total: " & Peso(trx.Total)
+            If trx.CustomerName <> "" Then info &= vbCrLf & "Customer: " & trx.CustomerName
+            If trx.TableName <> "" Then info &= vbCrLf & "Table: " & trx.TableName
             If trx.PaymentMethod = PaymentMethods.Card AndAlso cardUsed <> "" Then
                 info &= vbCrLf & "Card: " & cardUsed
             End If

@@ -38,13 +38,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel5 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.Guna2HtmlLabel7 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.main_pnl = New Guna.UI2.WinForms.Guna2Panel()
-        Me.Inventory = New System.Windows.Forms.Panel()
-        Me.pnlInvTable = New Guna.UI2.WinForms.Guna2Panel()
-        Me.invGrid = New System.Windows.Forms.DataGridView()
-        Me.lblInvShowing = New System.Windows.Forms.Label()
-        Me.lblInvCount = New System.Windows.Forms.Label()
-        Me.lblInvTableTitle = New System.Windows.Forms.Label()
-        Me.lblInvSub = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         Me.pnlInvAttn = New Guna.UI2.WinForms.Guna2Panel()
         Me.flInvAttn = New System.Windows.Forms.FlowLayoutPanel()
         Me.lblInvAttnCount = New System.Windows.Forms.Label()
@@ -54,6 +48,11 @@ Partial Class Cashier
         Me.picInvCatBar = New System.Windows.Forms.PictureBox()
         Me.lblInvCatTotal = New System.Windows.Forms.Label()
         Me.lblInvCatTitle = New System.Windows.Forms.Label()
+        Me.pnlInvTable = New Guna.UI2.WinForms.Guna2Panel()
+        Me.invGrid = New System.Windows.Forms.DataGridView()
+        Me.lblInvShowing = New System.Windows.Forms.Label()
+        Me.lblInvCount = New System.Windows.Forms.Label()
+        Me.lblInvTableTitle = New System.Windows.Forms.Label()
         Me.cboInvStatus = New Guna.UI2.WinForms.Guna2ComboBox()
         Me.cboInvCategory = New Guna.UI2.WinForms.Guna2ComboBox()
         Me.txtInvSearch = New Guna.UI2.WinForms.Guna2TextBox()
@@ -78,6 +77,7 @@ Partial Class Cashier
         Me.lblIK4V = New System.Windows.Forms.Label()
         Me.lblIK4T = New System.Windows.Forms.Label()
         Me.btnInvExport = New Guna.UI2.WinForms.Guna2Button()
+        Me.lblInvSub = New System.Windows.Forms.Label()
         Me.lblInvTitle = New System.Windows.Forms.Label()
         Me.pnl_History = New System.Windows.Forms.Panel()
         Me.pnlHistDetail = New Guna.UI2.WinForms.Guna2Panel()
@@ -135,17 +135,26 @@ Partial Class Cashier
         Me.btnHistExport = New Guna.UI2.WinForms.Guna2Button()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.pnlCardDim = New System.Windows.Forms.Panel()
+        Me.pnlCardModal = New Guna.UI2.WinForms.Guna2Panel()
+        Me.btnCardConfirm = New Guna.UI2.WinForms.Guna2Button()
+        Me.btnCardAmex = New Guna.UI2.WinForms.Guna2Button()
+        Me.btnCardJcb = New Guna.UI2.WinForms.Guna2Button()
+        Me.btnCardMastercard = New Guna.UI2.WinForms.Guna2Button()
+        Me.btnCardVisa = New Guna.UI2.WinForms.Guna2Button()
+        Me.btnCardCredit = New Guna.UI2.WinForms.Guna2Button()
+        Me.btnCardDebit = New Guna.UI2.WinForms.Guna2Button()
+        Me.pnlCardAmount = New Guna.UI2.WinForms.Guna2Panel()
+        Me.lblCardAmt = New System.Windows.Forms.Label()
+        Me.lblCardAmtCap = New System.Windows.Forms.Label()
+        Me.btnCardClose = New Guna.UI2.WinForms.Guna2Button()
+        Me.lblCardModalSub = New System.Windows.Forms.Label()
+        Me.lblCardModalTitle = New System.Windows.Forms.Label()
         Me.pnl_PointOfSale = New Guna.UI2.WinForms.Guna2Panel()
         Me.pnlProfileMenu = New Guna.UI2.WinForms.Guna2Panel()
         Me.btnMenuLogout = New Guna.UI2.WinForms.Guna2Button()
         Me.btnMenuProfile = New Guna.UI2.WinForms.Guna2Button()
         Me.btnMenuSettings = New Guna.UI2.WinForms.Guna2Button()
-        Me.pnlCardSelect = New Guna.UI2.WinForms.Guna2Panel()
-        Me.btnCardPrepaid = New Guna.UI2.WinForms.Guna2Button()
-        Me.btnCardCredit = New Guna.UI2.WinForms.Guna2Button()
-        Me.btnCardDebit = New Guna.UI2.WinForms.Guna2Button()
-        Me.btnCardClose = New Guna.UI2.WinForms.Guna2Button()
-        Me.lblCardTitle = New System.Windows.Forms.Label()
         Me.topimage = New Guna.UI2.WinForms.Guna2PictureBox()
         Me.Guna2Panel5 = New Guna.UI2.WinForms.Guna2Panel()
         Me.btn_chkout = New Guna.UI2.WinForms.Guna2Button()
@@ -177,6 +186,14 @@ Partial Class Cashier
         Me.lblCartCount = New System.Windows.Forms.Label()
         Me.lblCurrentOrder = New System.Windows.Forms.Label()
         Me.fl_MenuProduct = New System.Windows.Forms.FlowLayoutPanel()
+        Me.pnlCartSep = New Guna.UI2.WinForms.Guna2Panel()
+        Me.txtOrderNo = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.lblOrderCap = New System.Windows.Forms.Label()
+        Me.cboTable = New Guna.UI2.WinForms.Guna2ComboBox()
+        Me.lblTableCap = New System.Windows.Forms.Label()
+        Me.txtCustomer = New Guna.UI2.WinForms.Guna2TextBox()
+        Me.lblCustNameCap = New System.Windows.Forms.Label()
+        Me.lblCustInfo = New System.Windows.Forms.Label()
         Me.Guna2HtmlLabel15 = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.picCartIcon = New Guna.UI2.WinForms.Guna2PictureBox()
         Me.btn_Non_Coffee = New Guna.UI2.WinForms.Guna2Button()
@@ -200,6 +217,10 @@ Partial Class Cashier
         Me.CashierName = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.txtChat = New Guna.UI2.WinForms.Guna2TextBox()
         Me.dashbrd_pnl = New Guna.UI2.WinForms.Guna2Panel()
+        Me.pnlDashRecent = New Guna.UI2.WinForms.Guna2Panel()
+        Me.dashGrid = New System.Windows.Forms.DataGridView()
+        Me.lnkDashViewAll = New System.Windows.Forms.Label()
+        Me.lblDashRecentTitle = New System.Windows.Forms.Label()
         Me.pnlDashAlert = New Guna.UI2.WinForms.Guna2Panel()
         Me.flDashAlert = New System.Windows.Forms.FlowLayoutPanel()
         Me.lblDashAlertNote = New System.Windows.Forms.Label()
@@ -208,10 +229,6 @@ Partial Class Cashier
         Me.flDashTop = New System.Windows.Forms.FlowLayoutPanel()
         Me.lblDashTopNote = New System.Windows.Forms.Label()
         Me.lblDashTopTitle = New System.Windows.Forms.Label()
-        Me.pnlDashRecent = New Guna.UI2.WinForms.Guna2Panel()
-        Me.dashGrid = New System.Windows.Forms.DataGridView()
-        Me.lnkDashViewAll = New System.Windows.Forms.Label()
-        Me.lblDashRecentTitle = New System.Windows.Forms.Label()
         Me.pnlDashCat = New Guna.UI2.WinForms.Guna2Panel()
         Me.flDashCat = New System.Windows.Forms.FlowLayoutPanel()
         Me.lblDashCatNote = New System.Windows.Forms.Label()
@@ -249,12 +266,12 @@ Partial Class Cashier
         Me.dshbrd_Pnl.SuspendLayout()
         Me.pnlRegister.SuspendLayout()
         Me.main_pnl.SuspendLayout()
-        Me.Inventory.SuspendLayout()
-        Me.pnlInvTable.SuspendLayout()
-        CType(Me.invGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
         Me.pnlInvAttn.SuspendLayout()
         Me.pnlInvCat.SuspendLayout()
         CType(Me.picInvCatBar, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlInvTable.SuspendLayout()
+        CType(Me.invGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlIK1.SuspendLayout()
         CType(Me.picIK1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlIK2.SuspendLayout()
@@ -276,9 +293,11 @@ Partial Class Cashier
         CType(Me.picHK3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlHK4.SuspendLayout()
         CType(Me.picHK4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlCardDim.SuspendLayout()
+        Me.pnlCardModal.SuspendLayout()
+        Me.pnlCardAmount.SuspendLayout()
         Me.pnl_PointOfSale.SuspendLayout()
         Me.pnlProfileMenu.SuspendLayout()
-        Me.pnlCardSelect.SuspendLayout()
         CType(Me.topimage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Guna2Panel5.SuspendLayout()
         Me.pnlTotal.SuspendLayout()
@@ -290,10 +309,10 @@ Partial Class Cashier
         Me.pnl_MainChat.SuspendLayout()
         Me.flpMessages.SuspendLayout()
         Me.dashbrd_pnl.SuspendLayout()
-        Me.pnlDashAlert.SuspendLayout()
-        Me.pnlDashTop.SuspendLayout()
         Me.pnlDashRecent.SuspendLayout()
         CType(Me.dashGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlDashAlert.SuspendLayout()
+        Me.pnlDashTop.SuspendLayout()
         Me.pnlDashCat.SuspendLayout()
         Me.pnlDashTrend.SuspendLayout()
         CType(Me.picDashTrend, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -568,8 +587,9 @@ Partial Class Cashier
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.main_pnl.BackColor = System.Drawing.Color.WhiteSmoke
         Me.main_pnl.BorderColor = System.Drawing.Color.Black
-        Me.main_pnl.Controls.Add(Me.Inventory)
+        Me.main_pnl.Controls.Add(Me.Panel1)
         Me.main_pnl.Controls.Add(Me.pnl_History)
+        Me.main_pnl.Controls.Add(Me.pnlCardDim)
         Me.main_pnl.Controls.Add(Me.pnl_PointOfSale)
         Me.main_pnl.Controls.Add(Me.pnl_CashierMessages)
         Me.main_pnl.Controls.Add(Me.dashbrd_pnl)
@@ -578,112 +598,30 @@ Partial Class Cashier
         Me.main_pnl.Size = New System.Drawing.Size(1007, 666)
         Me.main_pnl.TabIndex = 4
         '
-        'Inventory
+        'Panel1
         '
-        Me.Inventory.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
-        Me.Inventory.Controls.Add(Me.pnlInvTable)
-        Me.Inventory.Controls.Add(Me.lblInvSub)
-        Me.Inventory.Controls.Add(Me.pnlInvAttn)
-        Me.Inventory.Controls.Add(Me.pnlInvCat)
-        Me.Inventory.Controls.Add(Me.cboInvStatus)
-        Me.Inventory.Controls.Add(Me.cboInvCategory)
-        Me.Inventory.Controls.Add(Me.txtInvSearch)
-        Me.Inventory.Controls.Add(Me.pnlIK1)
-        Me.Inventory.Controls.Add(Me.pnlIK2)
-        Me.Inventory.Controls.Add(Me.pnlIK3)
-        Me.Inventory.Controls.Add(Me.pnlIK4)
-        Me.Inventory.Controls.Add(Me.btnInvExport)
-        Me.Inventory.Controls.Add(Me.lblInvTitle)
-        Me.Inventory.Location = New System.Drawing.Point(0, 0)
-        Me.Inventory.Name = "Inventory"
-        Me.Inventory.Size = New System.Drawing.Size(1007, 666)
-        Me.Inventory.TabIndex = 22
-        Me.Inventory.Visible = False
-        '
-        'pnlInvTable
-        '
-        Me.pnlInvTable.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlInvTable.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
-        Me.pnlInvTable.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.pnlInvTable.BorderRadius = 14
-        Me.pnlInvTable.BorderThickness = 1
-        Me.pnlInvTable.Controls.Add(Me.invGrid)
-        Me.pnlInvTable.Controls.Add(Me.lblInvShowing)
-        Me.pnlInvTable.Controls.Add(Me.lblInvCount)
-        Me.pnlInvTable.Controls.Add(Me.lblInvTableTitle)
-        Me.pnlInvTable.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlInvTable.Location = New System.Drawing.Point(20, 226)
-        Me.pnlInvTable.Name = "pnlInvTable"
-        Me.pnlInvTable.Size = New System.Drawing.Size(667, 431)
-        Me.pnlInvTable.TabIndex = 1175
-        '
-        'invGrid
-        '
-        Me.invGrid.AllowUserToAddRows = False
-        Me.invGrid.AllowUserToDeleteRows = False
-        Me.invGrid.AllowUserToResizeRows = False
-        Me.invGrid.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.invGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.invGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.invGrid.Location = New System.Drawing.Point(0, 48)
-        Me.invGrid.Name = "invGrid"
-        Me.invGrid.ReadOnly = True
-        Me.invGrid.RowHeadersVisible = False
-        Me.invGrid.Size = New System.Drawing.Size(666, 371)
-        Me.invGrid.TabIndex = 1178
-        '
-        'lblInvShowing
-        '
-        Me.lblInvShowing.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblInvShowing.AutoSize = True
-        Me.lblInvShowing.BackColor = System.Drawing.Color.Transparent
-        Me.lblInvShowing.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblInvShowing.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblInvShowing.Location = New System.Drawing.Point(16, 404)
-        Me.lblInvShowing.Name = "lblInvShowing"
-        Me.lblInvShowing.Size = New System.Drawing.Size(0, 15)
-        Me.lblInvShowing.TabIndex = 1179
-        '
-        'lblInvCount
-        '
-        Me.lblInvCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblInvCount.BackColor = System.Drawing.Color.Transparent
-        Me.lblInvCount.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblInvCount.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblInvCount.Location = New System.Drawing.Point(494, 18)
-        Me.lblInvCount.Name = "lblInvCount"
-        Me.lblInvCount.Size = New System.Drawing.Size(157, 18)
-        Me.lblInvCount.TabIndex = 1177
-        Me.lblInvCount.Text = "0 items"
-        Me.lblInvCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblInvTableTitle
-        '
-        Me.lblInvTableTitle.AutoSize = True
-        Me.lblInvTableTitle.BackColor = System.Drawing.Color.Transparent
-        Me.lblInvTableTitle.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblInvTableTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblInvTableTitle.Location = New System.Drawing.Point(16, 14)
-        Me.lblInvTableTitle.Name = "lblInvTableTitle"
-        Me.lblInvTableTitle.Size = New System.Drawing.Size(100, 20)
-        Me.lblInvTableTitle.TabIndex = 1176
-        Me.lblInvTableTitle.Text = "All inventory"
-        '
-        'lblInvSub
-        '
-        Me.lblInvSub.AutoSize = True
-        Me.lblInvSub.BackColor = System.Drawing.Color.Transparent
-        Me.lblInvSub.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblInvSub.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblInvSub.Location = New System.Drawing.Point(20, 46)
-        Me.lblInvSub.Name = "lblInvSub"
-        Me.lblInvSub.Size = New System.Drawing.Size(322, 15)
-        Me.lblInvSub.TabIndex = 1150
-        Me.lblInvSub.Text = "Live stock levels. Ask the administrator to restock low items."
+        Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
+        Me.Panel1.Controls.Add(Me.pnlInvAttn)
+        Me.Panel1.Controls.Add(Me.pnlInvCat)
+        Me.Panel1.Controls.Add(Me.pnlInvTable)
+        Me.Panel1.Controls.Add(Me.cboInvStatus)
+        Me.Panel1.Controls.Add(Me.cboInvCategory)
+        Me.Panel1.Controls.Add(Me.txtInvSearch)
+        Me.Panel1.Controls.Add(Me.pnlIK1)
+        Me.Panel1.Controls.Add(Me.pnlIK2)
+        Me.Panel1.Controls.Add(Me.pnlIK3)
+        Me.Panel1.Controls.Add(Me.pnlIK4)
+        Me.Panel1.Controls.Add(Me.btnInvExport)
+        Me.Panel1.Controls.Add(Me.lblInvSub)
+        Me.Panel1.Controls.Add(Me.lblInvTitle)
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1007, 666)
+        Me.Panel1.TabIndex = 22
+        Me.Panel1.Visible = False
         '
         'pnlInvAttn
         '
@@ -697,9 +635,9 @@ Partial Class Cashier
         Me.pnlInvAttn.Controls.Add(Me.lblInvAttnCount)
         Me.pnlInvAttn.Controls.Add(Me.lblInvAttnTitle)
         Me.pnlInvAttn.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlInvAttn.Location = New System.Drawing.Point(698, 436)
+        Me.pnlInvAttn.Location = New System.Drawing.Point(700, 436)
         Me.pnlInvAttn.Name = "pnlInvAttn"
-        Me.pnlInvAttn.Size = New System.Drawing.Size(293, 221)
+        Me.pnlInvAttn.Size = New System.Drawing.Size(293, 210)
         Me.pnlInvAttn.TabIndex = 1185
         '
         'flInvAttn
@@ -711,7 +649,7 @@ Partial Class Cashier
         Me.flInvAttn.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.flInvAttn.Location = New System.Drawing.Point(16, 44)
         Me.flInvAttn.Name = "flInvAttn"
-        Me.flInvAttn.Size = New System.Drawing.Size(265, 168)
+        Me.flInvAttn.Size = New System.Drawing.Size(265, 157)
         Me.flInvAttn.TabIndex = 1188
         Me.flInvAttn.WrapContents = False
         '
@@ -752,7 +690,7 @@ Partial Class Cashier
         Me.pnlInvCat.Controls.Add(Me.lblInvCatTotal)
         Me.pnlInvCat.Controls.Add(Me.lblInvCatTitle)
         Me.pnlInvCat.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlInvCat.Location = New System.Drawing.Point(698, 226)
+        Me.pnlInvCat.Location = New System.Drawing.Point(700, 226)
         Me.pnlInvCat.Name = "pnlInvCat"
         Me.pnlInvCat.Size = New System.Drawing.Size(293, 200)
         Me.pnlInvCat.TabIndex = 1180
@@ -803,6 +741,77 @@ Partial Class Cashier
         Me.lblInvCatTitle.TabIndex = 1181
         Me.lblInvCatTitle.Text = "Stock by category"
         '
+        'pnlInvTable
+        '
+        Me.pnlInvTable.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlInvTable.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
+        Me.pnlInvTable.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.pnlInvTable.BorderRadius = 14
+        Me.pnlInvTable.BorderThickness = 1
+        Me.pnlInvTable.Controls.Add(Me.invGrid)
+        Me.pnlInvTable.Controls.Add(Me.lblInvShowing)
+        Me.pnlInvTable.Controls.Add(Me.lblInvCount)
+        Me.pnlInvTable.Controls.Add(Me.lblInvTableTitle)
+        Me.pnlInvTable.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.pnlInvTable.Location = New System.Drawing.Point(20, 226)
+        Me.pnlInvTable.Name = "pnlInvTable"
+        Me.pnlInvTable.Size = New System.Drawing.Size(672, 420)
+        Me.pnlInvTable.TabIndex = 1175
+        '
+        'invGrid
+        '
+        Me.invGrid.AllowUserToAddRows = False
+        Me.invGrid.AllowUserToDeleteRows = False
+        Me.invGrid.AllowUserToResizeRows = False
+        Me.invGrid.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.invGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.invGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.invGrid.Location = New System.Drawing.Point(7, 46)
+        Me.invGrid.Name = "invGrid"
+        Me.invGrid.ReadOnly = True
+        Me.invGrid.RowHeadersVisible = False
+        Me.invGrid.Size = New System.Drawing.Size(654, 365)
+        Me.invGrid.TabIndex = 1178
+        '
+        'lblInvShowing
+        '
+        Me.lblInvShowing.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblInvShowing.AutoSize = True
+        Me.lblInvShowing.BackColor = System.Drawing.Color.Transparent
+        Me.lblInvShowing.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInvShowing.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.lblInvShowing.Location = New System.Drawing.Point(16, 393)
+        Me.lblInvShowing.Name = "lblInvShowing"
+        Me.lblInvShowing.Size = New System.Drawing.Size(0, 15)
+        Me.lblInvShowing.TabIndex = 1179
+        '
+        'lblInvCount
+        '
+        Me.lblInvCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblInvCount.BackColor = System.Drawing.Color.Transparent
+        Me.lblInvCount.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInvCount.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.lblInvCount.Location = New System.Drawing.Point(499, 18)
+        Me.lblInvCount.Name = "lblInvCount"
+        Me.lblInvCount.Size = New System.Drawing.Size(157, 18)
+        Me.lblInvCount.TabIndex = 1177
+        Me.lblInvCount.Text = "0 items"
+        Me.lblInvCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblInvTableTitle
+        '
+        Me.lblInvTableTitle.AutoSize = True
+        Me.lblInvTableTitle.BackColor = System.Drawing.Color.Transparent
+        Me.lblInvTableTitle.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInvTableTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.lblInvTableTitle.Location = New System.Drawing.Point(16, 14)
+        Me.lblInvTableTitle.Name = "lblInvTableTitle"
+        Me.lblInvTableTitle.Size = New System.Drawing.Size(100, 20)
+        Me.lblInvTableTitle.TabIndex = 1176
+        Me.lblInvTableTitle.Text = "All inventory"
+        '
         'cboInvStatus
         '
         Me.cboInvStatus.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -818,7 +827,7 @@ Partial Class Cashier
         Me.cboInvStatus.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.cboInvStatus.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.cboInvStatus.ItemHeight = 30
-        Me.cboInvStatus.Location = New System.Drawing.Point(821, 174)
+        Me.cboInvStatus.Location = New System.Drawing.Point(816, 176)
         Me.cboInvStatus.Name = "cboInvStatus"
         Me.cboInvStatus.Size = New System.Drawing.Size(170, 36)
         Me.cboInvStatus.TabIndex = 1174
@@ -838,7 +847,7 @@ Partial Class Cashier
         Me.cboInvCategory.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.cboInvCategory.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.cboInvCategory.ItemHeight = 30
-        Me.cboInvCategory.Location = New System.Drawing.Point(637, 174)
+        Me.cboInvCategory.Location = New System.Drawing.Point(637, 176)
         Me.cboInvCategory.Name = "cboInvCategory"
         Me.cboInvCategory.Size = New System.Drawing.Size(170, 36)
         Me.cboInvCategory.TabIndex = 1173
@@ -861,7 +870,7 @@ Partial Class Cashier
         Me.txtInvSearch.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
         Me.txtInvSearch.PlaceholderText = "Search item, SKU, or category..."
         Me.txtInvSearch.SelectedText = ""
-        Me.txtInvSearch.Size = New System.Drawing.Size(613, 38)
+        Me.txtInvSearch.Size = New System.Drawing.Size(608, 38)
         Me.txtInvSearch.TabIndex = 1172
         Me.txtInvSearch.TextOffset = New System.Drawing.Point(6, 0)
         '
@@ -1139,11 +1148,23 @@ Partial Class Cashier
         Me.btnInvExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btnInvExport.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.btnInvExport.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnInvExport.Location = New System.Drawing.Point(667, 14)
+        Me.btnInvExport.Location = New System.Drawing.Point(669, 14)
         Me.btnInvExport.Name = "btnInvExport"
         Me.btnInvExport.Size = New System.Drawing.Size(100, 38)
         Me.btnInvExport.TabIndex = 1151
         Me.btnInvExport.Text = "Export CSV"
+        '
+        'lblInvSub
+        '
+        Me.lblInvSub.AutoSize = True
+        Me.lblInvSub.BackColor = System.Drawing.Color.Transparent
+        Me.lblInvSub.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInvSub.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.lblInvSub.Location = New System.Drawing.Point(20, 46)
+        Me.lblInvSub.Name = "lblInvSub"
+        Me.lblInvSub.Size = New System.Drawing.Size(322, 15)
+        Me.lblInvSub.TabIndex = 1150
+        Me.lblInvSub.Text = "Live stock levels. Ask the administrator to restock low items."
         '
         'lblInvTitle
         '
@@ -1646,7 +1667,7 @@ Partial Class Cashier
         Me.Guna2TextBox1.Margin = New System.Windows.Forms.Padding(2, 3, 2, 3)
         Me.Guna2TextBox1.Name = "Guna2TextBox1"
         Me.Guna2TextBox1.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.Guna2TextBox1.PlaceholderText = "Search order, cashier, product, or payment..."
+        Me.Guna2TextBox1.PlaceholderText = "Search order, customer, product, or payment..."
         Me.Guna2TextBox1.SelectedText = ""
         Me.Guna2TextBox1.Size = New System.Drawing.Size(507, 38)
         Me.Guna2TextBox1.TabIndex = 3
@@ -1975,11 +1996,292 @@ Partial Class Cashier
         Me.Label4.TabIndex = 0
         Me.Label4.Text = "Order history"
         '
+        'pnlCardDim
+        '
+        Me.pnlCardDim.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pnlCardDim.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(22, Byte), Integer))
+        Me.pnlCardDim.Controls.Add(Me.pnlCardModal)
+        Me.pnlCardDim.Location = New System.Drawing.Point(0, 0)
+        Me.pnlCardDim.Name = "pnlCardDim"
+        Me.pnlCardDim.Size = New System.Drawing.Size(1007, 666)
+        Me.pnlCardDim.TabIndex = 1509
+        Me.pnlCardDim.Visible = False
+        '
+        'pnlCardModal
+        '
+        Me.pnlCardModal.BackColor = System.Drawing.Color.Transparent
+        Me.pnlCardModal.BorderColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.pnlCardModal.BorderRadius = 20
+        Me.pnlCardModal.Controls.Add(Me.btnCardConfirm)
+        Me.pnlCardModal.Controls.Add(Me.btnCardAmex)
+        Me.pnlCardModal.Controls.Add(Me.btnCardJcb)
+        Me.pnlCardModal.Controls.Add(Me.btnCardMastercard)
+        Me.pnlCardModal.Controls.Add(Me.btnCardVisa)
+        Me.pnlCardModal.Controls.Add(Me.btnCardCredit)
+        Me.pnlCardModal.Controls.Add(Me.btnCardDebit)
+        Me.pnlCardModal.Controls.Add(Me.pnlCardAmount)
+        Me.pnlCardModal.Controls.Add(Me.btnCardClose)
+        Me.pnlCardModal.Controls.Add(Me.lblCardModalSub)
+        Me.pnlCardModal.Controls.Add(Me.lblCardModalTitle)
+        Me.pnlCardModal.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.pnlCardModal.Location = New System.Drawing.Point(283, 120)
+        Me.pnlCardModal.Name = "pnlCardModal"
+        Me.pnlCardModal.Size = New System.Drawing.Size(440, 392)
+        Me.pnlCardModal.TabIndex = 1510
+        '
+        'btnCardConfirm
+        '
+        Me.btnCardConfirm.Animated = True
+        Me.btnCardConfirm.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardConfirm.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.btnCardConfirm.BorderRadius = 12
+        Me.btnCardConfirm.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCardConfirm.FillColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.btnCardConfirm.Font = New System.Drawing.Font("Segoe UI", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCardConfirm.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardConfirm.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(172, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(46, Byte), Integer))
+        Me.btnCardConfirm.HoverState.ForeColor = System.Drawing.Color.White
+        Me.btnCardConfirm.Location = New System.Drawing.Point(28, 338)
+        Me.btnCardConfirm.Name = "btnCardConfirm"
+        Me.btnCardConfirm.Size = New System.Drawing.Size(384, 44)
+        Me.btnCardConfirm.TabIndex = 1523
+        Me.btnCardConfirm.Text = "Confirm card"
+        '
+        'btnCardAmex
+        '
+        Me.btnCardAmex.Animated = True
+        Me.btnCardAmex.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardAmex.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.btnCardAmex.BorderRadius = 12
+        Me.btnCardAmex.BorderThickness = 1
+        Me.btnCardAmex.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCardAmex.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardAmex.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCardAmex.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardAmex.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.btnCardAmex.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardAmex.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardAmex.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardAmex.ImageOffset = New System.Drawing.Point(10, 0)
+        Me.btnCardAmex.ImageSize = New System.Drawing.Size(26, 26)
+        Me.btnCardAmex.Location = New System.Drawing.Point(226, 272)
+        Me.btnCardAmex.Name = "btnCardAmex"
+        Me.btnCardAmex.Size = New System.Drawing.Size(186, 52)
+        Me.btnCardAmex.TabIndex = 1522
+        Me.btnCardAmex.Text = "American Express"
+        Me.btnCardAmex.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardAmex.TextOffset = New System.Drawing.Point(8, 0)
+        '
+        'btnCardJcb
+        '
+        Me.btnCardJcb.Animated = True
+        Me.btnCardJcb.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardJcb.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.btnCardJcb.BorderRadius = 12
+        Me.btnCardJcb.BorderThickness = 1
+        Me.btnCardJcb.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCardJcb.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardJcb.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCardJcb.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardJcb.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.btnCardJcb.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardJcb.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardJcb.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardJcb.ImageOffset = New System.Drawing.Point(10, 0)
+        Me.btnCardJcb.ImageSize = New System.Drawing.Size(26, 26)
+        Me.btnCardJcb.Location = New System.Drawing.Point(28, 272)
+        Me.btnCardJcb.Name = "btnCardJcb"
+        Me.btnCardJcb.Size = New System.Drawing.Size(186, 52)
+        Me.btnCardJcb.TabIndex = 1521
+        Me.btnCardJcb.Text = "JCB"
+        Me.btnCardJcb.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardJcb.TextOffset = New System.Drawing.Point(8, 0)
+        '
+        'btnCardMastercard
+        '
+        Me.btnCardMastercard.Animated = True
+        Me.btnCardMastercard.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardMastercard.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.btnCardMastercard.BorderRadius = 12
+        Me.btnCardMastercard.BorderThickness = 1
+        Me.btnCardMastercard.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCardMastercard.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardMastercard.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCardMastercard.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardMastercard.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.btnCardMastercard.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardMastercard.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardMastercard.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardMastercard.ImageOffset = New System.Drawing.Point(10, 0)
+        Me.btnCardMastercard.ImageSize = New System.Drawing.Size(26, 26)
+        Me.btnCardMastercard.Location = New System.Drawing.Point(226, 210)
+        Me.btnCardMastercard.Name = "btnCardMastercard"
+        Me.btnCardMastercard.Size = New System.Drawing.Size(186, 52)
+        Me.btnCardMastercard.TabIndex = 1520
+        Me.btnCardMastercard.Text = "Mastercard"
+        Me.btnCardMastercard.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardMastercard.TextOffset = New System.Drawing.Point(8, 0)
+        '
+        'btnCardVisa
+        '
+        Me.btnCardVisa.Animated = True
+        Me.btnCardVisa.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardVisa.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.btnCardVisa.BorderRadius = 12
+        Me.btnCardVisa.BorderThickness = 1
+        Me.btnCardVisa.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCardVisa.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardVisa.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCardVisa.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardVisa.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.btnCardVisa.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardVisa.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardVisa.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardVisa.ImageOffset = New System.Drawing.Point(10, 0)
+        Me.btnCardVisa.ImageSize = New System.Drawing.Size(26, 26)
+        Me.btnCardVisa.Location = New System.Drawing.Point(28, 210)
+        Me.btnCardVisa.Name = "btnCardVisa"
+        Me.btnCardVisa.Size = New System.Drawing.Size(186, 52)
+        Me.btnCardVisa.TabIndex = 1519
+        Me.btnCardVisa.Text = "Visa"
+        Me.btnCardVisa.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardVisa.TextOffset = New System.Drawing.Point(8, 0)
+        '
+        'btnCardCredit
+        '
+        Me.btnCardCredit.Animated = True
+        Me.btnCardCredit.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardCredit.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.btnCardCredit.BorderRadius = 12
+        Me.btnCardCredit.BorderThickness = 1
+        Me.btnCardCredit.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCardCredit.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardCredit.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCardCredit.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardCredit.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.btnCardCredit.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardCredit.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardCredit.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardCredit.ImageOffset = New System.Drawing.Point(10, 0)
+        Me.btnCardCredit.ImageSize = New System.Drawing.Size(26, 26)
+        Me.btnCardCredit.Location = New System.Drawing.Point(226, 148)
+        Me.btnCardCredit.Name = "btnCardCredit"
+        Me.btnCardCredit.Size = New System.Drawing.Size(186, 52)
+        Me.btnCardCredit.TabIndex = 1518
+        Me.btnCardCredit.Text = "Credit Card"
+        Me.btnCardCredit.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardCredit.TextOffset = New System.Drawing.Point(8, 0)
+        '
+        'btnCardDebit
+        '
+        Me.btnCardDebit.Animated = True
+        Me.btnCardDebit.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardDebit.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.btnCardDebit.BorderRadius = 12
+        Me.btnCardDebit.BorderThickness = 1
+        Me.btnCardDebit.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCardDebit.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardDebit.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCardDebit.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardDebit.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.btnCardDebit.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardDebit.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.btnCardDebit.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardDebit.ImageOffset = New System.Drawing.Point(10, 0)
+        Me.btnCardDebit.ImageSize = New System.Drawing.Size(26, 26)
+        Me.btnCardDebit.Location = New System.Drawing.Point(28, 148)
+        Me.btnCardDebit.Name = "btnCardDebit"
+        Me.btnCardDebit.Size = New System.Drawing.Size(186, 52)
+        Me.btnCardDebit.TabIndex = 1517
+        Me.btnCardDebit.Text = "Debit Card"
+        Me.btnCardDebit.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+        Me.btnCardDebit.TextOffset = New System.Drawing.Point(8, 0)
+        '
+        'pnlCardAmount
+        '
+        Me.pnlCardAmount.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.pnlCardAmount.BorderColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.pnlCardAmount.BorderRadius = 12
+        Me.pnlCardAmount.Controls.Add(Me.lblCardAmt)
+        Me.pnlCardAmount.Controls.Add(Me.lblCardAmtCap)
+        Me.pnlCardAmount.FillColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.pnlCardAmount.Location = New System.Drawing.Point(28, 86)
+        Me.pnlCardAmount.Name = "pnlCardAmount"
+        Me.pnlCardAmount.Size = New System.Drawing.Size(384, 48)
+        Me.pnlCardAmount.TabIndex = 1514
+        '
+        'lblCardAmt
+        '
+        Me.lblCardAmt.BackColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.lblCardAmt.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCardAmt.ForeColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.lblCardAmt.Location = New System.Drawing.Point(170, 8)
+        Me.lblCardAmt.Name = "lblCardAmt"
+        Me.lblCardAmt.Size = New System.Drawing.Size(200, 32)
+        Me.lblCardAmt.TabIndex = 1516
+        Me.lblCardAmt.Text = "0.00"
+        Me.lblCardAmt.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblCardAmtCap
+        '
+        Me.lblCardAmtCap.AutoSize = True
+        Me.lblCardAmtCap.BackColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.lblCardAmtCap.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCardAmtCap.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.lblCardAmtCap.Location = New System.Drawing.Point(14, 15)
+        Me.lblCardAmtCap.Name = "lblCardAmtCap"
+        Me.lblCardAmtCap.Size = New System.Drawing.Size(87, 15)
+        Me.lblCardAmtCap.TabIndex = 1515
+        Me.lblCardAmtCap.Text = "Amount to pay"
+        '
+        'btnCardClose
+        '
+        Me.btnCardClose.Animated = True
+        Me.btnCardClose.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnCardClose.BorderColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardClose.BorderRadius = 15
+        Me.btnCardClose.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCardClose.FillColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardClose.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCardClose.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.btnCardClose.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnCardClose.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.btnCardClose.Location = New System.Drawing.Point(384, 18)
+        Me.btnCardClose.Name = "btnCardClose"
+        Me.btnCardClose.Size = New System.Drawing.Size(30, 30)
+        Me.btnCardClose.TabIndex = 1513
+        Me.btnCardClose.Text = "X"
+        '
+        'lblCardModalSub
+        '
+        Me.lblCardModalSub.AutoSize = True
+        Me.lblCardModalSub.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lblCardModalSub.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCardModalSub.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.lblCardModalSub.Location = New System.Drawing.Point(28, 52)
+        Me.lblCardModalSub.Name = "lblCardModalSub"
+        Me.lblCardModalSub.Size = New System.Drawing.Size(242, 15)
+        Me.lblCardModalSub.TabIndex = 1512
+        Me.lblCardModalSub.Text = "Choose the card the customer is paying with"
+        '
+        'lblCardModalTitle
+        '
+        Me.lblCardModalTitle.AutoSize = True
+        Me.lblCardModalTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lblCardModalTitle.Font = New System.Drawing.Font("Segoe UI", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCardModalTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.lblCardModalTitle.Location = New System.Drawing.Point(28, 22)
+        Me.lblCardModalTitle.Name = "lblCardModalTitle"
+        Me.lblCardModalTitle.Size = New System.Drawing.Size(144, 28)
+        Me.lblCardModalTitle.TabIndex = 1511
+        Me.lblCardModalTitle.Text = "Card payment"
+        '
         'pnl_PointOfSale
         '
         Me.pnl_PointOfSale.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
         Me.pnl_PointOfSale.Controls.Add(Me.pnlProfileMenu)
-        Me.pnl_PointOfSale.Controls.Add(Me.pnlCardSelect)
         Me.pnl_PointOfSale.Controls.Add(Me.topimage)
         Me.pnl_PointOfSale.Controls.Add(Me.Guna2Panel5)
         Me.pnl_PointOfSale.Controls.Add(Me.txt_SearchMenu)
@@ -2076,127 +2378,17 @@ Partial Class Cashier
         Me.btnMenuSettings.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.btnMenuSettings.TextOffset = New System.Drawing.Point(8, 0)
         '
-        'pnlCardSelect
-        '
-        Me.pnlCardSelect.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlCardSelect.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
-        Me.pnlCardSelect.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
-        Me.pnlCardSelect.BorderRadius = 12
-        Me.pnlCardSelect.BorderThickness = 1
-        Me.pnlCardSelect.Controls.Add(Me.btnCardPrepaid)
-        Me.pnlCardSelect.Controls.Add(Me.btnCardCredit)
-        Me.pnlCardSelect.Controls.Add(Me.btnCardDebit)
-        Me.pnlCardSelect.Controls.Add(Me.btnCardClose)
-        Me.pnlCardSelect.Controls.Add(Me.lblCardTitle)
-        Me.pnlCardSelect.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlCardSelect.Location = New System.Drawing.Point(673, 271)
-        Me.pnlCardSelect.Name = "pnlCardSelect"
-        Me.pnlCardSelect.Size = New System.Drawing.Size(317, 192)
-        Me.pnlCardSelect.TabIndex = 956
-        Me.pnlCardSelect.Visible = False
-        '
-        'btnCardPrepaid
-        '
-        Me.btnCardPrepaid.Animated = True
-        Me.btnCardPrepaid.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.btnCardPrepaid.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.btnCardPrepaid.BorderRadius = 10
-        Me.btnCardPrepaid.BorderThickness = 1
-        Me.btnCardPrepaid.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCardPrepaid.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.btnCardPrepaid.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCardPrepaid.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnCardPrepaid.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
-        Me.btnCardPrepaid.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnCardPrepaid.Location = New System.Drawing.Point(16, 134)
-        Me.btnCardPrepaid.Name = "btnCardPrepaid"
-        Me.btnCardPrepaid.Size = New System.Drawing.Size(285, 36)
-        Me.btnCardPrepaid.TabIndex = 961
-        Me.btnCardPrepaid.Text = "Prepaid Card"
-        Me.btnCardPrepaid.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btnCardPrepaid.TextOffset = New System.Drawing.Point(10, 0)
-        '
-        'btnCardCredit
-        '
-        Me.btnCardCredit.Animated = True
-        Me.btnCardCredit.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.btnCardCredit.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.btnCardCredit.BorderRadius = 10
-        Me.btnCardCredit.BorderThickness = 1
-        Me.btnCardCredit.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCardCredit.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.btnCardCredit.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCardCredit.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnCardCredit.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
-        Me.btnCardCredit.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnCardCredit.Location = New System.Drawing.Point(16, 90)
-        Me.btnCardCredit.Name = "btnCardCredit"
-        Me.btnCardCredit.Size = New System.Drawing.Size(285, 36)
-        Me.btnCardCredit.TabIndex = 960
-        Me.btnCardCredit.Text = "Credit Card"
-        Me.btnCardCredit.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btnCardCredit.TextOffset = New System.Drawing.Point(10, 0)
-        '
-        'btnCardDebit
-        '
-        Me.btnCardDebit.Animated = True
-        Me.btnCardDebit.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.btnCardDebit.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.btnCardDebit.BorderRadius = 10
-        Me.btnCardDebit.BorderThickness = 1
-        Me.btnCardDebit.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCardDebit.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.btnCardDebit.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCardDebit.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnCardDebit.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
-        Me.btnCardDebit.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnCardDebit.Location = New System.Drawing.Point(16, 46)
-        Me.btnCardDebit.Name = "btnCardDebit"
-        Me.btnCardDebit.Size = New System.Drawing.Size(285, 36)
-        Me.btnCardDebit.TabIndex = 959
-        Me.btnCardDebit.Text = "Debit Card"
-        Me.btnCardDebit.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
-        Me.btnCardDebit.TextOffset = New System.Drawing.Point(10, 0)
-        '
-        'btnCardClose
-        '
-        Me.btnCardClose.Animated = True
-        Me.btnCardClose.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.btnCardClose.BorderRadius = 8
-        Me.btnCardClose.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCardClose.FillColor = System.Drawing.Color.Transparent
-        Me.btnCardClose.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCardClose.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.btnCardClose.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(232, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.btnCardClose.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(176, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.btnCardClose.Location = New System.Drawing.Point(277, 8)
-        Me.btnCardClose.Name = "btnCardClose"
-        Me.btnCardClose.Size = New System.Drawing.Size(30, 28)
-        Me.btnCardClose.TabIndex = 958
-        Me.btnCardClose.Text = "X"
-        '
-        'lblCardTitle
-        '
-        Me.lblCardTitle.AutoSize = True
-        Me.lblCardTitle.BackColor = System.Drawing.Color.Transparent
-        Me.lblCardTitle.Font = New System.Drawing.Font("Segoe UI", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCardTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblCardTitle.Location = New System.Drawing.Point(16, 14)
-        Me.lblCardTitle.Name = "lblCardTitle"
-        Me.lblCardTitle.Size = New System.Drawing.Size(85, 19)
-        Me.lblCardTitle.TabIndex = 957
-        Me.lblCardTitle.Text = "Select Card"
-        '
         'topimage
         '
         Me.topimage.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.topimage.BackColor = System.Drawing.Color.Transparent
         Me.topimage.BorderRadius = 14
         Me.topimage.Image = CType(resources.GetObject("topimage.Image"), System.Drawing.Image)
         Me.topimage.ImageRotate = 0!
         Me.topimage.Location = New System.Drawing.Point(20, 62)
         Me.topimage.Name = "topimage"
-        Me.topimage.Size = New System.Drawing.Size(616, 112)
+        Me.topimage.Size = New System.Drawing.Size(616, 92)
         Me.topimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.topimage.TabIndex = 26
         Me.topimage.TabStop = False
@@ -2220,9 +2412,9 @@ Partial Class Cashier
         Me.Guna2Panel5.Controls.Add(Me.Guna2HtmlLabel17)
         Me.Guna2Panel5.Controls.Add(Me.Guna2Panel8)
         Me.Guna2Panel5.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.Guna2Panel5.Location = New System.Drawing.Point(657, 323)
+        Me.Guna2Panel5.Location = New System.Drawing.Point(657, 369)
         Me.Guna2Panel5.Name = "Guna2Panel5"
-        Me.Guna2Panel5.Size = New System.Drawing.Size(349, 331)
+        Me.Guna2Panel5.Size = New System.Drawing.Size(349, 266)
         Me.Guna2Panel5.TabIndex = 23
         '
         'btn_chkout
@@ -2238,9 +2430,9 @@ Partial Class Cashier
         Me.btn_chkout.ForeColor = System.Drawing.Color.White
         Me.btn_chkout.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(172, Byte), Integer), CType(CType(90, Byte), Integer), CType(CType(46, Byte), Integer))
         Me.btn_chkout.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_chkout.Location = New System.Drawing.Point(16, 254)
+        Me.btn_chkout.Location = New System.Drawing.Point(16, 220)
         Me.btn_chkout.Name = "btn_chkout"
-        Me.btn_chkout.Size = New System.Drawing.Size(317, 48)
+        Me.btn_chkout.Size = New System.Drawing.Size(317, 44)
         Me.btn_chkout.TabIndex = 28
         Me.btn_chkout.Text = "Continue to Payment"
         '
@@ -2258,13 +2450,13 @@ Partial Class Cashier
         Me.txt_Cash_Receive.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txt_Cash_Receive.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.txt_Cash_Receive.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.txt_Cash_Receive.Location = New System.Drawing.Point(16, 210)
+        Me.txt_Cash_Receive.Location = New System.Drawing.Point(16, 182)
         Me.txt_Cash_Receive.Margin = New System.Windows.Forms.Padding(3, 5, 3, 5)
         Me.txt_Cash_Receive.Name = "txt_Cash_Receive"
         Me.txt_Cash_Receive.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
         Me.txt_Cash_Receive.PlaceholderText = "Cash received (₱)"
         Me.txt_Cash_Receive.SelectedText = ""
-        Me.txt_Cash_Receive.Size = New System.Drawing.Size(189, 34)
+        Me.txt_Cash_Receive.Size = New System.Drawing.Size(189, 32)
         Me.txt_Cash_Receive.TabIndex = 27
         '
         'lbl_Change
@@ -2272,9 +2464,9 @@ Partial Class Cashier
         Me.lbl_Change.BackColor = System.Drawing.Color.Transparent
         Me.lbl_Change.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Change.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lbl_Change.Location = New System.Drawing.Point(213, 223)
+        Me.lbl_Change.Location = New System.Drawing.Point(213, 197)
         Me.lbl_Change.Name = "lbl_Change"
-        Me.lbl_Change.Size = New System.Drawing.Size(120, 22)
+        Me.lbl_Change.Size = New System.Drawing.Size(120, 18)
         Me.lbl_Change.TabIndex = 923
         Me.lbl_Change.Text = "₱0.00"
         Me.lbl_Change.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -2284,7 +2476,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel24.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel24.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel24.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.Guna2HtmlLabel24.Location = New System.Drawing.Point(293, 208)
+        Me.Guna2HtmlLabel24.Location = New System.Drawing.Point(293, 183)
         Me.Guna2HtmlLabel24.Name = "Guna2HtmlLabel24"
         Me.Guna2HtmlLabel24.Size = New System.Drawing.Size(43, 15)
         Me.Guna2HtmlLabel24.TabIndex = 32
@@ -2304,9 +2496,9 @@ Partial Class Cashier
         Me.tileCard.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.tileCard.ImageOffset = New System.Drawing.Point(0, -10)
         Me.tileCard.ImageSize = New System.Drawing.Size(22, 22)
-        Me.tileCard.Location = New System.Drawing.Point(179, 146)
+        Me.tileCard.Location = New System.Drawing.Point(179, 124)
         Me.tileCard.Name = "tileCard"
-        Me.tileCard.Size = New System.Drawing.Size(153, 56)
+        Me.tileCard.Size = New System.Drawing.Size(153, 50)
         Me.tileCard.TabIndex = 928
         Me.tileCard.Text = "Card"
         Me.tileCard.TextOffset = New System.Drawing.Point(0, 13)
@@ -2325,9 +2517,9 @@ Partial Class Cashier
         Me.tileCash.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.tileCash.ImageOffset = New System.Drawing.Point(0, -10)
         Me.tileCash.ImageSize = New System.Drawing.Size(22, 22)
-        Me.tileCash.Location = New System.Drawing.Point(16, 146)
+        Me.tileCash.Location = New System.Drawing.Point(16, 124)
         Me.tileCash.Name = "tileCash"
-        Me.tileCash.Size = New System.Drawing.Size(153, 56)
+        Me.tileCash.Size = New System.Drawing.Size(153, 50)
         Me.tileCash.TabIndex = 927
         Me.tileCash.Text = "Cash"
         Me.tileCash.TextOffset = New System.Drawing.Point(0, 13)
@@ -2338,7 +2530,7 @@ Partial Class Cashier
         Me.lblPayCap.BackColor = System.Drawing.Color.Transparent
         Me.lblPayCap.Font = New System.Drawing.Font("Segoe UI", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPayCap.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblPayCap.Location = New System.Drawing.Point(16, 120)
+        Me.lblPayCap.Location = New System.Drawing.Point(16, 102)
         Me.lblPayCap.Name = "lblPayCap"
         Me.lblPayCap.Size = New System.Drawing.Size(124, 19)
         Me.lblPayCap.TabIndex = 926
@@ -2352,9 +2544,9 @@ Partial Class Cashier
         Me.pnlTotal.Controls.Add(Me.lblTotalSub)
         Me.pnlTotal.Controls.Add(Me.Guna2HtmlLabel19)
         Me.pnlTotal.FillColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(232, Byte), Integer), CType(CType(222, Byte), Integer))
-        Me.pnlTotal.Location = New System.Drawing.Point(16, 60)
+        Me.pnlTotal.Location = New System.Drawing.Point(16, 52)
         Me.pnlTotal.Name = "pnlTotal"
-        Me.pnlTotal.Size = New System.Drawing.Size(317, 50)
+        Me.pnlTotal.Size = New System.Drawing.Size(317, 44)
         Me.pnlTotal.TabIndex = 924
         '
         'lbl_Total
@@ -2362,7 +2554,7 @@ Partial Class Cashier
         Me.lbl_Total.BackColor = System.Drawing.Color.Transparent
         Me.lbl_Total.Font = New System.Drawing.Font("Segoe UI", 17.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Total.ForeColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(78, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.lbl_Total.Location = New System.Drawing.Point(115, 8)
+        Me.lbl_Total.Location = New System.Drawing.Point(115, 5)
         Me.lbl_Total.Name = "lbl_Total"
         Me.lbl_Total.Size = New System.Drawing.Size(190, 34)
         Me.lbl_Total.TabIndex = 922
@@ -2375,7 +2567,7 @@ Partial Class Cashier
         Me.lblTotalSub.BackColor = System.Drawing.Color.Transparent
         Me.lblTotalSub.Font = New System.Drawing.Font("Segoe UI", 7.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTotalSub.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblTotalSub.Location = New System.Drawing.Point(12, 28)
+        Me.lblTotalSub.Location = New System.Drawing.Point(12, 24)
         Me.lblTotalSub.Name = "lblTotalSub"
         Me.lblTotalSub.Size = New System.Drawing.Size(60, 12)
         Me.lblTotalSub.TabIndex = 925
@@ -2386,7 +2578,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel19.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel19.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel19.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.Guna2HtmlLabel19.Location = New System.Drawing.Point(12, 6)
+        Me.Guna2HtmlLabel19.Location = New System.Drawing.Point(12, 4)
         Me.Guna2HtmlLabel19.Name = "Guna2HtmlLabel19"
         Me.Guna2HtmlLabel19.Size = New System.Drawing.Size(35, 19)
         Me.Guna2HtmlLabel19.TabIndex = 25
@@ -2397,9 +2589,9 @@ Partial Class Cashier
         Me.lbl_Tax.BackColor = System.Drawing.Color.Transparent
         Me.lbl_Tax.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Tax.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lbl_Tax.Location = New System.Drawing.Point(203, 34)
+        Me.lbl_Tax.Location = New System.Drawing.Point(203, 29)
         Me.lbl_Tax.Name = "lbl_Tax"
-        Me.lbl_Tax.Size = New System.Drawing.Size(130, 20)
+        Me.lbl_Tax.Size = New System.Drawing.Size(130, 18)
         Me.lbl_Tax.TabIndex = 921
         Me.lbl_Tax.Text = "₱0.00"
         Me.lbl_Tax.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -2409,7 +2601,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel18.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel18.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel18.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.Guna2HtmlLabel18.Location = New System.Drawing.Point(16, 35)
+        Me.Guna2HtmlLabel18.Location = New System.Drawing.Point(16, 30)
         Me.Guna2HtmlLabel18.Name = "Guna2HtmlLabel18"
         Me.Guna2HtmlLabel18.Size = New System.Drawing.Size(21, 17)
         Me.Guna2HtmlLabel18.TabIndex = 24
@@ -2420,9 +2612,9 @@ Partial Class Cashier
         Me.lbl_Subtotal.BackColor = System.Drawing.Color.Transparent
         Me.lbl_Subtotal.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbl_Subtotal.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lbl_Subtotal.Location = New System.Drawing.Point(203, 12)
+        Me.lbl_Subtotal.Location = New System.Drawing.Point(203, 9)
         Me.lbl_Subtotal.Name = "lbl_Subtotal"
-        Me.lbl_Subtotal.Size = New System.Drawing.Size(130, 20)
+        Me.lbl_Subtotal.Size = New System.Drawing.Size(130, 18)
         Me.lbl_Subtotal.TabIndex = 920
         Me.lbl_Subtotal.Text = "₱0.00"
         Me.lbl_Subtotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -2432,7 +2624,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel17.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel17.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel17.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.Guna2HtmlLabel17.Location = New System.Drawing.Point(16, 13)
+        Me.Guna2HtmlLabel17.Location = New System.Drawing.Point(16, 10)
         Me.Guna2HtmlLabel17.Name = "Guna2HtmlLabel17"
         Me.Guna2HtmlLabel17.Size = New System.Drawing.Size(53, 17)
         Me.Guna2HtmlLabel17.TabIndex = 23
@@ -2453,6 +2645,7 @@ Partial Class Cashier
         '
         Me.txt_SearchMenu.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txt_SearchMenu.BackColor = System.Drawing.Color.Transparent
         Me.txt_SearchMenu.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.txt_SearchMenu.BorderRadius = 12
         Me.txt_SearchMenu.Cursor = System.Windows.Forms.Cursors.IBeam
@@ -2491,7 +2684,6 @@ Partial Class Cashier
         Me.btnBell.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBell.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btnBell.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
-        Me.btnBell.Image = Global.Vb_POS.My.Resources.Resources.icons8_notification_48
         Me.btnBell.ImageSize = New System.Drawing.Size(22, 22)
         Me.btnBell.Location = New System.Drawing.Point(396, 12)
         Me.btnBell.Name = "btnBell"
@@ -2578,6 +2770,14 @@ Partial Class Cashier
         Me.Guna2Panel6.Controls.Add(Me.lblCartCount)
         Me.Guna2Panel6.Controls.Add(Me.lblCurrentOrder)
         Me.Guna2Panel6.Controls.Add(Me.fl_MenuProduct)
+        Me.Guna2Panel6.Controls.Add(Me.pnlCartSep)
+        Me.Guna2Panel6.Controls.Add(Me.txtOrderNo)
+        Me.Guna2Panel6.Controls.Add(Me.lblOrderCap)
+        Me.Guna2Panel6.Controls.Add(Me.cboTable)
+        Me.Guna2Panel6.Controls.Add(Me.lblTableCap)
+        Me.Guna2Panel6.Controls.Add(Me.txtCustomer)
+        Me.Guna2Panel6.Controls.Add(Me.lblCustNameCap)
+        Me.Guna2Panel6.Controls.Add(Me.lblCustInfo)
         Me.Guna2Panel6.Controls.Add(Me.Guna2HtmlLabel15)
         Me.Guna2Panel6.Controls.Add(Me.picCartIcon)
         Me.Guna2Panel6.Dock = System.Windows.Forms.DockStyle.Right
@@ -2594,7 +2794,7 @@ Partial Class Cashier
         Me.lblEmpty.BackColor = System.Drawing.Color.Transparent
         Me.lblEmpty.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblEmpty.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblEmpty.Location = New System.Drawing.Point(16, 130)
+        Me.lblEmpty.Location = New System.Drawing.Point(16, 252)
         Me.lblEmpty.Name = "lblEmpty"
         Me.lblEmpty.Size = New System.Drawing.Size(317, 44)
         Me.lblEmpty.TabIndex = 919
@@ -2614,7 +2814,7 @@ Partial Class Cashier
         Me.btn_Clear.ForeColor = System.Drawing.Color.FromArgb(CType(CType(176, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(48, Byte), Integer))
         Me.btn_Clear.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(232, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btn_Clear.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(176, Byte), Integer), CType(CType(72, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.btn_Clear.Location = New System.Drawing.Point(279, 62)
+        Me.btn_Clear.Location = New System.Drawing.Point(279, 185)
         Me.btn_Clear.Name = "btn_Clear"
         Me.btn_Clear.Size = New System.Drawing.Size(56, 22)
         Me.btn_Clear.TabIndex = 24
@@ -2625,7 +2825,7 @@ Partial Class Cashier
         Me.lblCartCount.BackColor = System.Drawing.Color.Transparent
         Me.lblCartCount.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCartCount.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblCartCount.Location = New System.Drawing.Point(195, 66)
+        Me.lblCartCount.Location = New System.Drawing.Point(195, 189)
         Me.lblCartCount.Name = "lblCartCount"
         Me.lblCartCount.Size = New System.Drawing.Size(70, 18)
         Me.lblCartCount.TabIndex = 918
@@ -2638,7 +2838,7 @@ Partial Class Cashier
         Me.lblCurrentOrder.BackColor = System.Drawing.Color.Transparent
         Me.lblCurrentOrder.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblCurrentOrder.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblCurrentOrder.Location = New System.Drawing.Point(16, 64)
+        Me.lblCurrentOrder.Location = New System.Drawing.Point(16, 187)
         Me.lblCurrentOrder.Name = "lblCurrentOrder"
         Me.lblCurrentOrder.Size = New System.Drawing.Size(106, 20)
         Me.lblCurrentOrder.TabIndex = 917
@@ -2652,17 +2852,139 @@ Partial Class Cashier
         Me.fl_MenuProduct.AutoScroll = True
         Me.fl_MenuProduct.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.fl_MenuProduct.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.fl_MenuProduct.Location = New System.Drawing.Point(0, 90)
+        Me.fl_MenuProduct.Location = New System.Drawing.Point(0, 214)
         Me.fl_MenuProduct.Name = "fl_MenuProduct"
-        Me.fl_MenuProduct.Size = New System.Drawing.Size(349, 229)
+        Me.fl_MenuProduct.Size = New System.Drawing.Size(349, 150)
         Me.fl_MenuProduct.TabIndex = 26
+        '
+        'pnlCartSep
+        '
+        Me.pnlCartSep.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.pnlCartSep.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.pnlCartSep.FillColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.pnlCartSep.Location = New System.Drawing.Point(16, 179)
+        Me.pnlCartSep.Name = "pnlCartSep"
+        Me.pnlCartSep.Size = New System.Drawing.Size(319, 1)
+        Me.pnlCartSep.TabIndex = 1508
+        '
+        'txtOrderNo
+        '
+        Me.txtOrderNo.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.txtOrderNo.BorderRadius = 10
+        Me.txtOrderNo.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.txtOrderNo.DefaultText = ""
+        Me.txtOrderNo.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.txtOrderNo.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.txtOrderNo.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtOrderNo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.txtOrderNo.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.txtOrderNo.IconLeftOffset = New System.Drawing.Point(8, 0)
+        Me.txtOrderNo.IconLeftSize = New System.Drawing.Size(16, 16)
+        Me.txtOrderNo.Location = New System.Drawing.Point(181, 139)
+        Me.txtOrderNo.Name = "txtOrderNo"
+        Me.txtOrderNo.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.txtOrderNo.PlaceholderText = "Order number"
+        Me.txtOrderNo.ReadOnly = True
+        Me.txtOrderNo.SelectedText = ""
+        Me.txtOrderNo.Size = New System.Drawing.Size(154, 32)
+        Me.txtOrderNo.TabIndex = 1507
+        Me.txtOrderNo.TextOffset = New System.Drawing.Point(4, 0)
+        '
+        'lblOrderCap
+        '
+        Me.lblOrderCap.AutoSize = True
+        Me.lblOrderCap.BackColor = System.Drawing.Color.Transparent
+        Me.lblOrderCap.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblOrderCap.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.lblOrderCap.Location = New System.Drawing.Point(181, 125)
+        Me.lblOrderCap.Name = "lblOrderCap"
+        Me.lblOrderCap.Size = New System.Drawing.Size(80, 13)
+        Me.lblOrderCap.TabIndex = 1506
+        Me.lblOrderCap.Text = "Order number"
+        '
+        'cboTable
+        '
+        Me.cboTable.BackColor = System.Drawing.Color.Transparent
+        Me.cboTable.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.cboTable.BorderRadius = 10
+        Me.cboTable.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.cboTable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboTable.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.cboTable.FocusedColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.cboTable.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.cboTable.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboTable.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.cboTable.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.cboTable.ItemHeight = 30
+        Me.cboTable.Location = New System.Drawing.Point(16, 139)
+        Me.cboTable.Name = "cboTable"
+        Me.cboTable.Size = New System.Drawing.Size(154, 36)
+        Me.cboTable.TabIndex = 1505
+        '
+        'lblTableCap
+        '
+        Me.lblTableCap.AutoSize = True
+        Me.lblTableCap.BackColor = System.Drawing.Color.Transparent
+        Me.lblTableCap.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTableCap.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.lblTableCap.Location = New System.Drawing.Point(16, 125)
+        Me.lblTableCap.Name = "lblTableCap"
+        Me.lblTableCap.Size = New System.Drawing.Size(33, 13)
+        Me.lblTableCap.TabIndex = 1504
+        Me.lblTableCap.Text = "Table"
+        '
+        'txtCustomer
+        '
+        Me.txtCustomer.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.txtCustomer.BorderRadius = 10
+        Me.txtCustomer.Cursor = System.Windows.Forms.Cursors.IBeam
+        Me.txtCustomer.DefaultText = ""
+        Me.txtCustomer.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.txtCustomer.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.txtCustomer.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCustomer.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.txtCustomer.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.txtCustomer.IconLeftOffset = New System.Drawing.Point(8, 0)
+        Me.txtCustomer.IconLeftSize = New System.Drawing.Size(16, 16)
+        Me.txtCustomer.Location = New System.Drawing.Point(16, 87)
+        Me.txtCustomer.Name = "txtCustomer"
+        Me.txtCustomer.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.txtCustomer.PlaceholderText = "Customer name (optional)"
+        Me.txtCustomer.SelectedText = ""
+        Me.txtCustomer.Size = New System.Drawing.Size(319, 32)
+        Me.txtCustomer.TabIndex = 1503
+        Me.txtCustomer.TextOffset = New System.Drawing.Point(4, 0)
+        '
+        'lblCustNameCap
+        '
+        Me.lblCustNameCap.AutoSize = True
+        Me.lblCustNameCap.BackColor = System.Drawing.Color.Transparent
+        Me.lblCustNameCap.Font = New System.Drawing.Font("Segoe UI", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCustNameCap.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
+        Me.lblCustNameCap.Location = New System.Drawing.Point(16, 73)
+        Me.lblCustNameCap.Name = "lblCustNameCap"
+        Me.lblCustNameCap.Size = New System.Drawing.Size(87, 13)
+        Me.lblCustNameCap.TabIndex = 1502
+        Me.lblCustNameCap.Text = "Customer name"
+        '
+        'lblCustInfo
+        '
+        Me.lblCustInfo.AutoSize = True
+        Me.lblCustInfo.BackColor = System.Drawing.Color.Transparent
+        Me.lblCustInfo.Font = New System.Drawing.Font("Segoe UI", 10.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCustInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.lblCustInfo.Location = New System.Drawing.Point(16, 52)
+        Me.lblCustInfo.Name = "lblCustInfo"
+        Me.lblCustInfo.Size = New System.Drawing.Size(156, 19)
+        Me.lblCustInfo.TabIndex = 1501
+        Me.lblCustInfo.Text = "Customer Information"
         '
         'Guna2HtmlLabel15
         '
         Me.Guna2HtmlLabel15.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel15.Font = New System.Drawing.Font("Segoe UI", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel15.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.Guna2HtmlLabel15.Location = New System.Drawing.Point(56, 14)
+        Me.Guna2HtmlLabel15.Location = New System.Drawing.Point(56, 12)
         Me.Guna2HtmlLabel15.Name = "Guna2HtmlLabel15"
         Me.Guna2HtmlLabel15.Size = New System.Drawing.Size(95, 30)
         Me.Guna2HtmlLabel15.TabIndex = 19
@@ -2674,7 +2996,7 @@ Partial Class Cashier
         Me.picCartIcon.BorderRadius = 8
         Me.picCartIcon.FillColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.picCartIcon.ImageRotate = 0!
-        Me.picCartIcon.Location = New System.Drawing.Point(16, 13)
+        Me.picCartIcon.Location = New System.Drawing.Point(16, 10)
         Me.picCartIcon.Name = "picCartIcon"
         Me.picCartIcon.Size = New System.Drawing.Size(34, 34)
         Me.picCartIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -2696,15 +3018,14 @@ Partial Class Cashier
         Me.btn_Non_Coffee.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btn_Non_Coffee.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.btn_Non_Coffee.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btn_Non_Coffee.Image = Global.Vb_POS.My.Resources.Resources.icons8_confectionery_30
-        Me.btn_Non_Coffee.ImageOffset = New System.Drawing.Point(9, -7)
+        Me.btn_Non_Coffee.ImageOffset = New System.Drawing.Point(0, -12)
         Me.btn_Non_Coffee.ImageSize = New System.Drawing.Size(30, 30)
-        Me.btn_Non_Coffee.Location = New System.Drawing.Point(520, 198)
+        Me.btn_Non_Coffee.Location = New System.Drawing.Point(520, 190)
         Me.btn_Non_Coffee.Name = "btn_Non_Coffee"
         Me.btn_Non_Coffee.Size = New System.Drawing.Size(115, 64)
         Me.btn_Non_Coffee.TabIndex = 3
-        Me.btn_Non_Coffee.Text = "Sweet"
-        Me.btn_Non_Coffee.TextOffset = New System.Drawing.Point(-9, 19)
+        Me.btn_Non_Coffee.Text = "Non-Coffee"
+        Me.btn_Non_Coffee.TextOffset = New System.Drawing.Point(0, 19)
         '
         'btn_Specialty
         '
@@ -2723,7 +3044,7 @@ Partial Class Cashier
         Me.btn_Specialty.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btn_Specialty.ImageOffset = New System.Drawing.Point(0, -12)
         Me.btn_Specialty.ImageSize = New System.Drawing.Size(30, 30)
-        Me.btn_Specialty.Location = New System.Drawing.Point(395, 198)
+        Me.btn_Specialty.Location = New System.Drawing.Point(395, 190)
         Me.btn_Specialty.Name = "btn_Specialty"
         Me.btn_Specialty.Size = New System.Drawing.Size(115, 64)
         Me.btn_Specialty.TabIndex = 2
@@ -2745,15 +3066,14 @@ Partial Class Cashier
         Me.btn_IcedCoffee.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btn_IcedCoffee.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.btn_IcedCoffee.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btn_IcedCoffee.Image = Global.Vb_POS.My.Resources.Resources.icons8_iced_coffee_40
-        Me.btn_IcedCoffee.ImageOffset = New System.Drawing.Point(15, -7)
+        Me.btn_IcedCoffee.ImageOffset = New System.Drawing.Point(0, -12)
         Me.btn_IcedCoffee.ImageSize = New System.Drawing.Size(30, 30)
-        Me.btn_IcedCoffee.Location = New System.Drawing.Point(270, 198)
+        Me.btn_IcedCoffee.Location = New System.Drawing.Point(270, 190)
         Me.btn_IcedCoffee.Name = "btn_IcedCoffee"
         Me.btn_IcedCoffee.Size = New System.Drawing.Size(115, 64)
         Me.btn_IcedCoffee.TabIndex = 4
         Me.btn_IcedCoffee.Text = "Iced Coffee"
-        Me.btn_IcedCoffee.TextOffset = New System.Drawing.Point(-9, 19)
+        Me.btn_IcedCoffee.TextOffset = New System.Drawing.Point(0, 19)
         '
         'btn_hotCoffee
         '
@@ -2770,15 +3090,14 @@ Partial Class Cashier
         Me.btn_hotCoffee.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btn_hotCoffee.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.btn_hotCoffee.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btn_hotCoffee.Image = Global.Vb_POS.My.Resources.Resources.icons8_cafe_30
-        Me.btn_hotCoffee.ImageOffset = New System.Drawing.Point(16, -7)
+        Me.btn_hotCoffee.ImageOffset = New System.Drawing.Point(0, -12)
         Me.btn_hotCoffee.ImageSize = New System.Drawing.Size(30, 30)
-        Me.btn_hotCoffee.Location = New System.Drawing.Point(145, 198)
+        Me.btn_hotCoffee.Location = New System.Drawing.Point(145, 190)
         Me.btn_hotCoffee.Name = "btn_hotCoffee"
         Me.btn_hotCoffee.Size = New System.Drawing.Size(115, 64)
         Me.btn_hotCoffee.TabIndex = 1
         Me.btn_hotCoffee.Text = "Hot Coffee"
-        Me.btn_hotCoffee.TextOffset = New System.Drawing.Point(-9, 19)
+        Me.btn_hotCoffee.TextOffset = New System.Drawing.Point(0, 19)
         '
         'btn_All
         '
@@ -2796,16 +3115,15 @@ Partial Class Cashier
         Me.btn_All.ForeColor = System.Drawing.Color.White
         Me.btn_All.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.btn_All.HoverState.ForeColor = System.Drawing.Color.White
-        Me.btn_All.Image = Global.Vb_POS.My.Resources.Resources.icons8_border_all_48
-        Me.btn_All.ImageOffset = New System.Drawing.Point(5, -8)
-        Me.btn_All.ImageSize = New System.Drawing.Size(40, 40)
+        Me.btn_All.ImageOffset = New System.Drawing.Point(0, -12)
+        Me.btn_All.ImageSize = New System.Drawing.Size(30, 30)
         Me.btn_All.IndicateFocus = True
-        Me.btn_All.Location = New System.Drawing.Point(20, 198)
+        Me.btn_All.Location = New System.Drawing.Point(20, 190)
         Me.btn_All.Name = "btn_All"
         Me.btn_All.Size = New System.Drawing.Size(115, 64)
         Me.btn_All.TabIndex = 0
         Me.btn_All.Text = "All"
-        Me.btn_All.TextOffset = New System.Drawing.Point(-10, 19)
+        Me.btn_All.TextOffset = New System.Drawing.Point(0, 19)
         '
         'lblAvailable
         '
@@ -2852,7 +3170,7 @@ Partial Class Cashier
         Me.lblChoose.BackColor = System.Drawing.Color.Transparent
         Me.lblChoose.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblChoose.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblChoose.Location = New System.Drawing.Point(20, 172)
+        Me.lblChoose.Location = New System.Drawing.Point(20, 164)
         Me.lblChoose.Name = "lblChoose"
         Me.lblChoose.Size = New System.Drawing.Size(140, 21)
         Me.lblChoose.TabIndex = 912
@@ -2867,7 +3185,7 @@ Partial Class Cashier
         Me.fl_Menu.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
         Me.fl_Menu.Location = New System.Drawing.Point(20, 294)
         Me.fl_Menu.Name = "fl_Menu"
-        Me.fl_Menu.Size = New System.Drawing.Size(616, 360)
+        Me.fl_Menu.Size = New System.Drawing.Size(616, 335)
         Me.fl_Menu.TabIndex = 25
         '
         'pnl_CashierMessages
@@ -3013,9 +3331,9 @@ Partial Class Cashier
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dashbrd_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
+        Me.dashbrd_pnl.Controls.Add(Me.pnlDashRecent)
         Me.dashbrd_pnl.Controls.Add(Me.pnlDashAlert)
         Me.dashbrd_pnl.Controls.Add(Me.pnlDashTop)
-        Me.dashbrd_pnl.Controls.Add(Me.pnlDashRecent)
         Me.dashbrd_pnl.Controls.Add(Me.pnlDashCat)
         Me.dashbrd_pnl.Controls.Add(Me.pnlDashTrend)
         Me.dashbrd_pnl.Controls.Add(Me.pnlDK1)
@@ -3030,6 +3348,64 @@ Partial Class Cashier
         Me.dashbrd_pnl.Size = New System.Drawing.Size(1007, 666)
         Me.dashbrd_pnl.TabIndex = 23
         Me.dashbrd_pnl.Visible = False
+        '
+        'pnlDashRecent
+        '
+        Me.pnlDashRecent.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
+        Me.pnlDashRecent.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.pnlDashRecent.BorderRadius = 14
+        Me.pnlDashRecent.BorderThickness = 1
+        Me.pnlDashRecent.Controls.Add(Me.dashGrid)
+        Me.pnlDashRecent.Controls.Add(Me.lnkDashViewAll)
+        Me.pnlDashRecent.Controls.Add(Me.lblDashRecentTitle)
+        Me.pnlDashRecent.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.pnlDashRecent.Location = New System.Drawing.Point(20, 366)
+        Me.pnlDashRecent.Name = "pnlDashRecent"
+        Me.pnlDashRecent.Size = New System.Drawing.Size(590, 288)
+        Me.pnlDashRecent.TabIndex = 1334
+        '
+        'dashGrid
+        '
+        Me.dashGrid.AllowUserToAddRows = False
+        Me.dashGrid.AllowUserToDeleteRows = False
+        Me.dashGrid.AllowUserToResizeRows = False
+        Me.dashGrid.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dashGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.dashGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.dashGrid.Location = New System.Drawing.Point(14, 38)
+        Me.dashGrid.Name = "dashGrid"
+        Me.dashGrid.ReadOnly = True
+        Me.dashGrid.RowHeadersVisible = False
+        Me.dashGrid.Size = New System.Drawing.Size(562, 235)
+        Me.dashGrid.TabIndex = 1337
+        '
+        'lnkDashViewAll
+        '
+        Me.lnkDashViewAll.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lnkDashViewAll.BackColor = System.Drawing.Color.Transparent
+        Me.lnkDashViewAll.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.lnkDashViewAll.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lnkDashViewAll.ForeColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.lnkDashViewAll.Location = New System.Drawing.Point(450, 18)
+        Me.lnkDashViewAll.Name = "lnkDashViewAll"
+        Me.lnkDashViewAll.Size = New System.Drawing.Size(124, 16)
+        Me.lnkDashViewAll.TabIndex = 1336
+        Me.lnkDashViewAll.Text = "View all orders →"
+        Me.lnkDashViewAll.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblDashRecentTitle
+        '
+        Me.lblDashRecentTitle.AutoSize = True
+        Me.lblDashRecentTitle.BackColor = System.Drawing.Color.Transparent
+        Me.lblDashRecentTitle.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDashRecentTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.lblDashRecentTitle.Location = New System.Drawing.Point(16, 14)
+        Me.lblDashRecentTitle.Name = "lblDashRecentTitle"
+        Me.lblDashRecentTitle.Size = New System.Drawing.Size(106, 20)
+        Me.lblDashRecentTitle.TabIndex = 1335
+        Me.lblDashRecentTitle.Text = "Recent orders"
         '
         'pnlDashAlert
         '
@@ -3055,7 +3431,7 @@ Partial Class Cashier
         Me.flDashAlert.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.flDashAlert.Location = New System.Drawing.Point(16, 38)
         Me.flDashAlert.Name = "flDashAlert"
-        Me.flDashAlert.Size = New System.Drawing.Size(331, 103)
+        Me.flDashAlert.Size = New System.Drawing.Size(331, 99)
         Me.flDashAlert.TabIndex = 1345
         Me.flDashAlert.WrapContents = False
         '
@@ -3136,64 +3512,6 @@ Partial Class Cashier
         Me.lblDashTopTitle.Size = New System.Drawing.Size(123, 19)
         Me.lblDashTopTitle.TabIndex = 1339
         Me.lblDashTopTitle.Text = "Top-selling items"
-        '
-        'pnlDashRecent
-        '
-        Me.pnlDashRecent.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
-        Me.pnlDashRecent.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.pnlDashRecent.BorderRadius = 14
-        Me.pnlDashRecent.BorderThickness = 1
-        Me.pnlDashRecent.Controls.Add(Me.dashGrid)
-        Me.pnlDashRecent.Controls.Add(Me.lnkDashViewAll)
-        Me.pnlDashRecent.Controls.Add(Me.lblDashRecentTitle)
-        Me.pnlDashRecent.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlDashRecent.Location = New System.Drawing.Point(20, 366)
-        Me.pnlDashRecent.Name = "pnlDashRecent"
-        Me.pnlDashRecent.Size = New System.Drawing.Size(590, 288)
-        Me.pnlDashRecent.TabIndex = 1334
-        '
-        'dashGrid
-        '
-        Me.dashGrid.AllowUserToAddRows = False
-        Me.dashGrid.AllowUserToDeleteRows = False
-        Me.dashGrid.AllowUserToResizeRows = False
-        Me.dashGrid.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dashGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.dashGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.dashGrid.Location = New System.Drawing.Point(1, 46)
-        Me.dashGrid.Name = "dashGrid"
-        Me.dashGrid.ReadOnly = True
-        Me.dashGrid.RowHeadersVisible = False
-        Me.dashGrid.Size = New System.Drawing.Size(588, 235)
-        Me.dashGrid.TabIndex = 1337
-        '
-        'lnkDashViewAll
-        '
-        Me.lnkDashViewAll.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lnkDashViewAll.BackColor = System.Drawing.Color.Transparent
-        Me.lnkDashViewAll.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.lnkDashViewAll.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lnkDashViewAll.ForeColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
-        Me.lnkDashViewAll.Location = New System.Drawing.Point(450, 18)
-        Me.lnkDashViewAll.Name = "lnkDashViewAll"
-        Me.lnkDashViewAll.Size = New System.Drawing.Size(124, 16)
-        Me.lnkDashViewAll.TabIndex = 1336
-        Me.lnkDashViewAll.Text = "View all orders →"
-        Me.lnkDashViewAll.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblDashRecentTitle
-        '
-        Me.lblDashRecentTitle.AutoSize = True
-        Me.lblDashRecentTitle.BackColor = System.Drawing.Color.Transparent
-        Me.lblDashRecentTitle.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDashRecentTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblDashRecentTitle.Location = New System.Drawing.Point(16, 14)
-        Me.lblDashRecentTitle.Name = "lblDashRecentTitle"
-        Me.lblDashRecentTitle.Size = New System.Drawing.Size(106, 20)
-        Me.lblDashRecentTitle.TabIndex = 1335
-        Me.lblDashRecentTitle.Text = "Recent orders"
         '
         'pnlDashCat
         '
@@ -3600,7 +3918,7 @@ Partial Class Cashier
         Me.btnDashExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btnDashExport.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.btnDashExport.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnDashExport.Location = New System.Drawing.Point(637, 14)
+        Me.btnDashExport.Location = New System.Drawing.Point(629, 14)
         Me.btnDashExport.Name = "btnDashExport"
         Me.btnDashExport.Size = New System.Drawing.Size(120, 38)
         Me.btnDashExport.TabIndex = 1303
@@ -3657,16 +3975,16 @@ Partial Class Cashier
         Me.pnlRegister.PerformLayout()
         Me.main_pnl.ResumeLayout(False)
         Me.main_pnl.PerformLayout()
-        Me.Inventory.ResumeLayout(False)
-        Me.Inventory.PerformLayout()
-        Me.pnlInvTable.ResumeLayout(False)
-        Me.pnlInvTable.PerformLayout()
-        CType(Me.invGrid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.pnlInvAttn.ResumeLayout(False)
         Me.pnlInvAttn.PerformLayout()
         Me.pnlInvCat.ResumeLayout(False)
         Me.pnlInvCat.PerformLayout()
         CType(Me.picInvCatBar, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlInvTable.ResumeLayout(False)
+        Me.pnlInvTable.PerformLayout()
+        CType(Me.invGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlIK1.ResumeLayout(False)
         Me.pnlIK1.PerformLayout()
         CType(Me.picIK1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -3700,11 +4018,14 @@ Partial Class Cashier
         Me.pnlHK4.ResumeLayout(False)
         Me.pnlHK4.PerformLayout()
         CType(Me.picHK4, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlCardDim.ResumeLayout(False)
+        Me.pnlCardModal.ResumeLayout(False)
+        Me.pnlCardModal.PerformLayout()
+        Me.pnlCardAmount.ResumeLayout(False)
+        Me.pnlCardAmount.PerformLayout()
         Me.pnl_PointOfSale.ResumeLayout(False)
         Me.pnl_PointOfSale.PerformLayout()
         Me.pnlProfileMenu.ResumeLayout(False)
-        Me.pnlCardSelect.ResumeLayout(False)
-        Me.pnlCardSelect.PerformLayout()
         CType(Me.topimage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Guna2Panel5.ResumeLayout(False)
         Me.Guna2Panel5.PerformLayout()
@@ -3723,13 +4044,13 @@ Partial Class Cashier
         Me.flpMessages.PerformLayout()
         Me.dashbrd_pnl.ResumeLayout(False)
         Me.dashbrd_pnl.PerformLayout()
+        Me.pnlDashRecent.ResumeLayout(False)
+        Me.pnlDashRecent.PerformLayout()
+        CType(Me.dashGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlDashAlert.ResumeLayout(False)
         Me.pnlDashAlert.PerformLayout()
         Me.pnlDashTop.ResumeLayout(False)
         Me.pnlDashTop.PerformLayout()
-        Me.pnlDashRecent.ResumeLayout(False)
-        Me.pnlDashRecent.PerformLayout()
-        CType(Me.dashGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlDashCat.ResumeLayout(False)
         Me.pnlDashCat.PerformLayout()
         Me.pnlDashTrend.ResumeLayout(False)
@@ -3794,7 +4115,7 @@ Partial Class Cashier
     Friend WithEvents btnSend As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents txtChat As Guna.UI2.WinForms.Guna2TextBox
     Friend WithEvents FlowLayoutPanel3 As FlowLayoutPanel
-    Friend WithEvents Inventory As Panel
+    Friend WithEvents Panel1 As Panel
     Friend WithEvents fl_Menu As FlowLayoutPanel
     Friend WithEvents btn_Non_Coffee As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents pnl_History As Panel
@@ -3835,12 +4156,6 @@ Partial Class Cashier
     Friend WithEvents btnMenuSettings As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btnMenuProfile As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btnMenuLogout As Guna.UI2.WinForms.Guna2Button
-    Friend WithEvents pnlCardSelect As Guna.UI2.WinForms.Guna2Panel
-    Friend WithEvents lblCardTitle As System.Windows.Forms.Label
-    Friend WithEvents btnCardClose As Guna.UI2.WinForms.Guna2Button
-    Friend WithEvents btnCardDebit As Guna.UI2.WinForms.Guna2Button
-    Friend WithEvents btnCardCredit As Guna.UI2.WinForms.Guna2Button
-    Friend WithEvents btnCardPrepaid As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btnHistExport As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btnHistNewOrder As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents pnlHK1 As Guna.UI2.WinForms.Guna2Panel
@@ -3974,4 +4289,27 @@ Partial Class Cashier
     Friend WithEvents lblDashAlertTitle As System.Windows.Forms.Label
     Friend WithEvents lblDashAlertNote As System.Windows.Forms.Label
     Friend WithEvents flDashAlert As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents lblCustInfo As System.Windows.Forms.Label
+    Friend WithEvents lblCustNameCap As System.Windows.Forms.Label
+    Friend WithEvents txtCustomer As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents lblTableCap As System.Windows.Forms.Label
+    Friend WithEvents cboTable As Guna.UI2.WinForms.Guna2ComboBox
+    Friend WithEvents lblOrderCap As System.Windows.Forms.Label
+    Friend WithEvents txtOrderNo As Guna.UI2.WinForms.Guna2TextBox
+    Friend WithEvents pnlCartSep As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents pnlCardDim As System.Windows.Forms.Panel
+    Friend WithEvents pnlCardModal As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents lblCardModalTitle As System.Windows.Forms.Label
+    Friend WithEvents lblCardModalSub As System.Windows.Forms.Label
+    Friend WithEvents btnCardClose As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents pnlCardAmount As Guna.UI2.WinForms.Guna2Panel
+    Friend WithEvents lblCardAmtCap As System.Windows.Forms.Label
+    Friend WithEvents lblCardAmt As System.Windows.Forms.Label
+    Friend WithEvents btnCardDebit As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnCardCredit As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnCardVisa As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnCardMastercard As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnCardJcb As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnCardAmex As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents btnCardConfirm As Guna.UI2.WinForms.Guna2Button
 End Class

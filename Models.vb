@@ -120,6 +120,9 @@ Public Class POS_Transaction
     Public Property TransactionDate As DateTime = DateTime.Now
     Public Property Cashier As String = ""
     Public Property CashierUsername As String = ""
+    Public Property TableName As String = ""
+    Public Property CardType As String = ""
+    Public Property CustomerName As String = ""
     Public Property Items As New List(Of TransactionItem)
     Public Property PaymentMethod As String = PaymentMethods.Cash
 

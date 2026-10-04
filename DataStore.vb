@@ -145,7 +145,7 @@ Public Module DataStore
             For Each line In File.ReadAllLines(path, Encoding.UTF8)
                 Dim f = Fields(line) : Dim price As Decimal : Dim stock As Integer
                 If f.Length >= 5 AndAlso Decimal.TryParse(f(2), NumberStyles.Number, CultureInfo.InvariantCulture, price) AndAlso Integer.TryParse(f(3), stock) Then
-                    ' columns: Id|Name|Price|Stock|Category|Description|ImagePath|LastUpdated  (last 3 are optional: old files still load)
+                    ' columns: Id|Name|Price|Stock|Category|Description|ImagePath|LastUpdated|MinStock  (the last 4 are optional: old files still load)
                     Dim p As New Product With {.Id = f(0), .Name = f(1), .Price = price, .Stock = stock, .Category = f(4), .Status = If(stock > 0, "Available", "Unavailable")}
                     If f.Length >= 6 Then p.Description = f(5)
                     If f.Length >= 7 Then p.ImagePath = f(6)
@@ -155,6 +155,8 @@ Public Module DataStore
                     Else
                         p.LastUpdated = DateTime.Now
                     End If
+                    Dim minStockValue As Integer
+                    If f.Length >= 9 AndAlso Integer.TryParse(f(8), minStockValue) Then p.MinStock = minStockValue
                     LoadProductImage(p)
                     Products.Add(p)
                 End If
@@ -166,7 +168,7 @@ Public Module DataStore
     End Sub
 
     Public Sub SaveProducts()
-        File.WriteAllLines(FilePathOf("products.txt"), Products.Select(Function(p) String.Join("|", SafeField(p.Id), SafeField(p.Name), p.Price.ToString(CultureInfo.InvariantCulture), p.Stock, SafeField(p.Category), SafeField(p.Description), SafeField(p.ImagePath), p.LastUpdated.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("products.txt"), Products.Select(Function(p) String.Join("|", SafeField(p.Id), SafeField(p.Name), p.Price.ToString(CultureInfo.InvariantCulture), p.Stock, SafeField(p.Category), SafeField(p.Description), SafeField(p.ImagePath), p.LastUpdated.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), p.MinStock)).ToArray(), Encoding.UTF8)
     End Sub
 
     Public Sub LoadCashiers()
@@ -204,28 +206,51 @@ Public Module DataStore
     End Sub
 
     Public Sub LoadTransactions()
-        Transactions = New List(Of POS_Transaction) : Dim ordersPath = FilePathOf("orders.txt")
-        If File.Exists(ordersPath) Then
-            Dim itemPath = FilePathOf("order_items.txt")
-            For Each line In File.ReadAllLines(ordersPath, Encoding.UTF8)
-                Dim f = Fields(line) : Dim dt As DateTime : Dim total As Decimal
-                If f.Length >= 4 AndAlso DateTime.TryParse(f(2), CultureInfo.InvariantCulture, DateTimeStyles.None, dt) AndAlso Decimal.TryParse(f(3), NumberStyles.Number, CultureInfo.InvariantCulture, total) Then
-                    Dim t As New POS_Transaction With {.TransactionID = f(0), .Cashier = f(1), .CashierUsername = f(1), .TransactionDate = dt, .Total = total, .Subtotal = total, .Status = TransactionStatus.Completed}
-                    If File.Exists(itemPath) Then
-                        For Each il In File.ReadAllLines(itemPath, Encoding.UTF8)
-                            Dim it = Fields(il) : Dim qty As Integer : Dim price As Decimal
-                            If it.Length >= 5 AndAlso it(0) = t.TransactionID AndAlso Integer.TryParse(it(2), qty) AndAlso Decimal.TryParse(it(3), NumberStyles.Number, CultureInfo.InvariantCulture, price) Then t.Items.Add(New TransactionItem With {.ProductName = it(1), .Quantity = qty, .Price = price})
-                        Next
+        Transactions = New List(Of POS_Transaction)
+        Dim ordersPath = FilePathOf("orders.txt")
+        If Not File.Exists(ordersPath) Then Return
+
+        Dim itemPath = FilePathOf("order_items.txt")
+        Dim itemLines As String() = If(File.Exists(itemPath), File.ReadAllLines(itemPath, Encoding.UTF8), New String() {})
+
+        For Each line In File.ReadAllLines(ordersPath, Encoding.UTF8)
+            Dim f = Fields(line) : Dim dt As DateTime : Dim total As Decimal
+            If f.Length >= 4 AndAlso DateTime.TryParse(f(2), CultureInfo.InvariantCulture, DateTimeStyles.None, dt) AndAlso Decimal.TryParse(f(3), NumberStyles.Number, CultureInfo.InvariantCulture, total) Then
+
+                ' orders.txt columns: Id|Cashier|Date|Total  then (optional - older files do not have them):
+                ' Status|Payment|Subtotal|Tax|CashReceived|Change|CashierUsername|Customer|Table|CardType|StatusChangedBy|StatusChangedDate
+                Dim t As New POS_Transaction With {.TransactionID = f(0), .Cashier = f(1), .CashierUsername = f(1), .TransactionDate = dt, .Total = total, .Subtotal = total, .Status = TransactionStatus.Completed}
+                Dim num As Decimal
+                If f.Length >= 5 AndAlso f(4) <> "" Then t.Status = f(4)
+                If f.Length >= 6 AndAlso (f(5) = PaymentMethods.Cash OrElse f(5) = PaymentMethods.Card) Then t.PaymentMethod = f(5)
+                If f.Length >= 7 AndAlso Decimal.TryParse(f(6), NumberStyles.Number, CultureInfo.InvariantCulture, num) Then t.Subtotal = num
+                If f.Length >= 8 AndAlso Decimal.TryParse(f(7), NumberStyles.Number, CultureInfo.InvariantCulture, num) Then t.Tax = num
+                If f.Length >= 9 AndAlso Decimal.TryParse(f(8), NumberStyles.Number, CultureInfo.InvariantCulture, num) Then t.CashReceived = num
+                If f.Length >= 10 AndAlso Decimal.TryParse(f(9), NumberStyles.Number, CultureInfo.InvariantCulture, num) Then t.ChangeGiven = num
+                If f.Length >= 11 AndAlso f(10) <> "" Then t.CashierUsername = f(10)
+                If f.Length >= 12 Then t.CustomerName = f(11)
+                If f.Length >= 13 Then t.TableName = f(12)
+                If f.Length >= 14 Then t.CardType = f(13)
+                If f.Length >= 15 Then t.StatusChangedBy = f(14)
+                Dim changed As DateTime
+                If f.Length >= 16 AndAlso DateTime.TryParse(f(15), CultureInfo.InvariantCulture, DateTimeStyles.None, changed) Then t.StatusChangedDate = changed
+
+                For Each il In itemLines
+                    Dim it = Fields(il) : Dim qty As Integer : Dim price As Decimal
+                    If it.Length >= 5 AndAlso it(0) = t.TransactionID AndAlso Integer.TryParse(it(2), qty) AndAlso Decimal.TryParse(it(3), NumberStyles.Number, CultureInfo.InvariantCulture, price) Then
+                        Dim ti As New TransactionItem With {.ProductName = it(1), .Quantity = qty, .Price = price}
+                        If it.Length >= 6 Then ti.ProductId = it(5)
+                        t.Items.Add(ti)
                     End If
-                    Transactions.Add(t)
-                End If
-            Next
-        End If
+                Next
+                Transactions.Add(t)
+            End If
+        Next
     End Sub
 
     Public Sub SaveTransactions()
-        File.WriteAllLines(FilePathOf("orders.txt"), Transactions.Select(Function(t) String.Join("|", SafeField(t.TransactionID), SafeField(t.Cashier), t.TransactionDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), t.Total.ToString(CultureInfo.InvariantCulture))).ToArray(), Encoding.UTF8)
-        File.WriteAllLines(FilePathOf("order_items.txt"), Transactions.SelectMany(Function(t) t.Items.Select(Function(i) String.Join("|", SafeField(t.TransactionID), SafeField(i.ProductName), i.Quantity, i.Price.ToString(CultureInfo.InvariantCulture), i.LineTotal.ToString(CultureInfo.InvariantCulture)))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("orders.txt"), Transactions.Select(Function(t) String.Join("|", SafeField(t.TransactionID), SafeField(t.Cashier), t.TransactionDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), t.Total.ToString(CultureInfo.InvariantCulture), SafeField(t.Status), SafeField(t.PaymentMethod), t.Subtotal.ToString(CultureInfo.InvariantCulture), t.Tax.ToString(CultureInfo.InvariantCulture), t.CashReceived.ToString(CultureInfo.InvariantCulture), t.ChangeGiven.ToString(CultureInfo.InvariantCulture), SafeField(t.CashierUsername), SafeField(t.CustomerName), SafeField(t.TableName), SafeField(t.CardType), SafeField(t.StatusChangedBy), If(t.StatusChangedDate.HasValue, t.StatusChangedDate.Value.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), ""))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("order_items.txt"), Transactions.SelectMany(Function(t) t.Items.Select(Function(i) String.Join("|", SafeField(t.TransactionID), SafeField(i.ProductName), i.Quantity, i.Price.ToString(CultureInfo.InvariantCulture), i.LineTotal.ToString(CultureInfo.InvariantCulture), SafeField(i.ProductId)))).ToArray(), Encoding.UTF8)
         File.WriteAllLines(FilePathOf("sales.txt"), Transactions.Where(Function(t) t.Status = TransactionStatus.Completed).GroupBy(Function(t) t.TransactionDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)).OrderBy(Function(g) g.Key).Select(Function(g) g.Key & "|" & g.Sum(Function(t) t.Total).ToString(CultureInfo.InvariantCulture)).ToArray(), Encoding.UTF8)
     End Sub
 
@@ -736,6 +761,17 @@ Public Module DataStore
         Return id
     End Function
 
+    ''' <summary>The id the NEXT sale will get (does not use it up).</summary>
+    Public Function PeekNextTransactionId() As String
+        Dim n As Integer = PosSettings.NextTransactionNumber
+        Dim id As String
+        Do
+            id = "TRX-" & n.ToString("D4")
+            n += 1
+        Loop While Transactions.Exists(Function(t) t.TransactionID = id)
+        Return id
+    End Function
+
     ''' <summary>Compatibility wrapper: stores a ready-made transaction.</summary>
     Public Sub AddTransaction(transaction As POS_Transaction)
         transaction.TransactionID = NextTransactionId()
@@ -757,7 +793,10 @@ Public Module DataStore
     Public Function CreateSale(cashierName As String, cashierUsername As String,
                                lines As List(Of KeyValuePair(Of Product, Integer)),
                                paymentMethod As String, cashReceived As Decimal,
-                               ByRef errorMessage As String) As POS_Transaction
+                               ByRef errorMessage As String,
+                               Optional customerName As String = "",
+                               Optional tableName As String = "",
+                               Optional cardType As String = "") As POS_Transaction
         errorMessage = ""
         If lines Is Nothing OrElse lines.Count = 0 Then
             errorMessage = "Your cart is empty."
@@ -803,7 +842,10 @@ Public Module DataStore
             .Total = total,
             .CashReceived = If(paymentMethod = PaymentMethods.Cash, cashReceived, 0D),
             .ChangeGiven = If(paymentMethod = PaymentMethods.Cash, cashReceived - total, 0D),
-            .Status = TransactionStatus.Completed
+            .Status = TransactionStatus.Completed,
+            .CustomerName = If(customerName, "").Trim(),
+            .TableName = If(tableName, "").Trim(),
+            .CardType = If(paymentMethod = PaymentMethods.Card, If(cardType, "").Trim(), "")
         }
 
         Dim originalStocks As New Dictionary(Of Product, Integer)
