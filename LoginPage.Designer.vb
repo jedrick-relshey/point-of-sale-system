@@ -193,7 +193,7 @@ Partial Class LoginPage
         Me.cbShowHidePass.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbShowHidePass.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.cbShowHidePass.Location = New System.Drawing.Point(523, 281)
-        Me.cbShowHidePass.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.cbShowHidePass.Margin = New System.Windows.Forms.Padding(2)
         Me.cbShowHidePass.Name = "cbShowHidePass"
         Me.cbShowHidePass.Size = New System.Drawing.Size(108, 19)
         Me.cbShowHidePass.TabIndex = 24
@@ -216,7 +216,7 @@ Partial Class LoginPage
         Me.Guna2Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Guna2Panel1.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.Guna2Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Guna2Panel1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2Panel1.Name = "Guna2Panel1"
         Me.Guna2Panel1.Size = New System.Drawing.Size(431, 528)
         Me.Guna2Panel1.TabIndex = 21
@@ -226,7 +226,7 @@ Partial Class LoginPage
         Me.PictureBox1.BackgroundImage = Global.Vb_POS.My.Resources.Resources.cafe_logo
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox1.Location = New System.Drawing.Point(165, 186)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(114, 111)
         Me.PictureBox1.TabIndex = 30
@@ -238,7 +238,7 @@ Partial Class LoginPage
         Me.Guna2Panel2.BorderColor = System.Drawing.Color.Transparent
         Me.Guna2Panel2.FillColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.Guna2Panel2.Location = New System.Drawing.Point(393, 0)
-        Me.Guna2Panel2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2Panel2.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2Panel2.Name = "Guna2Panel2"
         Me.Guna2Panel2.Size = New System.Drawing.Size(38, 528)
         Me.Guna2Panel2.TabIndex = 29
@@ -290,7 +290,7 @@ Partial Class LoginPage
         Me.rbAdmin.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbAdmin.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.rbAdmin.Location = New System.Drawing.Point(602, 350)
-        Me.rbAdmin.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.rbAdmin.Margin = New System.Windows.Forms.Padding(2)
         Me.rbAdmin.Name = "rbAdmin"
         Me.rbAdmin.Size = New System.Drawing.Size(98, 19)
         Me.rbAdmin.TabIndex = 23
@@ -311,7 +311,7 @@ Partial Class LoginPage
         Me.rbCashier.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbCashier.ForeColor = System.Drawing.Color.FromArgb(CType(CType(62, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.rbCashier.Location = New System.Drawing.Point(524, 350)
-        Me.rbCashier.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.rbCashier.Margin = New System.Windows.Forms.Padding(2)
         Me.rbCashier.Name = "rbCashier"
         Me.rbCashier.Size = New System.Drawing.Size(64, 19)
         Me.rbCashier.TabIndex = 22
@@ -373,7 +373,7 @@ Partial Class LoginPage
         Me.txtUser.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txtUser.IconLeft = Global.Vb_POS.My.Resources.Resources.pfp_icon_removebg_preview
         Me.txtUser.Location = New System.Drawing.Point(523, 155)
-        Me.txtUser.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.txtUser.Margin = New System.Windows.Forms.Padding(4)
         Me.txtUser.Name = "txtUser"
         Me.txtUser.PlaceholderForeColor = System.Drawing.Color.DimGray
         Me.txtUser.PlaceholderText = "Enter your Username"
@@ -400,7 +400,7 @@ Partial Class LoginPage
         Me.txtPass.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(94, Byte), Integer), CType(CType(148, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.txtPass.IconLeft = Global.Vb_POS.My.Resources.Resources.lock_icon_removebg_preview1
         Me.txtPass.Location = New System.Drawing.Point(523, 233)
-        Me.txtPass.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.txtPass.Margin = New System.Windows.Forms.Padding(4)
         Me.txtPass.Name = "txtPass"
         Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPass.PlaceholderForeColor = System.Drawing.Color.DimGray
