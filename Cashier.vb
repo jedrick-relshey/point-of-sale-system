@@ -74,6 +74,7 @@ Public Class Cashier
             originalFill(b) = b.FillColor
         Next
 
+        SetupDashboard()
         SetupInventory()
         SetupHistory()
         BuildMessagingLayout()
@@ -96,6 +97,7 @@ Public Class Cashier
         RemoveHandler DataStore.ProductsChanged, AddressOf Cashier_ProductsChanged
         RemoveHandler DataStore.MessagesChanged, AddressOf Cashier_MessagesChanged
         If catBarImage IsNot Nothing Then catBarImage.Dispose()
+        If trendImage IsNot Nothing Then trendImage.Dispose()
         DisposeCardImages()
         DisposeCartThumbs()
         If profilePhoto IsNot Nothing Then profilePhoto.Dispose()
@@ -128,7 +130,7 @@ Public Class Cashier
 
         If target Is pnl_PointOfSale Then
             AttachTopBar(pnl_PointOfSale, 20 + Guna2Panel6.Width)
-        ElseIf target Is Panel1 OrElse target Is pnl_History Then
+        ElseIf target Is dashbrd_pnl OrElse target Is Panel1 OrElse target Is pnl_History Then
             AttachTopBar(target, 20)
         End If
 
@@ -191,9 +193,66 @@ Public Class Cashier
     '=================================================================
     ' DASHBOARD
     '=================================================================
-    Private Sub LoadTransactions()
+    '=================================================================
+    ' DASHBOARD  (layout is in Cashier_Designer.vb  |  numbers, chart, lists: here)
+    '=================================================================
+    Private Class DayStats
+        Public Sales As Decimal
+        Public Orders As Integer
+        Public Items As Integer
+    End Class
 
-        dgv_Recent_Transactions.Rows.Clear()
+    Private trendImage As Bitmap
+    Private lastDashWidth As Integer = 0
+    Private Const HourStart As Integer = 7
+    Private Const HourEnd As Integer = 21
+
+    Private Sub SetupDashboard()
+
+        StyleGrid(dashGrid, 38)
+        dashGrid.Columns.Add(MakeCol("colDOrder", "Order", 84, 0, True))
+        dashGrid.Columns.Add(MakeCol("colDTime", "Time", 112, 0, False))
+        dashGrid.Columns.Add(MakeCol("colDItems", "Items", 0, 140, False))
+        dashGrid.Columns.Add(MakeCol("colDPay", "Payment", 66, 0, False))
+        dashGrid.Columns.Add(MakeCol("colDTotal", "Total", 84, 0, True))
+        dashGrid.Columns.Add(MakeCol("colDStatus", "Status", 100, 0, False))
+
+        lblDashLegToday.ForeColor = Accent
+        lblDashLegYest.ForeColor = Color.FromArgb(222, 190, 165)
+
+        AddHandler dashbrd_pnl.Resize, Sub(s As Object, ev As EventArgs) LayoutDash()
+        AddHandler picDashTrend.SizeChanged, Sub(s As Object, ev As EventArgs) RenderTrend()
+        LayoutDash()
+    End Sub
+
+    Private Sub LayoutDash()
+        If pnlDashTrend Is Nothing Then Return
+        Const pad As Integer = 20
+        Const gap As Integer = 14
+        Dim total As Integer = dashbrd_pnl.ClientSize.Width - pad * 2
+        If total < 600 Then Return
+
+        LayoutKpiRow(dashbrd_pnl, New Control() {pnlDK1, pnlDK2, pnlDK3, pnlDK4})
+
+        Dim leftW As Integer = CInt((total - gap) * 0.62)
+        Dim rightW As Integer = total - gap - leftW
+        Dim rx As Integer = pad + leftW + gap
+        For Each c As Control In New Control() {pnlDashTrend, pnlDashRecent}
+            c.SetBounds(pad, c.Top, leftW, c.Height)
+        Next
+        For Each c As Control In New Control() {pnlDashCat, pnlDashTop, pnlDashAlert}
+            c.SetBounds(rx, c.Top, rightW, c.Height)
+        Next
+
+        If dashbrd_pnl.ClientSize.Width <> lastDashWidth Then
+            lastDashWidth = dashbrd_pnl.ClientSize.Width
+            RefreshCashierDashboard()
+        End If
+    End Sub
+
+    Private Sub LoadTransactions()
+        If dashGrid Is Nothing OrElse dashGrid.Columns.Count = 0 Then Return
+        dashGrid.Rows.Clear()
 
         Dim recent As New List(Of POS_Transaction)(DataStore.Transactions)
         recent.Sort(Function(a, b) b.TransactionDate.CompareTo(a.TransactionDate))
@@ -203,18 +262,332 @@ Public Class Cashier
             Dim timeText As String = If(t.TransactionDate.Date = DateTime.Today,
                                         t.TransactionDate.ToString("hh:mm tt"),
                                         t.TransactionDate.ToString("MMM d, hh:mm tt"))
-            dgv_Recent_Transactions.Rows.Add(t.TransactionID, timeText, DataStore.BuildItemsText(t),
-                                             t.PaymentMethod, Peso(t.Total), t.Status)
+            Dim idx As Integer = dashGrid.Rows.Add(t.TransactionID, timeText, DataStore.BuildItemsText(t),
+                                                   t.PaymentMethod, Peso(t.Total), t.Status)
+            dashGrid.Rows(idx).Tag = t
             count += 1
-            If count >= 15 Then Exit For
+            If count >= 10 Then Exit For
         Next
     End Sub
 
+    Private Sub dashGrid_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles dashGrid.CellPainting
+        If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then Return
+        If dashGrid.Columns(e.ColumnIndex).Name <> "colDStatus" Then Return
+        Dim status As String = Convert.ToString(e.Value)
+        e.PaintBackground(e.CellBounds, True)
+        DrawPill(e.Graphics, e.CellBounds, status, PillBack(status), PillFore(status))
+        e.Paint(e.CellBounds, DataGridViewPaintParts.Border)
+        e.Handled = True
+    End Sub
+
+    Private Sub lnkDashViewAll_Click(sender As Object, e As EventArgs) Handles lnkDashViewAll.Click
+        btn_hstry.PerformClick()
+    End Sub
+
+    Private Sub btnDashExport_Click(sender As Object, e As EventArgs) Handles btnDashExport.Click
+        Dim rows As New List(Of String())
+        For Each t As POS_Transaction In DataStore.Transactions
+            If t.TransactionDate.Date <> DateTime.Today Then Continue For
+            rows.Add(New String() {t.TransactionID, t.TransactionDate.ToString("yyyy-MM-dd HH:mm"), t.Cashier, DataStore.BuildItemsText(t),
+                                   t.PaymentMethod, t.Subtotal.ToString("0.00"), t.Tax.ToString("0.00"), t.Total.ToString("0.00"), t.Status})
+        Next
+        SaveCsv("daily_report", New String() {"Order", "Date", "Cashier", "Items", "Payment", "Subtotal", "Tax", "Total", "Status"}, rows)
+    End Sub
+
+    Private Function StatsFor(day As DateTime) As DayStats
+        Dim st As New DayStats()
+        For Each t As POS_Transaction In DataStore.Transactions
+            If t.TransactionDate.Date <> day.Date Then Continue For
+            If Not String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then Continue For
+            st.Sales += t.Total
+            st.Orders += 1
+            For Each item As TransactionItem In t.Items
+                st.Items += item.Quantity
+            Next
+        Next
+        Return st
+    End Function
+
+    Private Sub SetTrend(lbl As Label, today As Decimal, yesterday As Decimal)
+        If yesterday <= 0D Then
+            lbl.Text = If(today > 0D, "New today", "No data yet")
+            lbl.ForeColor = Muted
+            Return
+        End If
+        Dim pct As Decimal = (today - yesterday) / yesterday * 100D
+        lbl.Text = If(pct >= 0D, ChrW(&H25B2), ChrW(&H25BC)) & " " & Math.Abs(pct).ToString("0.#") & "% vs yesterday"
+        lbl.ForeColor = If(pct >= 0D, Color.FromArgb(92, 122, 84), Color.FromArgb(176, 72, 48))
+    End Sub
+
     Private Sub RefreshCashierDashboard()
-        lbl_AverageOrder_Cashier.Text = Peso(DataStore.GetTodayAverageOrder())
-        lbl_Today_Cashier.Text = Peso(DataStore.GetTodaySales())
-        lbl_LowStock_Cashier.Text = DataStore.GetLowStockCount().ToString()
-        lbl_TotalOrders_Cashier.Text = DataStore.GetTodayOrderCount().ToString()
+        If lblDashGreeting Is Nothing Then Return
+
+        ' ---- greeting ----
+        Dim hr As Integer = DateTime.Now.Hour
+        Dim part As String = If(hr < 12, "Good morning", If(hr < 18, "Good afternoon", "Good evening"))
+        Dim names As String() = lblUserName.Text.Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
+        lblDashGreeting.Text = part & If(names.Length > 0, ", " & names(0), "")
+        lblDashSub.Text = "Here's how Forest Roast is doing today  " & ChrW(&HB7) & "  " & DateTime.Now.ToString("MMMM d, yyyy")
+
+        ' ---- KPI cards (today vs yesterday) ----
+        Dim today As DayStats = StatsFor(DateTime.Today)
+        Dim yest As DayStats = StatsFor(DateTime.Today.AddDays(-1))
+        Dim avgToday As Decimal = If(today.Orders = 0, 0D, today.Sales / today.Orders)
+        Dim avgYest As Decimal = If(yest.Orders = 0, 0D, yest.Sales / yest.Orders)
+
+        lblDK1V.Text = Peso(today.Sales)
+        SetTrend(lblDK1S, today.Sales, yest.Sales)
+        lblDK2V.Text = today.Orders.ToString()
+        SetTrend(lblDK2S, today.Orders, yest.Orders)
+        lblDK3V.Text = today.Items.ToString()
+        SetTrend(lblDK3S, today.Items, yest.Items)
+        lblDK4V.Text = Peso(avgToday)
+        SetTrend(lblDK4S, avgToday, avgYest)
+
+        RenderTrend()
+        BuildDashCategories()
+        BuildDashTop()
+        BuildDashAlerts()
+    End Sub
+
+    '---------------- sales trend chart ----------------
+    Private Function CumulativeByHour(day As DateTime, upToHour As Integer) As Decimal()
+        Dim count As Integer = Math.Min(HourEnd, Math.Max(HourStart, upToHour)) - HourStart + 1
+        Dim buckets(HourEnd - HourStart) As Decimal
+        For Each t As POS_Transaction In DataStore.Transactions
+            If t.TransactionDate.Date <> day.Date Then Continue For
+            If Not String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then Continue For
+            Dim h As Integer = Math.Min(HourEnd, Math.Max(HourStart, t.TransactionDate.Hour))
+            buckets(h - HourStart) += t.Total
+        Next
+        Dim result(count - 1) As Decimal
+        Dim running As Decimal = 0D
+        For i As Integer = 0 To count - 1
+            running += buckets(i)
+            result(i) = running
+        Next
+        Return result
+    End Function
+
+    Private Sub RenderTrend()
+        If picDashTrend Is Nothing OrElse picDashTrend.Width < 80 OrElse picDashTrend.Height < 50 Then Return
+
+        Dim w As Integer = picDashTrend.Width
+        Dim h As Integer = picDashTrend.Height
+        Dim bmp As New Bitmap(w, h)
+        Dim todaySeries As Decimal() = CumulativeByHour(DateTime.Today, DateTime.Now.Hour)
+        Dim yestSeries As Decimal() = CumulativeByHour(DateTime.Today.AddDays(-1), HourEnd)
+
+        Dim maxVal As Decimal = 0D
+        For Each v As Decimal In todaySeries
+            If v > maxVal Then maxVal = v
+        Next
+        For Each v As Decimal In yestSeries
+            If v > maxVal Then maxVal = v
+        Next
+
+        Using g As Graphics = Graphics.FromImage(bmp)
+            g.SmoothingMode = SmoothingMode.AntiAlias
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
+            g.Clear(CardFill)
+
+            Dim left As Integer = 8
+            Dim right As Integer = w - 8
+            Dim top As Integer = 6
+            Dim bottom As Integer = h - 20
+            Dim chartW As Integer = right - left
+            Dim chartH As Integer = bottom - top
+            Dim slots As Integer = HourEnd - HourStart
+
+            ' grid + hour labels
+            Using gridPen As New Pen(Color.FromArgb(240, 232, 224), 1.0F),
+                  f As New Font("Segoe UI", 7.5F), mutedB As New SolidBrush(Muted),
+                  sf As New StringFormat With {.Alignment = StringAlignment.Center}
+                For i As Integer = 0 To 3
+                    Dim y As Single = top + chartH * i / 3.0F
+                    g.DrawLine(gridPen, left, y, right, y)
+                Next
+                For i As Integer = 0 To slots Step 2
+                    Dim hour As Integer = HourStart + i
+                    Dim label As String = If(hour = 12, "12 PM", If(hour > 12, (hour - 12).ToString() & " PM", hour.ToString() & " AM"))
+                    Dim x As Single = left + chartW * i / CSng(slots)
+                    g.DrawString(label, f, mutedB, x, bottom + 4, sf)
+                Next
+            End Using
+
+            If maxVal <= 0D Then
+                Using f As New Font("Segoe UI", 9.0F), mutedB As New SolidBrush(Muted),
+                      sf As New StringFormat With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center}
+                    g.DrawString("No sales yet today", f, mutedB, New RectangleF(0, top, w, chartH), sf)
+                End Using
+            Else
+                DrawSeries(g, yestSeries, maxVal, left, top, chartW, chartH, slots, Color.FromArgb(222, 190, 165), 2.0F)
+                DrawSeries(g, todaySeries, maxVal, left, top, chartW, chartH, slots, Accent, 2.75F)
+            End If
+        End Using
+
+        Dim old As Bitmap = trendImage
+        trendImage = bmp
+        picDashTrend.Image = bmp
+        If old IsNot Nothing Then old.Dispose()
+    End Sub
+
+    Private Shared Sub DrawSeries(g As Graphics, series As Decimal(), maxVal As Decimal, left As Integer, top As Integer,
+                                  chartW As Integer, chartH As Integer, slots As Integer, color As Color, width As Single)
+        If series.Length = 0 Then Return
+        Dim pts(series.Length - 1) As PointF
+        For i As Integer = 0 To series.Length - 1
+            Dim x As Single = left + chartW * i / CSng(slots)
+            Dim y As Single = top + chartH * (1.0F - CSng(series(i) / maxVal))
+            pts(i) = New PointF(x, y)
+        Next
+        Using pen As New Pen(color, width), b As New SolidBrush(color)
+            pen.LineJoin = LineJoin.Round
+            pen.StartCap = LineCap.Round
+            pen.EndCap = LineCap.Round
+            If pts.Length >= 3 Then
+                g.DrawCurve(pen, pts, 0.4F)
+            ElseIf pts.Length = 2 Then
+                g.DrawLine(pen, pts(0), pts(1))
+            End If
+            Dim last As PointF = pts(pts.Length - 1)
+            g.FillEllipse(b, last.X - 3.5F, last.Y - 3.5F, 7.0F, 7.0F)
+        End Using
+    End Sub
+
+    '---------------- list helpers ----------------
+    Private Shared Sub ClearFlow(flow As FlowLayoutPanel)
+        For i As Integer = flow.Controls.Count - 1 To 0 Step -1
+            Dim old As Control = flow.Controls(i)
+            flow.Controls.RemoveAt(i)
+            old.Dispose()
+        Next
+    End Sub
+
+    Private Shared Function TextLabel(text As String, x As Integer, y As Integer, w As Integer, h As Integer, f As Font, fore As Color,
+                                      Optional align As ContentAlignment = ContentAlignment.MiddleLeft) As Label
+        Return New Label With {.Text = text, .AutoSize = False, .AutoEllipsis = True, .Location = New Point(x, y), .Size = New Size(w, h),
+                               .Font = f, .ForeColor = fore, .BackColor = CardFill, .TextAlign = align}
+    End Function
+
+    Private Sub BuildDashCategories()
+        Dim byId As New Dictionary(Of String, Product)
+        For Each p As Product In DataStore.Products
+            byId(p.Id) = p
+        Next
+
+        Dim totals As New Dictionary(Of String, Decimal)
+        For Each t As POS_Transaction In DataStore.Transactions
+            If t.TransactionDate.Date <> DateTime.Today Then Continue For
+            If Not String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then Continue For
+            For Each item As TransactionItem In t.Items
+                Dim cat As String = "Other"
+                Dim prod As Product = Nothing
+                If byId.TryGetValue(item.ProductId, prod) Then cat = CategoryOf(prod)
+                If Not totals.ContainsKey(cat) Then totals(cat) = 0D
+                totals(cat) += item.LineTotal
+            Next
+        Next
+
+        Dim keys As New List(Of String)(totals.Keys)
+        keys.Sort(Function(a, b) totals(b).CompareTo(totals(a)))
+
+        flDashCat.SuspendLayout()
+        ClearFlow(flDashCat)
+        Dim rowW As Integer = Math.Max(150, flDashCat.ClientSize.Width - 4)
+
+        If keys.Count = 0 Then
+            flDashCat.Controls.Add(TextLabel("No sales yet today.", 0, 0, rowW, 40, New Font("Segoe UI", 9.0F), Muted, ContentAlignment.MiddleCenter))
+        End If
+
+        Dim best As Decimal = If(keys.Count > 0, totals(keys(0)), 0D)
+        For i As Integer = 0 To Math.Min(3, keys.Count - 1)
+            Dim key As String = keys(i)
+            Dim row As New Panel With {.Size = New Size(rowW, 30), .Margin = New Padding(0, 0, 0, 3), .BackColor = CardFill}
+            row.Controls.Add(TextLabel(key, 0, 0, rowW - 90, 17, New Font("Segoe UI", 8.5F), Ink))
+            row.Controls.Add(TextLabel(Peso(totals(key)), rowW - 90, 0, 90, 17, New Font("Segoe UI", 8.5F, FontStyle.Bold), Ink, ContentAlignment.MiddleRight))
+            Dim track As New Guna2Panel With {.Location = New Point(0, 20), .Size = New Size(rowW, 7), .BorderRadius = 3,
+                .FillColor = Color.FromArgb(240, 232, 224), .BackColor = CardFill}
+            Dim fillW As Integer = If(best <= 0D, 0, Math.Max(6, CInt(rowW * CDbl(totals(key) / best))))
+            track.Controls.Add(New Guna2Panel With {.Location = New Point(0, 0), .Size = New Size(Math.Min(fillW, rowW), 7), .BorderRadius = 3,
+                .FillColor = CatColors(i Mod CatColors.Length), .BackColor = Color.FromArgb(240, 232, 224)})
+            row.Controls.Add(track)
+            flDashCat.Controls.Add(row)
+        Next
+        flDashCat.ResumeLayout()
+    End Sub
+
+    Private Sub BuildDashTop()
+        Dim qty As New Dictionary(Of String, Integer)
+        Dim revenue As New Dictionary(Of String, Decimal)
+        For Each t As POS_Transaction In DataStore.Transactions
+            If t.TransactionDate.Date <> DateTime.Today Then Continue For
+            If Not String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then Continue For
+            For Each item As TransactionItem In t.Items
+                Dim key As String = item.ProductName
+                If Not qty.ContainsKey(key) Then
+                    qty(key) = 0
+                    revenue(key) = 0D
+                End If
+                qty(key) += item.Quantity
+                revenue(key) += item.LineTotal
+            Next
+        Next
+
+        Dim keys As New List(Of String)(qty.Keys)
+        keys.Sort(Function(a, b) qty(b).CompareTo(qty(a)))
+
+        flDashTop.SuspendLayout()
+        ClearFlow(flDashTop)
+        Dim rowW As Integer = Math.Max(150, flDashTop.ClientSize.Width - 4)
+        If keys.Count = 0 Then
+            flDashTop.Controls.Add(TextLabel("No items sold yet today.", 0, 0, rowW, 40, New Font("Segoe UI", 9.0F), Muted, ContentAlignment.MiddleCenter))
+        End If
+
+        For i As Integer = 0 To Math.Min(2, keys.Count - 1)
+            Dim key As String = keys(i)
+            Dim row As New Panel With {.Size = New Size(rowW, 29), .Margin = New Padding(0, 0, 0, 1), .BackColor = CardFill}
+            row.Controls.Add(New Label With {.Text = (i + 1).ToString(), .AutoSize = False, .Size = New Size(22, 22), .Location = New Point(0, 3),
+                .TextAlign = ContentAlignment.MiddleCenter, .BackColor = Color.FromArgb(243, 232, 222), .ForeColor = Accent,
+                .Font = New Font("Segoe UI", 8.0F, FontStyle.Bold)})
+            row.Controls.Add(TextLabel(key, 30, 0, rowW - 30 - 84, 15, New Font("Segoe UI", 8.5F, FontStyle.Bold), Ink))
+            row.Controls.Add(TextLabel(qty(key).ToString() & " sold", 30, 15, rowW - 30 - 84, 13, New Font("Segoe UI", 7.5F), Muted))
+            row.Controls.Add(TextLabel(Peso(revenue(key)), rowW - 84, 5, 84, 18, New Font("Segoe UI", 8.5F, FontStyle.Bold), Ink, ContentAlignment.MiddleRight))
+            flDashTop.Controls.Add(row)
+        Next
+        flDashTop.ResumeLayout()
+    End Sub
+
+    Private Sub BuildDashAlerts()
+        Dim need As New List(Of Product)
+        For Each p As Product In DataStore.Products
+            If DataStore.GetProductStockStatus(p) <> StockStatus.InStock Then need.Add(p)
+        Next
+        need.Sort(Function(a, b) a.Stock.CompareTo(b.Stock))
+        lblDashAlertNote.Text = need.Count.ToString() & " need attention"
+
+        flDashAlert.SuspendLayout()
+        ClearFlow(flDashAlert)
+        Dim rowW As Integer = Math.Max(150, flDashAlert.ClientSize.Width - 4)
+        If need.Count = 0 Then
+            flDashAlert.Controls.Add(TextLabel("All items are well stocked.", 0, 0, rowW, 40, New Font("Segoe UI", 9.0F), Muted, ContentAlignment.MiddleCenter))
+        End If
+
+        For i As Integer = 0 To Math.Min(2, need.Count - 1)
+            Dim p As Product = need(i)
+            Dim isOut As Boolean = (p.Stock <= 0)
+            Dim chipBack As Color = If(isOut, Color.FromArgb(250, 226, 222), Color.FromArgb(250, 235, 210))
+            Dim fore As Color = If(isOut, Color.FromArgb(176, 72, 48), Color.FromArgb(170, 105, 30))
+            Dim row As New Panel With {.Size = New Size(rowW, 26), .Margin = New Padding(0, 0, 0, 2), .BackColor = CardFill}
+            row.Controls.Add(New Label With {.Text = "!", .AutoSize = False, .Size = New Size(22, 22), .Location = New Point(0, 2),
+                .TextAlign = ContentAlignment.MiddleCenter, .BackColor = chipBack, .ForeColor = fore,
+                .Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)})
+            row.Controls.Add(TextLabel(p.Name, 30, 3, rowW - 30 - 100, 18, New Font("Segoe UI", 8.5F, FontStyle.Bold), Ink))
+            row.Controls.Add(TextLabel(If(isOut, "Out of stock", p.Stock.ToString() & " left"), rowW - 100, 3, 100, 18,
+                                       New Font("Segoe UI", 8.0F, FontStyle.Bold), fore, ContentAlignment.MiddleRight))
+            flDashAlert.Controls.Add(row)
+        Next
+        flDashAlert.ResumeLayout()
     End Sub
 
     Private Sub RefreshCashierData()
