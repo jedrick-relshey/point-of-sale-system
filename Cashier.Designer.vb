@@ -24,6 +24,7 @@ Partial Class Cashier
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Cashier))
         Me.dshbrd_Pnl = New Guna.UI2.WinForms.Guna2Panel()
+        Me.lblManagement = New System.Windows.Forms.Label()
         Me.btnCashierLogout = New Guna.UI2.WinForms.Guna2Button()
         Me.pnlRegister = New Guna.UI2.WinForms.Guna2Panel()
         Me.lblRegShift = New System.Windows.Forms.Label()
@@ -217,6 +218,7 @@ Partial Class Cashier
         Me.CashierName = New Guna.UI2.WinForms.Guna2HtmlLabel()
         Me.txtChat = New Guna.UI2.WinForms.Guna2TextBox()
         Me.dashbrd_pnl = New Guna.UI2.WinForms.Guna2Panel()
+        Me.cboDashPeriod = New Guna.UI2.WinForms.Guna2ComboBox()
         Me.pnlDashRecent = New Guna.UI2.WinForms.Guna2Panel()
         Me.dashGrid = New System.Windows.Forms.DataGridView()
         Me.lnkDashViewAll = New System.Windows.Forms.Label()
@@ -331,6 +333,7 @@ Partial Class Cashier
         Me.dshbrd_Pnl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.dshbrd_Pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(23, Byte), Integer))
+        Me.dshbrd_Pnl.Controls.Add(Me.lblManagement)
         Me.dshbrd_Pnl.Controls.Add(Me.btnCashierLogout)
         Me.dshbrd_Pnl.Controls.Add(Me.pnlRegister)
         Me.dshbrd_Pnl.Controls.Add(Me.btn_CashierMessages)
@@ -345,6 +348,18 @@ Partial Class Cashier
         Me.dshbrd_Pnl.Name = "dshbrd_Pnl"
         Me.dshbrd_Pnl.Size = New System.Drawing.Size(199, 666)
         Me.dshbrd_Pnl.TabIndex = 0
+        '
+        'lblManagement
+        '
+        Me.lblManagement.AutoSize = True
+        Me.lblManagement.BackColor = System.Drawing.Color.Transparent
+        Me.lblManagement.Font = New System.Drawing.Font("Segoe UI", 7.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblManagement.ForeColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(125, Byte), Integer), CType(CType(112, Byte), Integer))
+        Me.lblManagement.Location = New System.Drawing.Point(16, 318)
+        Me.lblManagement.Name = "lblManagement"
+        Me.lblManagement.Size = New System.Drawing.Size(78, 12)
+        Me.lblManagement.TabIndex = 1701
+        Me.lblManagement.Text = "MANAGEMENT"
         '
         'btnCashierLogout
         '
@@ -364,7 +379,7 @@ Partial Class Cashier
         Me.btnCashierLogout.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.btnCashierLogout.ImageOffset = New System.Drawing.Point(6, 0)
         Me.btnCashierLogout.ImageSize = New System.Drawing.Size(22, 22)
-        Me.btnCashierLogout.Location = New System.Drawing.Point(10, 586)
+        Me.btnCashierLogout.Location = New System.Drawing.Point(10, 600)
         Me.btnCashierLogout.Name = "btnCashierLogout"
         Me.btnCashierLogout.Size = New System.Drawing.Size(179, 42)
         Me.btnCashierLogout.TabIndex = 18
@@ -381,7 +396,7 @@ Partial Class Cashier
         Me.pnlRegister.Controls.Add(Me.lblRegName)
         Me.pnlRegister.Controls.Add(Me.lblRegOpen)
         Me.pnlRegister.FillColor = System.Drawing.Color.FromArgb(CType(CType(58, Byte), Integer), CType(CType(38, Byte), Integer), CType(CType(31, Byte), Integer))
-        Me.pnlRegister.Location = New System.Drawing.Point(10, 486)
+        Me.pnlRegister.Location = New System.Drawing.Point(10, 500)
         Me.pnlRegister.Name = "pnlRegister"
         Me.pnlRegister.Size = New System.Drawing.Size(179, 82)
         Me.pnlRegister.TabIndex = 903
@@ -439,7 +454,7 @@ Partial Class Cashier
         Me.btn_CashierMessages.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.btn_CashierMessages.ImageOffset = New System.Drawing.Point(6, 0)
         Me.btn_CashierMessages.ImageSize = New System.Drawing.Size(22, 22)
-        Me.btn_CashierMessages.Location = New System.Drawing.Point(10, 306)
+        Me.btn_CashierMessages.Location = New System.Drawing.Point(10, 206)
         Me.btn_CashierMessages.Name = "btn_CashierMessages"
         Me.btn_CashierMessages.Size = New System.Drawing.Size(179, 42)
         Me.btn_CashierMessages.TabIndex = 16
@@ -464,7 +479,7 @@ Partial Class Cashier
         Me.btn_hstry.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.btn_hstry.ImageOffset = New System.Drawing.Point(6, 0)
         Me.btn_hstry.ImageSize = New System.Drawing.Size(22, 22)
-        Me.btn_hstry.Location = New System.Drawing.Point(10, 258)
+        Me.btn_hstry.Location = New System.Drawing.Point(10, 252)
         Me.btn_hstry.Name = "btn_hstry"
         Me.btn_hstry.Size = New System.Drawing.Size(179, 42)
         Me.btn_hstry.TabIndex = 11
@@ -489,7 +504,7 @@ Partial Class Cashier
         Me.btn_invtry.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.btn_invtry.ImageOffset = New System.Drawing.Point(6, 0)
         Me.btn_invtry.ImageSize = New System.Drawing.Size(22, 22)
-        Me.btn_invtry.Location = New System.Drawing.Point(10, 210)
+        Me.btn_invtry.Location = New System.Drawing.Point(10, 340)
         Me.btn_invtry.Name = "btn_invtry"
         Me.btn_invtry.Size = New System.Drawing.Size(179, 42)
         Me.btn_invtry.TabIndex = 4
@@ -514,7 +529,7 @@ Partial Class Cashier
         Me.btn_Point_Of_Sale.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left
         Me.btn_Point_Of_Sale.ImageOffset = New System.Drawing.Point(6, 0)
         Me.btn_Point_Of_Sale.ImageSize = New System.Drawing.Size(22, 22)
-        Me.btn_Point_Of_Sale.Location = New System.Drawing.Point(10, 162)
+        Me.btn_Point_Of_Sale.Location = New System.Drawing.Point(10, 160)
         Me.btn_Point_Of_Sale.Name = "btn_Point_Of_Sale"
         Me.btn_Point_Of_Sale.Size = New System.Drawing.Size(179, 42)
         Me.btn_Point_Of_Sale.TabIndex = 2
@@ -583,7 +598,8 @@ Partial Class Cashier
         '
         'main_pnl
         '
-        Me.main_pnl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.main_pnl.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.main_pnl.BackColor = System.Drawing.Color.WhiteSmoke
         Me.main_pnl.BorderColor = System.Drawing.Color.Black
@@ -637,7 +653,7 @@ Partial Class Cashier
         Me.pnlInvAttn.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.pnlInvAttn.Location = New System.Drawing.Point(700, 436)
         Me.pnlInvAttn.Name = "pnlInvAttn"
-        Me.pnlInvAttn.Size = New System.Drawing.Size(293, 210)
+        Me.pnlInvAttn.Size = New System.Drawing.Size(293, 228)
         Me.pnlInvAttn.TabIndex = 1185
         '
         'flInvAttn
@@ -649,7 +665,7 @@ Partial Class Cashier
         Me.flInvAttn.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.flInvAttn.Location = New System.Drawing.Point(16, 44)
         Me.flInvAttn.Name = "flInvAttn"
-        Me.flInvAttn.Size = New System.Drawing.Size(265, 157)
+        Me.flInvAttn.Size = New System.Drawing.Size(265, 175)
         Me.flInvAttn.TabIndex = 1188
         Me.flInvAttn.WrapContents = False
         '
@@ -743,7 +759,8 @@ Partial Class Cashier
         '
         'pnlInvTable
         '
-        Me.pnlInvTable.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.pnlInvTable.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlInvTable.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
         Me.pnlInvTable.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
@@ -756,7 +773,7 @@ Partial Class Cashier
         Me.pnlInvTable.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.pnlInvTable.Location = New System.Drawing.Point(20, 226)
         Me.pnlInvTable.Name = "pnlInvTable"
-        Me.pnlInvTable.Size = New System.Drawing.Size(672, 420)
+        Me.pnlInvTable.Size = New System.Drawing.Size(672, 438)
         Me.pnlInvTable.TabIndex = 1175
         '
         'invGrid
@@ -764,7 +781,8 @@ Partial Class Cashier
         Me.invGrid.AllowUserToAddRows = False
         Me.invGrid.AllowUserToDeleteRows = False
         Me.invGrid.AllowUserToResizeRows = False
-        Me.invGrid.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.invGrid.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.invGrid.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.invGrid.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -772,7 +790,7 @@ Partial Class Cashier
         Me.invGrid.Name = "invGrid"
         Me.invGrid.ReadOnly = True
         Me.invGrid.RowHeadersVisible = False
-        Me.invGrid.Size = New System.Drawing.Size(654, 365)
+        Me.invGrid.Size = New System.Drawing.Size(654, 383)
         Me.invGrid.TabIndex = 1178
         '
         'lblInvShowing
@@ -782,7 +800,7 @@ Partial Class Cashier
         Me.lblInvShowing.BackColor = System.Drawing.Color.Transparent
         Me.lblInvShowing.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblInvShowing.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblInvShowing.Location = New System.Drawing.Point(16, 393)
+        Me.lblInvShowing.Location = New System.Drawing.Point(16, 411)
         Me.lblInvShowing.Name = "lblInvShowing"
         Me.lblInvShowing.Size = New System.Drawing.Size(0, 15)
         Me.lblInvShowing.TabIndex = 1179
@@ -1148,7 +1166,7 @@ Partial Class Cashier
         Me.btnInvExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btnInvExport.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.btnInvExport.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnInvExport.Location = New System.Drawing.Point(669, 14)
+        Me.btnInvExport.Location = New System.Drawing.Point(659, 14)
         Me.btnInvExport.Name = "btnInvExport"
         Me.btnInvExport.Size = New System.Drawing.Size(100, 38)
         Me.btnInvExport.TabIndex = 1151
@@ -1234,7 +1252,7 @@ Partial Class Cashier
         Me.pnlHistDetail.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.pnlHistDetail.Location = New System.Drawing.Point(687, 226)
         Me.pnlHistDetail.Name = "pnlHistDetail"
-        Me.pnlHistDetail.Size = New System.Drawing.Size(300, 405)
+        Me.pnlHistDetail.Size = New System.Drawing.Size(300, 423)
         Me.pnlHistDetail.TabIndex = 1127
         '
         'lblDetEmpty
@@ -1258,7 +1276,7 @@ Partial Class Cashier
         Me.lblDetReceipt.BackColor = System.Drawing.Color.Transparent
         Me.lblDetReceipt.Font = New System.Drawing.Font("Segoe UI", 7.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDetReceipt.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblDetReceipt.Location = New System.Drawing.Point(16, 380)
+        Me.lblDetReceipt.Location = New System.Drawing.Point(16, 398)
         Me.lblDetReceipt.Name = "lblDetReceipt"
         Me.lblDetReceipt.Size = New System.Drawing.Size(268, 16)
         Me.lblDetReceipt.TabIndex = 1147
@@ -1524,7 +1542,7 @@ Partial Class Cashier
         Me.Guna2Panel15.Location = New System.Drawing.Point(20, 226)
         Me.Guna2Panel15.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2Panel15.Name = "Guna2Panel15"
-        Me.Guna2Panel15.Size = New System.Drawing.Size(653, 405)
+        Me.Guna2Panel15.Size = New System.Drawing.Size(653, 423)
         Me.Guna2Panel15.TabIndex = 2
         '
         'lblHistShowing
@@ -1534,7 +1552,7 @@ Partial Class Cashier
         Me.lblHistShowing.BackColor = System.Drawing.Color.Transparent
         Me.lblHistShowing.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblHistShowing.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.lblHistShowing.Location = New System.Drawing.Point(16, 378)
+        Me.lblHistShowing.Location = New System.Drawing.Point(16, 396)
         Me.lblHistShowing.Name = "lblHistShowing"
         Me.lblHistShowing.Size = New System.Drawing.Size(0, 15)
         Me.lblHistShowing.TabIndex = 1126
@@ -1553,7 +1571,7 @@ Partial Class Cashier
         Me.histGrid.Name = "histGrid"
         Me.histGrid.ReadOnly = True
         Me.histGrid.RowHeadersVisible = False
-        Me.histGrid.Size = New System.Drawing.Size(651, 320)
+        Me.histGrid.Size = New System.Drawing.Size(651, 338)
         Me.histGrid.TabIndex = 1125
         '
         'lblHistCount
@@ -2412,7 +2430,7 @@ Partial Class Cashier
         Me.Guna2Panel5.Controls.Add(Me.Guna2HtmlLabel17)
         Me.Guna2Panel5.Controls.Add(Me.Guna2Panel8)
         Me.Guna2Panel5.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.Guna2Panel5.Location = New System.Drawing.Point(657, 369)
+        Me.Guna2Panel5.Location = New System.Drawing.Point(657, 387)
         Me.Guna2Panel5.Name = "Guna2Panel5"
         Me.Guna2Panel5.Size = New System.Drawing.Size(349, 266)
         Me.Guna2Panel5.TabIndex = 23
@@ -2854,7 +2872,7 @@ Partial Class Cashier
         Me.fl_MenuProduct.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.fl_MenuProduct.Location = New System.Drawing.Point(0, 214)
         Me.fl_MenuProduct.Name = "fl_MenuProduct"
-        Me.fl_MenuProduct.Size = New System.Drawing.Size(349, 150)
+        Me.fl_MenuProduct.Size = New System.Drawing.Size(349, 168)
         Me.fl_MenuProduct.TabIndex = 26
         '
         'pnlCartSep
@@ -3185,7 +3203,7 @@ Partial Class Cashier
         Me.fl_Menu.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
         Me.fl_Menu.Location = New System.Drawing.Point(20, 294)
         Me.fl_Menu.Name = "fl_Menu"
-        Me.fl_Menu.Size = New System.Drawing.Size(616, 335)
+        Me.fl_Menu.Size = New System.Drawing.Size(616, 353)
         Me.fl_Menu.TabIndex = 25
         '
         'pnl_CashierMessages
@@ -3331,6 +3349,7 @@ Partial Class Cashier
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dashbrd_pnl.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
+        Me.dashbrd_pnl.Controls.Add(Me.cboDashPeriod)
         Me.dashbrd_pnl.Controls.Add(Me.pnlDashRecent)
         Me.dashbrd_pnl.Controls.Add(Me.pnlDashAlert)
         Me.dashbrd_pnl.Controls.Add(Me.pnlDashTop)
@@ -3349,6 +3368,26 @@ Partial Class Cashier
         Me.dashbrd_pnl.TabIndex = 23
         Me.dashbrd_pnl.Visible = False
         '
+        'cboDashPeriod
+        '
+        Me.cboDashPeriod.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cboDashPeriod.BackColor = System.Drawing.Color.Transparent
+        Me.cboDashPeriod.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
+        Me.cboDashPeriod.BorderRadius = 10
+        Me.cboDashPeriod.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.cboDashPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboDashPeriod.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.cboDashPeriod.FocusedColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.cboDashPeriod.FocusedState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.cboDashPeriod.Font = New System.Drawing.Font("Segoe UI", 9.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cboDashPeriod.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
+        Me.cboDashPeriod.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
+        Me.cboDashPeriod.ItemHeight = 30
+        Me.cboDashPeriod.Location = New System.Drawing.Point(497, 14)
+        Me.cboDashPeriod.Name = "cboDashPeriod"
+        Me.cboDashPeriod.Size = New System.Drawing.Size(130, 36)
+        Me.cboDashPeriod.TabIndex = 1702
+        '
         'pnlDashRecent
         '
         Me.pnlDashRecent.BackColor = System.Drawing.Color.FromArgb(CType(CType(248, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(235, Byte), Integer))
@@ -3359,9 +3398,9 @@ Partial Class Cashier
         Me.pnlDashRecent.Controls.Add(Me.lnkDashViewAll)
         Me.pnlDashRecent.Controls.Add(Me.lblDashRecentTitle)
         Me.pnlDashRecent.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlDashRecent.Location = New System.Drawing.Point(20, 366)
+        Me.pnlDashRecent.Location = New System.Drawing.Point(20, 388)
         Me.pnlDashRecent.Name = "pnlDashRecent"
-        Me.pnlDashRecent.Size = New System.Drawing.Size(590, 288)
+        Me.pnlDashRecent.Size = New System.Drawing.Size(590, 262)
         Me.pnlDashRecent.TabIndex = 1334
         '
         'dashGrid
@@ -3378,7 +3417,7 @@ Partial Class Cashier
         Me.dashGrid.Name = "dashGrid"
         Me.dashGrid.ReadOnly = True
         Me.dashGrid.RowHeadersVisible = False
-        Me.dashGrid.Size = New System.Drawing.Size(562, 235)
+        Me.dashGrid.Size = New System.Drawing.Size(588, 208)
         Me.dashGrid.TabIndex = 1337
         '
         'lnkDashViewAll
@@ -3417,9 +3456,9 @@ Partial Class Cashier
         Me.pnlDashAlert.Controls.Add(Me.lblDashAlertNote)
         Me.pnlDashAlert.Controls.Add(Me.lblDashAlertTitle)
         Me.pnlDashAlert.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlDashAlert.Location = New System.Drawing.Point(624, 506)
+        Me.pnlDashAlert.Location = New System.Drawing.Point(624, 526)
         Me.pnlDashAlert.Name = "pnlDashAlert"
-        Me.pnlDashAlert.Size = New System.Drawing.Size(363, 148)
+        Me.pnlDashAlert.Size = New System.Drawing.Size(363, 124)
         Me.pnlDashAlert.TabIndex = 1342
         '
         'flDashAlert
@@ -3431,7 +3470,7 @@ Partial Class Cashier
         Me.flDashAlert.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.flDashAlert.Location = New System.Drawing.Point(16, 38)
         Me.flDashAlert.Name = "flDashAlert"
-        Me.flDashAlert.Size = New System.Drawing.Size(331, 99)
+        Me.flDashAlert.Size = New System.Drawing.Size(331, 78)
         Me.flDashAlert.TabIndex = 1345
         Me.flDashAlert.WrapContents = False
         '
@@ -3470,9 +3509,9 @@ Partial Class Cashier
         Me.pnlDashTop.Controls.Add(Me.lblDashTopNote)
         Me.pnlDashTop.Controls.Add(Me.lblDashTopTitle)
         Me.pnlDashTop.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlDashTop.Location = New System.Drawing.Point(624, 366)
+        Me.pnlDashTop.Location = New System.Drawing.Point(624, 388)
         Me.pnlDashTop.Name = "pnlDashTop"
-        Me.pnlDashTop.Size = New System.Drawing.Size(363, 130)
+        Me.pnlDashTop.Size = New System.Drawing.Size(363, 124)
         Me.pnlDashTop.TabIndex = 1338
         '
         'flDashTop
@@ -3484,7 +3523,7 @@ Partial Class Cashier
         Me.flDashTop.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.flDashTop.Location = New System.Drawing.Point(16, 38)
         Me.flDashTop.Name = "flDashTop"
-        Me.flDashTop.Size = New System.Drawing.Size(331, 88)
+        Me.flDashTop.Size = New System.Drawing.Size(331, 80)
         Me.flDashTop.TabIndex = 1341
         Me.flDashTop.WrapContents = False
         '
@@ -3525,7 +3564,7 @@ Partial Class Cashier
         Me.pnlDashCat.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.pnlDashCat.Location = New System.Drawing.Point(624, 174)
         Me.pnlDashCat.Name = "pnlDashCat"
-        Me.pnlDashCat.Size = New System.Drawing.Size(363, 180)
+        Me.pnlDashCat.Size = New System.Drawing.Size(363, 200)
         Me.pnlDashCat.TabIndex = 1330
         '
         'flDashCat
@@ -3537,7 +3576,7 @@ Partial Class Cashier
         Me.flDashCat.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.flDashCat.Location = New System.Drawing.Point(16, 44)
         Me.flDashCat.Name = "flDashCat"
-        Me.flDashCat.Size = New System.Drawing.Size(331, 128)
+        Me.flDashCat.Size = New System.Drawing.Size(331, 146)
         Me.flDashCat.TabIndex = 1333
         Me.flDashCat.WrapContents = False
         '
@@ -3580,17 +3619,18 @@ Partial Class Cashier
         Me.pnlDashTrend.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.pnlDashTrend.Location = New System.Drawing.Point(20, 174)
         Me.pnlDashTrend.Name = "pnlDashTrend"
-        Me.pnlDashTrend.Size = New System.Drawing.Size(590, 180)
+        Me.pnlDashTrend.Size = New System.Drawing.Size(590, 200)
         Me.pnlDashTrend.TabIndex = 1324
         '
         'picDashTrend
         '
-        Me.picDashTrend.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.picDashTrend.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.picDashTrend.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.picDashTrend.Location = New System.Drawing.Point(14, 58)
         Me.picDashTrend.Name = "picDashTrend"
-        Me.picDashTrend.Size = New System.Drawing.Size(562, 112)
+        Me.picDashTrend.Size = New System.Drawing.Size(562, 132)
         Me.picDashTrend.TabIndex = 1329
         Me.picDashTrend.TabStop = False
         '
@@ -3680,7 +3720,7 @@ Partial Class Cashier
         Me.lblDK1S.BackColor = System.Drawing.Color.Transparent
         Me.lblDK1S.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDK1S.ForeColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
-        Me.lblDK1S.Location = New System.Drawing.Point(14, 62)
+        Me.lblDK1S.Location = New System.Drawing.Point(140, 46)
         Me.lblDK1S.Name = "lblDK1S"
         Me.lblDK1S.Size = New System.Drawing.Size(0, 15)
         Me.lblDK1S.TabIndex = 1307
@@ -3689,11 +3729,11 @@ Partial Class Cashier
         '
         Me.lblDK1V.AutoSize = True
         Me.lblDK1V.BackColor = System.Drawing.Color.Transparent
-        Me.lblDK1V.Font = New System.Drawing.Font("Segoe UI", 19.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDK1V.Font = New System.Drawing.Font("Segoe UI", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDK1V.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblDK1V.Location = New System.Drawing.Point(14, 32)
+        Me.lblDK1V.Location = New System.Drawing.Point(14, 34)
         Me.lblDK1V.Name = "lblDK1V"
-        Me.lblDK1V.Size = New System.Drawing.Size(30, 36)
+        Me.lblDK1V.Size = New System.Drawing.Size(33, 37)
         Me.lblDK1V.TabIndex = 1306
         Me.lblDK1V.Text = "0"
         '
@@ -3745,7 +3785,7 @@ Partial Class Cashier
         Me.lblDK2S.BackColor = System.Drawing.Color.Transparent
         Me.lblDK2S.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDK2S.ForeColor = System.Drawing.Color.FromArgb(CType(CType(92, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(84, Byte), Integer))
-        Me.lblDK2S.Location = New System.Drawing.Point(14, 62)
+        Me.lblDK2S.Location = New System.Drawing.Point(140, 46)
         Me.lblDK2S.Name = "lblDK2S"
         Me.lblDK2S.Size = New System.Drawing.Size(0, 15)
         Me.lblDK2S.TabIndex = 1312
@@ -3754,11 +3794,11 @@ Partial Class Cashier
         '
         Me.lblDK2V.AutoSize = True
         Me.lblDK2V.BackColor = System.Drawing.Color.Transparent
-        Me.lblDK2V.Font = New System.Drawing.Font("Segoe UI", 19.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDK2V.Font = New System.Drawing.Font("Segoe UI", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDK2V.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblDK2V.Location = New System.Drawing.Point(14, 32)
+        Me.lblDK2V.Location = New System.Drawing.Point(14, 34)
         Me.lblDK2V.Name = "lblDK2V"
-        Me.lblDK2V.Size = New System.Drawing.Size(30, 36)
+        Me.lblDK2V.Size = New System.Drawing.Size(33, 37)
         Me.lblDK2V.TabIndex = 1311
         Me.lblDK2V.Text = "0"
         '
@@ -3810,7 +3850,7 @@ Partial Class Cashier
         Me.lblDK3S.BackColor = System.Drawing.Color.Transparent
         Me.lblDK3S.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDK3S.ForeColor = System.Drawing.Color.FromArgb(CType(CType(92, Byte), Integer), CType(CType(122, Byte), Integer), CType(CType(84, Byte), Integer))
-        Me.lblDK3S.Location = New System.Drawing.Point(14, 62)
+        Me.lblDK3S.Location = New System.Drawing.Point(140, 46)
         Me.lblDK3S.Name = "lblDK3S"
         Me.lblDK3S.Size = New System.Drawing.Size(0, 15)
         Me.lblDK3S.TabIndex = 1317
@@ -3819,11 +3859,11 @@ Partial Class Cashier
         '
         Me.lblDK3V.AutoSize = True
         Me.lblDK3V.BackColor = System.Drawing.Color.Transparent
-        Me.lblDK3V.Font = New System.Drawing.Font("Segoe UI", 19.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDK3V.Font = New System.Drawing.Font("Segoe UI", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDK3V.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblDK3V.Location = New System.Drawing.Point(14, 32)
+        Me.lblDK3V.Location = New System.Drawing.Point(14, 34)
         Me.lblDK3V.Name = "lblDK3V"
-        Me.lblDK3V.Size = New System.Drawing.Size(30, 36)
+        Me.lblDK3V.Size = New System.Drawing.Size(33, 37)
         Me.lblDK3V.TabIndex = 1316
         Me.lblDK3V.Text = "0"
         '
@@ -3875,7 +3915,7 @@ Partial Class Cashier
         Me.lblDK4S.BackColor = System.Drawing.Color.Transparent
         Me.lblDK4S.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDK4S.ForeColor = System.Drawing.Color.FromArgb(CType(CType(205, Byte), Integer), CType(CType(130, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.lblDK4S.Location = New System.Drawing.Point(14, 62)
+        Me.lblDK4S.Location = New System.Drawing.Point(140, 46)
         Me.lblDK4S.Name = "lblDK4S"
         Me.lblDK4S.Size = New System.Drawing.Size(0, 15)
         Me.lblDK4S.TabIndex = 1322
@@ -3884,11 +3924,11 @@ Partial Class Cashier
         '
         Me.lblDK4V.AutoSize = True
         Me.lblDK4V.BackColor = System.Drawing.Color.Transparent
-        Me.lblDK4V.Font = New System.Drawing.Font("Segoe UI", 19.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDK4V.Font = New System.Drawing.Font("Segoe UI", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDK4V.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.lblDK4V.Location = New System.Drawing.Point(14, 32)
+        Me.lblDK4V.Location = New System.Drawing.Point(14, 34)
         Me.lblDK4V.Name = "lblDK4V"
-        Me.lblDK4V.Size = New System.Drawing.Size(30, 36)
+        Me.lblDK4V.Size = New System.Drawing.Size(33, 37)
         Me.lblDK4V.TabIndex = 1321
         Me.lblDK4V.Text = "0"
         '
@@ -3918,7 +3958,7 @@ Partial Class Cashier
         Me.btnDashExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btnDashExport.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.btnDashExport.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnDashExport.Location = New System.Drawing.Point(629, 14)
+        Me.btnDashExport.Location = New System.Drawing.Point(637, 14)
         Me.btnDashExport.Name = "btnDashExport"
         Me.btnDashExport.Size = New System.Drawing.Size(120, 38)
         Me.btnDashExport.TabIndex = 1303
@@ -3968,7 +4008,6 @@ Partial Class Cashier
         Me.Name = "Cashier"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Cashier"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Minimized
         Me.dshbrd_Pnl.ResumeLayout(False)
         Me.dshbrd_Pnl.PerformLayout()
         Me.pnlRegister.ResumeLayout(False)
@@ -4312,4 +4351,6 @@ Partial Class Cashier
     Friend WithEvents btnCardJcb As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btnCardAmex As Guna.UI2.WinForms.Guna2Button
     Friend WithEvents btnCardConfirm As Guna.UI2.WinForms.Guna2Button
+    Friend WithEvents lblManagement As System.Windows.Forms.Label
+    Friend WithEvents cboDashPeriod As Guna.UI2.WinForms.Guna2ComboBox
 End Class

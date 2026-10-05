@@ -50,6 +50,7 @@ Public Class Cashier
     Private selectedPayment As String = PaymentMethods.Cash
     Private selectedCardType As String = ""
     Private profilePhoto As Image
+    Private lastProfileUser As String = ""
 
     '=================================================================
     ' LOAD / CLOSE
@@ -97,6 +98,10 @@ Public Class Cashier
         RemoveHandler DataStore.ProductsChanged, AddressOf Cashier_ProductsChanged
         RemoveHandler DataStore.MessagesChanged, AddressOf Cashier_MessagesChanged
         If catBarImage IsNot Nothing Then catBarImage.Dispose()
+        If tmrClock IsNot Nothing Then
+            tmrClock.Stop()
+            tmrClock.Dispose()
+        End If
         If trendImage IsNot Nothing Then trendImage.Dispose()
         If dimImage IsNot Nothing Then dimImage.Dispose()
         DisposeCardImages()
@@ -132,6 +137,7 @@ Public Class Cashier
         If target Is pnl_PointOfSale Then
             AttachTopBar(pnl_PointOfSale, 20 + Guna2Panel6.Width)
         ElseIf target Is dashbrd_pnl OrElse target Is Panel1 OrElse target Is pnl_History Then
+            If target Is dashbrd_pnl AndAlso lastProfileUser <> CurrentSession.Username Then LoadCurrentProfile()
             AttachTopBar(target, 20)
         End If
 
@@ -205,53 +211,109 @@ Public Class Cashier
     End Class
 
     Private trendImage As Bitmap
-    Private lastDashWidth As Integer = 0
+    Private lastDashSize As Size = Size.Empty
+    Private tmrClock As System.Windows.Forms.Timer
     Private Const HourStart As Integer = 7
     Private Const HourEnd As Integer = 21
 
     Private Sub SetupDashboard()
 
-        StyleGrid(dashGrid, 38)
+        StyleGrid(dashGrid, 42)
         dashGrid.Columns.Add(MakeCol("colDOrder", "Order", 84, 0, True))
-        dashGrid.Columns.Add(MakeCol("colDTime", "Time", 112, 0, False))
-        dashGrid.Columns.Add(MakeCol("colDItems", "Items", 0, 140, False))
-        dashGrid.Columns.Add(MakeCol("colDPay", "Payment", 66, 0, False))
-        dashGrid.Columns.Add(MakeCol("colDTotal", "Total", 84, 0, True))
-        dashGrid.Columns.Add(MakeCol("colDStatus", "Status", 100, 0, False))
+        dashGrid.Columns.Add(MakeCol("colDCustomer", "Customer", 0, 100, False))
+        dashGrid.Columns.Add(MakeCol("colDType", "Type", 90, 0, False))
+        dashGrid.Columns.Add(MakeCol("colDTotal", "Total", 90, 0, True))
+        dashGrid.Columns.Add(MakeCol("colDStatus", "Status", 110, 0, False))
+
+        cboDashPeriod.Items.AddRange(New Object() {"Today", "Yesterday", "Last 7 days", "This month"})
+        cboDashPeriod.SelectedIndex = 0
 
         lblDashLegToday.ForeColor = Accent
         lblDashLegYest.ForeColor = Color.FromArgb(222, 190, 165)
 
         AddHandler dashbrd_pnl.Resize, Sub(s As Object, ev As EventArgs) LayoutDash()
         AddHandler picDashTrend.SizeChanged, Sub(s As Object, ev As EventArgs) RenderTrend()
+
+        ' keeps "Good morning / afternoon / evening" correct while the app stays open
+        tmrClock = New System.Windows.Forms.Timer()
+        tmrClock.Interval = 30000
+        AddHandler tmrClock.Tick, AddressOf ClockTick
+        tmrClock.Start()
+
         LayoutDash()
     End Sub
 
+    Private Sub ClockTick(sender As Object, e As EventArgs)
+        If lastProfileUser <> CurrentSession.Username Then LoadCurrentProfile()
+        UpdateGreeting()
+    End Sub
+
+    Private Sub cboDashPeriod_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboDashPeriod.SelectedIndexChanged
+        RefreshCashierDashboard()
+    End Sub
+
+    '---------------- greeting (time of day + the cashier who is logged in) ----------------
+    Private Function CashierFirstName() As String
+        Dim full As String = ""
+        Try
+            Dim acc As CashierAccount = FindCurrentAccount()
+            If acc IsNot Nothing Then full = acc.FullName
+        Catch ex As Exception
+            full = ""
+        End Try
+        If String.IsNullOrWhiteSpace(full) Then full = CurrentSession.FullName
+        If String.IsNullOrWhiteSpace(full) Then full = lblUserName.Text
+        Dim parts As String() = full.Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
+        Return If(parts.Length > 0, parts(0), "")
+    End Function
+
+    Private Sub UpdateGreeting()
+        Dim hr As Integer = DateTime.Now.Hour
+        Dim part As String = If(hr < 12, "Good morning", If(hr < 18, "Good afternoon", "Good evening"))
+        Dim who As String = CashierFirstName()
+        lblDashGreeting.Text = part & If(who <> "", ", " & who, "")
+        lblDashSub.Text = "Here's how Forest Roast is doing today  " & ChrW(&HB7) & "  " & DateTime.Now.ToString("MMMM d, yyyy")
+    End Sub
+
+    '---------------- layout: scales with the window (also when maximized) ----------------
     Private Sub LayoutDash()
         If pnlDashTrend Is Nothing Then Return
         Const pad As Integer = 20
         Const gap As Integer = 14
-        Dim total As Integer = dashbrd_pnl.ClientSize.Width - pad * 2
-        If total < 600 Then Return
+        Dim w As Integer = dashbrd_pnl.ClientSize.Width
+        Dim h As Integer = dashbrd_pnl.ClientSize.Height
+        Dim total As Integer = w - pad * 2
+        If total < 700 OrElse h < 420 Then Return
 
         LayoutKpiRow(dashbrd_pnl, New Control() {pnlDK1, pnlDK2, pnlDK3, pnlDK4})
 
+        Dim top2 As Integer = 174
+        Dim availH As Integer = h - top2 - 16
+        Dim h2 As Integer = Math.Max(170, CInt(availH * 0.42))
+        Dim h3 As Integer = Math.Max(190, availH - h2 - gap)
         Dim leftW As Integer = CInt((total - gap) * 0.62)
         Dim rightW As Integer = total - gap - leftW
         Dim rx As Integer = pad + leftW + gap
-        For Each c As Control In New Control() {pnlDashTrend, pnlDashRecent}
-            c.SetBounds(pad, c.Top, leftW, c.Height)
-        Next
-        For Each c As Control In New Control() {pnlDashCat, pnlDashTop, pnlDashAlert}
-            c.SetBounds(rx, c.Top, rightW, c.Height)
-        Next
+        Dim y3 As Integer = top2 + h2 + gap
+        Dim hb As Integer = (h3 - gap) \ 2
 
-        If dashbrd_pnl.ClientSize.Width <> lastDashWidth Then
-            lastDashWidth = dashbrd_pnl.ClientSize.Width
+        pnlDashTrend.SetBounds(pad, top2, leftW, h2)
+        pnlDashCat.SetBounds(rx, top2, rightW, h2)
+        pnlDashRecent.SetBounds(pad, y3, leftW, h3)
+        pnlDashTop.SetBounds(rx, y3, rightW, hb)
+        pnlDashAlert.SetBounds(rx, y3 + hb + gap, rightW, h3 - hb - gap)
+
+        flDashCat.Height = Math.Max(40, pnlDashCat.Height - flDashCat.Top - 12)
+        flDashTop.Height = Math.Max(40, pnlDashTop.Height - flDashTop.Top - 8)
+        flDashAlert.Height = Math.Max(40, pnlDashAlert.Height - flDashAlert.Top - 8)
+
+        If dashbrd_pnl.ClientSize <> lastDashSize Then
+            lastDashSize = dashbrd_pnl.ClientSize
             RefreshCashierDashboard()
         End If
     End Sub
 
+    '---------------- recent orders ----------------
     Private Sub LoadTransactions()
         If dashGrid Is Nothing OrElse dashGrid.Columns.Count = 0 Then Return
         dashGrid.Rows.Clear()
@@ -261,14 +323,13 @@ Public Class Cashier
 
         Dim count As Integer = 0
         For Each t As POS_Transaction In recent
-            Dim timeText As String = If(t.TransactionDate.Date = DateTime.Today,
-                                        t.TransactionDate.ToString("hh:mm tt"),
-                                        t.TransactionDate.ToString("MMM d, hh:mm tt"))
-            Dim idx As Integer = dashGrid.Rows.Add(t.TransactionID, timeText, DataStore.BuildItemsText(t),
-                                                   t.PaymentMethod, Peso(t.Total), t.Status)
+            Dim idx As Integer = dashGrid.Rows.Add("#" & t.TransactionID,
+                                                   If(String.IsNullOrWhiteSpace(t.CustomerName), "Walk-in customer", t.CustomerName),
+                                                   If(String.IsNullOrWhiteSpace(t.TableName), "-", t.TableName),
+                                                   Peso(t.Total), t.Status)
             dashGrid.Rows(idx).Tag = t
             count += 1
-            If count >= 10 Then Exit For
+            If count >= 12 Then Exit For
         Next
     End Sub
 
@@ -286,21 +347,48 @@ Public Class Cashier
         btn_hstry.PerformClick()
     End Sub
 
-    Private Sub btnDashExport_Click(sender As Object, e As EventArgs) Handles btnDashExport.Click
-        Dim rows As New List(Of String())
-        For Each t As POS_Transaction In DataStore.Transactions
-            If t.TransactionDate.Date <> DateTime.Today Then Continue For
-            rows.Add(New String() {t.TransactionID, t.TransactionDate.ToString("yyyy-MM-dd HH:mm"), t.Cashier, t.CustomerName, t.TableName, DataStore.BuildItemsText(t),
-                                   t.PaymentMethod, t.CardType, t.Subtotal.ToString("0.00"), t.Tax.ToString("0.00"), t.Total.ToString("0.00"), t.Status})
-        Next
-        SaveCsv("daily_report", New String() {"Order", "Date", "Cashier", "Customer", "Table", "Items", "Payment", "Card", "Subtotal", "Tax", "Total", "Status"}, rows)
+    '---------------- period (Today / Yesterday / Last 7 days / This month) ----------------
+    Private Sub PeriodRange(ByRef start As DateTime, ByRef days As Integer)
+        Select Case cboDashPeriod.SelectedIndex
+            Case 1
+                start = DateTime.Today.AddDays(-1)
+                days = 1
+            Case 2
+                start = DateTime.Today.AddDays(-6)
+                days = 7
+            Case 3
+                start = New DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+                days = DateTime.Today.Day
+            Case Else
+                start = DateTime.Today
+                days = 1
+        End Select
     End Sub
 
-    Private Function StatsFor(day As DateTime) As DayStats
+    Private Function InRange(t As POS_Transaction, start As DateTime, days As Integer) As Boolean
+        Dim d As DateTime = t.TransactionDate.Date
+        Return d >= start.Date AndAlso d <= start.Date.AddDays(days - 1) AndAlso
+               String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase)
+    End Function
+
+    Private Sub btnDashExport_Click(sender As Object, e As EventArgs) Handles btnDashExport.Click
+        Dim start As DateTime, days As Integer
+        PeriodRange(start, days)
+        Dim rows As New List(Of String())
+        For Each t As POS_Transaction In DataStore.Transactions
+            If t.TransactionDate.Date < start.Date OrElse t.TransactionDate.Date > start.Date.AddDays(days - 1) Then Continue For
+            rows.Add(New String() {t.TransactionID, t.TransactionDate.ToString("yyyy-MM-dd HH:mm"), t.Cashier, t.CustomerName, t.TableName,
+                                   DataStore.BuildItemsText(t), t.PaymentMethod, t.CardType, t.Subtotal.ToString("0.00"),
+                                   t.Tax.ToString("0.00"), t.Total.ToString("0.00"), t.Status})
+        Next
+        SaveCsv("report_" & cboDashPeriod.Text.Replace(" ", "_").ToLower(),
+                New String() {"Order", "Date", "Cashier", "Customer", "Table", "Items", "Payment", "Card", "Subtotal", "Tax", "Total", "Status"}, rows)
+    End Sub
+
+    Private Function StatsFor(start As DateTime, days As Integer) As DayStats
         Dim st As New DayStats()
         For Each t As POS_Transaction In DataStore.Transactions
-            If t.TransactionDate.Date <> day.Date Then Continue For
-            If Not String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then Continue For
+            If Not InRange(t, start, days) Then Continue For
             st.Sales += t.Total
             st.Orders += 1
             For Each item As TransactionItem In t.Items
@@ -310,58 +398,78 @@ Public Class Cashier
         Return st
     End Function
 
-    Private Sub SetTrend(lbl As Label, today As Decimal, yesterday As Decimal)
-        If yesterday <= 0D Then
-            lbl.Text = If(today > 0D, "New today", "No data yet")
-            lbl.ForeColor = Muted
-            Return
+    Private Sub ShowKpi(valueLabel As Label, trendLabel As Label, valueText As String, current As Decimal, previous As Decimal)
+        valueLabel.Text = valueText
+        If previous <= 0D Then
+            trendLabel.Text = If(current > 0D, "New", "")
+            trendLabel.ForeColor = Muted
+        Else
+            Dim pct As Decimal = (current - previous) / previous * 100D
+            trendLabel.Text = If(pct >= 0D, ChrW(&H25B2), ChrW(&H25BC)) & " " & Math.Abs(pct).ToString("0.#") & "%"
+            trendLabel.ForeColor = If(pct >= 0D, Color.FromArgb(92, 122, 84), Color.FromArgb(176, 72, 48))
         End If
-        Dim pct As Decimal = (today - yesterday) / yesterday * 100D
-        lbl.Text = If(pct >= 0D, ChrW(&H25B2), ChrW(&H25BC)) & " " & Math.Abs(pct).ToString("0.#") & "% vs yesterday"
-        lbl.ForeColor = If(pct >= 0D, Color.FromArgb(92, 122, 84), Color.FromArgb(176, 72, 48))
+        trendLabel.Left = valueLabel.Right + 8
+        trendLabel.Top = valueLabel.Top + valueLabel.Height - trendLabel.Height - 5
     End Sub
 
     Private Sub RefreshCashierDashboard()
-        If lblDashGreeting Is Nothing Then Return
+        If lblDashGreeting Is Nothing OrElse cboDashPeriod.SelectedIndex < 0 Then Return
 
-        ' ---- greeting ----
-        Dim hr As Integer = DateTime.Now.Hour
-        Dim part As String = If(hr < 12, "Good morning", If(hr < 18, "Good afternoon", "Good evening"))
-        Dim names As String() = lblUserName.Text.Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
-        lblDashGreeting.Text = part & If(names.Length > 0, ", " & names(0), "")
-        lblDashSub.Text = "Here's how Forest Roast is doing today  " & ChrW(&HB7) & "  " & DateTime.Now.ToString("MMMM d, yyyy")
+        UpdateGreeting()
 
-        ' ---- KPI cards (today vs yesterday) ----
-        Dim today As DayStats = StatsFor(DateTime.Today)
-        Dim yest As DayStats = StatsFor(DateTime.Today.AddDays(-1))
-        Dim avgToday As Decimal = If(today.Orders = 0, 0D, today.Sales / today.Orders)
-        Dim avgYest As Decimal = If(yest.Orders = 0, 0D, yest.Sales / yest.Orders)
+        Dim start As DateTime, days As Integer
+        PeriodRange(start, days)
+        Dim prevStart As DateTime = start.AddDays(-days)
 
-        lblDK1V.Text = Peso(today.Sales)
-        SetTrend(lblDK1S, today.Sales, yest.Sales)
-        lblDK2V.Text = today.Orders.ToString()
-        SetTrend(lblDK2S, today.Orders, yest.Orders)
-        lblDK3V.Text = today.Items.ToString()
-        SetTrend(lblDK3S, today.Items, yest.Items)
-        lblDK4V.Text = Peso(avgToday)
-        SetTrend(lblDK4S, avgToday, avgYest)
+        Dim cur As DayStats = StatsFor(start, days)
+        Dim prev As DayStats = StatsFor(prevStart, days)
+        Dim avgCur As Decimal = If(cur.Orders = 0, 0D, cur.Sales / cur.Orders)
+        Dim avgPrev As Decimal = If(prev.Orders = 0, 0D, prev.Sales / prev.Orders)
+
+        lblDK1T.Text = "Sales"
+        ShowKpi(lblDK1V, lblDK1S, Peso(cur.Sales), cur.Sales, prev.Sales)
+        lblDK2T.Text = "Orders"
+        ShowKpi(lblDK2V, lblDK2S, cur.Orders.ToString(), cur.Orders, prev.Orders)
+        lblDK3T.Text = "Items sold"
+        ShowKpi(lblDK3V, lblDK3S, cur.Items.ToString(), cur.Items, prev.Items)
+        lblDK4T.Text = "Average order"
+        ShowKpi(lblDK4V, lblDK4S, Peso(avgCur), avgCur, avgPrev)
+
+        Dim periodName As String = cboDashPeriod.Text
+        lblDashCatNote.Text = "Item sales  -  " & periodName.ToLower()
+        lblDashTopNote.Text = periodName
 
         RenderTrend()
-        BuildDashCategories()
-        BuildDashTop()
+        BuildDashCategories(start, days)
+        BuildDashTop(start, days)
         BuildDashAlerts()
     End Sub
 
     '---------------- sales trend chart ----------------
-    Private Function CumulativeByHour(day As DateTime, upToHour As Integer) As Decimal()
-        Dim count As Integer = Math.Min(HourEnd, Math.Max(HourStart, upToHour)) - HourStart + 1
-        Dim buckets(HourEnd - HourStart) As Decimal
+    Private Function CumulativeSeries(start As DateTime, days As Integer, hourly As Boolean, limitToNow As Boolean) As Decimal()
+        Dim slots As Integer = If(hourly, HourEnd - HourStart + 1, days)
+        Dim buckets(slots - 1) As Decimal
         For Each t As POS_Transaction In DataStore.Transactions
-            If t.TransactionDate.Date <> day.Date Then Continue For
-            If Not String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then Continue For
-            Dim h As Integer = Math.Min(HourEnd, Math.Max(HourStart, t.TransactionDate.Hour))
-            buckets(h - HourStart) += t.Total
+            If Not InRange(t, start, days) Then Continue For
+            Dim idx As Integer
+            If hourly Then
+                idx = Math.Min(HourEnd, Math.Max(HourStart, t.TransactionDate.Hour)) - HourStart
+            Else
+                idx = CInt((t.TransactionDate.Date - start.Date).TotalDays)
+            End If
+            If idx >= 0 AndAlso idx < slots Then buckets(idx) += t.Total
         Next
+
+        Dim count As Integer = slots
+        If limitToNow Then
+            If hourly Then
+                count = Math.Min(HourEnd, Math.Max(HourStart, DateTime.Now.Hour)) - HourStart + 1
+            Else
+                count = CInt((DateTime.Today - start.Date).TotalDays) + 1
+            End If
+            count = Math.Max(1, Math.Min(slots, count))
+        End If
+
         Dim result(count - 1) As Decimal
         Dim running As Decimal = 0D
         For i As Integer = 0 To count - 1
@@ -373,18 +481,42 @@ Public Class Cashier
 
     Private Sub RenderTrend()
         If picDashTrend Is Nothing OrElse picDashTrend.Width < 80 OrElse picDashTrend.Height < 50 Then Return
+        If cboDashPeriod.SelectedIndex < 0 Then Return
+
+        Dim start As DateTime, days As Integer
+        PeriodRange(start, days)
+        Dim prevStart As DateTime = start.AddDays(-days)
+        Dim hourly As Boolean = (days = 1)
+        Dim includesToday As Boolean = (start.AddDays(days - 1).Date >= DateTime.Today)
+
+        Dim curSeries As Decimal() = CumulativeSeries(start, days, hourly, includesToday)
+        Dim prevSeries As Decimal() = CumulativeSeries(prevStart, days, hourly, False)
+        Dim slots As Integer = If(hourly, HourEnd - HourStart, Math.Max(1, days - 1))
+
+        Select Case cboDashPeriod.SelectedIndex
+            Case 0
+                lblDashLegToday.Text = ChrW(&H25CF) & " Today"
+                lblDashLegYest.Text = ChrW(&H25CF) & " Yesterday"
+            Case 1
+                lblDashLegToday.Text = ChrW(&H25CF) & " Yesterday"
+                lblDashLegYest.Text = ChrW(&H25CF) & " Day before"
+            Case Else
+                lblDashLegToday.Text = ChrW(&H25CF) & " This period"
+                lblDashLegYest.Text = ChrW(&H25CF) & " Previous"
+        End Select
+        lblDashLegYest.Left = pnlDashTrend.Width - 16 - lblDashLegYest.Width
+        lblDashLegToday.Left = lblDashLegYest.Left - 12 - lblDashLegToday.Width
+        lblDashTrendSub.Text = "Cumulative sales by " & If(hourly, "hour", "day") & "  -  compared with the previous period"
 
         Dim w As Integer = picDashTrend.Width
         Dim h As Integer = picDashTrend.Height
         Dim bmp As New Bitmap(w, h)
-        Dim todaySeries As Decimal() = CumulativeByHour(DateTime.Today, DateTime.Now.Hour)
-        Dim yestSeries As Decimal() = CumulativeByHour(DateTime.Today.AddDays(-1), HourEnd)
 
         Dim maxVal As Decimal = 0D
-        For Each v As Decimal In todaySeries
+        For Each v As Decimal In curSeries
             If v > maxVal Then maxVal = v
         Next
-        For Each v As Decimal In yestSeries
+        For Each v As Decimal In prevSeries
             If v > maxVal Then maxVal = v
         Next
 
@@ -393,38 +525,42 @@ Public Class Cashier
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
             g.Clear(CardFill)
 
-            Dim left As Integer = 8
-            Dim right As Integer = w - 8
-            Dim top As Integer = 6
-            Dim bottom As Integer = h - 20
+            Dim left As Integer = 10
+            Dim right As Integer = w - 10
+            Dim top As Integer = 8
+            Dim bottom As Integer = h - 22
             Dim chartW As Integer = right - left
             Dim chartH As Integer = bottom - top
-            Dim slots As Integer = HourEnd - HourStart
 
-            ' grid + hour labels
             Using gridPen As New Pen(Color.FromArgb(240, 232, 224), 1.0F),
                   f As New Font("Segoe UI", 7.5F), mutedB As New SolidBrush(Muted),
                   sf As New StringFormat With {.Alignment = StringAlignment.Center}
                 For i As Integer = 0 To 3
                     Dim y As Single = top + chartH * i / 3.0F
-                    g.DrawLine(gridPen, left, y, right, y)
+                    g.DrawLine(gridPen, CSng(left), y, CSng(right), y)
                 Next
-                For i As Integer = 0 To slots Step 2
-                    Dim hour As Integer = HourStart + i
-                    Dim label As String = If(hour = 12, "12 PM", If(hour > 12, (hour - 12).ToString() & " PM", hour.ToString() & " AM"))
+                Dim stepSize As Integer = If(hourly, 2, Math.Max(1, CInt(Math.Ceiling((slots + 1) / 6.0))))
+                For i As Integer = 0 To slots Step stepSize
+                    Dim text As String
+                    If hourly Then
+                        Dim hour As Integer = HourStart + i
+                        text = If(hour = 12, "12 PM", If(hour > 12, (hour - 12).ToString() & " PM", hour.ToString() & " AM"))
+                    Else
+                        text = start.AddDays(i).ToString("MMM d")
+                    End If
                     Dim x As Single = left + chartW * i / CSng(slots)
-                    g.DrawString(label, f, mutedB, x, bottom + 4, sf)
+                    g.DrawString(text, f, mutedB, x, CSng(bottom + 5), sf)
                 Next
             End Using
 
             If maxVal <= 0D Then
                 Using f As New Font("Segoe UI", 9.0F), mutedB As New SolidBrush(Muted),
                       sf As New StringFormat With {.Alignment = StringAlignment.Center, .LineAlignment = StringAlignment.Center}
-                    g.DrawString("No sales yet today", f, mutedB, New RectangleF(0, top, w, chartH), sf)
+                    g.DrawString("No sales in this period yet", f, mutedB, New RectangleF(0, top, w, chartH), sf)
                 End Using
             Else
-                DrawSeries(g, yestSeries, maxVal, left, top, chartW, chartH, slots, Color.FromArgb(222, 190, 165), 2.0F)
-                DrawSeries(g, todaySeries, maxVal, left, top, chartW, chartH, slots, Accent, 2.75F)
+                DrawSeries(g, prevSeries, maxVal, left, top, chartW, chartH, slots, Color.FromArgb(222, 190, 165), 2.0F)
+                DrawSeries(g, curSeries, maxVal, left, top, chartW, chartH, slots, Accent, 2.75F)
             End If
         End Using
 
@@ -439,7 +575,7 @@ Public Class Cashier
         If series.Length = 0 Then Return
         Dim pts(series.Length - 1) As PointF
         For i As Integer = 0 To series.Length - 1
-            Dim x As Single = left + chartW * i / CSng(slots)
+            Dim x As Single = left + chartW * i / CSng(Math.Max(1, slots))
             Dim y As Single = top + chartH * (1.0F - CSng(series(i) / maxVal))
             pts(i) = New PointF(x, y)
         Next
@@ -472,20 +608,28 @@ Public Class Cashier
                                .Font = f, .ForeColor = fore, .BackColor = CardFill, .TextAlign = align}
     End Function
 
-    Private Sub BuildDashCategories()
+    ''' <summary>Category of a sold line: by product id, or (older records) by product name.</summary>
+    Private Shared Function CategoryOfLine(item As TransactionItem, byId As Dictionary(Of String, Product), byName As Dictionary(Of String, Product)) As String
+        Dim prod As Product = Nothing
+        If item.ProductId <> "" AndAlso byId.TryGetValue(item.ProductId, prod) Then Return CategoryOf(prod)
+        If byName.TryGetValue(item.ProductName.ToLower(), prod) Then Return CategoryOf(prod)
+        Return "Other"
+    End Function
+
+    ''' <summary>Every category that sold in the period is listed automatically, best seller first.</summary>
+    Private Sub BuildDashCategories(start As DateTime, days As Integer)
         Dim byId As New Dictionary(Of String, Product)
+        Dim byName As New Dictionary(Of String, Product)
         For Each p As Product In DataStore.Products
             byId(p.Id) = p
+            byName(p.Name.ToLower()) = p
         Next
 
         Dim totals As New Dictionary(Of String, Decimal)
         For Each t As POS_Transaction In DataStore.Transactions
-            If t.TransactionDate.Date <> DateTime.Today Then Continue For
-            If Not String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then Continue For
+            If Not InRange(t, start, days) Then Continue For
             For Each item As TransactionItem In t.Items
-                Dim cat As String = "Other"
-                Dim prod As Product = Nothing
-                If byId.TryGetValue(item.ProductId, prod) Then cat = CategoryOf(prod)
+                Dim cat As String = CategoryOfLine(item, byId, byName)
                 If Not totals.ContainsKey(cat) Then totals(cat) = 0D
                 totals(cat) += item.LineTotal
             Next
@@ -499,19 +643,19 @@ Public Class Cashier
         Dim rowW As Integer = Math.Max(150, flDashCat.ClientSize.Width - 4)
 
         If keys.Count = 0 Then
-            flDashCat.Controls.Add(TextLabel("No sales yet today.", 0, 0, rowW, 40, New Font("Segoe UI", 9.0F), Muted, ContentAlignment.MiddleCenter))
+            flDashCat.Controls.Add(TextLabel("No sales in this period yet.", 0, 0, rowW, 40, New Font("Segoe UI", 9.0F), Muted, ContentAlignment.MiddleCenter))
         End If
 
         Dim best As Decimal = If(keys.Count > 0, totals(keys(0)), 0D)
-        For i As Integer = 0 To Math.Min(3, keys.Count - 1)
+        For i As Integer = 0 To keys.Count - 1
             Dim key As String = keys(i)
-            Dim row As New Panel With {.Size = New Size(rowW, 30), .Margin = New Padding(0, 0, 0, 3), .BackColor = CardFill}
-            row.Controls.Add(TextLabel(key, 0, 0, rowW - 90, 17, New Font("Segoe UI", 8.5F), Ink))
-            row.Controls.Add(TextLabel(Peso(totals(key)), rowW - 90, 0, 90, 17, New Font("Segoe UI", 8.5F, FontStyle.Bold), Ink, ContentAlignment.MiddleRight))
-            Dim track As New Guna2Panel With {.Location = New Point(0, 20), .Size = New Size(rowW, 7), .BorderRadius = 3,
+            Dim row As New Panel With {.Size = New Size(rowW, 34), .Margin = New Padding(0, 0, 0, 4), .BackColor = CardFill}
+            row.Controls.Add(TextLabel(key, 0, 0, rowW - 96, 18, New Font("Segoe UI", 8.75F), Ink))
+            row.Controls.Add(TextLabel(Peso(totals(key)), rowW - 96, 0, 96, 18, New Font("Segoe UI", 8.75F, FontStyle.Bold), Ink, ContentAlignment.MiddleRight))
+            Dim track As New Guna2Panel With {.Location = New Point(0, 22), .Size = New Size(rowW, 8), .BorderRadius = 4,
                 .FillColor = Color.FromArgb(240, 232, 224), .BackColor = CardFill}
-            Dim fillW As Integer = If(best <= 0D, 0, Math.Max(6, CInt(rowW * CDbl(totals(key) / best))))
-            track.Controls.Add(New Guna2Panel With {.Location = New Point(0, 0), .Size = New Size(Math.Min(fillW, rowW), 7), .BorderRadius = 3,
+            Dim fillW As Integer = If(best <= 0D, 0, Math.Max(8, CInt(rowW * CDbl(totals(key) / best))))
+            track.Controls.Add(New Guna2Panel With {.Location = New Point(0, 0), .Size = New Size(Math.Min(fillW, rowW), 8), .BorderRadius = 4,
                 .FillColor = CatColors(i Mod CatColors.Length), .BackColor = Color.FromArgb(240, 232, 224)})
             row.Controls.Add(track)
             flDashCat.Controls.Add(row)
@@ -519,12 +663,11 @@ Public Class Cashier
         flDashCat.ResumeLayout()
     End Sub
 
-    Private Sub BuildDashTop()
+    Private Sub BuildDashTop(start As DateTime, days As Integer)
         Dim qty As New Dictionary(Of String, Integer)
         Dim revenue As New Dictionary(Of String, Decimal)
         For Each t As POS_Transaction In DataStore.Transactions
-            If t.TransactionDate.Date <> DateTime.Today Then Continue For
-            If Not String.Equals(t.Status, TransactionStatus.Completed, StringComparison.OrdinalIgnoreCase) Then Continue For
+            If Not InRange(t, start, days) Then Continue For
             For Each item As TransactionItem In t.Items
                 Dim key As String = item.ProductName
                 If Not qty.ContainsKey(key) Then
@@ -543,12 +686,13 @@ Public Class Cashier
         ClearFlow(flDashTop)
         Dim rowW As Integer = Math.Max(150, flDashTop.ClientSize.Width - 4)
         If keys.Count = 0 Then
-            flDashTop.Controls.Add(TextLabel("No items sold yet today.", 0, 0, rowW, 40, New Font("Segoe UI", 9.0F), Muted, ContentAlignment.MiddleCenter))
+            flDashTop.Controls.Add(TextLabel("No items sold in this period yet.", 0, 0, rowW, 40, New Font("Segoe UI", 9.0F), Muted, ContentAlignment.MiddleCenter))
         End If
 
-        For i As Integer = 0 To Math.Min(2, keys.Count - 1)
+        Dim fit As Integer = Math.Max(3, Math.Min(6, flDashTop.Height \ 31))
+        For i As Integer = 0 To Math.Min(fit - 1, keys.Count - 1)
             Dim key As String = keys(i)
-            Dim row As New Panel With {.Size = New Size(rowW, 29), .Margin = New Padding(0, 0, 0, 1), .BackColor = CardFill}
+            Dim row As New Panel With {.Size = New Size(rowW, 29), .Margin = New Padding(0, 0, 0, 2), .BackColor = CardFill}
             row.Controls.Add(New Label With {.Text = (i + 1).ToString(), .AutoSize = False, .Size = New Size(22, 22), .Location = New Point(0, 3),
                 .TextAlign = ContentAlignment.MiddleCenter, .BackColor = Color.FromArgb(243, 232, 222), .ForeColor = Accent,
                 .Font = New Font("Segoe UI", 8.0F, FontStyle.Bold)})
@@ -575,7 +719,8 @@ Public Class Cashier
             flDashAlert.Controls.Add(TextLabel("All items are well stocked.", 0, 0, rowW, 40, New Font("Segoe UI", 9.0F), Muted, ContentAlignment.MiddleCenter))
         End If
 
-        For i As Integer = 0 To Math.Min(2, need.Count - 1)
+        Dim fit As Integer = Math.Max(3, Math.Min(6, flDashAlert.Height \ 28))
+        For i As Integer = 0 To Math.Min(fit - 1, need.Count - 1)
             Dim p As Product = need(i)
             Dim isOut As Boolean = (p.Stock <= 0)
             Dim chipBack As Color = If(isOut, Color.FromArgb(250, 226, 222), Color.FromArgb(250, 235, 210))
@@ -1547,6 +1692,7 @@ Public Class Cashier
 
         If profilePhoto IsNot Nothing Then profilePhoto.Dispose()
         profilePhoto = photo
+        lastProfileUser = CurrentSession.Username
     End Sub
 
     Private Sub ProfileChip_Click(sender As Object, e As EventArgs) Handles pnlUserChip.Click, picAvatar.Click, lblUserName.Click, lblUserRole.Click, lblChevron.Click
@@ -1701,7 +1847,7 @@ Public Class Cashier
     Private Sub CenterCardModal()
         If pnlCardModal Is Nothing OrElse pnlCardDim Is Nothing Then Return
         pnlCardModal.Left = Math.Max(0, (pnlCardDim.ClientSize.Width - pnlCardModal.Width) \ 2)
-        pnlCardModal.Top = Math.Max(0, (pnlCardDim.ClientSize.Height - 31 - pnlCardModal.Height) \ 2)
+        pnlCardModal.Top = Math.Max(0, (pnlCardDim.ClientSize.Height - pnlCardModal.Height) \ 2)
     End Sub
 
     Private Sub CardOption_Click(sender As Object, e As EventArgs) Handles btnCardDebit.Click, btnCardCredit.Click, btnCardVisa.Click, btnCardMastercard.Click, btnCardJcb.Click, btnCardAmex.Click
