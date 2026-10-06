@@ -534,7 +534,7 @@ Partial Class LoginPage
         Me.rbCashier.CheckedState.InnerOffset = -4
         Me.rbCashier.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbCashier.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.rbCashier.Font = New System.Drawing.Font("Segoe UI Semibold", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rbCashier.Font = New System.Drawing.Font("Segoe UI Semibold", 8.5!)
         Me.rbCashier.ForeColor = System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(24, Byte), Integer), CType(CType(18, Byte), Integer))
         Me.rbCashier.Location = New System.Drawing.Point(14, 0)
         Me.rbCashier.Margin = New System.Windows.Forms.Padding(4)
