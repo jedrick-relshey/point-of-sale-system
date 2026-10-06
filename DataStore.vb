@@ -23,6 +23,7 @@ Public Module DataStore
     Public Cashiers As New List(Of CashierAccount)
     Public Admins As New List(Of AdminAccount)
     Public PriceLogs As New List(Of PriceChangeLog)
+    Public StockAdjustments As New List(Of StockAdjustment)
     Public PosSettings As New SystemSettings
 
     '------------------------------------------------------------------
@@ -98,6 +99,7 @@ Public Module DataStore
             LoadTransactions()
             LoadMessages()
             LoadPriceLogs()
+            LoadStockAdjustments()
             SyncCounters()
         Catch ex As Exception
             MessageBox.Show("Unable to load POS data." & vbCrLf & vbCrLf &
@@ -114,6 +116,7 @@ Public Module DataStore
         SaveTransactions()
         SaveMessages()
         SavePriceLogs()
+        SaveStockAdjustments()
     End Sub
 
     ' All persistent data uses readable pipe-delimited TXT files in the app folder.
@@ -281,6 +284,75 @@ Public Module DataStore
     Public Sub SavePriceLogs()
         File.WriteAllLines(FilePathOf("price_log.txt"), PriceLogs.Select(Function(x) String.Join("|", SafeField(x.ProductId), SafeField(x.ProductName), x.OldPrice.ToString(CultureInfo.InvariantCulture), x.NewPrice.ToString(CultureInfo.InvariantCulture), SafeField(x.ChangedBy), x.ChangedDate.ToString("o", CultureInfo.InvariantCulture))).ToArray(), Encoding.UTF8)
     End Sub
+
+    '------------------------------------------------------------------
+    ' STOCK ADJUSTMENTS (wastage / damaged / expired / lost / other)
+    '------------------------------------------------------------------
+    Public Sub LoadStockAdjustments()
+        StockAdjustments = New List(Of StockAdjustment)()
+        Dim path = FilePathOf("stock_adjustments.txt")
+        If Not File.Exists(path) Then Return
+        For Each line In File.ReadAllLines(path, Encoding.UTF8)
+            Dim f = Fields(line) : Dim qty As Integer : Dim before As Integer : Dim whenValue As DateTime
+            ' columns: Date|ProductId|ProductName|Type|Quantity|StockBefore|Reason|AdjustedBy
+            If f.Length >= 8 AndAlso DateTime.TryParse(f(0), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, whenValue) AndAlso
+               Integer.TryParse(f(4), qty) AndAlso Integer.TryParse(f(5), before) Then
+                StockAdjustments.Add(New StockAdjustment With {.AdjustedDate = whenValue, .ProductId = f(1), .ProductName = f(2),
+                    .AdjustmentType = f(3), .Quantity = qty, .StockBefore = before, .Reason = f(6), .AdjustedBy = f(7)})
+            End If
+        Next
+    End Sub
+
+    Public Sub SaveStockAdjustments()
+        File.WriteAllLines(FilePathOf("stock_adjustments.txt"), StockAdjustments.Select(Function(x) String.Join("|",
+            x.AdjustedDate.ToString("o", CultureInfo.InvariantCulture), SafeField(x.ProductId), SafeField(x.ProductName), SafeField(x.AdjustmentType),
+            x.Quantity, x.StockBefore, SafeField(x.Reason), SafeField(x.AdjustedBy))).ToArray(), Encoding.UTF8)
+    End Sub
+
+    ''' <summary>Lowers a product's stock (cashiers may only reduce), logs it, saves and refreshes every screen.</summary>
+    Public Function AdjustStock(p As Product, quantity As Integer, adjustmentType As String, reason As String,
+                                adjustedBy As String, ByRef errorMessage As String) As Boolean
+        errorMessage = ""
+        If p Is Nothing OrElse Not Products.Contains(p) Then
+            errorMessage = "Item not found."
+            Return False
+        End If
+        If quantity < 1 OrElse quantity > p.Stock Then
+            errorMessage = "Quantity must be between 1 and " & p.Stock.ToString() & "."
+            Return False
+        End If
+        If String.IsNullOrWhiteSpace(reason) Then
+            errorMessage = "Reason is required."
+            Return False
+        End If
+
+        Dim before As Integer = p.Stock
+        Dim entry As New StockAdjustment With {.AdjustedDate = DateTime.Now, .ProductId = p.Id, .ProductName = p.Name,
+            .AdjustmentType = adjustmentType, .Quantity = quantity, .StockBefore = before, .Reason = reason.Trim(), .AdjustedBy = adjustedBy}
+        Try
+            p.Stock -= quantity
+            SyncAvailability(p)
+            StockAdjustments.Add(entry)
+            SaveProducts()
+            SaveStockAdjustments()
+        Catch ex As Exception
+            p.Stock = before
+            SyncAvailability(p)
+            StockAdjustments.Remove(entry)
+            errorMessage = "The adjustment could not be saved: " & ex.Message
+            Return False
+        End Try
+        RaiseEvent ProductsChanged(Nothing, EventArgs.Empty)
+        Return True
+    End Function
+
+    Public Function GetTodayStockAdjustments() As List(Of StockAdjustment)
+        Dim result As New List(Of StockAdjustment)
+        For Each a As StockAdjustment In StockAdjustments
+            If a.AdjustedDate.Date = DateTime.Today Then result.Add(a)
+        Next
+        Return result
+    End Function
 
     '------------------------------------------------------------------
     ' Default menu used only when products.txt does not exist yet.
@@ -1084,6 +1156,20 @@ Public Module DataStore
     End Function
 
 End Module
+
+'=====================================================================
+' STOCK ADJUSTMENT RECORD (one line in stock_adjustments.txt)
+'=====================================================================
+Public Class StockAdjustment
+    Public Property AdjustedDate As DateTime = DateTime.Now
+    Public Property ProductId As String = ""
+    Public Property ProductName As String = ""
+    Public Property AdjustmentType As String = ""
+    Public Property Quantity As Integer
+    Public Property StockBefore As Integer
+    Public Property Reason As String = ""
+    Public Property AdjustedBy As String = ""
+End Class
 
 '=====================================================================
 ' CURRENT LOGGED-IN USER

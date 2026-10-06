@@ -1024,12 +1024,10 @@ Public Class Cashier
 
         StyleGrid(invGrid, 54)
         invGrid.Columns.Add(MakeCol("colInvItem", "Item", 0, 150, False))
-        invGrid.Columns.Add(MakeCol("colInvSku", "SKU", 70, 0, False))
-        invGrid.Columns.Add(MakeCol("colInvCat", "Category", 92, 0, False))
-        invGrid.Columns.Add(MakeCol("colInvStock", "Current stock", 112, 0, False))
-        invGrid.Columns.Add(MakeCol("colInvMin", "Reorder", 62, 0, False))
-        invGrid.Columns.Add(MakeCol("colInvPrice", "Price", 78, 0, False))
-        invGrid.Columns.Add(MakeCol("colInvStatus", "Status", 100, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvCat", "Category", 110, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvStock", "Current stock", 170, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvUnit", "Unit", 70, 0, False))
+        invGrid.Columns.Add(MakeCol("colInvStatus", "Status", 110, 0, False))
 
         cboInvStatus.Items.AddRange(New Object() {"All statuses", StockStatus.InStock, StockStatus.LowStock, StockStatus.OutOfStock})
         cboInvStatus.SelectedIndex = 0
@@ -1038,12 +1036,18 @@ Public Class Cashier
 
         AddHandler Panel1.Resize, Sub(s As Object, ev As EventArgs) LayoutKpiRows()
         LayoutKpiRows()
+        BuildAdjustPanel()
         RefreshCashierInventory()
     End Sub
 
     Private Sub InventoryFilter_Changed(sender As Object, e As EventArgs) Handles txtInvSearch.TextChanged, cboInvCategory.SelectedIndexChanged, cboInvStatus.SelectedIndexChanged
         If Not invBusy Then RefreshCashierInventory()
     End Sub
+
+    ''' <summary>Unit shown in the Unit column. Product has no unit field yet, so every item is counted in pcs.</summary>
+    Private Shared Function UnitOf(p As Product) As String
+        Return "pcs"
+    End Function
 
     Private Shared Function CategoryOf(p As Product) As String
         Return If(String.IsNullOrWhiteSpace(p.Category), "Uncategorized", p.Category.Trim())
@@ -1100,25 +1104,26 @@ Public Class Cashier
                 If hay.IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 Then Continue For
             End If
 
-            Dim idx As Integer = invGrid.Rows.Add(p.Name, p.Id, CategoryOf(p), p.Stock, DataStore.GetMinStock(p), Peso(p.Price), st)
+            Dim idx As Integer = invGrid.Rows.Add(p.Name, CategoryOf(p), p.Stock, UnitOf(p), st)
             invGrid.Rows(idx).Tag = p
             invShown.Add(p)
         Next
         invGrid.ClearSelection()
 
+        Dim inCount As Integer = DataStore.Products.Count - lowCount - outCount
         lblIK1V.Text = DataStore.Products.Count.ToString()
-        lblIK1S.Text = cats.Count.ToString() & If(cats.Count = 1, " category", " categories")
-        lblIK2V.Text = Peso(totalValue)
-        lblIK2S.Text = "At selling price"
+        lblIK1S.Text = invShown.Count.ToString() & " items shown"
+        lblIK2V.Text = inCount.ToString()
+        lblIK2S.Text = inCount.ToString() & If(inCount = 1, " item", " items")
         lblIK3V.Text = lowCount.ToString()
-        lblIK3S.Text = "Needs reorder"
+        lblIK3S.Text = lowCount.ToString() & If(lowCount = 1, " item", " items")
         lblIK4V.Text = outCount.ToString()
-        lblIK4S.Text = "Action required"
-        lblInvCount.Text = invShown.Count.ToString() & If(invShown.Count = 1, " item", " items")
+        lblIK4S.Text = outCount.ToString() & If(outCount = 1, " item", " items")
         lblInvShowing.Text = "Showing " & invShown.Count.ToString() & " of " & DataStore.Products.Count.ToString() & " items"
 
         BuildCategorySummary(totalValue)
-        BuildAttentionList()
+        RefreshAdjustItems()
+        lblInvCount.Text = "Last updated " & DateTime.Now.ToString("h:mm tt")
     End Sub
 
     Private Sub BuildCategorySummary(totalValue As Decimal)
@@ -1132,7 +1137,7 @@ Public Class Cashier
                 vals(key) = 0D
             End If
             items(key) += 1
-            vals(key) += p.Price * p.Stock
+            vals(key) += p.Stock
         Next
 
         Dim keys As New List(Of String)(vals.Keys)
@@ -1151,7 +1156,7 @@ Public Class Cashier
             End If
         Next
 
-        lblInvCatTotal.Text = Peso(totalValue) & " total"
+        lblInvCatTotal.Text = DataStore.Products.Count.ToString() & " items shown"
 
         ' stacked bar
         Dim bar As New Bitmap(picInvCatBar.Width, picInvCatBar.Height)
@@ -1199,12 +1204,236 @@ Public Class Cashier
             row.Controls.Add(New Label With {.Text = counts(i).ToString() & If(counts(i) = 1, " item", " items"), .AutoSize = False,
                 .Size = New Size(56, 22), .Location = New Point(128, 1), .ForeColor = Muted, .BackColor = CardFill,
                 .Font = New Font("Segoe UI", 7.5F), .TextAlign = ContentAlignment.MiddleRight})
-            row.Controls.Add(New Label With {.Text = Peso(amounts(i)), .AutoSize = False, .Size = New Size(76, 22),
+            row.Controls.Add(New Label With {.Text = amounts(i).ToString("N0") & " pcs", .AutoSize = False, .Size = New Size(76, 22),
                 .Location = New Point(row.Width - 76, 1), .ForeColor = Ink, .BackColor = CardFill,
                 .Font = New Font("Segoe UI", 8.5F, FontStyle.Bold), .TextAlign = ContentAlignment.MiddleRight})
             flInvCat.Controls.Add(row)
         Next
         flInvCat.ResumeLayout()
+    End Sub
+
+    '=================================================================
+    ' ADJUST STOCK PANEL  (replaces "Needs attention"; cashiers can only REDUCE stock)
+    '=================================================================
+    Private cboAdjItem As Guna2ComboBox, cboAdjType As Guna2ComboBox
+    Private txtAdjAvail As TextBox, txtAdjQty As TextBox, txtAdjReason As TextBox
+    Private lblAdjValidation As Label, lblAdjNote As Label
+    Private btnAdjCancel As Guna2Button, btnAdjConfirm As Guna2Button
+    Private adjProducts As New List(Of Product)
+    Private adjBusy As Boolean = False
+
+    Private Shared ReadOnly AdjTypes As String() = {"Wastage", "Damaged", "Expired", "Lost", "Other"}
+
+    Private Function AdjLabel(text As String, y As Integer) As Label
+        Return New Label With {.Text = text, .AutoSize = False, .Size = New Size(261, 14), .Location = New Point(16, y),
+            .ForeColor = Ink, .BackColor = CardFill, .Font = New Font("Segoe UI", 7.5F, FontStyle.Bold)}
+    End Function
+
+    Private Function AdjBox(y As Integer, readOnlyBox As Boolean) As TextBox
+        Dim host As New Guna2Panel With {.Size = New Size(261, 32), .Location = New Point(16, y), .BorderRadius = 8,
+            .BorderThickness = 1, .BorderColor = CardBorder, .FillColor = CardFill, .BackColor = CardFill}
+        Dim t As New TextBox With {.BorderStyle = BorderStyle.None, .BackColor = CardFill, .ForeColor = Ink,
+            .Font = New Font("Segoe UI", 9.0F), .ReadOnly = readOnlyBox, .Width = 239, .Location = New Point(11, 8)}
+        host.Controls.Add(t)
+        AddHandler t.Enter, Sub(s As Object, ev As EventArgs) host.BorderColor = Accent
+        AddHandler t.Leave, Sub(s As Object, ev As EventArgs) host.BorderColor = CardBorder
+        pnlInvAttn.Controls.Add(host)
+        Return t
+    End Function
+
+    Private Function AdjCombo(y As Integer) As Guna2ComboBox
+        Dim c As New Guna2ComboBox With {.Size = New Size(261, 30), .Location = New Point(16, y), .BorderRadius = 8,
+            .BorderColor = CardBorder, .FillColor = CardFill, .ForeColor = Ink, .Font = New Font("Segoe UI", 8.5F),
+            .DropDownStyle = ComboBoxStyle.DropDownList, .DrawMode = DrawMode.OwnerDrawFixed, .ItemHeight = 22, .BackColor = CardFill}
+        c.FocusedState.BorderColor = Accent
+        c.HoverState.BorderColor = Accent
+        Return c
+    End Function
+
+    Private Sub BuildAdjustPanel()
+        ' re-use the old "Needs attention" card
+        flInvAttn.Visible = False
+        lblInvAttnCount.Visible = False
+        lblInvAttnTitle.Text = "Adjust stock"
+
+        Dim hint As New Label With {.Text = "Cashier-only reduction", .AutoSize = False, .Size = New Size(130, 16), .Location = New Point(147, 16),
+            .TextAlign = ContentAlignment.MiddleRight, .ForeColor = Muted, .BackColor = CardFill, .Font = New Font("Segoe UI", 7.5F)}
+        pnlInvAttn.Controls.Add(hint)
+
+        Dim y As Integer = 40
+        pnlInvAttn.Controls.Add(AdjLabel("Item", y))
+        cboAdjItem = AdjCombo(y + 15)
+        pnlInvAttn.Controls.Add(cboAdjItem)
+
+        y += 52
+        pnlInvAttn.Controls.Add(AdjLabel("Available stock / unit", y))
+        txtAdjAvail = AdjBox(y + 15, True)
+
+        y += 52
+        pnlInvAttn.Controls.Add(AdjLabel("Adjustment type", y))
+        cboAdjType = AdjCombo(y + 15)
+        cboAdjType.Items.AddRange(AdjTypes)
+        cboAdjType.SelectedIndex = 0
+        pnlInvAttn.Controls.Add(cboAdjType)
+
+        y += 52
+        pnlInvAttn.Controls.Add(AdjLabel("Quantity", y))
+        txtAdjQty = AdjBox(y + 15, False)
+
+        y += 52
+        pnlInvAttn.Controls.Add(AdjLabel("Reason", y))
+        txtAdjReason = AdjBox(y + 15, False)
+
+        y += 54
+        lblAdjValidation = New Label With {.AutoSize = False, .Size = New Size(261, 24), .Location = New Point(16, y),
+            .TextAlign = ContentAlignment.MiddleCenter, .Font = New Font("Segoe UI", 7.75F, FontStyle.Bold),
+            .BackColor = Color.FromArgb(250, 235, 210), .ForeColor = Color.FromArgb(150, 90, 40)}
+        pnlInvAttn.Controls.Add(lblAdjValidation)
+
+        y += 32
+        btnAdjCancel = New Guna2Button With {.Text = "Cancel", .Size = New Size(90, 34), .Location = New Point(16, y), .BorderRadius = 10,
+            .BorderThickness = 1, .BorderColor = CardBorder, .FillColor = CardFill, .ForeColor = Ink, .BackColor = CardFill,
+            .Font = New Font("Segoe UI", 8.75F, FontStyle.Bold), .Cursor = Cursors.Hand}
+        btnAdjCancel.HoverState.FillColor = Color.FromArgb(255, 245, 236)
+        btnAdjCancel.HoverState.ForeColor = Ink
+        btnAdjConfirm = New Guna2Button With {.Text = "Confirm adjustment", .Size = New Size(160, 34), .Location = New Point(117, y), .BorderRadius = 10,
+            .FillColor = Accent, .ForeColor = Color.White, .BackColor = CardFill,
+            .Font = New Font("Segoe UI", 8.5F, FontStyle.Bold), .Cursor = Cursors.Hand}
+        btnAdjConfirm.HoverState.FillColor = Color.FromArgb(176, 94, 50)
+        btnAdjConfirm.HoverState.ForeColor = Color.White
+        pnlInvAttn.Controls.Add(btnAdjCancel)
+        pnlInvAttn.Controls.Add(btnAdjConfirm)
+
+        y += 40
+        lblAdjNote = New Label With {.AutoSize = False, .Size = New Size(261, 44), .Location = New Point(16, y),
+            .ForeColor = Muted, .BackColor = CardFill, .Font = New Font("Segoe UI", 7.0F)}
+        pnlInvAttn.Controls.Add(lblAdjNote)
+
+        AddHandler cboAdjItem.SelectedIndexChanged, Sub(s As Object, ev As EventArgs)
+                                                        If Not adjBusy Then
+                                                            ShowAdjAvailable()
+                                                            ValidateAdjust()
+                                                        End If
+                                                    End Sub
+        AddHandler cboAdjType.SelectedIndexChanged, Sub(s As Object, ev As EventArgs) ValidateAdjust()
+        AddHandler txtAdjQty.TextChanged, Sub(s As Object, ev As EventArgs) ValidateAdjust()
+        AddHandler txtAdjReason.TextChanged, Sub(s As Object, ev As EventArgs) ValidateAdjust()
+        AddHandler btnAdjCancel.Click, Sub(s As Object, ev As EventArgs) ResetAdjustForm()
+        AddHandler btnAdjConfirm.Click, AddressOf btnAdjConfirm_Click
+        AddHandler invGrid.CellClick, AddressOf invGrid_RowPicked
+    End Sub
+
+    Private Sub invGrid_RowPicked(sender As Object, e As DataGridViewCellEventArgs)
+        If e.RowIndex < 0 Then Return
+        Dim p As Product = TryCast(invGrid.Rows(e.RowIndex).Tag, Product)
+        If p Is Nothing Then Return
+        Dim i As Integer = adjProducts.IndexOf(p)
+        If i >= 0 Then cboAdjItem.SelectedIndex = i
+    End Sub
+
+    Private Sub RefreshAdjustItems()
+        If cboAdjItem Is Nothing Then Return
+        adjBusy = True
+        Dim keepId As String = ""
+        Dim cur As Product = SelectedAdjProduct()
+        If cur IsNot Nothing Then keepId = cur.Id.ToString()
+        adjProducts.Clear()
+        cboAdjItem.Items.Clear()
+        For Each p As Product In DataStore.Products
+            adjProducts.Add(p)
+            cboAdjItem.Items.Add(p.Name)
+        Next
+        Dim idx As Integer = 0
+        For i As Integer = 0 To adjProducts.Count - 1
+            If adjProducts(i).Id.ToString() = keepId Then idx = i : Exit For
+        Next
+        If adjProducts.Count > 0 Then cboAdjItem.SelectedIndex = idx
+        adjBusy = False
+        ShowAdjAvailable()
+        ValidateAdjust()
+    End Sub
+
+    Private Function SelectedAdjProduct() As Product
+        If cboAdjItem Is Nothing Then Return Nothing
+        Dim i As Integer = cboAdjItem.SelectedIndex
+        If i < 0 OrElse i >= adjProducts.Count Then Return Nothing
+        Return adjProducts(i)
+    End Function
+
+    Private Sub ShowAdjAvailable()
+        Dim p As Product = SelectedAdjProduct()
+        txtAdjAvail.Text = If(p Is Nothing, "", p.Stock.ToString("N0") & " " & UnitOf(p) & " " & ChrW(&HB7) & " unit set by Admin")
+    End Sub
+
+    ''' <summary>Returns "" when the form is valid, otherwise the message to show.</summary>
+    Private Function ValidateAdjust() As String
+        Dim p As Product = SelectedAdjProduct()
+        Dim msg As String = ""
+        Dim qty As Integer
+        If p Is Nothing Then
+            msg = "Select an item."
+        ElseIf p.Stock <= 0 Then
+            msg = "No stock available to reduce."
+        ElseIf Not Integer.TryParse(txtAdjQty.Text.Trim(), qty) OrElse qty < 1 OrElse qty > p.Stock Then
+            msg = "Enter 1" & ChrW(&H2013) & p.Stock.ToString() & " " & UnitOf(p) & ". Larger quantities are blocked."
+        ElseIf txtAdjReason.Text.Trim() = "" Then
+            msg = "Reason is required."
+        End If
+
+        If msg = "" Then
+            lblAdjValidation.Text = "Ready to confirm."
+            lblAdjValidation.BackColor = Color.FromArgb(225, 236, 225)
+            lblAdjValidation.ForeColor = Color.FromArgb(70, 110, 70)
+            lblAdjNote.Text = "After confirmation: " & p.Stock.ToString() & " " & UnitOf(p) & " - " & qty.ToString() & " " & UnitOf(p) &
+                " = " & (p.Stock - qty).ToString() & " " & UnitOf(p) & "." & vbCrLf &
+                "Types: Wastage, Damaged, Expired, Lost, Other." & vbCrLf & "Damaged / Lost require permission. Reason required."
+        Else
+            lblAdjValidation.Text = msg
+            lblAdjValidation.BackColor = Color.FromArgb(250, 235, 210)
+            lblAdjValidation.ForeColor = Color.FromArgb(150, 90, 40)
+            lblAdjNote.Text = "Types: Wastage, Damaged, Expired, Lost, Other." & vbCrLf & "Damaged / Lost require permission. Reason required."
+        End If
+        Return msg
+    End Function
+
+    Private Sub ResetAdjustForm()
+        txtAdjQty.Text = ""
+        txtAdjReason.Text = ""
+        cboAdjType.SelectedIndex = 0
+        ValidateAdjust()
+    End Sub
+
+    Private Sub btnAdjConfirm_Click(sender As Object, e As EventArgs)
+        Dim msg As String = ValidateAdjust()
+        If msg <> "" Then
+            MessageBox.Show(msg, "Adjust stock", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        Dim p As Product = SelectedAdjProduct()
+        Dim qty As Integer = Integer.Parse(txtAdjQty.Text.Trim())
+        Dim kind As String = cboAdjType.Text
+
+        If kind = "Damaged" OrElse kind = "Lost" Then
+            If MessageBox.Show(kind & " adjustments require permission." & vbCrLf & "Do you have approval to continue?",
+                               "Permission required", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then Return
+        End If
+
+        Dim errMsg As String = ""
+        Dim by As String = If(String.IsNullOrWhiteSpace(CurrentSession.FullName), CurrentSession.Username, CurrentSession.FullName)
+        If Not DataStore.AdjustStock(p, qty, kind, txtAdjReason.Text.Trim(), by, errMsg) Then
+            MessageBox.Show(errMsg, "Adjust stock", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+        ' notify the admin through the Messages page (cashier name + reason)
+        DataStore.AddMessage(New ChatMessage With {
+            .Sender = "Cashier",
+            .Receiver = "Admin",
+            .Message = "[Stock adjustment] " & by & ": " & p.Name & " -" & qty.ToString() & " " & UnitOf(p) & " (" & kind & "). Reason: " & txtAdjReason.Text.Trim(),
+            .TimeSent = DateTime.Now})
+        MessageBox.Show(p.Name & ": reduced by " & qty.ToString() & " " & UnitOf(p) & " (" & kind & ").", "Stock adjusted",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information)
+        ResetAdjustForm()
+        RefreshCashierInventory()
     End Sub
 
     Private Sub BuildAttentionList()
@@ -1282,9 +1511,9 @@ Public Class Cashier
             Case "colInvStock"
                 Dim minStock As Integer = DataStore.GetMinStock(p)
                 Using f As New Font("Segoe UI", 9.0F, FontStyle.Bold), inkB As New SolidBrush(Ink)
-                    g.DrawString(p.Stock.ToString(), f, inkB, cb.X + 10, cb.Y + 11)
+                    g.DrawString(p.Stock.ToString("N0") & " " & UnitOf(p), f, inkB, cb.X + 10, cb.Y + 11)
                 End Using
-                Dim track As New Rectangle(cb.X + 10, cb.Y + 33, Math.Min(86, cb.Width - 22), 6)
+                Dim track As New Rectangle(cb.X + 10, cb.Y + 33, Math.Min(140, cb.Width - 22), 6)
                 Using tp As GraphicsPath = RoundRectPath(track, 3, False), tb As New SolidBrush(Color.FromArgb(238, 230, 222))
                     g.FillPath(tb, tp)
                 End Using
@@ -1311,10 +1540,9 @@ Public Class Cashier
     Private Sub btnInvExport_Click(sender As Object, e As EventArgs) Handles btnInvExport.Click
         Dim rows As New List(Of String())
         For Each p As Product In invShown
-            rows.Add(New String() {p.Id, p.Name, CategoryOf(p), p.Stock.ToString(), DataStore.GetMinStock(p).ToString(),
-                                   p.Price.ToString("0.00"), DataStore.GetProductStockStatus(p)})
+            rows.Add(New String() {p.Name, CategoryOf(p), p.Stock.ToString(), UnitOf(p), DataStore.GetProductStockStatus(p)})
         Next
-        SaveCsv("inventory", New String() {"SKU", "Item", "Category", "Stock", "Reorder level", "Price", "Status"}, rows)
+        SaveCsv("inventory", New String() {"Item", "Category", "Stock", "Unit", "Status"}, rows)
     End Sub
 
     '=================================================================
@@ -1677,6 +1905,8 @@ Public Class Cashier
             If acc IsNot Nothing Then
                 If Not String.IsNullOrWhiteSpace(acc.FullName) Then displayName = acc.FullName
                 photo = CashierPhotos.Load(acc.Id)
+                ' own copy: never keep/dispose an image that CashierPhotos or the Admin screen may also be using
+                If photo IsNot Nothing Then photo = New Bitmap(photo)
             End If
         Catch ex As Exception
             photo = Nothing

@@ -545,8 +545,32 @@ Partial Public Class Admin
         ' chat header follows the selection
         CashierName.Text = If(selectedConvo = "", "Cashier Team", selectedConvo)
         chatAvatarHost.Controls.Clear()
-        Dim av As Control = CashierAvatar(CashierName.Text, 44, Counterly.TealSoft, Counterly.Teal)
-        chatAvatarHost.Controls.Add(av)
+        AddAvatarSafe(chatAvatarHost, CashierName.Text, 44, Counterly.TealSoft, Counterly.Teal, Point.Empty)
+    End Sub
+
+    ' Adds a cashier avatar. If the cashier's photo can't be drawn (e.g. an image that was already disposed
+    ' after a logout/login), falls back to the plain initials avatar instead of crashing the screen.
+    Private Sub AddAvatarSafe(host As Control, fullName As String, size As Integer, back As Color, fore As Color, loc As Point)
+        Dim av As Control = Nothing
+        Try
+            av = CashierAvatar(fullName, size, back, fore)
+            If loc <> Point.Empty Then av.Location = loc
+            host.Controls.Add(av)
+        Catch ex As ArgumentException
+            If av IsNot Nothing Then
+                host.Controls.Remove(av)
+                av.Dispose()
+            End If
+            Dim initials As String = ""
+            For Each part As String In If(fullName, "").Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
+                initials &= Char.ToUpper(part(0))
+                If initials.Length = 2 Then Exit For
+            Next
+            If initials = "" Then initials = "C"
+            Dim fb As Control = Counterly.Avatar(initials, size, back, fore)
+            If loc <> Point.Empty Then fb.Location = loc
+            host.Controls.Add(fb)
+        End Try
     End Sub
 
     Private Function BuildConvoItem(nm As String, w As Integer, h As Integer) As Panel
@@ -572,11 +596,9 @@ Partial Public Class Admin
         p.Cursor = Cursors.Hand
         p.Tag = nm
 
-        Dim av As Control = CashierAvatar(nm, 40,
-                                          If(isSel, Color.FromArgb(205, 240, 234), Counterly.AvatarGray),
-                                          If(isSel, Counterly.Teal, Counterly.Ink))
-        av.Location = New Point(16, 21)
-        p.Controls.Add(av)
+        AddAvatarSafe(p, nm, 40,
+                      If(isSel, Color.FromArgb(205, 240, 234), Counterly.AvatarGray),
+                      If(isSel, Counterly.Teal, Counterly.Ink), New Point(16, 21))
 
         p.Controls.Add(Counterly.Lbl(nm, 10.0F, FontStyle.Bold, Counterly.Ink, 68, 17))
 

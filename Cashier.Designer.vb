@@ -651,9 +651,9 @@ Partial Class Cashier
         Me.pnlInvAttn.Controls.Add(Me.lblInvAttnCount)
         Me.pnlInvAttn.Controls.Add(Me.lblInvAttnTitle)
         Me.pnlInvAttn.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.pnlInvAttn.Location = New System.Drawing.Point(934, 436)
+        Me.pnlInvAttn.Location = New System.Drawing.Point(934, 406)
         Me.pnlInvAttn.Name = "pnlInvAttn"
-        Me.pnlInvAttn.Size = New System.Drawing.Size(293, 397)
+        Me.pnlInvAttn.Size = New System.Drawing.Size(293, 427)
         Me.pnlInvAttn.TabIndex = 1185
         '
         'flInvAttn
@@ -708,7 +708,7 @@ Partial Class Cashier
         Me.pnlInvCat.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.pnlInvCat.Location = New System.Drawing.Point(934, 226)
         Me.pnlInvCat.Name = "pnlInvCat"
-        Me.pnlInvCat.Size = New System.Drawing.Size(293, 200)
+        Me.pnlInvCat.Size = New System.Drawing.Size(293, 170)
         Me.pnlInvCat.TabIndex = 1180
         '
         'flInvCat
@@ -719,7 +719,7 @@ Partial Class Cashier
         Me.flInvCat.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.flInvCat.Location = New System.Drawing.Point(16, 66)
         Me.flInvCat.Name = "flInvCat"
-        Me.flInvCat.Size = New System.Drawing.Size(265, 126)
+        Me.flInvCat.Size = New System.Drawing.Size(265, 96)
         Me.flInvCat.TabIndex = 1184
         Me.flInvCat.WrapContents = False
         '
@@ -826,9 +826,9 @@ Partial Class Cashier
         Me.lblInvTableTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.lblInvTableTitle.Location = New System.Drawing.Point(16, 14)
         Me.lblInvTableTitle.Name = "lblInvTableTitle"
-        Me.lblInvTableTitle.Size = New System.Drawing.Size(100, 20)
+        Me.lblInvTableTitle.Size = New System.Drawing.Size(90, 20)
         Me.lblInvTableTitle.TabIndex = 1176
-        Me.lblInvTableTitle.Text = "All inventory"
+        Me.lblInvTableTitle.Text = "Stock levels"
         '
         'cboInvStatus
         '
@@ -886,7 +886,7 @@ Partial Class Cashier
         Me.txtInvSearch.Location = New System.Drawing.Point(20, 176)
         Me.txtInvSearch.Name = "txtInvSearch"
         Me.txtInvSearch.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
-        Me.txtInvSearch.PlaceholderText = "Search item, SKU, or category..."
+        Me.txtInvSearch.PlaceholderText = "Search item or category..."
         Me.txtInvSearch.SelectedText = ""
         Me.txtInvSearch.Size = New System.Drawing.Size(842, 38)
         Me.txtInvSearch.TabIndex = 1172
@@ -1018,9 +1018,9 @@ Partial Class Cashier
         Me.lblIK2T.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
         Me.lblIK2T.Location = New System.Drawing.Point(14, 12)
         Me.lblIK2T.Name = "lblIK2T"
-        Me.lblIK2T.Size = New System.Drawing.Size(67, 15)
+        Me.lblIK2T.Size = New System.Drawing.Size(48, 15)
         Me.lblIK2T.TabIndex = 1158
-        Me.lblIK2T.Text = "Stock value"
+        Me.lblIK2T.Text = "In stock"
         '
         'pnlIK3
         '
@@ -1166,11 +1166,11 @@ Partial Class Cashier
         Me.btnInvExport.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btnInvExport.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.btnInvExport.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.btnInvExport.Location = New System.Drawing.Point(893, 14)
+        Me.btnInvExport.Location = New System.Drawing.Point(903, 14)
         Me.btnInvExport.Name = "btnInvExport"
-        Me.btnInvExport.Size = New System.Drawing.Size(100, 38)
+        Me.btnInvExport.Size = New System.Drawing.Size(90, 38)
         Me.btnInvExport.TabIndex = 1151
-        Me.btnInvExport.Text = "Export CSV"
+        Me.btnInvExport.Text = "Export"
         '
         'lblInvSub
         '
@@ -1180,9 +1180,9 @@ Partial Class Cashier
         Me.lblInvSub.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
         Me.lblInvSub.Location = New System.Drawing.Point(20, 46)
         Me.lblInvSub.Name = "lblInvSub"
-        Me.lblInvSub.Size = New System.Drawing.Size(322, 15)
+        Me.lblInvSub.Size = New System.Drawing.Size(313, 15)
         Me.lblInvSub.TabIndex = 1150
-        Me.lblInvSub.Text = "Live stock levels. Ask the administrator to restock low items."
+        Me.lblInvSub.Text = "Monitor stock levels and see which items need restocking."
         '
         'lblInvTitle
         '
@@ -4005,7 +4005,6 @@ Partial Class Cashier
         Me.ClientSize = New System.Drawing.Size(1440, 844)
         Me.Controls.Add(Me.main_pnl)
         Me.Controls.Add(Me.dshbrd_Pnl)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Cashier"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Cashier"
