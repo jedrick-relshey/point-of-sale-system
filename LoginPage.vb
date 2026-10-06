@@ -46,7 +46,7 @@ Public Class LoginPage
             Return
         End If
 
-        MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
 
         If role = "admin" Then
             Dim adminForm As New Admin()
