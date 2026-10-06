@@ -16,7 +16,7 @@ Public Class LoginPage
         txtUser.Clear()
         txtPass.Clear()
         cbShowHidePass.Checked = False
-        chkRemember.Checked = False
+
         rbAdmin.Checked = False
         rbCashier.Checked = False
         Me.Show()
@@ -135,5 +135,4 @@ Public Class LoginPage
             MessageBox.Show("Please select a role first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
-
 End Class
