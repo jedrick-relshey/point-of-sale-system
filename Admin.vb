@@ -18,6 +18,7 @@ Public Class Admin
     Private closingForLogout As Boolean = False
 
     Private history As HistoryView
+    Private newProductPage As ProductPageControl      ' new Product management design
 
     ' ---- controls created in code (inventory screen) ----
     Private invSearch As Guna2TextBox
@@ -49,6 +50,7 @@ Public Class Admin
         SetupHistory()
         BuildMessagingLayout()
         BuildCashierPage()
+        InstallProductPage()
 
         LoadChatMessages()
         displayCashiers()
@@ -150,6 +152,22 @@ Public Class Admin
     Private Sub RefreshAdminData()
         LoadAdminTransactions()
         RefreshAdminDashboard()
+    End Sub
+
+    '=================================================================
+    ' NEW PRODUCT MANAGEMENT PAGE (replaces the look of the old products panel)
+    ' The old controls stay in the Designer (hidden) so the old code still compiles.
+    '=================================================================
+    Private Sub InstallProductPage()
+        For Each c As Control In pnl_Products.Controls
+            c.Visible = False
+        Next
+        pnl_Products.AutoScroll = False
+
+        newProductPage = New ProductPageControl()
+        newProductPage.Dock = DockStyle.Fill
+        pnl_Products.Controls.Add(newProductPage)
+        newProductPage.BringToFront()
     End Sub
 
     '=================================================================
@@ -495,6 +513,9 @@ Public Class Admin
     Private Sub btn_Product_Click(sender As Object, e As EventArgs) Handles btn_Product.Click
         ShowPanel(pnl_Products)
         FilterProducts()
+        If newProductPage IsNot Nothing Then
+            newProductPage.RefreshList()
+        End If
     End Sub
 
     Private Sub btnMessages_Click(sender As Object, e As EventArgs) Handles btnMessages.Click
@@ -822,6 +843,23 @@ Public Class Admin
         }
         restockPanel.Controls.Add(flpRestock)
         pnl_Inventory.Controls.Add(restockPanel)
+
+        AttachIngredientInventory()          ' MULTI-BRANCH: adds [Products] [Ingredients] to this same page
+    End Sub
+
+    '=================================================================
+    ' MULTI-BRANCH: [Products] [Ingredients] switch on the EXISTING inventory page.
+    ' Products side = everything above, unchanged. Ingredients side = IngredientInventoryView.
+    '=================================================================
+    Private Sub AttachIngredientInventory()
+        Dim titles As New List(Of Control)
+        For Each l As Label In pnl_Inventory.Controls.OfType(Of Label)()
+            If l.Visible AndAlso l.Top < 66 Then titles.Add(l)
+        Next
+        Dim view As New IngredientInventoryView(pnl_Inventory.BackColor)
+        view.SetBounds(35, 100, 934, 540)
+        view.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        Dim modeSwitch As New InventoryModeSwitch(pnl_Inventory, view, New Point(325, 24), titles, False)
     End Sub
 
     Private Function MakeLabel(text As String, x As Integer, y As Integer, f As Font, c As Color) As Label

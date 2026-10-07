@@ -81,6 +81,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddProductForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Admin.Cashiers.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +114,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CounterlyUi.vb" />
+    <Compile Include="DataStore.MultiShop.vb" />
     <Compile Include="DataStore.vb" />
     <Compile Include="ForestUi.vb">
       <SubType>Component</SubType>
@@ -120,6 +124,12 @@
     </Compile>
     <Compile Include="HistoryView.vb">
     </Compile>
+    <Compile Include="Ingredient.vb" />
+    <Compile Include="IngredientInventoryView.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="InventoryAdjustment.vb" />
+    <Compile Include="InventoryModeSwitch.vb" />
     <Compile Include="InventoryView.vb" />
     <Compile Include="LoginPage.vb">
       <SubType>Form</SubType>
@@ -148,8 +158,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ProductPageControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProductStore.vb" />
+    <Compile Include="ProductVariant.vb" />
+    <Compile Include="RecipeEditorForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecipeItem.vb" />
     <Compile Include="RoundedPanel.vb">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Shop.vb" />
+    <Compile Include="ShopContext.vb" />
+    <Compile Include="SuperAdminForm.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="TransactionDetailForm.Designer.vb">
       <DependentUpon>TransactionDetailForm.vb</DependentUpon>
@@ -157,6 +181,12 @@
     <Compile Include="TransactionDetailForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UiDialogs.vb" />
+    <Compile Include="UiKit.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UnitHelper.vb" />
+    <Compile Include="UserRoles.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Admin.resx">

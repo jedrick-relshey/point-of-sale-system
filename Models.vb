@@ -46,6 +46,7 @@ End Class
 '---------------------------------------------------------------------
 Public Class Product
 
+    Public Property ShopId As String = ""
     Public Property Id As String = ""
     Public Property Name As String = ""
     Public Property Price As Decimal = 0D
@@ -75,6 +76,7 @@ End Class
 '---------------------------------------------------------------------
 Public Class CashierAccount
 
+    Public Property ShopId As String = ""
     Public Property Id As String = ""
     Public Property FullName As String = ""
     Public Property Username As String = ""
@@ -94,6 +96,8 @@ End Class
 
 Public Class AdminAccount
 
+    Public Property ShopId As String = ""
+    Public Property Role As String = "manager"
     Public Property Id As String = ""
     Public Property FullName As String = ""
     Public Property Username As String = ""
@@ -116,6 +120,7 @@ End Class
 '---------------------------------------------------------------------
 Public Class POS_Transaction
 
+    Public Property ShopId As String = ""
     Public Property TransactionID As String = ""
     Public Property TransactionDate As DateTime = DateTime.Now
     Public Property Cashier As String = ""
@@ -161,6 +166,7 @@ End Class
 '---------------------------------------------------------------------
 Public Class ChatMessage
 
+    Public Property ShopId As String = ""
     Public Property Sender As String = ""
     Public Property Receiver As String = ""
     Public Property Message As String = ""

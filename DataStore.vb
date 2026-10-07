@@ -4,6 +4,7 @@ Option Explicit On
 Imports System.Drawing
 Imports System.Globalization
 Imports System.IO
+Imports System.Security
 Imports System.Text
 
 '=====================================================================
@@ -12,18 +13,18 @@ Imports System.Text
 '
 ' Forms must NEVER read/write files themselves - they call this module.
 '=====================================================================
-Public Module DataStore
+Partial Public Module DataStore
 
     '------------------------------------------------------------------
     ' IN-MEMORY DATA (public names kept for compatibility with old forms)
     '------------------------------------------------------------------
-    Public Products As New List(Of Product)
-    Public Transactions As New List(Of POS_Transaction)
-    Public ChatMessages As New List(Of ChatMessage)
-    Public Cashiers As New List(Of CashierAccount)
-    Public Admins As New List(Of AdminAccount)
+    Public AllProducts As New List(Of Product)
+    Public AllTransactions As New List(Of POS_Transaction)
+    Public AllChatMessages As New List(Of ChatMessage)
+    Public AllCashiers As New List(Of CashierAccount)
+    Public AllAdmins As New List(Of AdminAccount)
     Public PriceLogs As New List(Of PriceChangeLog)
-    Public StockAdjustments As New List(Of StockAdjustment)
+    Public AllStockAdjustments As New List(Of StockAdjustment)
     Public PosSettings As New SystemSettings
 
     '------------------------------------------------------------------
@@ -100,7 +101,10 @@ Public Module DataStore
             LoadMessages()
             LoadPriceLogs()
             LoadStockAdjustments()
+            LoadMultiShop()
+            MigrateToMultiShop()
             SyncCounters()
+            RefreshRecipeAvailability("")
         Catch ex As Exception
             MessageBox.Show("Unable to load POS data." & vbCrLf & vbCrLf &
                             "The system will attempt to recover the data." & vbCrLf & ex.Message,
@@ -117,6 +121,7 @@ Public Module DataStore
         SaveMessages()
         SavePriceLogs()
         SaveStockAdjustments()
+        SaveMultiShop()
     End Sub
 
     ' All persistent data uses readable pipe-delimited TXT files in the app folder.
@@ -143,7 +148,7 @@ Public Module DataStore
 
     Public Sub LoadProducts()
         Dim path = FilePathOf("products.txt")
-        Products = New List(Of Product)
+        AllProducts = New List(Of Product)
         If File.Exists(path) Then
             For Each line In File.ReadAllLines(path, Encoding.UTF8)
                 Dim f = Fields(line) : Dim price As Decimal : Dim stock As Integer
@@ -160,56 +165,57 @@ Public Module DataStore
                     End If
                     Dim minStockValue As Integer
                     If f.Length >= 9 AndAlso Integer.TryParse(f(8), minStockValue) Then p.MinStock = minStockValue
+                    If f.Length >= 10 Then p.ShopId = f(9)
                     LoadProductImage(p)
-                    Products.Add(p)
+                    AllProducts.Add(p)
                 End If
             Next
         Else
-            Products = BuildDefaultProducts()
+            AllProducts = BuildDefaultProducts()
             SaveProducts()
         End If
     End Sub
 
     Public Sub SaveProducts()
-        File.WriteAllLines(FilePathOf("products.txt"), Products.Select(Function(p) String.Join("|", SafeField(p.Id), SafeField(p.Name), p.Price.ToString(CultureInfo.InvariantCulture), p.Stock, SafeField(p.Category), SafeField(p.Description), SafeField(p.ImagePath), p.LastUpdated.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), p.MinStock)).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("products.txt"), AllProducts.Select(Function(p) String.Join("|", SafeField(p.Id), SafeField(p.Name), p.Price.ToString(CultureInfo.InvariantCulture), p.Stock, SafeField(p.Category), SafeField(p.Description), SafeField(p.ImagePath), p.LastUpdated.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), p.MinStock, SafeField(p.ShopId))).ToArray(), Encoding.UTF8)
     End Sub
 
     Public Sub LoadCashiers()
-        Cashiers = New List(Of CashierAccount) : Dim path = FilePathOf("cashier_accounts.txt")
+        AllCashiers = New List(Of CashierAccount) : Dim path = FilePathOf("cashier_accounts.txt")
         If File.Exists(path) Then
             For Each line In File.ReadAllLines(path, Encoding.UTF8)
                 Dim f = Fields(line)
-                If f.Length >= 3 Then Cashiers.Add(New CashierAccount With {.Username = f(0), .PasswordHash = f(1), .FullName = f(2), .Id = "CSH-" & (Cashiers.Count + 1).ToString("D3"), .Status = AccountStatus.Active})
+                If f.Length >= 3 Then AllCashiers.Add(New CashierAccount With {.Username = f(0), .PasswordHash = f(1), .FullName = f(2), .Id = "CSH-" & (AllCashiers.Count + 1).ToString("D3"), .Status = AccountStatus.Active, .ShopId = If(f.Length >= 4, f(3), "")})
             Next
         Else
-            Cashiers.Add(New CashierAccount With {.Id = "CSH-001", .FullName = "Jedrick Miclat", .Username = "jedrick", .PasswordHash = "cashier123", .Status = AccountStatus.Active})
+            AllCashiers.Add(New CashierAccount With {.Id = "CSH-001", .FullName = "Jedrick Miclat", .Username = "jedrick", .PasswordHash = "cashier123", .Status = AccountStatus.Active})
             SaveCashiers()
         End If
     End Sub
 
     Public Sub SaveCashiers()
-        File.WriteAllLines(FilePathOf("cashier_accounts.txt"), Cashiers.Select(Function(c) String.Join("|", SafeField(c.Username), SafeField(c.PasswordHash), SafeField(c.FullName))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("cashier_accounts.txt"), AllCashiers.Select(Function(c) String.Join("|", SafeField(c.Username), SafeField(c.PasswordHash), SafeField(c.FullName), SafeField(c.ShopId))).ToArray(), Encoding.UTF8)
     End Sub
 
     Public Sub LoadAdmins()
-        Admins = New List(Of AdminAccount) : Dim path = FilePathOf("admin_accounts.txt")
+        AllAdmins = New List(Of AdminAccount) : Dim path = FilePathOf("admin_accounts.txt")
         If File.Exists(path) Then
             For Each line In File.ReadAllLines(path, Encoding.UTF8)
                 Dim f = Fields(line)
-                If f.Length >= 3 Then Admins.Add(New AdminAccount With {.Username = f(0), .PasswordHash = f(1), .FullName = f(2), .Id = "ADM-" & (Admins.Count + 1).ToString("D3"), .Status = AccountStatus.Active})
+                If f.Length >= 3 Then AllAdmins.Add(New AdminAccount With {.Username = f(0), .PasswordHash = f(1), .FullName = f(2), .Id = "ADM-" & (AllAdmins.Count + 1).ToString("D3"), .Status = AccountStatus.Active, .ShopId = If(f.Length >= 4, f(3), ""), .Role = If(f.Length >= 5 AndAlso f(4) <> "", f(4), UserRoles.Manager)})
             Next
         Else
-            Admins.Add(New AdminAccount With {.Id = "ADM-001", .FullName = "Justine Fritz Bucong", .Username = "fritz", .PasswordHash = "admin123", .Status = AccountStatus.Active})
+            AllAdmins.Add(New AdminAccount With {.Id = "ADM-001", .FullName = "Justine Fritz Bucong", .Username = "fritz", .PasswordHash = "admin123", .Status = AccountStatus.Active})
             SaveAdmins()
         End If
     End Sub
 
     Public Sub SaveAdmins()
-        File.WriteAllLines(FilePathOf("admin_accounts.txt"), Admins.Select(Function(a) String.Join("|", SafeField(a.Username), SafeField(a.PasswordHash), SafeField(a.FullName))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("admin_accounts.txt"), AllAdmins.Select(Function(a) String.Join("|", SafeField(a.Username), SafeField(a.PasswordHash), SafeField(a.FullName), SafeField(a.ShopId), SafeField(a.Role))).ToArray(), Encoding.UTF8)
     End Sub
 
     Public Sub LoadTransactions()
-        Transactions = New List(Of POS_Transaction)
+        AllTransactions = New List(Of POS_Transaction)
         Dim ordersPath = FilePathOf("orders.txt")
         If Not File.Exists(ordersPath) Then Return
 
@@ -237,6 +243,7 @@ Public Module DataStore
                 If f.Length >= 15 Then t.StatusChangedBy = f(14)
                 Dim changed As DateTime
                 If f.Length >= 16 AndAlso DateTime.TryParse(f(15), CultureInfo.InvariantCulture, DateTimeStyles.None, changed) Then t.StatusChangedDate = changed
+                If f.Length >= 17 Then t.ShopId = f(16)
 
                 For Each il In itemLines
                     Dim it = Fields(il) : Dim qty As Integer : Dim price As Decimal
@@ -246,29 +253,29 @@ Public Module DataStore
                         t.Items.Add(ti)
                     End If
                 Next
-                Transactions.Add(t)
+                AllTransactions.Add(t)
             End If
         Next
     End Sub
 
     Public Sub SaveTransactions()
-        File.WriteAllLines(FilePathOf("orders.txt"), Transactions.Select(Function(t) String.Join("|", SafeField(t.TransactionID), SafeField(t.Cashier), t.TransactionDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), t.Total.ToString(CultureInfo.InvariantCulture), SafeField(t.Status), SafeField(t.PaymentMethod), t.Subtotal.ToString(CultureInfo.InvariantCulture), t.Tax.ToString(CultureInfo.InvariantCulture), t.CashReceived.ToString(CultureInfo.InvariantCulture), t.ChangeGiven.ToString(CultureInfo.InvariantCulture), SafeField(t.CashierUsername), SafeField(t.CustomerName), SafeField(t.TableName), SafeField(t.CardType), SafeField(t.StatusChangedBy), If(t.StatusChangedDate.HasValue, t.StatusChangedDate.Value.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), ""))).ToArray(), Encoding.UTF8)
-        File.WriteAllLines(FilePathOf("order_items.txt"), Transactions.SelectMany(Function(t) t.Items.Select(Function(i) String.Join("|", SafeField(t.TransactionID), SafeField(i.ProductName), i.Quantity, i.Price.ToString(CultureInfo.InvariantCulture), i.LineTotal.ToString(CultureInfo.InvariantCulture), SafeField(i.ProductId)))).ToArray(), Encoding.UTF8)
-        File.WriteAllLines(FilePathOf("sales.txt"), Transactions.Where(Function(t) t.Status = TransactionStatus.Completed).GroupBy(Function(t) t.TransactionDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)).OrderBy(Function(g) g.Key).Select(Function(g) g.Key & "|" & g.Sum(Function(t) t.Total).ToString(CultureInfo.InvariantCulture)).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("orders.txt"), AllTransactions.Select(Function(t) String.Join("|", SafeField(t.TransactionID), SafeField(t.Cashier), t.TransactionDate.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), t.Total.ToString(CultureInfo.InvariantCulture), SafeField(t.Status), SafeField(t.PaymentMethod), t.Subtotal.ToString(CultureInfo.InvariantCulture), t.Tax.ToString(CultureInfo.InvariantCulture), t.CashReceived.ToString(CultureInfo.InvariantCulture), t.ChangeGiven.ToString(CultureInfo.InvariantCulture), SafeField(t.CashierUsername), SafeField(t.CustomerName), SafeField(t.TableName), SafeField(t.CardType), SafeField(t.StatusChangedBy), If(t.StatusChangedDate.HasValue, t.StatusChangedDate.Value.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), ""), SafeField(t.ShopId))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("order_items.txt"), AllTransactions.SelectMany(Function(t) t.Items.Select(Function(i) String.Join("|", SafeField(t.TransactionID), SafeField(i.ProductName), i.Quantity, i.Price.ToString(CultureInfo.InvariantCulture), i.LineTotal.ToString(CultureInfo.InvariantCulture), SafeField(i.ProductId)))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("sales.txt"), AllTransactions.Where(Function(t) t.Status = TransactionStatus.Completed).GroupBy(Function(t) t.TransactionDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)).OrderBy(Function(g) g.Key).Select(Function(g) g.Key & "|" & g.Sum(Function(t) t.Total).ToString(CultureInfo.InvariantCulture)).ToArray(), Encoding.UTF8)
     End Sub
 
     Public Sub LoadMessages()
-        ChatMessages = New List(Of ChatMessage)()
+        AllChatMessages = New List(Of ChatMessage)()
         Dim path = FilePathOf("messages.txt")
         If Not File.Exists(path) Then Return
         For Each line In File.ReadAllLines(path, Encoding.UTF8)
             Dim f = Fields(line) : Dim sent As DateTime
-            If f.Length >= 4 AndAlso DateTime.TryParse(f(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, sent) Then ChatMessages.Add(New ChatMessage With {.Sender = f(0), .Receiver = f(1), .Message = f(2), .TimeSent = sent})
+            If f.Length >= 4 AndAlso DateTime.TryParse(f(3), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, sent) Then AllChatMessages.Add(New ChatMessage With {.Sender = f(0), .Receiver = f(1), .Message = f(2), .TimeSent = sent, .ShopId = If(f.Length >= 5, f(4), "")})
         Next
     End Sub
 
     Public Sub SaveMessages()
-        File.WriteAllLines(FilePathOf("messages.txt"), ChatMessages.Select(Function(m) String.Join("|", SafeField(m.Sender), SafeField(m.Receiver), SafeField(m.Message), m.TimeSent.ToString("o", CultureInfo.InvariantCulture))).ToArray(), Encoding.UTF8)
+        File.WriteAllLines(FilePathOf("messages.txt"), AllChatMessages.Select(Function(m) String.Join("|", SafeField(m.Sender), SafeField(m.Receiver), SafeField(m.Message), m.TimeSent.ToString("o", CultureInfo.InvariantCulture), SafeField(m.ShopId))).ToArray(), Encoding.UTF8)
     End Sub
 
     Public Sub LoadPriceLogs()
@@ -289,7 +296,7 @@ Public Module DataStore
     ' STOCK ADJUSTMENTS (wastage / damaged / expired / lost / other)
     '------------------------------------------------------------------
     Public Sub LoadStockAdjustments()
-        StockAdjustments = New List(Of StockAdjustment)()
+        AllStockAdjustments = New List(Of StockAdjustment)()
         Dim path = FilePathOf("stock_adjustments.txt")
         If Not File.Exists(path) Then Return
         For Each line In File.ReadAllLines(path, Encoding.UTF8)
@@ -297,23 +304,23 @@ Public Module DataStore
             ' columns: Date|ProductId|ProductName|Type|Quantity|StockBefore|Reason|AdjustedBy
             If f.Length >= 8 AndAlso DateTime.TryParse(f(0), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, whenValue) AndAlso
                Integer.TryParse(f(4), qty) AndAlso Integer.TryParse(f(5), before) Then
-                StockAdjustments.Add(New StockAdjustment With {.AdjustedDate = whenValue, .ProductId = f(1), .ProductName = f(2),
-                    .AdjustmentType = f(3), .Quantity = qty, .StockBefore = before, .Reason = f(6), .AdjustedBy = f(7)})
+                AllStockAdjustments.Add(New StockAdjustment With {.AdjustedDate = whenValue, .ProductId = f(1), .ProductName = f(2),
+                    .AdjustmentType = f(3), .Quantity = qty, .StockBefore = before, .Reason = f(6), .AdjustedBy = f(7), .ShopId = If(f.Length >= 9, f(8), "")})
             End If
         Next
     End Sub
 
     Public Sub SaveStockAdjustments()
-        File.WriteAllLines(FilePathOf("stock_adjustments.txt"), StockAdjustments.Select(Function(x) String.Join("|",
+        File.WriteAllLines(FilePathOf("stock_adjustments.txt"), AllStockAdjustments.Select(Function(x) String.Join("|",
             x.AdjustedDate.ToString("o", CultureInfo.InvariantCulture), SafeField(x.ProductId), SafeField(x.ProductName), SafeField(x.AdjustmentType),
-            x.Quantity, x.StockBefore, SafeField(x.Reason), SafeField(x.AdjustedBy))).ToArray(), Encoding.UTF8)
+            x.Quantity, x.StockBefore, SafeField(x.Reason), SafeField(x.AdjustedBy), SafeField(x.ShopId))).ToArray(), Encoding.UTF8)
     End Sub
 
     ''' <summary>Lowers a product's stock (cashiers may only reduce), logs it, saves and refreshes every screen.</summary>
     Public Function AdjustStock(p As Product, quantity As Integer, adjustmentType As String, reason As String,
                                 adjustedBy As String, ByRef errorMessage As String) As Boolean
         errorMessage = ""
-        If p Is Nothing OrElse Not Products.Contains(p) Then
+        If p Is Nothing OrElse Not AllProducts.Contains(p) Then
             errorMessage = "Item not found."
             Return False
         End If
@@ -328,17 +335,17 @@ Public Module DataStore
 
         Dim before As Integer = p.Stock
         Dim entry As New StockAdjustment With {.AdjustedDate = DateTime.Now, .ProductId = p.Id, .ProductName = p.Name,
-            .AdjustmentType = adjustmentType, .Quantity = quantity, .StockBefore = before, .Reason = reason.Trim(), .AdjustedBy = adjustedBy}
+            .AdjustmentType = adjustmentType, .Quantity = quantity, .StockBefore = before, .Reason = reason.Trim(), .AdjustedBy = adjustedBy, .ShopId = p.ShopId}
         Try
             p.Stock -= quantity
             SyncAvailability(p)
-            StockAdjustments.Add(entry)
+            AllStockAdjustments.Add(entry)
             SaveProducts()
             SaveStockAdjustments()
         Catch ex As Exception
             p.Stock = before
             SyncAvailability(p)
-            StockAdjustments.Remove(entry)
+            AllStockAdjustments.Remove(entry)
             errorMessage = "The adjustment could not be saved: " & ex.Message
             Return False
         End Try
@@ -388,7 +395,7 @@ Public Module DataStore
     ''' <summary>Makes sure counters never fall behind the data already stored.</summary>
     Private Sub SyncCounters()
         Dim maxTrx As Integer = 0
-        For Each t As POS_Transaction In Transactions
+        For Each t As POS_Transaction In AllTransactions
             maxTrx = Math.Max(maxTrx, NumberFromId(t.TransactionID))
         Next
         If PosSettings.NextTransactionNumber <= maxTrx Then
@@ -396,7 +403,7 @@ Public Module DataStore
         End If
 
         Dim maxPrd As Integer = 0
-        For Each p As Product In Products
+        For Each p As Product In AllProducts
             If String.IsNullOrWhiteSpace(p.Id) Then
                 p.Id = "PRD-" & PosSettings.NextProductNumber.ToString("D3")
                 PosSettings.NextProductNumber += 1
@@ -408,7 +415,7 @@ Public Module DataStore
         End If
 
         Dim maxCsh As Integer = 0
-        For Each c As CashierAccount In Cashiers
+        For Each c As CashierAccount In AllCashiers
             maxCsh = Math.Max(maxCsh, NumberFromId(c.Id))
         Next
         If PosSettings.NextCashierNumber <= maxCsh Then
@@ -545,21 +552,25 @@ Public Module DataStore
     '==================================================================
     Public Function AddProduct(p As Product, Optional imageSourcePath As String = "") As Boolean
         Try
+            If Not ShopContext.Can(Permissions.ManageProducts) Then Throw New UnauthorizedAccessException("Only a Manager can add products.")
+            If String.IsNullOrWhiteSpace(p.ShopId) Then p.ShopId = ShopContext.CurrentShopId
+            If p.ShopId = "" Then Throw New InvalidOperationException("Select a shop first.")
+            If Not ShopContext.CanAccess(p.ShopId) Then Throw New UnauthorizedAccessException("You cannot add products to another shop.")
             Do
                 p.Id = "PRD-" & PosSettings.NextProductNumber.ToString("D3")
                 PosSettings.NextProductNumber += 1
-            Loop While Products.Exists(Function(x) x.Id = p.Id)
+            Loop While AllProducts.Exists(Function(x) x.Id = p.Id)
 
             If Not String.IsNullOrWhiteSpace(imageSourcePath) Then StoreProductImage(p, imageSourcePath)
             SyncAvailability(p)
-            Products.Add(p)
+            AllProducts.Add(p)
 
             SaveProducts()
             SaveSettings()
             RaiseEvent ProductsChanged(Nothing, EventArgs.Empty)
             Return True
         Catch ex As Exception
-            Products.Remove(p)
+            AllProducts.Remove(p)
             MessageBox.Show(ex.Message, "BrewPoint POS", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return False
         End Try
@@ -596,7 +607,7 @@ Public Module DataStore
     ''' <summary>Removes the product from the CATALOG only. Transactions are untouched.</summary>
     Public Function DeleteProduct(p As Product) As Boolean
         Try
-            Products.Remove(p)
+            AllProducts.Remove(p)
             SaveProducts()
             If Not String.IsNullOrWhiteSpace(p.ImagePath) Then
                 Try
@@ -627,14 +638,16 @@ Public Module DataStore
         End Try
     End Function
 
-    Public Function FindProduct(id As String, name As String) As Product
+    Public Function FindProduct(id As String, name As String, Optional shopId As String = "") As Product
+        If shopId = "" Then shopId = ShopContext.CurrentShopId
         If Not String.IsNullOrWhiteSpace(id) Then
-            For Each p As Product In Products
+            For Each p As Product In AllProducts
                 If String.Equals(p.Id, id, StringComparison.OrdinalIgnoreCase) Then Return p
             Next
         End If
-        For Each p As Product In Products
-            If String.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase) Then Return p
+        For Each p As Product In AllProducts
+            If String.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase) AndAlso
+               (shopId = "" OrElse String.Equals(p.ShopId, shopId, StringComparison.OrdinalIgnoreCase)) Then Return p
         Next
         Return Nothing
     End Function
@@ -644,29 +657,34 @@ Public Module DataStore
     '==================================================================
     Public Function UsernameExists(username As String, Optional excludeCashierId As String = "") As Boolean
         Dim u As String = username.Trim()
-        For Each c As CashierAccount In Cashiers
+        For Each c As CashierAccount In AllCashiers
             If c.Id <> excludeCashierId AndAlso String.Equals(c.Username, u, StringComparison.OrdinalIgnoreCase) Then Return True
         Next
-        For Each a As AdminAccount In Admins
+        For Each a As AdminAccount In AllAdmins
             If String.Equals(a.Username, u, StringComparison.OrdinalIgnoreCase) Then Return True
         Next
         Return False
     End Function
 
     Public Function FindCashierById(id As String) As CashierAccount
-        For Each c As CashierAccount In Cashiers
+        For Each c As CashierAccount In AllCashiers
             If c.Id = id Then Return c
         Next
         Return Nothing
     End Function
 
     Public Function AddCashier(fullName As String, username As String, password As String,
-                               status As String, ByRef errorMessage As String) As Boolean
+                               status As String, ByRef errorMessage As String,
+                               Optional shopId As String = "") As Boolean
         errorMessage = ""
         If String.IsNullOrWhiteSpace(fullName) Then errorMessage = "Full name is required." : Return False
         If String.IsNullOrWhiteSpace(username) Then errorMessage = "Username is required." : Return False
         If String.IsNullOrEmpty(password) Then errorMessage = "Password is required." : Return False
         If UsernameExists(username) Then errorMessage = "That username is already in use." : Return False
+        If Not ShopContext.Can(Permissions.ManageCashiers) Then errorMessage = "You are not allowed to add cashiers." : Return False
+        Dim targetShop As String = If(shopId <> "", shopId, ShopContext.CurrentShopId)
+        If targetShop = "" Then errorMessage = "Select a shop first." : Return False
+        If Not ShopContext.CanAccess(targetShop) Then errorMessage = "You cannot add cashiers to another shop." : Return False
 
         Dim acc As New CashierAccount With {
             .Id = "CSH-" & PosSettings.NextCashierNumber.ToString("D3"),
@@ -674,15 +692,16 @@ Public Module DataStore
             .Username = username.Trim(),
             .PasswordHash = password,
             .Status = status,
-            .DateAdded = DateTime.Now
+            .DateAdded = DateTime.Now,
+            .ShopId = targetShop
         }
         PosSettings.NextCashierNumber += 1
-        Cashiers.Add(acc)
+        AllCashiers.Add(acc)
         Try
             SaveCashiers()
             SaveSettings()
         Catch ex As Exception
-            Cashiers.Remove(acc)
+            AllCashiers.Remove(acc)
             errorMessage = ex.Message
             Return False
         End Try
@@ -747,11 +766,11 @@ Public Module DataStore
         errorMessage = ""
         Dim acc As CashierAccount = FindCashierById(id)
         If acc Is Nothing Then errorMessage = "Cashier not found." : Return False
-        Cashiers.Remove(acc)
+        AllCashiers.Remove(acc)
         Try
             SaveCashiers()
         Catch ex As Exception
-            Cashiers.Add(acc)
+            AllCashiers.Add(acc)
             errorMessage = ex.Message
             Return False
         End Try
@@ -768,29 +787,52 @@ Public Module DataStore
         Dim u As String = username.Trim()
 
         If role = "admin" Then
-            For Each a As AdminAccount In Admins
+            ' the "Admin" radio button logs in BOTH Managers and the Super Admin
+            For Each a As AdminAccount In AllAdmins
                 If String.Equals(a.Username, u, StringComparison.OrdinalIgnoreCase) Then
                     If Not String.Equals(password, a.PasswordHash, StringComparison.Ordinal) Then Exit For
                     If Not a.IsActive Then
-                        message = "Your administrator account is currently inactive."
+                        message = "Your account is currently inactive."
                         Return False
+                    End If
+                    Dim acctRole As String = UserRoles.Normalize(a.Role)
+                    If acctRole <> UserRoles.SuperAdmin Then
+                        Dim myShop As Shop = FindShop(a.ShopId)
+                        If myShop Is Nothing Then
+                            message = "Your account is not assigned to a shop." & vbCrLf & "Please contact the Super Admin."
+                            Return False
+                        End If
+                        If Not myShop.IsActive Then
+                            message = "Your shop (" & myShop.ShopName & ") is currently inactive."
+                            Return False
+                        End If
                     End If
                     a.LastLogin = DateTime.Now
                     Try
                         SaveAdmins()
                     Catch
                     End Try
-                    CurrentSession.Start(a.Id, a.Username, a.FullName, "admin")
+                    CurrentSession.Start(a.Id, a.Username, a.FullName, If(acctRole = UserRoles.SuperAdmin, UserRoles.SuperAdmin, "admin"))
+                    ShopContext.SignIn(acctRole, If(acctRole = UserRoles.SuperAdmin, "", a.ShopId))
                     Return True
                 End If
             Next
         Else
-            For Each c As CashierAccount In Cashiers
+            For Each c As CashierAccount In AllCashiers
                 If String.Equals(c.Username, u, StringComparison.OrdinalIgnoreCase) Then
                     If Not String.Equals(password, c.PasswordHash, StringComparison.Ordinal) Then Exit For
                     If Not c.IsActive Then
                         message = "Your cashier account is currently inactive." & vbCrLf &
                                   "Please contact the administrator."
+                        Return False
+                    End If
+                    Dim myShop As Shop = FindShop(c.ShopId)
+                    If myShop Is Nothing Then
+                        message = "Your account is not assigned to a shop." & vbCrLf & "Please contact your manager."
+                        Return False
+                    End If
+                    If Not myShop.IsActive Then
+                        message = "Your shop (" & myShop.ShopName & ") is currently inactive."
                         Return False
                     End If
                     c.LastLogin = DateTime.Now
@@ -799,6 +841,7 @@ Public Module DataStore
                     Catch
                     End Try
                     CurrentSession.Start(c.Id, c.Username, c.FullName, "cashier")
+                    ShopContext.SignIn(UserRoles.Cashier, c.ShopId)
                     Return True
                 End If
             Next
@@ -812,7 +855,8 @@ Public Module DataStore
     ' MESSAGES
     '==================================================================
     Public Sub AddMessage(msg As ChatMessage)
-        ChatMessages.Add(msg)
+        If String.IsNullOrWhiteSpace(msg.ShopId) Then msg.ShopId = ShopContext.CurrentShopId
+        AllChatMessages.Add(msg)
         Try
             SaveMessages()
         Catch ex As Exception
@@ -829,7 +873,7 @@ Public Module DataStore
         Do
             id = "TRX-" & PosSettings.NextTransactionNumber.ToString("D4")
             PosSettings.NextTransactionNumber += 1
-        Loop While Transactions.Exists(Function(t) t.TransactionID = id)
+        Loop While AllTransactions.Exists(Function(t) t.TransactionID = id)
         Return id
     End Function
 
@@ -840,14 +884,15 @@ Public Module DataStore
         Do
             id = "TRX-" & n.ToString("D4")
             n += 1
-        Loop While Transactions.Exists(Function(t) t.TransactionID = id)
+        Loop While AllTransactions.Exists(Function(t) t.TransactionID = id)
         Return id
     End Function
 
     ''' <summary>Compatibility wrapper: stores a ready-made transaction.</summary>
     Public Sub AddTransaction(transaction As POS_Transaction)
+        If String.IsNullOrWhiteSpace(transaction.ShopId) Then transaction.ShopId = ShopContext.CurrentShopId
         transaction.TransactionID = NextTransactionId()
-        Transactions.Add(transaction)
+        AllTransactions.Add(transaction)
         SaveTransactions()
         SaveSettings()
         RaiseEvent TransactionsChanged(Nothing, EventArgs.Empty)
@@ -879,9 +924,20 @@ Public Module DataStore
             Return Nothing
         End If
 
+        If ShopContext.CurrentShopId = "" Then
+            errorMessage = "No shop is selected for this sale."
+            Return Nothing
+        End If
+        For Each ln As KeyValuePair(Of Product, Integer) In lines
+            If Not String.Equals(ln.Key.ShopId, ShopContext.CurrentShopId, StringComparison.OrdinalIgnoreCase) Then
+                errorMessage = """" & ln.Key.Name & """ belongs to another shop."
+                Return Nothing
+            End If
+        Next
+
         Dim subtotal As Decimal = 0D
         For Each line As KeyValuePair(Of Product, Integer) In lines
-            If Not Products.Contains(line.Key) Then
+            If Not AllProducts.Contains(line.Key) Then
                 errorMessage = """" & line.Key.Name & """ is no longer available in the product catalog."
                 Return Nothing
             End If
@@ -889,12 +945,16 @@ Public Module DataStore
                 errorMessage = "Invalid quantity for " & line.Key.Name & "."
                 Return Nothing
             End If
-            If line.Value > line.Key.Stock Then
+            If RecipeVariantOf(line.Key) Is Nothing AndAlso line.Value > line.Key.Stock Then
                 errorMessage = "Not enough stock for " & line.Key.Name & " (available: " & line.Key.Stock & ")."
                 Return Nothing
             End If
             subtotal += line.Key.Price * line.Value
         Next
+
+        ' ingredient-based products: every ingredient of every recipe must be enough (checked together)
+        Dim needs As Dictionary(Of String, Decimal) = BuildIngredientNeeds(lines)
+        If Not CheckIngredientNeeds(needs, errorMessage) Then Return Nothing
 
         Dim tax As Decimal = Math.Round(subtotal * PosSettings.TaxRate, 2, MidpointRounding.AwayFromZero)
         Dim total As Decimal = subtotal + tax
@@ -917,7 +977,8 @@ Public Module DataStore
             .Status = TransactionStatus.Completed,
             .CustomerName = If(customerName, "").Trim(),
             .TableName = If(tableName, "").Trim(),
-            .CardType = If(paymentMethod = PaymentMethods.Card, If(cardType, "").Trim(), "")
+            .CardType = If(paymentMethod = PaymentMethods.Card, If(cardType, "").Trim(), ""),
+            .ShopId = ShopContext.CurrentShopId
         }
 
         Dim originalStocks As New Dictionary(Of Product, Integer)
@@ -929,21 +990,28 @@ Public Module DataStore
                 .Price = line.Key.Price          ' PRICE SNAPSHOT
             })
             originalStocks(line.Key) = line.Key.Stock
-            line.Key.Stock -= line.Value
-            SyncAvailability(line.Key)
+            If RecipeVariantOf(line.Key) Is Nothing Then
+                line.Key.Stock -= line.Value        ' old behaviour: product without recipe
+                SyncAvailability(line.Key)
+            End If
         Next
 
         Dim previousNumber As Integer = PosSettings.NextTransactionNumber
         trx.TransactionID = NextTransactionId()
-        Transactions.Add(trx)
+        AllTransactions.Add(trx)
+        Dim recorded As List(Of InventoryAdjustment) = ApplyIngredientNeeds(needs, trx.TransactionID, cashierName, AdjustmentReason.Sale)
+        RefreshRecipeAvailability(trx.ShopId)
 
         Try
             SaveProducts()
             SaveTransactions()
+            SaveIngredientData()
             SaveSettings()
         Catch ex As Exception
             ' roll back memory so nothing is half-saved
-            Transactions.Remove(trx)
+            AllTransactions.Remove(trx)
+            RollbackIngredientAdjustments(recorded)
+            RefreshRecipeAvailability(trx.ShopId)
             PosSettings.NextTransactionNumber = previousNumber
             For Each kv As KeyValuePair(Of Product, Integer) In originalStocks
                 kv.Key.Stock = kv.Value
@@ -953,13 +1021,14 @@ Public Module DataStore
             Return Nothing
         End Try
 
+        RaiseEvent IngredientsChanged(Nothing, EventArgs.Empty)
         RaiseEvent ProductsChanged(Nothing, EventArgs.Empty)
         RaiseEvent TransactionsChanged(Nothing, EventArgs.Empty)
         Return trx
     End Function
 
     Public Function FindTransaction(id As String) As POS_Transaction
-        For Each t As POS_Transaction In Transactions
+        For Each t As POS_Transaction In AllTransactions
             If String.Equals(t.TransactionID, id, StringComparison.OrdinalIgnoreCase) Then Return t
         Next
         Return Nothing
@@ -979,15 +1048,17 @@ Public Module DataStore
         errorMessage = ""
         Dim trx As POS_Transaction = FindTransaction(id)
         If trx Is Nothing Then errorMessage = "Transaction not found." : Return False
+        If Not ShopContext.CanAccess(trx.ShopId) Then errorMessage = "This transaction belongs to another shop." : Return False
         If trx.Status <> TransactionStatus.Completed Then
             errorMessage = "Only completed transactions can be changed. This one is already " & trx.Status & "."
             Return False
         End If
 
+        Dim hadIngredientRecords As Boolean = HasSaleAdjustments(trx.TransactionID)
         Dim restored As New Dictionary(Of Product, Integer)
         For Each item As TransactionItem In trx.Items
-            Dim p As Product = FindProduct(item.ProductId, item.ProductName)
-            If p IsNot Nothing Then
+            Dim p As Product = FindProduct(item.ProductId, item.ProductName, trx.ShopId)
+            If p IsNot Nothing AndAlso Not (hadIngredientRecords AndAlso RecipeVariantOf(p) IsNot Nothing) Then
                 If Not restored.ContainsKey(p) Then restored(p) = 0
                 restored(p) += item.Quantity
             End If
@@ -1002,13 +1073,19 @@ Public Module DataStore
             SyncAvailability(kv.Key)
         Next
 
+        Dim reversed As List(Of InventoryAdjustment) = ReverseSaleAdjustments(trx.TransactionID, changedBy, newStatus)
+        RefreshRecipeAvailability(trx.ShopId)
+
         Try
             SaveProducts()
             SaveTransactions()
+            SaveIngredientData()
         Catch ex As Exception
             trx.Status = oldStatus
             trx.StatusChangedBy = ""
             trx.StatusChangedDate = Nothing
+            RollbackIngredientAdjustments(reversed)
+            RefreshRecipeAvailability(trx.ShopId)
             For Each kv As KeyValuePair(Of Product, Integer) In restored
                 kv.Key.Stock -= kv.Value
                 SyncAvailability(kv.Key)
@@ -1017,6 +1094,7 @@ Public Module DataStore
             Return False
         End Try
 
+        RaiseEvent IngredientsChanged(Nothing, EventArgs.Empty)
         RaiseEvent ProductsChanged(Nothing, EventArgs.Empty)
         RaiseEvent TransactionsChanged(Nothing, EventArgs.Empty)
         Return True
@@ -1169,6 +1247,7 @@ Public Class StockAdjustment
     Public Property StockBefore As Integer
     Public Property Reason As String = ""
     Public Property AdjustedBy As String = ""
+    Public Property ShopId As String = ""
 End Class
 
 '=====================================================================
@@ -1235,6 +1314,7 @@ Public Module AppNavigation
 
     Public Sub ShowLogin()
         CurrentSession.Clear()
+        ShopContext.SignOut()
         For Each f As Form In Application.OpenForms
             Dim login As LoginPage = TryCast(f, LoginPage)
             If login IsNot Nothing Then

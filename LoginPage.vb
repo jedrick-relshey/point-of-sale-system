@@ -48,7 +48,12 @@ Public Class LoginPage
 
 
 
-        If role = "admin" Then
+        If ShopContext.IsSuperAdmin Then
+            ' Super Admin logs in through the "Admin" option and gets the multi-branch dashboard
+            Dim superForm As New SuperAdminForm()
+            superForm.Show()
+        ElseIf role = "admin" Then
+            ' Manager: ShopContext is already set to his own shop by DataStore.Authenticate
             Dim adminForm As New Admin()
             adminForm.Show()
         Else
@@ -126,7 +131,7 @@ Public Class LoginPage
 
         If rbCashier.Checked Then
             Dim found As Boolean = False
-            For Each c As CashierAccount In DataStore.Cashiers
+            For Each c As CashierAccount In DataStore.AllCashiers
                 If String.Equals(c.Username, txtUser.Text.Trim(), StringComparison.OrdinalIgnoreCase) Then found = True
             Next
             If found Then
