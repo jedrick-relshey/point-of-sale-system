@@ -5,7 +5,7 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports Guna.UI2.WinForms
 
-' Admin.Counterly.vb  -  NEW FILE (second half of the Admin class).
+' Admin.ForestUi.vb  -  NEW FILE (second half of the Admin class).
 ' Restyles the sidebar and rebuilds the Messages page to match the Counterly design.
 ' Admin_Designer.vb is NOT changed: the page is laid out in code and re-uses your
 ' existing controls (flpAdminMessages, txtAdminChat, btnAdmin, CashierName,
@@ -53,14 +53,14 @@ Partial Public Class Admin
     '=================================================================
     Private Sub StyleSidebar()
 
-        Navigation.BackColor = Counterly.Navy
+        Navigation.BackColor = ForestUi.Navy
 
         ' remove the old cafe-style bits
         Guna2HtmlLabel40.Visible = False
         Guna2CustomGradientPanel2.Visible = False
 
         ' logo tile + app name
-        Dim logo As Guna2Panel = Counterly.Card(40, 40, 10, Counterly.Teal)
+        Dim logo As Guna2Panel = ForestUi.Card(40, 40, 10, ForestUi.Accent)
         logo.Location = New Point(14, 16)
         Dim logoText As New Label()
         logoText.Dock = DockStyle.Fill
@@ -68,21 +68,21 @@ Partial Public Class Admin
         logoText.ForeColor = Color.White
         logoText.Font = New Font("Segoe UI", 15.0F, FontStyle.Bold)
         logoText.TextAlign = ContentAlignment.MiddleCenter
-        logoText.Text = Counterly.AppName.Substring(0, 1)
+        logoText.Text = ForestUi.AppName.Substring(0, 1)
         logo.Controls.Add(logoText)
         Navigation.Controls.Add(logo)
 
-        Guna2HtmlLabel26.Text = Counterly.AppName
+        Guna2HtmlLabel26.Text = ForestUi.AppName
         Guna2HtmlLabel26.Font = New Font("Segoe UI", 14.0F, FontStyle.Regular)
         Guna2HtmlLabel26.ForeColor = Color.White
         Guna2HtmlLabel26.Location = New Point(62, 14)
 
-        Dim sub1 As Label = Counterly.Lbl("RETAIL OS", 7.5F, FontStyle.Regular, Counterly.NavMuted, 63, 38)
+        Dim sub1 As Label = ForestUi.Lbl(ForestUi.AppSub, 7.5F, FontStyle.Regular, ForestUi.NavMuted, 63, 38)
         Navigation.Controls.Add(sub1)
 
         Guna2HtmlLabel4.Text = "ADMIN WORKSPACE"
         Guna2HtmlLabel4.Font = New Font("Segoe UI", 7.5F, FontStyle.Bold)
-        Guna2HtmlLabel4.ForeColor = Counterly.NavMuted
+        Guna2HtmlLabel4.ForeColor = ForestUi.NavMuted
         Guna2HtmlLabel4.Location = New Point(16, 82)
 
         ' menu buttons, in the order shown in the design
@@ -99,16 +99,16 @@ Partial Public Class Admin
             b.Size = New Size(175, 42)
             b.Location = New Point(12, y)
             b.FillColor = Color.Transparent
-            b.ForeColor = Counterly.NavText
+            b.ForeColor = ForestUi.NavText
             b.Font = navFontOff
-            b.HoverState.FillColor = Counterly.NavHover
+            b.HoverState.FillColor = ForestUi.NavHover
             b.HoverState.ForeColor = Color.White
             b.Cursor = Cursors.Hand
             y += 48
         Next
 
         ' unread badge on the Messages item
-        navBadge = Counterly.Card(22, 22, 11, Counterly.Teal)
+        navBadge = ForestUi.Card(22, 22, 11, ForestUi.Accent)
         navBadgeText = New Label()
         navBadgeText.Dock = DockStyle.Fill
         navBadgeText.BackColor = Color.Transparent
@@ -122,40 +122,55 @@ Partial Public Class Admin
         navBadge.BringToFront()
 
         ' "Need help?" card
-        Dim help As Guna2Panel = Counterly.Card(175, 104, 12, Counterly.NavCard)
+        Dim help As Guna2Panel = ForestUi.Card(175, 104, 12, ForestUi.NavCard)
         help.Location = New Point(12, 420)
         Dim helpIcon As New Label()
         helpIcon.AutoSize = True
         helpIcon.BackColor = Color.Transparent
-        helpIcon.ForeColor = Counterly.Teal
+        helpIcon.ForeColor = ForestUi.Accent
         helpIcon.Font = New Font("Segoe MDL2 Assets", 14.0F)
-        helpIcon.Text = Counterly.GlyphHelp
+        helpIcon.Text = ForestUi.GlyphHelp
         helpIcon.Location = New Point(12, 10)
         help.Controls.Add(helpIcon)
-        help.Controls.Add(Counterly.Lbl("Need help?", 10.0F, FontStyle.Bold, Color.White, 12, 38))
-        Dim helpText As Label = Counterly.Lbl("Visit the operations guide or contact support.", 8.0F,
-                                              FontStyle.Regular, Counterly.NavMuted, 12, 60)
+        help.Controls.Add(ForestUi.Lbl("Need help?", 10.0F, FontStyle.Bold, Color.White, 12, 38))
+        Dim helpText As Label = ForestUi.Lbl("Visit the operations guide or contact support.", 8.0F,
+                                              FontStyle.Regular, ForestUi.NavMuted, 12, 60)
         helpText.AutoSize = False
         helpText.Size = New Size(152, 36)
         help.Controls.Add(helpText)
         Navigation.Controls.Add(help)
 
         ' store status
-        Dim dot As Guna2Panel = Counterly.Card(8, 8, 4, Counterly.Teal)
+        Dim dot As Guna2Panel = ForestUi.Card(8, 8, 4, ForestUi.Accent)
         dot.Location = New Point(20, 548)
+        dot.FillColor = ForestUi.Green
+        dot.Anchor = AnchorStyles.Left Or AnchorStyles.Bottom
+        dot.Top = Math.Max(530, Navigation.Height - 118)
         Navigation.Controls.Add(dot)
-        Navigation.Controls.Add(Counterly.Lbl(Counterly.StoreName & " " & ChrW(&HB7) & " Open", 8.5F,
-                                              FontStyle.Regular, Counterly.NavText, 34, 543))
+        Dim storeLbl As Label = ForestUi.Lbl(ForestUi.StoreName & " " & ChrW(&HB7) & " Open", 8.5F,
+                                             FontStyle.Regular, ForestUi.NavText, 34, dot.Top - 5)
+        storeLbl.Anchor = AnchorStyles.Left Or AnchorStyles.Bottom
+        Navigation.Controls.Add(storeLbl)
 
         ' logout (same button, new look)
         btnAdminLogout.Animated = False
         btnAdminLogout.BorderRadius = 10
         btnAdminLogout.Size = New Size(175, 42)
-        btnAdminLogout.Location = New Point(12, 587)
+        btnAdminLogout.Location = New Point(12, Math.Max(540, Navigation.Height - 62))
+        btnAdminLogout.Anchor = AnchorStyles.Left Or AnchorStyles.Bottom
+        btnAdminLogout.Text = "Log out"
+        btnAdminLogout.TextAlign = HorizontalAlignment.Left
+        btnAdminLogout.TextOffset = New Point(12, 0)
+        Dim logoutLine As New Panel()
+        logoutLine.Size = New Size(175, 1)
+        logoutLine.BackColor = ForestUi.NavCard
+        logoutLine.Location = New Point(12, btnAdminLogout.Top - 8)
+        logoutLine.Anchor = AnchorStyles.Left Or AnchorStyles.Bottom
+        Navigation.Controls.Add(logoutLine)
         btnAdminLogout.FillColor = Color.Transparent
         btnAdminLogout.ForeColor = Color.FromArgb(240, 140, 140)
         btnAdminLogout.Font = navFontOff
-        btnAdminLogout.HoverState.FillColor = Counterly.NavHover
+        btnAdminLogout.HoverState.FillColor = ForestUi.NavHover
         btnAdminLogout.HoverState.ForeColor = Color.White
 
         HighlightNav(pnl_dashboard_system)
@@ -180,9 +195,9 @@ Partial Public Class Admin
 
         For Each b As Guna2Button In navButtons
             Dim isActive As Boolean = (b Is active)
-            b.FillColor = If(isActive, Counterly.NavActive, Color.Transparent)
-            b.HoverState.FillColor = If(isActive, Counterly.NavActive, Counterly.NavHover)
-            b.ForeColor = If(isActive, Color.White, Counterly.NavText)
+            b.FillColor = If(isActive, ForestUi.NavActive, Color.Transparent)
+            b.HoverState.FillColor = If(isActive, ForestUi.NavActive, ForestUi.NavHover)
+            b.ForeColor = If(isActive, Color.White, ForestUi.NavText)
             b.Font = If(isActive, navFontOn, navFontOff)
         Next
     End Sub
@@ -209,7 +224,7 @@ Partial Public Class Admin
 
         Dim pg As Panel = pnl_Messages
         pg.SuspendLayout()
-        pg.BackColor = Counterly.Page
+        pg.BackColor = ForestUi.Page
         pg.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
 
         ' take the old pieces out of the page; some are re-used below
@@ -222,10 +237,10 @@ Partial Public Class Admin
         ' ---------- body: one big rounded card ----------
         Dim body As New Panel()
         body.Dock = DockStyle.Fill
-        body.BackColor = Counterly.Page
+        body.BackColor = ForestUi.Page
         body.Padding = New Padding(24)
 
-        Dim shell As Guna2Panel = Counterly.Card(100, 100, 12, Color.White, Counterly.Border)
+        Dim shell As Guna2Panel = ForestUi.Card(100, 100, 12, ForestUi.CardFill, ForestUi.Border)
         shell.Dock = DockStyle.Fill
         shell.Padding = New Padding(2)
         body.Controls.Add(shell)
@@ -233,16 +248,16 @@ Partial Public Class Admin
         listPane = New Panel()
         listPane.Dock = DockStyle.Left
         listPane.Width = 300
-        listPane.BackColor = Color.White
+        listPane.BackColor = ForestUi.CardFill
 
         Dim sep As New Panel()
         sep.Dock = DockStyle.Left
         sep.Width = 1
-        sep.BackColor = Counterly.Border
+        sep.BackColor = ForestUi.Border
 
         Dim chatPane As New Panel()
         chatPane.Dock = DockStyle.Fill
-        chatPane.BackColor = Counterly.ChatBg
+        chatPane.BackColor = ForestUi.ChatBg
 
         shell.Controls.Add(chatPane)   ' Fill goes first, then the docked edges
         shell.Controls.Add(sep)
@@ -255,34 +270,34 @@ Partial Public Class Admin
         FlowLayoutPanel3.AutoScroll = True
         FlowLayoutPanel3.Padding = Padding.Empty
         FlowLayoutPanel3.Margin = Padding.Empty
-        FlowLayoutPanel3.BackColor = Color.White
+        FlowLayoutPanel3.BackColor = ForestUi.CardFill
         FlowLayoutPanel3.Anchor = AnchorStyles.Top Or AnchorStyles.Left
         listPane.Controls.Add(FlowLayoutPanel3)
 
         listSearchWrap = New Panel()
         listSearchWrap.Dock = DockStyle.Top
         listSearchWrap.Height = 66
-        listSearchWrap.BackColor = Color.White
+        listSearchWrap.BackColor = ForestUi.CardFill
 
-        listSearchBox = Counterly.Card(260, 44, 10, Color.White, Counterly.Border)
+        listSearchBox = ForestUi.Card(260, 44, 10, ForestUi.CardFill, ForestUi.Border)
         listSearchBox.Location = New Point(20, 4)
         Dim searchIcon As New Label()
         searchIcon.AutoSize = True
         searchIcon.BackColor = Color.Transparent
-        searchIcon.ForeColor = Counterly.Muted
+        searchIcon.ForeColor = ForestUi.Muted
         searchIcon.Font = New Font("Segoe MDL2 Assets", 11.0F)
-        searchIcon.Text = Counterly.GlyphSearch
+        searchIcon.Text = ForestUi.GlyphSearch
         searchIcon.Location = New Point(14, 13)
         listSearchBox.Controls.Add(searchIcon)
 
         convoSearch = New Guna2TextBox()
         convoSearch.BorderThickness = 0
         convoSearch.BorderRadius = 0
-        convoSearch.FillColor = Color.White
+        convoSearch.FillColor = ForestUi.CardFill
         convoSearch.Font = New Font("Segoe UI", 10.0F)
-        convoSearch.ForeColor = Counterly.Ink
+        convoSearch.ForeColor = ForestUi.Ink
         convoSearch.PlaceholderText = "Search team members"
-        convoSearch.PlaceholderForeColor = Counterly.Muted
+        convoSearch.PlaceholderForeColor = ForestUi.Muted
         convoSearch.Location = New Point(42, 6)
         convoSearch.Size = New Size(205, 32)
         listSearchBox.Controls.Add(convoSearch)
@@ -293,9 +308,9 @@ Partial Public Class Admin
         listTitleRow = New Panel()
         listTitleRow.Dock = DockStyle.Top
         listTitleRow.Height = 72
-        listTitleRow.BackColor = Color.White
-        listTitleRow.Controls.Add(Counterly.Lbl("Team conversations", 12.0F, FontStyle.Regular, Counterly.Ink, 22, 24))
-        listCompose = Counterly.GlyphButton(Counterly.GlyphEdit, 36, Counterly.TealSoft, Counterly.Teal)
+        listTitleRow.BackColor = ForestUi.CardFill
+        listTitleRow.Controls.Add(ForestUi.Lbl("Team conversations", 12.0F, FontStyle.Regular, ForestUi.Ink, 22, 24))
+        listCompose = ForestUi.GlyphButton(ForestUi.GlyphEdit, 36, ForestUi.AccentSoft, ForestUi.Accent)
         listCompose.Location = New Point(244, 18)
         listTitleRow.Controls.Add(listCompose)
         AddHandler listCompose.Click, AddressOf ListCompose_Click
@@ -305,7 +320,7 @@ Partial Public Class Admin
         ' messages area (re-used control)
         flpAdminMessages.Dock = DockStyle.Fill
         flpAdminMessages.Anchor = AnchorStyles.Top Or AnchorStyles.Left
-        flpAdminMessages.BackColor = Counterly.ChatBg
+        flpAdminMessages.BackColor = ForestUi.ChatBg
         flpAdminMessages.FlowDirection = FlowDirection.TopDown
         flpAdminMessages.WrapContents = False
         flpAdminMessages.AutoScroll = True
@@ -316,33 +331,33 @@ Partial Public Class Admin
         composer = New Panel()
         composer.Dock = DockStyle.Bottom
         composer.Height = 76
-        composer.BackColor = Color.White
+        composer.BackColor = ForestUi.CardFill
         Dim composerLine As New Panel()
         composerLine.Dock = DockStyle.Top
         composerLine.Height = 1
-        composerLine.BackColor = Counterly.Border
+        composerLine.BackColor = ForestUi.Border
         composer.Controls.Add(composerLine)
 
         txtAdminChat.Anchor = AnchorStyles.Top Or AnchorStyles.Left
         txtAdminChat.BorderRadius = 10
-        txtAdminChat.BorderColor = Counterly.Border
-        txtAdminChat.FillColor = Counterly.Page
-        txtAdminChat.ForeColor = Counterly.Ink
+        txtAdminChat.BorderColor = ForestUi.Border
+        txtAdminChat.FillColor = ForestUi.Page
+        txtAdminChat.ForeColor = ForestUi.Ink
         txtAdminChat.Font = New Font("Segoe UI", 10.0F)
         txtAdminChat.PlaceholderText = "Type a message..."
-        txtAdminChat.PlaceholderForeColor = Counterly.Muted
-        txtAdminChat.FocusedState.BorderColor = Counterly.Teal
-        txtAdminChat.HoverState.BorderColor = Counterly.Teal
+        txtAdminChat.PlaceholderForeColor = ForestUi.Muted
+        txtAdminChat.FocusedState.BorderColor = ForestUi.Accent
+        txtAdminChat.HoverState.BorderColor = ForestUi.Accent
         composer.Controls.Add(txtAdminChat)
         AddHandler txtAdminChat.KeyDown, AddressOf TxtAdminChat_KeyDown
 
         btnAdmin.Anchor = AnchorStyles.Top Or AnchorStyles.Left
         btnAdmin.Animated = False
         btnAdmin.BorderRadius = 10
-        btnAdmin.FillColor = Counterly.Teal
+        btnAdmin.FillColor = ForestUi.Accent
         btnAdmin.ForeColor = Color.White
         btnAdmin.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
-        btnAdmin.HoverState.FillColor = Counterly.TealDark
+        btnAdmin.HoverState.FillColor = ForestUi.AccentDark
         btnAdmin.Text = "Send"
         btnAdmin.Cursor = Cursors.Hand
         btnAdmin.Size = New Size(96, 44)
@@ -354,38 +369,38 @@ Partial Public Class Admin
         chatHeader = New Panel()
         chatHeader.Dock = DockStyle.Top
         chatHeader.Height = 76
-        chatHeader.BackColor = Color.White
+        chatHeader.BackColor = ForestUi.CardFill
         Dim headerLine As New Panel()
         headerLine.Dock = DockStyle.Bottom
         headerLine.Height = 1
-        headerLine.BackColor = Counterly.Border
+        headerLine.BackColor = ForestUi.Border
         chatHeader.Controls.Add(headerLine)
 
         chatAvatarHost = New Panel()
         chatAvatarHost.Size = New Size(44, 44)
         chatAvatarHost.Location = New Point(24, 16)
-        chatAvatarHost.BackColor = Color.White
+        chatAvatarHost.BackColor = ForestUi.CardFill
         chatHeader.Controls.Add(chatAvatarHost)
 
         CashierName.Font = New Font("Segoe UI", 11.0F, FontStyle.Regular)
-        CashierName.ForeColor = Counterly.Ink
+        CashierName.ForeColor = ForestUi.Ink
         CashierName.BackColor = Color.Transparent
         CashierName.Location = New Point(80, 16)
         chatHeader.Controls.Add(CashierName)
 
-        chatStatusDot = Counterly.Card(8, 8, 4, Counterly.Teal)
+        chatStatusDot = ForestUi.Card(8, 8, 4, ForestUi.Accent)
         chatStatusDot.Location = New Point(82, 46)
         chatHeader.Controls.Add(chatStatusDot)
 
         Guna2HtmlLabel60.Text = "Cashier terminal"
         Guna2HtmlLabel60.Font = New Font("Segoe UI", 8.5F, FontStyle.Regular)
-        Guna2HtmlLabel60.ForeColor = Counterly.Muted
+        Guna2HtmlLabel60.ForeColor = ForestUi.Muted
         Guna2HtmlLabel60.BackColor = Color.Transparent
         Guna2HtmlLabel60.Location = New Point(96, 41)
         chatHeader.Controls.Add(Guna2HtmlLabel60)
 
-        chatCall = Counterly.GlyphButton(Counterly.GlyphPhone, 36, Counterly.Page, Counterly.Muted)
-        chatMore = Counterly.GlyphButton(Counterly.GlyphMore, 36, Counterly.Page, Counterly.Muted)
+        chatCall = ForestUi.GlyphButton(ForestUi.GlyphPhone, 36, ForestUi.Page, ForestUi.Muted)
+        chatMore = ForestUi.GlyphButton(ForestUi.GlyphMore, 36, ForestUi.Page, ForestUi.Muted)
         chatHeader.Controls.Add(chatCall)
         chatHeader.Controls.Add(chatMore)
         AddHandler chatHeader.Resize, AddressOf ChatHeader_Resize
@@ -397,35 +412,35 @@ Partial Public Class Admin
         hdrPanel = New Panel()
         hdrPanel.Dock = DockStyle.Top
         hdrPanel.Height = 80
-        hdrPanel.BackColor = Color.White
+        hdrPanel.BackColor = ForestUi.CardFill
         Dim hdrLine As New Panel()
         hdrLine.Dock = DockStyle.Bottom
         hdrLine.Height = 1
-        hdrLine.BackColor = Counterly.Border
+        hdrLine.BackColor = ForestUi.Border
         hdrPanel.Controls.Add(hdrLine)
 
-        hdrPanel.Controls.Add(Counterly.Lbl("Messages", 17.0F, FontStyle.Regular, Counterly.Ink, 28, 12))
-        hdrPanel.Controls.Add(Counterly.Lbl("Coordinate with cashiers and keep store operations moving", 9.5F,
-                                            FontStyle.Regular, Counterly.Muted, 29, 46))
+        hdrPanel.Controls.Add(ForestUi.Lbl("Messages", 17.0F, FontStyle.Regular, ForestUi.Ink, 28, 12))
+        hdrPanel.Controls.Add(ForestUi.Lbl("Coordinate with cashiers and keep store operations moving", 9.5F,
+                                            FontStyle.Regular, ForestUi.Muted, 29, 46))
 
-        hdrBell = Counterly.GlyphButton(Counterly.GlyphBell, 40, Color.White, Counterly.Ink)
-        hdrBell.BorderColor = Counterly.Border
+        hdrBell = ForestUi.GlyphButton(ForestUi.GlyphBell, 40, ForestUi.CardFill, ForestUi.Ink)
+        hdrBell.BorderColor = ForestUi.Border
         hdrBell.BorderThickness = 1
         hdrPanel.Controls.Add(hdrBell)
 
         hdrDivider = New Panel()
         hdrDivider.Size = New Size(1, 40)
-        hdrDivider.BackColor = Counterly.Border
+        hdrDivider.BackColor = ForestUi.Border
         hdrPanel.Controls.Add(hdrDivider)
 
-        hdrAvatar = Counterly.Avatar("AD", 40, Counterly.TealSoft, Counterly.Teal)
+        hdrAvatar = ForestUi.Avatar("AD", 40, ForestUi.AccentSoft, ForestUi.Accent)
         hdrPanel.Controls.Add(hdrAvatar)
-        hdrUserName = Counterly.Lbl("Admin", 10.0F, FontStyle.Bold, Counterly.Ink)
-        hdrUserRole = Counterly.Lbl("Administrator", 8.5F, FontStyle.Regular, Counterly.Muted)
+        hdrUserName = ForestUi.Lbl("Admin", 10.0F, FontStyle.Bold, ForestUi.Ink)
+        hdrUserRole = ForestUi.Lbl("Administrator", 8.5F, FontStyle.Regular, ForestUi.Muted)
         hdrPanel.Controls.Add(hdrUserName)
         hdrPanel.Controls.Add(hdrUserRole)
 
-        hdrLogout = Counterly.GlyphButton(Counterly.GlyphPower, 36, Color.White, Counterly.Danger)
+        hdrLogout = ForestUi.GlyphButton(ForestUi.GlyphPower, 36, ForestUi.CardFill, ForestUi.Danger)
         hdrPanel.Controls.Add(hdrLogout)
         AddHandler hdrLogout.Click, AddressOf HdrLogout_Click
         AddHandler hdrPanel.Resize, AddressOf HdrPanel_Resize
@@ -530,7 +545,7 @@ Partial Public Class Admin
         If w < 100 Then w = 299
 
         If names.Count = 0 Then
-            Dim empty As Label = Counterly.Lbl("No team members found.", 9.5F, FontStyle.Regular, Counterly.Muted, 0, 0)
+            Dim empty As Label = ForestUi.Lbl("No team members found.", 9.5F, FontStyle.Regular, ForestUi.Muted, 0, 0)
             empty.AutoSize = False
             empty.Size = New Size(w, 60)
             empty.TextAlign = ContentAlignment.MiddleCenter
@@ -545,7 +560,7 @@ Partial Public Class Admin
         ' chat header follows the selection
         CashierName.Text = If(selectedConvo = "", "Cashier Team", selectedConvo)
         chatAvatarHost.Controls.Clear()
-        AddAvatarSafe(chatAvatarHost, CashierName.Text, 44, Counterly.TealSoft, Counterly.Teal, Point.Empty)
+        AddAvatarSafe(chatAvatarHost, CashierName.Text, 44, ForestUi.AccentSoft, ForestUi.Accent, Point.Empty)
     End Sub
 
     ' Adds a cashier avatar. If the cashier's photo can't be drawn (e.g. an image that was already disposed
@@ -567,7 +582,7 @@ Partial Public Class Admin
                 If initials.Length = 2 Then Exit For
             Next
             If initials = "" Then initials = "C"
-            Dim fb As Control = Counterly.Avatar(initials, size, back, fore)
+            Dim fb As Control = ForestUi.Avatar(initials, size, back, fore)
             If loc <> Point.Empty Then fb.Location = loc
             host.Controls.Add(fb)
         End Try
@@ -592,24 +607,24 @@ Partial Public Class Admin
         Dim p As New Panel()
         p.Size = New Size(w, h)
         p.Margin = Padding.Empty
-        p.BackColor = If(isSel, Counterly.TealSoft, Color.White)
+        p.BackColor = If(isSel, ForestUi.AccentSoft, ForestUi.CardFill)
         p.Cursor = Cursors.Hand
         p.Tag = nm
 
         AddAvatarSafe(p, nm, 40,
-                      If(isSel, Color.FromArgb(205, 240, 234), Counterly.AvatarGray),
-                      If(isSel, Counterly.Teal, Counterly.Ink), New Point(16, 21))
+                      If(isSel, Color.FromArgb(205, 240, 234), ForestUi.AvatarGray),
+                      If(isSel, ForestUi.Accent, ForestUi.Ink), New Point(16, 21))
 
-        p.Controls.Add(Counterly.Lbl(nm, 10.0F, FontStyle.Bold, Counterly.Ink, 68, 17))
+        p.Controls.Add(ForestUi.Lbl(nm, 10.0F, FontStyle.Bold, ForestUi.Ink, 68, 17))
 
-        Dim preview As Label = Counterly.Lbl(If(hasLast, lastText, "Cashier"), 9.0F, FontStyle.Regular, Counterly.Muted, 68, 41)
+        Dim preview As Label = ForestUi.Lbl(If(hasLast, lastText, "Cashier"), 9.0F, FontStyle.Regular, ForestUi.Muted, 68, 41)
         preview.AutoSize = False
         preview.AutoEllipsis = True
         preview.Size = New Size(Math.Max(40, w - 68 - 16), 20)
         p.Controls.Add(preview)
 
         If hasLast Then
-            Dim tm As Label = Counterly.Lbl(Counterly.TimeAgo(lastTime), 8.0F, FontStyle.Regular, Counterly.Muted)
+            Dim tm As Label = ForestUi.Lbl(ForestUi.TimeAgo(lastTime), 8.0F, FontStyle.Regular, ForestUi.Muted)
             tm.Location = New Point(w - tm.Width - 16, 19)
             p.Controls.Add(tm)
         End If
@@ -668,7 +683,7 @@ Partial Public Class Admin
                 lastDate = chat.TimeSent.Date
                 Dim dateText As String = If(lastDate = DateTime.Today, "TODAY", lastDate.ToString("dddd").ToUpper()) _
                                       & " " & ChrW(&HB7) & " " & lastDate.ToString("MMMM d").ToUpper()
-                Dim divider As Label = Counterly.Lbl(dateText, 8.0F, FontStyle.Regular, Counterly.Muted)
+                Dim divider As Label = ForestUi.Lbl(dateText, 8.0F, FontStyle.Regular, ForestUi.Muted)
                 divider.AutoSize = False
                 divider.Size = New Size(areaW, 34)
                 divider.TextAlign = ContentAlignment.MiddleCenter
@@ -706,16 +721,16 @@ Partial Public Class Admin
         Dim bubbleW As Integer = contentW + 2 * padX
         Dim bubbleH As Integer = padY + txtSize.Height + 8 + metaSize.Height + padY
 
-        Dim fill As Color = If(fromAdmin, Counterly.Bubble, Color.White)
+        Dim fill As Color = If(fromAdmin, ForestUi.Bubble, ForestUi.CardFill)
         Dim bubble As Guna2Panel = If(fromAdmin,
-                                      Counterly.Card(bubbleW, bubbleH, 12, fill),
-                                      Counterly.Card(bubbleW, bubbleH, 12, fill, Color.FromArgb(238, 242, 246)))
+                                      ForestUi.Card(bubbleW, bubbleH, 12, fill),
+                                      ForestUi.Card(bubbleW, bubbleH, 12, fill, Color.FromArgb(238, 242, 246)))
 
         Dim msgLbl As New Label()
         msgLbl.AutoSize = False
         msgLbl.UseMnemonic = False
         msgLbl.BackColor = Color.Transparent
-        msgLbl.ForeColor = If(fromAdmin, Color.White, Counterly.Ink)
+        msgLbl.ForeColor = If(fromAdmin, Color.White, ForestUi.Ink)
         msgLbl.Font = bubbleFont
         msgLbl.Text = txt
         msgLbl.Location = New Point(padX, padY)

@@ -36,6 +36,7 @@ Public Class Admin
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         DataStore.Initialize()
+        ApplyResponsiveLayout()
 
         txtPass.UseSystemPasswordChar = True
         txtConfirmPass.UseSystemPasswordChar = True
@@ -43,6 +44,7 @@ Public Class Admin
 
         SetupCashierGrid()
         StyleSidebar()
+        BuildDashboardUi()
         BuildInventoryUi()
         SetupHistory()
         BuildMessagingLayout()
@@ -142,6 +144,7 @@ Public Class Admin
         lbl_TodaySales.Text = Peso(DataStore.GetTodaySales())
         lbl_TotalOrders.Text = DataStore.GetTodayOrderCount().ToString()
         lbl_LowStock.Text = DataStore.GetLowStockCount().ToString()
+        RefreshDashboardUi()
     End Sub
 
     Private Sub RefreshAdminData()
