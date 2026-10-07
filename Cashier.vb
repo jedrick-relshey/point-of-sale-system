@@ -16,6 +16,7 @@ Public Class Cashier
 
     Private cart As New Dictionary(Of Product, Integer)
     Private selectedCategory As String = "All"
+    Private rebuildingCart As Boolean = False
 
     Private isProcessing As Boolean = False
     Private closingForLogout As Boolean = False
@@ -2365,17 +2366,17 @@ Public Class Cashier
     Private Sub UpdateCartDisplay()
 
         fl_MenuProduct.SuspendLayout()
-        fl_MenuProduct.Controls.Clear()
+        rebuildingCart = True
+        ClearFlow(fl_MenuProduct)
+        rebuildingCart = False
         DisposeCartThumbs()
 
         Dim itemW As Integer = Math.Max(220, fl_MenuProduct.ClientSize.Width - 16 - SystemInformation.VerticalScrollBarWidth - 6)
-        Dim itemCount As Integer = 0
 
         For Each item As KeyValuePair(Of Product, Integer) In cart
 
             Dim product As Product = item.Key
             Dim quantity As Integer = item.Value
-            itemCount += quantity
 
             Dim row As New Panel()
             row.Width = itemW
@@ -2418,44 +2419,61 @@ Public Class Cashier
             noteLabel.ForeColor = Muted
             noteLabel.BackColor = CardFill
 
+            ' "-" button  (symbol is drawn, so it always shows)
             Dim minusButton As New Guna2Button()
-            minusButton.Text = "-"
             minusButton.Size = New Size(24, 24)
             minusButton.Location = New Point(62, 36)
             minusButton.BorderRadius = 6
             minusButton.FillColor = Color.White
             minusButton.BorderThickness = 1
             minusButton.BorderColor = CardBorder
-            minusButton.ForeColor = Ink
-            minusButton.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
-            minusButton.HoverState.FillColor = AccentSoft
-            minusButton.HoverState.ForeColor = Ink
+            minusButton.HoverState.FillColor = Color.FromArgb(240, 214, 196)
             minusButton.Cursor = Cursors.Hand
             minusButton.BackColor = CardFill
+            minusButton.ImageSize = New Size(12, 12)
+            minusButton.ImageAlign = HorizontalAlignment.Center
+            Dim minusIcon As Bitmap = MakeSymbolIcon(False)
+            cartThumbs.Add(minusIcon)
+            minusButton.Image = minusIcon
 
-            Dim quantityLabel As New Label()
-            quantityLabel.Text = quantity.ToString()
-            quantityLabel.Size = New Size(26, 24)
-            quantityLabel.Location = New Point(88, 36)
-            quantityLabel.TextAlign = ContentAlignment.MiddleCenter
-            quantityLabel.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
-            quantityLabel.ForeColor = Ink
-            quantityLabel.BackColor = CardFill
+            ' editable quantity box: type a bulk quantity directly (digits only, capped at stock)
+            Dim qtyHost As New Guna2Panel()
+            qtyHost.Size = New Size(48, 24)
+            qtyHost.Location = New Point(90, 36)
+            qtyHost.BorderRadius = 6
+            qtyHost.BorderThickness = 1
+            qtyHost.BorderColor = CardBorder
+            qtyHost.FillColor = Color.White
+            qtyHost.BackColor = CardFill
 
+            Dim qtyBox As New TextBox()
+            qtyBox.BorderStyle = BorderStyle.None
+            qtyBox.BackColor = Color.White
+            qtyBox.ForeColor = Ink
+            qtyBox.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
+            qtyBox.TextAlign = HorizontalAlignment.Center
+            qtyBox.MaxLength = 4
+            qtyBox.Text = quantity.ToString()
+            qtyBox.Width = 40
+            qtyBox.Location = New Point(4, 4)
+            qtyHost.Controls.Add(qtyBox)
+
+            ' "+" button  (symbol is drawn, so it always shows)
             Dim plusButton As New Guna2Button()
-            plusButton.Text = "+"
             plusButton.Size = New Size(24, 24)
-            plusButton.Location = New Point(116, 36)
+            plusButton.Location = New Point(142, 36)
             plusButton.BorderRadius = 6
             plusButton.FillColor = AccentSoft
             plusButton.BorderThickness = 1
             plusButton.BorderColor = Color.FromArgb(226, 190, 165)
-            plusButton.ForeColor = Ink
-            plusButton.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
-            plusButton.HoverState.FillColor = Accent
-            plusButton.HoverState.ForeColor = Color.White
+            plusButton.HoverState.FillColor = Color.FromArgb(240, 214, 196)
             plusButton.Cursor = Cursors.Hand
             plusButton.BackColor = CardFill
+            plusButton.ImageSize = New Size(12, 12)
+            plusButton.ImageAlign = HorizontalAlignment.Center
+            Dim plusIcon As Bitmap = MakeSymbolIcon(True)
+            cartThumbs.Add(plusIcon)
+            plusButton.Image = plusIcon
 
             Dim deleteButton As New Label()
             deleteButton.Text = "Remove"
@@ -2467,8 +2485,33 @@ Public Class Cashier
             deleteButton.BackColor = CardFill
             deleteButton.Cursor = Cursors.Hand
 
-            AddHandler minusButton.Click, Sub(s As Object, ev As EventArgs) DecreaseQuantity(product)
-            AddHandler plusButton.Click, Sub(s As Object, ev As EventArgs) IncreaseQuantity(product)
+            AddHandler minusButton.Click, Sub(s As Object, ev As EventArgs)
+                                              CommitQuantity(product, qtyBox, itemTotalLabel)
+                                              DecreaseQuantity(product)
+                                          End Sub
+            AddHandler plusButton.Click, Sub(s As Object, ev As EventArgs)
+                                             CommitQuantity(product, qtyBox, itemTotalLabel)
+                                             IncreaseQuantity(product)
+                                         End Sub
+
+            AddHandler qtyBox.KeyPress, Sub(s As Object, ev As KeyPressEventArgs)
+                                            If Not Char.IsControl(ev.KeyChar) AndAlso Not Char.IsDigit(ev.KeyChar) Then ev.Handled = True
+                                        End Sub
+            AddHandler qtyBox.KeyDown, Sub(s As Object, ev As KeyEventArgs)
+                                           If ev.KeyCode = Keys.Enter Then
+                                               ev.SuppressKeyPress = True
+                                               CommitQuantity(product, qtyBox, itemTotalLabel)
+                                               qtyBox.SelectAll()
+                                           End If
+                                       End Sub
+            AddHandler qtyBox.Enter, Sub(s As Object, ev As EventArgs)
+                                         qtyHost.BorderColor = Accent
+                                         qtyBox.BeginInvoke(New MethodInvoker(Sub() qtyBox.SelectAll()))
+                                     End Sub
+            AddHandler qtyBox.Leave, Sub(s As Object, ev As EventArgs)
+                                         qtyHost.BorderColor = CardBorder
+                                         CommitQuantity(product, qtyBox, itemTotalLabel)
+                                     End Sub
             AddHandler deleteButton.Click, Sub(s As Object, ev As EventArgs) DeleteCartItem(product)
 
             row.Controls.Add(pic)
@@ -2476,7 +2519,7 @@ Public Class Cashier
             row.Controls.Add(itemTotalLabel)
             row.Controls.Add(noteLabel)
             row.Controls.Add(minusButton)
-            row.Controls.Add(quantityLabel)
+            row.Controls.Add(qtyHost)
             row.Controls.Add(plusButton)
             row.Controls.Add(deleteButton)
 
@@ -2485,11 +2528,62 @@ Public Class Cashier
 
         fl_MenuProduct.ResumeLayout()
 
+        UpdateCartSummary()
+    End Sub
+
+    ''' <summary>Item count, "empty" hint and totals (does not rebuild the rows).</summary>
+    Private Sub UpdateCartSummary()
+        Dim itemCount As Integer = 0
+        For Each q As Integer In cart.Values
+            itemCount += q
+        Next
         If lblCartCount IsNot Nothing Then lblCartCount.Text = itemCount.ToString() & If(itemCount = 1, " item", " items")
         If lblEmpty IsNot Nothing Then lblEmpty.Visible = (cart.Count = 0)
-
         UpdateTotals()
     End Sub
+
+    ''' <summary>Applies a quantity typed into the cart row (bulk orders). Capped at the available stock.</summary>
+    Private Sub CommitQuantity(product As Product, qtyBox As TextBox, totalLabel As Label)
+        If rebuildingCart OrElse Not cart.ContainsKey(product) Then Return
+        Dim current As Integer = cart(product)
+        Dim entered As Integer
+
+        If Not Integer.TryParse(qtyBox.Text.Trim(), entered) OrElse entered < 1 Then
+            qtyBox.Text = current.ToString()      ' empty / 0 / invalid: keep the old quantity (use Remove to delete)
+            Return
+        End If
+
+        If entered > product.Stock Then
+            entered = product.Stock
+            qtyBox.Text = entered.ToString()
+            MessageBox.Show("Only " & product.Stock.ToString() & " available in stock for " & product.Name &
+                            "." & vbCrLf & "Quantity set to " & entered.ToString() & ".", "Stock Limit",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+
+        qtyBox.Text = entered.ToString()
+        If entered = current Then Return
+
+        cart(product) = entered
+        totalLabel.Text = Peso(product.Price * entered)
+        UpdateCartSummary()
+    End Sub
+
+    ''' <summary>Small drawn "+" or "-" icon for the cart buttons.</summary>
+    Private Shared Function MakeSymbolIcon(isPlus As Boolean) As Bitmap
+        Dim bmp As New Bitmap(12, 12)
+        Using g As Graphics = Graphics.FromImage(bmp)
+            g.SmoothingMode = SmoothingMode.AntiAlias
+            g.Clear(Color.Transparent)
+            Using pen As New Pen(Ink, 2.0F)
+                pen.StartCap = LineCap.Round
+                pen.EndCap = LineCap.Round
+                g.DrawLine(pen, 2.0F, 6.0F, 10.0F, 6.0F)
+                If isPlus Then g.DrawLine(pen, 6.0F, 2.0F, 6.0F, 10.0F)
+            End Using
+        End Using
+        Return bmp
+    End Function
 
     Private Sub DeleteCartItem(product As Product)
         If Not cart.ContainsKey(product) Then Exit Sub
