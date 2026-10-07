@@ -2685,6 +2685,14 @@ Public Class Cashier
         LoadProducts()
     End Sub
 
+    Private Sub dshbrd_Pnl_Paint(sender As Object, e As PaintEventArgs) Handles dshbrd_Pnl.Paint
+
+    End Sub
+
+    Private Sub Guna2PictureBox1_Click(sender As Object, e As EventArgs) Handles Guna2PictureBox1.Click
+
+    End Sub
+
     Private Sub btn_IcedCoffee_Click(sender As Object, e As EventArgs) Handles btn_IcedCoffee.Click
         selectedCategory = "Iced Coffee"
         LoadProducts()
