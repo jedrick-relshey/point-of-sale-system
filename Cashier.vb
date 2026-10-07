@@ -1414,7 +1414,7 @@ Public Class Cashier
         Dim kind As String = cboAdjType.Text
 
         If kind = "Damaged" OrElse kind = "Lost" Then
-            If MessageBox.Show(kind & " adjustments require permission." & vbCrLf & "Do you have approval to continue?",
+            If MessageBox.Show(kind & " Are you sure you want to adjust" & vbCrLf & "the current stock?",
                                "Permission required", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then Return
         End If
 
