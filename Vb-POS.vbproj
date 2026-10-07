@@ -339,5 +339,20 @@
   <ItemGroup>
     <None Include="Resources\cafe_photo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\total-items-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\in-stock-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\in-stock-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\low-stock-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\out-of-stock-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
