@@ -172,7 +172,11 @@ Public Class Cashier
     End Sub
 
     Private Sub btn_invtry_Click(sender As Object, e As EventArgs) Handles btn_invtry.Click
-        ShowCashierPanel(Panel1, btn_invtry)
+        ShowCashierPanel(Panel1, btn_invtry)          ' Panel1 is visible from here on
+        If Not ingredientViewAttached Then
+            ingredientViewAttached = True
+            AttachIngredientInventory()                ' [Products] [Ingredients] switch, built while the page is really showing
+        End If
         RefreshCashierInventory()
     End Sub
 
@@ -1042,7 +1046,9 @@ Public Class Cashier
         LayoutKpiRows()
         BuildAdjustPanel()
         RefreshCashierInventory()
-        AttachIngredientInventory()          ' MULTI-BRANCH: [Products] [Ingredients] on this same page
+        ' NOTE: AttachIngredientInventory() is NOT called here any more. It runs the first time the Inventory
+        ' page is opened (btn_invtry_Click), because while the form is still loading Panel1 is hidden and the
+        ' [Products] [Ingredients] switch would remember NO controls to bring back for the Products side.
     End Sub
 
     '=================================================================
@@ -1050,6 +1056,8 @@ Public Class Cashier
     ' low stock, report wastage / damage / lost). The Products side is the old screen, unchanged.
     ' What the cashier may do is decided by ShopContext permissions inside the view.
     '=================================================================
+    Private ingredientViewAttached As Boolean = False
+
     Private Sub AttachIngredientInventory()
         Dim view As New IngredientInventoryView(Panel1.BackColor)
         view.SetBounds(20, 76, Panel1.Width - 40, Panel1.Height - 96)

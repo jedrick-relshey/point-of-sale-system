@@ -18,7 +18,8 @@ Imports System.Text.RegularExpressions
 '
 ' Old messages (Sender "Cashier" / "Admin", Receiver "Admin" / "Cashier") still load:
 '   - old cashier messages that start with "[Stock adjustment] Name:" go to that cashier
-'   - old admin messages (Receiver "Cashier") are shown in every cashier's chat
+'   - old admin messages with no named cashier (Receiver "Cashier") are NOT shown in any chat any more,
+'     so a newly created cashier always starts with an empty conversation (the lines stay in messages.txt)
 '
 ' Read / unread is kept in message_reads.txt (one line per reader + cashier).
 '=====================================================================
@@ -65,8 +66,8 @@ Partial Public Module DataStore
         Return target
     End Function
 
-    ''' <summary>All messages of one cashier's conversation, oldest first.</summary>
-    Public Function ThreadMessages(cashierName As String, Optional includeBroadcast As Boolean = True) As List(Of ChatMessage)
+    ''' <summary>All messages of one cashier's conversation, oldest first. Old broadcast messages are only included when includeBroadcast = True (default False).</summary>
+    Public Function ThreadMessages(cashierName As String, Optional includeBroadcast As Boolean = False) As List(Of ChatMessage)
         Dim result As New List(Of ChatMessage)()
         If String.IsNullOrWhiteSpace(cashierName) Then Return result
 
@@ -170,7 +171,7 @@ Partial Public Module DataStore
 
         ' newest message that the reader has to look at
         Dim latest As DateTime = DateTime.MinValue
-        For Each m As ChatMessage In ThreadMessages(cashierName, Not asAdmin)
+        For Each m As ChatMessage In ThreadMessages(cashierName, False)
             If IsFromCashier(m) = asAdmin AndAlso m.TimeSent > latest Then latest = m.TimeSent
         Next
         If latest = DateTime.MinValue Then Return
