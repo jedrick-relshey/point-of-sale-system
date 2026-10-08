@@ -1439,7 +1439,7 @@ Public Class Cashier
         End If
         ' notify the admin through the Messages page (cashier name + reason)
         DataStore.AddMessage(New ChatMessage With {
-            .Sender = "Cashier",
+            .Sender = by,
             .Receiver = "Admin",
             .Message = "[Stock adjustment] " & by & ": " & p.Name & " -" & qty.ToString() & " " & UnitOf(p) & " (" & kind & "). Reason: " & txtAdjReason.Text.Trim(),
             .TimeSent = DateTime.Now})
@@ -2729,7 +2729,7 @@ Public Class Cashier
         If String.IsNullOrWhiteSpace(txtChat.Text) Then Return
 
         Dim newMessage As New ChatMessage With {
-            .Sender = "Cashier",
+            .Sender = MyChatName(),
             .Receiver = "Admin",
             .Message = txtChat.Text.Trim(),
             .TimeSent = DateTime.Now
@@ -2739,13 +2739,19 @@ Public Class Cashier
         DataStore.AddMessage(newMessage)        ' saved; MessagesChanged reloads the chat
     End Sub
 
+    ' the name used for this cashier's conversation with the admin
+    Private Function MyChatName() As String
+        If Not String.IsNullOrWhiteSpace(CurrentSession.FullName) Then Return CurrentSession.FullName.Trim()
+        Return CurrentSession.Username
+    End Function
+
     Private Sub LoadCashierChat()
 
         flpMessages.Controls.Clear()
 
-        For Each chat As ChatMessage In DataStore.ChatMessages
+        For Each chat As ChatMessage In DataStore.ThreadMessages(MyChatName())
 
-            Dim isMine As Boolean = (chat.Sender = "Cashier")
+            Dim isMine As Boolean = DataStore.IsFromCashier(chat)
 
             Dim messagePanel As New RoundedPanel()
             messagePanel.Width = flpMessages.ClientSize.Width - 120
@@ -2757,7 +2763,7 @@ Public Class Cashier
             Dim fore As Color = If(isMine, Color.White, brown)
 
             Dim senderLabel As New Label()
-            senderLabel.Text = chat.Sender
+            senderLabel.Text = If(isMine, "You", chat.Sender)
             senderLabel.AutoSize = True
             senderLabel.Location = New Point(10, 8)
             senderLabel.Font = New Font("Segoe UI", 9, FontStyle.Bold)
@@ -2789,5 +2795,8 @@ Public Class Cashier
         If flpMessages.Controls.Count > 0 Then
             flpMessages.ScrollControlIntoView(flpMessages.Controls(flpMessages.Controls.Count - 1))
         End If
+
+        ' the admin sees "Read" once the cashier has opened the chat
+        If pnl_CashierMessages.Visible Then DataStore.MarkThreadRead(False, MyChatName())
     End Sub
 End Class

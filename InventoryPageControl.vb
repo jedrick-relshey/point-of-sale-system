@@ -449,7 +449,7 @@ Public Class InventoryPageControl
         txtSearch.Width = 280
         pnlSearch.Controls.Add(txtSearch)
 
-        lblSearchHint = New Label()
+        lblSearchHint = New HintLabel()
         lblSearchHint.Text = "Search product, SKU, or category"
         lblSearchHint.Font = Theme.UiFont(8.5F)
         lblSearchHint.ForeColor = Theme.TextMuted
@@ -458,6 +458,8 @@ Public Class InventoryPageControl
         lblSearchHint.Size = New Size(280, 18)
         lblSearchHint.Location = New Point(36, 9)
         AddHandler lblSearchHint.Click, Sub(s, e) txtSearch.Focus()
+        AddHandler pnlSearch.Click, Sub(s, e) txtSearch.Focus()
+        AddHandler icon.Click, Sub(s, e) txtSearch.Focus()
         pnlSearch.Controls.Add(lblSearchHint)
         lblSearchHint.BringToFront()
 

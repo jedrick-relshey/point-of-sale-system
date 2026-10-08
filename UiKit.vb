@@ -123,6 +123,27 @@ End Class
 
 
 ' ------------------------------------------------------------
+'  Placeholder label for search boxes. It sits on top of the TextBox
+'  but lets every mouse click fall through to the TextBox underneath.
+' ------------------------------------------------------------
+Public Class HintLabel
+    Inherits Label
+
+    Private Const WM_NCHITTEST As Integer = &H84
+    Private Const HTTRANSPARENT As Integer = -1
+
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        If m.Msg = WM_NCHITTEST Then
+            m.Result = New IntPtr(HTTRANSPARENT)
+            Return
+        End If
+        MyBase.WndProc(m)
+    End Sub
+
+End Class
+
+
+' ------------------------------------------------------------
 '  Plain panel with a 1px bottom line (header bar / table rows)
 ' ------------------------------------------------------------
 Public Class BorderedPanel
@@ -557,5 +578,4 @@ Public Class StatCard
         TextRenderer.DrawText(g, _icon, f, tile, _iconColor,
                               TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter Or TextFormatFlags.NoPadding)
     End Sub
-
 End Class

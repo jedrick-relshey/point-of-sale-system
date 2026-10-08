@@ -48,6 +48,11 @@ Partial Public Class Admin
     Private ReadOnly metaFont As New Font("Segoe UI", 8.0F)
     Private lastChatWidth As Integer = -1
 
+    Private composerAttach As Guna2Button
+    Private chatRoleBadge As Guna2Panel
+    Private msgRendering As Boolean = False
+    Private lastAdminInitials As String = ""
+
     '=================================================================
     ' SIDEBAR
     '=================================================================
@@ -205,16 +210,9 @@ Partial Public Class Admin
     Private Sub UpdateMessageBadge()
         If navBadge Is Nothing Then Return
 
-        Dim all As List(Of ChatMessage) = DataStore.ChatMessages.ToList()
-        If pnl_Messages.Visible Then seenMessageCount = all.Count
-
-        Dim unread As Integer = 0
-        For i As Integer = seenMessageCount To all.Count - 1
-            If Not String.Equals(all(i).Sender, "Admin", StringComparison.OrdinalIgnoreCase) Then unread += 1
-        Next
-
+        Dim unread As Integer = DataStore.TotalUnreadForAdmin()
         navBadge.Visible = unread > 0
-        navBadgeText.Text = unread.ToString()
+        navBadgeText.Text = If(unread > 9, "9+", unread.ToString())
     End Sub
 
     '=================================================================
@@ -296,7 +294,7 @@ Partial Public Class Admin
         convoSearch.FillColor = ForestUi.CardFill
         convoSearch.Font = New Font("Segoe UI", 10.0F)
         convoSearch.ForeColor = ForestUi.Ink
-        convoSearch.PlaceholderText = "Search team members"
+        convoSearch.PlaceholderText = "Search Admin or Cashier"
         convoSearch.PlaceholderForeColor = ForestUi.Muted
         convoSearch.Location = New Point(42, 6)
         convoSearch.Size = New Size(205, 32)
@@ -305,13 +303,38 @@ Partial Public Class Admin
         listSearchWrap.Controls.Add(listSearchBox)
         listPane.Controls.Add(listSearchWrap)
 
+        ' "ACCESS SCOPE:  [Admin] & [Cashier] only"
+        Dim scopeRow As New Panel()
+        scopeRow.Dock = DockStyle.Top
+        scopeRow.Height = 70
+        scopeRow.BackColor = ForestUi.CardFill
+        Dim scopeCaption As Label = ForestUi.Lbl("ACCESS SCOPE", 7.5F, FontStyle.Bold, ForestUi.Muted, 22, 6)
+        scopeCaption.UseMnemonic = False
+        scopeRow.Controls.Add(scopeCaption)
+        Dim scopePill As Guna2Panel = ForestUi.Card(260, 32, 16, ForestUi.AccentSoft)
+        scopePill.Location = New Point(20, 28)
+        Dim scopeAdmin As Guna2Panel = MakeRoleBadge("Admin")
+        scopeAdmin.Location = New Point(10, 7)
+        scopePill.Controls.Add(scopeAdmin)
+        Dim scopeAmp As Label = ForestUi.Lbl("&", 8.0F, FontStyle.Regular, ForestUi.Muted, scopeAdmin.Right + 8, 8)
+        scopeAmp.UseMnemonic = False
+        scopePill.Controls.Add(scopeAmp)
+        Dim scopeCashier As Guna2Panel = MakeRoleBadge("Cashier")
+        scopeCashier.Location = New Point(scopeAmp.Right + 6, 7)
+        scopePill.Controls.Add(scopeCashier)
+        scopePill.Controls.Add(ForestUi.Lbl("only", 8.0F, FontStyle.Regular, ForestUi.Muted, scopeCashier.Right + 8, 8))
+        scopeRow.Controls.Add(scopePill)
+        listPane.Controls.Add(scopeRow)
+
         listTitleRow = New Panel()
         listTitleRow.Dock = DockStyle.Top
-        listTitleRow.Height = 72
+        listTitleRow.Height = 62
         listTitleRow.BackColor = ForestUi.CardFill
-        listTitleRow.Controls.Add(ForestUi.Lbl("Team conversations", 12.0F, FontStyle.Regular, ForestUi.Ink, 22, 24))
-        listCompose = ForestUi.GlyphButton(ForestUi.GlyphEdit, 36, ForestUi.AccentSoft, ForestUi.Accent)
-        listCompose.Location = New Point(244, 18)
+        Dim listTitle As Label = ForestUi.Lbl("Admin & Cashier conversations", 10.5F, FontStyle.Bold, ForestUi.Ink, 22, 22)
+        listTitle.UseMnemonic = False
+        listTitleRow.Controls.Add(listTitle)
+        listCompose = ForestUi.GlyphButton(ForestUi.GlyphEdit, 34, ForestUi.AccentSoft, ForestUi.Accent)
+        listCompose.Location = New Point(246, 14)
         listTitleRow.Controls.Add(listCompose)
         AddHandler listCompose.Click, AddressOf ListCompose_Click
         listPane.Controls.Add(listTitleRow)
@@ -338,13 +361,16 @@ Partial Public Class Admin
         composerLine.BackColor = ForestUi.Border
         composer.Controls.Add(composerLine)
 
+        composerAttach = ForestUi.GlyphButton(ChrW(&HE723), 36, ForestUi.Page, ForestUi.Muted)
+        composer.Controls.Add(composerAttach)
+
         txtAdminChat.Anchor = AnchorStyles.Top Or AnchorStyles.Left
-        txtAdminChat.BorderRadius = 10
+        txtAdminChat.BorderRadius = 20
         txtAdminChat.BorderColor = ForestUi.Border
-        txtAdminChat.FillColor = ForestUi.Page
+        txtAdminChat.FillColor = ForestUi.CardFill
         txtAdminChat.ForeColor = ForestUi.Ink
         txtAdminChat.Font = New Font("Segoe UI", 10.0F)
-        txtAdminChat.PlaceholderText = "Type a message..."
+        txtAdminChat.PlaceholderText = "Write a message..."
         txtAdminChat.PlaceholderForeColor = ForestUi.Muted
         txtAdminChat.FocusedState.BorderColor = ForestUi.Accent
         txtAdminChat.HoverState.BorderColor = ForestUi.Accent
@@ -353,15 +379,19 @@ Partial Public Class Admin
 
         btnAdmin.Anchor = AnchorStyles.Top Or AnchorStyles.Left
         btnAdmin.Animated = False
-        btnAdmin.BorderRadius = 10
+        btnAdmin.BorderRadius = 20
         btnAdmin.FillColor = ForestUi.Accent
         btnAdmin.ForeColor = Color.White
-        btnAdmin.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+        btnAdmin.Font = New Font("Segoe MDL2 Assets", 12.0F)
         btnAdmin.HoverState.FillColor = ForestUi.AccentDark
-        btnAdmin.Text = "Send"
+        btnAdmin.Text = ChrW(&HE725)
         btnAdmin.Cursor = Cursors.Hand
-        btnAdmin.Size = New Size(96, 44)
+        btnAdmin.Size = New Size(40, 40)
         composer.Controls.Add(btnAdmin)
+
+        ' the old handler sent every message to "Cashier"; this one sends to the open conversation
+        RemoveHandler btnAdmin.Click, AddressOf btnAdminSend_Click
+        AddHandler btnAdmin.Click, AddressOf AdminChat_Send
         AddHandler composer.Resize, AddressOf Composer_Resize
         chatPane.Controls.Add(composer)
 
@@ -382,22 +412,19 @@ Partial Public Class Admin
         chatAvatarHost.BackColor = ForestUi.CardFill
         chatHeader.Controls.Add(chatAvatarHost)
 
-        CashierName.Font = New Font("Segoe UI", 11.0F, FontStyle.Regular)
+        CashierName.Font = New Font("Segoe UI", 11.0F, FontStyle.Bold)
         CashierName.ForeColor = ForestUi.Ink
         CashierName.BackColor = Color.Transparent
-        CashierName.Location = New Point(80, 16)
+        CashierName.Location = New Point(80, 14)
         chatHeader.Controls.Add(CashierName)
 
-        chatStatusDot = ForestUi.Card(8, 8, 4, ForestUi.Accent)
-        chatStatusDot.Location = New Point(82, 46)
-        chatHeader.Controls.Add(chatStatusDot)
+        chatRoleBadge = MakeRoleBadge("Cashier")
+        chatRoleBadge.Location = New Point(82, 46)
+        chatHeader.Controls.Add(chatRoleBadge)
 
-        Guna2HtmlLabel60.Text = "Cashier terminal"
-        Guna2HtmlLabel60.Font = New Font("Segoe UI", 8.5F, FontStyle.Regular)
-        Guna2HtmlLabel60.ForeColor = ForestUi.Muted
-        Guna2HtmlLabel60.BackColor = Color.Transparent
-        Guna2HtmlLabel60.Location = New Point(96, 41)
-        chatHeader.Controls.Add(Guna2HtmlLabel60)
+        chatStatusDot = ForestUi.Card(8, 8, 4, ForestUi.Accent)   ' not used in the new design
+        chatStatusDot.Visible = False
+        Guna2HtmlLabel60.Visible = False
 
         chatCall = ForestUi.GlyphButton(ForestUi.GlyphPhone, 36, ForestUi.Page, ForestUi.Muted)
         chatMore = ForestUi.GlyphButton(ForestUi.GlyphMore, 36, ForestUi.Page, ForestUi.Muted)
@@ -419,8 +446,10 @@ Partial Public Class Admin
         hdrLine.BackColor = ForestUi.Border
         hdrPanel.Controls.Add(hdrLine)
 
-        hdrPanel.Controls.Add(ForestUi.Lbl("Messages", 17.0F, FontStyle.Regular, ForestUi.Ink, 28, 12))
-        hdrPanel.Controls.Add(ForestUi.Lbl("Coordinate with cashiers and keep store operations moving", 9.5F,
+        Dim hdrTitle As Label = ForestUi.Lbl("Admin & Cashier Messages", 17.0F, FontStyle.Regular, ForestUi.Ink, 28, 12)
+        hdrTitle.UseMnemonic = False
+        hdrPanel.Controls.Add(hdrTitle)
+        hdrPanel.Controls.Add(ForestUi.Lbl("Restricted workspace for Admin and Cashier coordination only", 9.5F,
                                             FontStyle.Regular, ForestUi.Muted, 29, 46))
 
         hdrBell = ForestUi.GlyphButton(ForestUi.GlyphBell, 40, ForestUi.CardFill, ForestUi.Ink)
@@ -453,6 +482,8 @@ Partial Public Class Admin
         ChatHeader_Resize(Nothing, EventArgs.Empty)
         Composer_Resize(Nothing, EventArgs.Empty)
 
+        AddHandler DataStore.ReadStatesChanged, AddressOf Admin_ReadStatesChanged
+        RefreshAdminIdentity()
         RefreshConversationList()
         lastChatWidth = flpAdminMessages.ClientSize.Width
         AddHandler flpAdminMessages.Resize, AddressOf ChatArea_Resize
@@ -487,9 +518,10 @@ Partial Public Class Admin
     Private Sub Composer_Resize(sender As Object, e As EventArgs)
         If composer Is Nothing Then Return
         Dim w As Integer = composer.ClientSize.Width
-        btnAdmin.Location = New Point(w - 20 - btnAdmin.Width, 16)
-        txtAdminChat.Location = New Point(20, 16)
-        txtAdminChat.Size = New Size(Math.Max(100, btnAdmin.Left - 12 - 20), 44)
+        btnAdmin.Location = New Point(w - 20 - btnAdmin.Width, 18)
+        composerAttach.Location = New Point(20, 20)
+        txtAdminChat.Location = New Point(composerAttach.Right + 10, 18)
+        txtAdminChat.Size = New Size(Math.Max(100, btnAdmin.Left - 12 - txtAdminChat.Left), 40)
     End Sub
 
     Private Sub TxtAdminChat_KeyDown(sender As Object, e As KeyEventArgs)
@@ -512,25 +544,157 @@ Partial Public Class Admin
     End Sub
 
     '=================================================================
+    ' SIGNED-IN ADMIN  (name comes from the login, nothing is typed in)
+    '=================================================================
+    Private Function CurrentAdminName() As String
+        If Not String.IsNullOrWhiteSpace(CurrentSession.FullName) Then Return CurrentSession.FullName.Trim()
+        If Not String.IsNullOrWhiteSpace(CurrentSession.Username) Then Return CurrentSession.Username.Trim()
+        Return "Admin"
+    End Function
+
+    Private Function InitialsOf(name As String) As String
+        Dim ini As String = ""
+        For Each part As String In If(name, "").Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
+            ini &= Char.ToUpper(part(0))
+            If ini.Length = 2 Then Exit For
+        Next
+        Return If(ini = "", "A", ini)
+    End Function
+
+    Private Sub RefreshAdminIdentity()
+        If hdrPanel Is Nothing OrElse hdrUserName Is Nothing Then Return
+
+        Dim nm As String = CurrentAdminName()
+        hdrUserName.Text = nm
+        hdrUserRole.Text = If(String.Equals(CurrentSession.Role, UserRoles.SuperAdmin, StringComparison.OrdinalIgnoreCase),
+                              "Super Admin", "Administrator")
+
+        Dim ini As String = InitialsOf(nm)
+        If ini <> lastAdminInitials Then
+            lastAdminInitials = ini
+            Dim old As Guna2Panel = hdrAvatar
+            hdrAvatar = ForestUi.Avatar(ini, 40, ForestUi.AccentSoft, ForestUi.Accent)
+            hdrPanel.Controls.Add(hdrAvatar)
+            If old IsNot Nothing Then
+                hdrPanel.Controls.Remove(old)
+                old.Dispose()
+            End If
+        End If
+        HdrPanel_Resize(Nothing, EventArgs.Empty)
+    End Sub
+
+    ' small dark pill, e.g. "Cashier" / "Admin"
+    Private Function MakeRoleBadge(text As String) As Guna2Panel
+        Dim f As New Font("Segoe UI", 7.0F, FontStyle.Bold)
+        Dim w As Integer = TextRenderer.MeasureText(text, f).Width + 14
+        Dim b As Guna2Panel = ForestUi.Card(w, 17, 8, ForestUi.Ink)
+        Dim l As New Label()
+        l.Dock = DockStyle.Fill
+        l.BackColor = Color.Transparent
+        l.ForeColor = Color.White
+        l.Font = f
+        l.TextAlign = ContentAlignment.MiddleCenter
+        l.UseMnemonic = False
+        l.Text = text
+        b.Controls.Add(l)
+        Return b
+    End Function
+
+    ' the admin writes to the cashier whose conversation is open
+    Private Sub AdminChat_Send(sender As Object, e As EventArgs)
+        If String.IsNullOrWhiteSpace(txtAdminChat.Text) Then Return
+        If selectedConvo = "" Then Return
+
+        Dim newMessage As New ChatMessage With {
+            .Sender = CurrentAdminName(),
+            .Receiver = selectedConvo,
+            .Message = txtAdminChat.Text.Trim(),
+            .TimeSent = DateTime.Now
+        }
+        txtAdminChat.Clear()
+        DataStore.AddMessage(newMessage)      ' saved + MessagesChanged refreshes this screen
+    End Sub
+
+    Private Sub Admin_ReadStatesChanged(sender As Object, e As EventArgs)
+        If msgRendering Then Return
+        LoadChatMessages()
+    End Sub
+
+    Private Sub Admin_FormClosed_Messaging(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        RemoveHandler DataStore.ReadStatesChanged, AddressOf Admin_ReadStatesChanged
+    End Sub
+
+    '=================================================================
     ' CONVERSATION LIST
     '=================================================================
+    Private Function AllCashierNames() As List(Of String)
+        Dim result As New List(Of String)
+        For Each acc As CashierAccount In DataStore.Cashiers
+            If Not String.IsNullOrWhiteSpace(acc.FullName) Then result.Add(acc.FullName)
+        Next
+        Return result
+    End Function
+
+    Private Function LastTimeOf(nm As String) As DateTime
+        Dim m As ChatMessage = DataStore.ThreadLast(nm)
+        Return If(m Is Nothing, DateTime.MinValue, m.TimeSent)
+    End Function
+
+    ' keeps selectedConvo pointing at a real cashier (the one with the newest message if nothing is selected)
+    Private Sub EnsureSelectedConvo()
+        Dim all As List(Of String) = AllCashierNames()
+        For Each n As String In all
+            If String.Equals(n, selectedConvo, StringComparison.OrdinalIgnoreCase) Then
+                selectedConvo = n
+                Return
+            End If
+        Next
+
+        selectedConvo = ""
+        Dim best As DateTime = DateTime.MinValue
+        For Each n As String In all
+            Dim t As DateTime = LastTimeOf(n)
+            If selectedConvo = "" OrElse t > best Then
+                selectedConvo = n
+                best = t
+            End If
+        Next
+    End Sub
+
+    Private Function MakeSectionLabel(text As String, w As Integer) As Label
+        Dim l As Label = ForestUi.Lbl(text, 7.5F, FontStyle.Bold, ForestUi.Muted, 0, 0)
+        l.AutoSize = False
+        l.UseMnemonic = False
+        l.Size = New Size(w, 30)
+        l.Padding = New Padding(22, 0, 0, 6)
+        l.TextAlign = ContentAlignment.BottomLeft
+        l.Margin = Padding.Empty
+        Return l
+    End Function
+
     Private Sub RefreshConversationList()
         If FlowLayoutPanel3 Is Nothing OrElse listPane Is Nothing OrElse chatAvatarHost Is Nothing Then Return
 
+        Dim before As String = selectedConvo
+        EnsureSelectedConvo()
+        If Not msgRendering AndAlso Not String.Equals(before, selectedConvo, StringComparison.Ordinal) Then
+            LoadChatMessages()      ' the selection moved to another cashier: reload the bubbles (this redraws the list too)
+            Return
+        End If
+
         Dim query As String = If(convoSearch Is Nothing, "", convoSearch.Text.Trim())
 
-        ' who is in the list?
+        ' cashiers (newest conversation first)
         Dim names As New List(Of String)
-        For Each acc As CashierAccount In DataStore.Cashiers
-            If String.IsNullOrWhiteSpace(acc.FullName) Then Continue For
-            If query.Length > 0 AndAlso acc.FullName.IndexOf(query, StringComparison.OrdinalIgnoreCase) < 0 Then Continue For
-            names.Add(acc.FullName)
+        For Each nm As String In AllCashierNames()
+            If query.Length > 0 AndAlso nm.IndexOf(query, StringComparison.OrdinalIgnoreCase) < 0 Then Continue For
+            names.Add(nm)
         Next
+        names = names.OrderByDescending(Function(n) LastTimeOf(n)).ThenBy(Function(n) n, StringComparer.OrdinalIgnoreCase).ToList()
 
-        ' keep a valid selection
-        If Not names.Contains(selectedConvo) Then
-            selectedConvo = If(names.Count > 0, names(0), "")
-        End If
+        Dim adminName As String = CurrentAdminName()
+        Dim showAdmin As Boolean = (query.Length = 0 OrElse adminName.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0 _
+                                    OrElse "admin".IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0)
 
         FlowLayoutPanel3.SuspendLayout()
         For i As Integer = FlowLayoutPanel3.Controls.Count - 1 To 0 Step -1
@@ -539,28 +703,41 @@ Partial Public Class Admin
             c.Dispose()
         Next
 
-        Dim rowH As Integer = 82
-        Dim needsScroll As Boolean = names.Count * rowH > FlowLayoutPanel3.ClientSize.Height
+        Dim rowH As Integer = 76
+        Dim totalH As Integer = 30 + Math.Max(1, names.Count) * rowH + If(showAdmin, 30 + rowH, 0)
+        Dim needsScroll As Boolean = totalH > FlowLayoutPanel3.ClientSize.Height
         Dim w As Integer = FlowLayoutPanel3.ClientSize.Width - If(needsScroll, SystemInformation.VerticalScrollBarWidth, 0)
         If w < 100 Then w = 299
 
+        FlowLayoutPanel3.Controls.Add(MakeSectionLabel("CASHIERS", w))
         If names.Count = 0 Then
-            Dim empty As Label = ForestUi.Lbl("No team members found.", 9.5F, FontStyle.Regular, ForestUi.Muted, 0, 0)
+            Dim empty As Label = ForestUi.Lbl("No cashiers found.", 9.5F, FontStyle.Regular, ForestUi.Muted, 0, 0)
             empty.AutoSize = False
             empty.Size = New Size(w, 60)
             empty.TextAlign = ContentAlignment.MiddleCenter
             FlowLayoutPanel3.Controls.Add(empty)
         End If
-
         For Each nm As String In names
             FlowLayoutPanel3.Controls.Add(BuildConvoItem(nm, w, rowH))
         Next
+
+        If showAdmin Then
+            FlowLayoutPanel3.Controls.Add(MakeSectionLabel("ADMIN", w))
+            FlowLayoutPanel3.Controls.Add(BuildAdminItem(adminName, w, rowH))
+        End If
         FlowLayoutPanel3.ResumeLayout(True)
 
-        ' chat header follows the selection
-        CashierName.Text = If(selectedConvo = "", "Cashier Team", selectedConvo)
+        ' chat header + composer follow the selection
+        Dim hasSel As Boolean = (selectedConvo <> "")
+        CashierName.Text = If(hasSel, selectedConvo, "No cashier selected")
+        chatRoleBadge.Visible = hasSel
         chatAvatarHost.Controls.Clear()
-        AddAvatarSafe(chatAvatarHost, CashierName.Text, 44, ForestUi.AccentSoft, ForestUi.Accent, Point.Empty)
+        If hasSel Then AddAvatarSafe(chatAvatarHost, selectedConvo, 44, ForestUi.AccentSoft, ForestUi.Accent, Point.Empty)
+
+        Dim firstName As String = If(selectedConvo.Contains(" "), selectedConvo.Substring(0, selectedConvo.IndexOf(" "c)), selectedConvo)
+        txtAdminChat.PlaceholderText = If(hasSel, "Write a message to " & firstName & "...", "Add a cashier to start chatting")
+        txtAdminChat.Enabled = hasSel
+        btnAdmin.Enabled = hasSel
     End Sub
 
     ' Adds a cashier avatar. If the cashier's photo can't be drawn (e.g. an image that was already disposed
@@ -588,21 +765,14 @@ Partial Public Class Admin
         End Try
     End Sub
 
+    ' one cashier: avatar, name, time of the last message, "Cashier" badge, preview, unread count
     Private Function BuildConvoItem(nm As String, w As Integer, h As Integer) As Panel
 
         Dim isSel As Boolean = String.Equals(nm, selectedConvo, StringComparison.OrdinalIgnoreCase)
+        Dim last As ChatMessage = DataStore.ThreadLast(nm)
 
-        ' latest message sent by this cashier (if any)
-        Dim hasLast As Boolean = False
-        Dim lastText As String = ""
-        Dim lastTime As DateTime = DateTime.Now
-        For Each m As ChatMessage In DataStore.ChatMessages
-            If String.Equals(m.Sender, nm, StringComparison.OrdinalIgnoreCase) Then
-                hasLast = True
-                lastText = m.Message
-                lastTime = m.TimeSent
-            End If
-        Next
+        Dim unread As Integer = DataStore.UnreadForAdmin(nm)
+        If isSel AndAlso pnl_Messages.Visible Then unread = 0      ' the open conversation counts as read
 
         Dim p As New Panel()
         p.Size = New Size(w, h)
@@ -613,20 +783,49 @@ Partial Public Class Admin
 
         AddAvatarSafe(p, nm, 40,
                       If(isSel, Color.FromArgb(205, 240, 234), ForestUi.AvatarGray),
-                      If(isSel, ForestUi.Accent, ForestUi.Ink), New Point(16, 21))
+                      If(isSel, ForestUi.Accent, ForestUi.Ink), New Point(16, 18))
 
-        p.Controls.Add(ForestUi.Lbl(nm, 10.0F, FontStyle.Bold, ForestUi.Ink, 68, 17))
+        Dim timeW As Integer = 0
+        If last IsNot Nothing Then
+            Dim tm As Label = ForestUi.Lbl(ForestUi.TimeAgo(last.TimeSent), 7.5F, FontStyle.Regular, ForestUi.Muted)
+            tm.Location = New Point(w - tm.Width - 16, 15)
+            timeW = tm.Width + 6
+            p.Controls.Add(tm)
+        End If
 
-        Dim preview As Label = ForestUi.Lbl(If(hasLast, lastText, "Cashier"), 9.0F, FontStyle.Regular, ForestUi.Muted, 68, 41)
+        Dim nameLbl As Label = ForestUi.Lbl(nm, 9.5F, FontStyle.Bold, ForestUi.Ink, 68, 14)
+        nameLbl.AutoSize = False
+        nameLbl.AutoEllipsis = True
+        nameLbl.UseMnemonic = False
+        nameLbl.Size = New Size(Math.Max(40, w - 68 - 16 - timeW), 20)
+        p.Controls.Add(nameLbl)
+
+        Dim badge As Guna2Panel = MakeRoleBadge("Cashier")
+        badge.Location = New Point(68, 42)
+        p.Controls.Add(badge)
+
+        Dim previewX As Integer = badge.Right + 6
+        Dim reserve As Integer = If(unread > 0, 28, 0)
+        Dim preview As Label = ForestUi.Lbl(If(last IsNot Nothing, last.Message, "No messages yet"), 8.5F, FontStyle.Regular, ForestUi.Muted, previewX, 41)
         preview.AutoSize = False
         preview.AutoEllipsis = True
-        preview.Size = New Size(Math.Max(40, w - 68 - 16), 20)
+        preview.UseMnemonic = False
+        preview.Size = New Size(Math.Max(30, w - previewX - 16 - reserve), 20)
         p.Controls.Add(preview)
 
-        If hasLast Then
-            Dim tm As Label = ForestUi.Lbl(ForestUi.TimeAgo(lastTime), 8.0F, FontStyle.Regular, ForestUi.Muted)
-            tm.Location = New Point(w - tm.Width - 16, 19)
-            p.Controls.Add(tm)
+        If unread > 0 Then
+            Dim dot As Guna2Panel = ForestUi.Card(20, 20, 10, ForestUi.Accent)
+            Dim dotText As New Label()
+            dotText.Dock = DockStyle.Fill
+            dotText.BackColor = Color.Transparent
+            dotText.ForeColor = Color.White
+            dotText.Font = New Font("Segoe UI", 7.5F, FontStyle.Bold)
+            dotText.TextAlign = ContentAlignment.MiddleCenter
+            dotText.UseMnemonic = False
+            dotText.Text = If(unread > 9, "9+", unread.ToString())
+            dot.Controls.Add(dotText)
+            dot.Location = New Point(w - 16 - 20, 40)
+            p.Controls.Add(dot)
         End If
 
         ' every child behaves like the row itself
@@ -643,11 +842,40 @@ Partial Public Class Admin
         Return p
     End Function
 
+    ' the signed-in admin (information only, not a conversation)
+    Private Function BuildAdminItem(nm As String, w As Integer, h As Integer) As Panel
+        Dim p As New Panel()
+        p.Size = New Size(w, h)
+        p.Margin = Padding.Empty
+        p.BackColor = ForestUi.CardFill
+
+        Dim av As Control = ForestUi.Avatar(InitialsOf(nm), 40, ForestUi.AvatarGray, ForestUi.Ink)
+        av.Location = New Point(16, 18)
+        p.Controls.Add(av)
+
+        Dim cur As Label = ForestUi.Lbl("Current admin", 7.5F, FontStyle.Regular, ForestUi.Muted)
+        cur.Location = New Point(w - cur.Width - 16, 15)
+        p.Controls.Add(cur)
+
+        Dim nameLbl As Label = ForestUi.Lbl(nm, 9.5F, FontStyle.Bold, ForestUi.Ink, 68, 14)
+        nameLbl.AutoSize = False
+        nameLbl.AutoEllipsis = True
+        nameLbl.UseMnemonic = False
+        nameLbl.Size = New Size(Math.Max(40, w - 68 - 16 - cur.Width - 6), 20)
+        p.Controls.Add(nameLbl)
+
+        Dim badge As Guna2Panel = MakeRoleBadge("Admin")
+        badge.Location = New Point(68, 42)
+        p.Controls.Add(badge)
+        p.Controls.Add(ForestUi.Lbl("Signed-in workspace", 8.5F, FontStyle.Regular, ForestUi.Muted, badge.Right + 6, 41))
+        Return p
+    End Function
+
     Private Sub ConvoItem_Click(sender As Object, e As EventArgs)
         Dim c As Control = TryCast(sender, Control)
         If c Is Nothing OrElse c.Tag Is Nothing Then Return
         selectedConvo = CStr(c.Tag)
-        RefreshConversationList()
+        LoadChatMessages()          ' shows this cashier's chat and redraws the list
         txtAdminChat.Focus()
     End Sub
 
@@ -662,50 +890,73 @@ Partial Public Class Admin
     End Sub
 
     Private Sub LoadChatMessages()
+        If msgRendering Then Return
+        msgRendering = True
+        Try
+            RefreshAdminIdentity()
+            EnsureSelectedConvo()
 
-        flpAdminMessages.SuspendLayout()
-        For i As Integer = flpAdminMessages.Controls.Count - 1 To 0 Step -1
-            Dim c As Control = flpAdminMessages.Controls(i)
-            flpAdminMessages.Controls.RemoveAt(i)
-            c.Dispose()
-        Next
+            flpAdminMessages.SuspendLayout()
+            For i As Integer = flpAdminMessages.Controls.Count - 1 To 0 Step -1
+                Dim c As Control = flpAdminMessages.Controls(i)
+                flpAdminMessages.Controls.RemoveAt(i)
+                c.Dispose()
+            Next
 
-        ' usable width (always reserve the scrollbar so nothing ever scrolls sideways)
-        Dim areaW As Integer = flpAdminMessages.ClientSize.Width - flpAdminMessages.Padding.Horizontal _
-                               - SystemInformation.VerticalScrollBarWidth
-        If areaW < 240 Then areaW = 240
-        Dim maxBubble As Integer = Math.Min(560, CInt(areaW * 0.7))
+            ' usable width (always reserve the scrollbar so nothing ever scrolls sideways)
+            Dim areaW As Integer = flpAdminMessages.ClientSize.Width - flpAdminMessages.Padding.Horizontal _
+                                   - SystemInformation.VerticalScrollBarWidth
+            If areaW < 240 Then areaW = 240
+            Dim maxBubble As Integer = Math.Min(560, CInt(areaW * 0.7))
 
-        Dim lastDate As DateTime = DateTime.MinValue
-        For Each chat As ChatMessage In DataStore.ChatMessages
+            ' only the open cashier's conversation
+            Dim thread As List(Of ChatMessage) = DataStore.ThreadMessages(selectedConvo)
 
-            If chat.TimeSent.Date <> lastDate Then
-                lastDate = chat.TimeSent.Date
-                Dim dateText As String = If(lastDate = DateTime.Today, "TODAY", lastDate.ToString("dddd").ToUpper()) _
-                                      & " " & ChrW(&HB7) & " " & lastDate.ToString("MMMM d").ToUpper()
-                Dim divider As Label = ForestUi.Lbl(dateText, 8.0F, FontStyle.Regular, ForestUi.Muted)
-                divider.AutoSize = False
-                divider.Size = New Size(areaW, 34)
-                divider.TextAlign = ContentAlignment.MiddleCenter
-                divider.Margin = New Padding(0, 4, 0, 2)
-                flpAdminMessages.Controls.Add(divider)
+            If thread.Count = 0 Then
+                Dim hint As Label = ForestUi.Lbl(If(selectedConvo = "", "No cashier selected.", "No messages yet. Say hello!"),
+                                                 9.5F, FontStyle.Regular, ForestUi.Muted)
+                hint.AutoSize = False
+                hint.Size = New Size(areaW, 60)
+                hint.TextAlign = ContentAlignment.MiddleCenter
+                flpAdminMessages.Controls.Add(hint)
             End If
 
-            flpAdminMessages.Controls.Add(BuildBubble(chat, areaW, maxBubble))
-        Next
+            Dim lastDate As DateTime = DateTime.MinValue
+            For Each chat As ChatMessage In thread
 
-        flpAdminMessages.ResumeLayout(True)
-        If flpAdminMessages.Controls.Count > 0 Then
-            flpAdminMessages.ScrollControlIntoView(flpAdminMessages.Controls(flpAdminMessages.Controls.Count - 1))
-        End If
+                If chat.TimeSent.Date <> lastDate Then
+                    lastDate = chat.TimeSent.Date
+                    Dim dateText As String = If(lastDate = DateTime.Today, "TODAY", lastDate.ToString("dddd").ToUpper()) _
+                                          & " " & ChrW(&HB7) & " " & lastDate.ToString("MMMM d").ToUpper()
+                    Dim divider As Label = ForestUi.Lbl(dateText, 8.0F, FontStyle.Regular, ForestUi.Muted)
+                    divider.AutoSize = False
+                    divider.Size = New Size(areaW, 34)
+                    divider.TextAlign = ContentAlignment.MiddleCenter
+                    divider.Margin = New Padding(0, 4, 0, 2)
+                    flpAdminMessages.Controls.Add(divider)
+                End If
 
-        RefreshConversationList()   ' previews + times
-        UpdateMessageBadge()
+                flpAdminMessages.Controls.Add(BuildBubble(chat, areaW, maxBubble))
+            Next
+
+            flpAdminMessages.ResumeLayout(True)
+            If flpAdminMessages.Controls.Count > 0 Then
+                flpAdminMessages.ScrollControlIntoView(flpAdminMessages.Controls(flpAdminMessages.Controls.Count - 1))
+            End If
+
+            ' looking at the conversation = reading it
+            If pnl_Messages.Visible AndAlso selectedConvo <> "" Then DataStore.MarkThreadRead(True, selectedConvo)
+
+            RefreshConversationList()   ' previews, times, unread counts
+            UpdateMessageBadge()
+        Finally
+            msgRendering = False
+        End Try
     End Sub
 
     Private Function BuildBubble(chat As ChatMessage, areaW As Integer, maxBubble As Integer) As Guna2Panel
 
-        Dim fromAdmin As Boolean = String.Equals(chat.Sender, "Admin", StringComparison.OrdinalIgnoreCase)
+        Dim fromAdmin As Boolean = Not DataStore.IsFromCashier(chat)
 
         Const padX As Integer = 16
         Const padY As Integer = 12
@@ -714,7 +965,12 @@ Partial Public Class Admin
         Dim txt As String = If(chat.Message, "")
         Dim txtSize As Size = TextRenderer.MeasureText(txt, bubbleFont, New Size(maxBubble - 2 * padX, 0), flags)
 
-        Dim metaText As String = chat.TimeSent.ToString("hh:mm tt") & If(fromAdmin, " " & ChrW(&HB7) & " Read", "")
+        Dim metaText As String = chat.TimeSent.ToString("hh:mm tt")
+        If fromAdmin Then
+            ' "Read" once the cashier has opened the chat after this message was sent
+            Dim readAt As DateTime = DataStore.CashierReadAt(selectedConvo)
+            metaText &= " " & ChrW(&HB7) & " " & If(readAt >= chat.TimeSent, "Read", "Sent")
+        End If
         Dim metaSize As Size = TextRenderer.MeasureText(metaText, metaFont)
 
         Dim contentW As Integer = Math.Max(txtSize.Width, metaSize.Width) + 6

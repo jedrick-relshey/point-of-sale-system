@@ -116,6 +116,7 @@
     <Compile Include="CounterlyUi.vb" />
     <Compile Include="DataStore.MultiShop.vb" />
     <Compile Include="DataStore.vb" />
+    <Compile Include="DataStore_Messaging.vb" />
     <Compile Include="ForestUi.vb">
       <SubType>Component</SubType>
     </Compile>
