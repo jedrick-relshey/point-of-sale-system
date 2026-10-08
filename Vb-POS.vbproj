@@ -130,6 +130,9 @@
     </Compile>
     <Compile Include="InventoryAdjustment.vb" />
     <Compile Include="InventoryModeSwitch.vb" />
+    <Compile Include="InventoryPageControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="InventoryView.vb" />
     <Compile Include="LoginPage.vb">
       <SubType>Form</SubType>
@@ -161,7 +164,6 @@
     <Compile Include="ProductPageControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ProductStore.vb" />
     <Compile Include="ProductVariant.vb" />
     <Compile Include="RecipeEditorForm.vb">
       <SubType>Form</SubType>
@@ -180,6 +182,9 @@
     </Compile>
     <Compile Include="TransactionDetailForm.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransactionHistoryControl.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UiDialogs.vb" />
     <Compile Include="UiKit.vb">

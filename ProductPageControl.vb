@@ -7,15 +7,10 @@ Imports System.Windows.Forms
 
 ' ============================================================
 '  ProductPageControl.vb
-'  The "Product management" page (header, search + filters,
-'  product table, pagination, Add product button).
+'  The "Product management" page. It reads from DataStore.Products
+'  and saves with DataStore.AddProduct / UpdateProduct / DeleteProduct,
+'  and refreshes itself on DataStore.ProductsChanged.
 '  Built fully in code - no Designer needed.
-'
-'  Usage (in any form):
-'      Dim page As New ProductPageControl()
-'      page.Dock = DockStyle.Fill
-'      page.SetUser("Alex Morgan", "Admin " & ChrW(&HB7) & " Morning shift")
-'      Me.Controls.Add(page)
 ' ============================================================
 Public Class ProductPageControl
     Inherits UserControl
@@ -23,8 +18,8 @@ Public Class ProductPageControl
     Private Const PageSize As Integer = 8
     Private Const RowHeight As Integer = 49
 
-    ' column widths in % : name, price, category, stock, pricing, actions
-    Private ReadOnly _colWidths As Single() = {30.0F, 16.0F, 16.0F, 12.0F, 13.0F, 13.0F}
+    ' column widths in % : name, price, category, stock, status, actions
+    Private ReadOnly _colWidths As Single() = {30.0F, 15.0F, 17.0F, 11.0F, 14.0F, 13.0F}
 
     ' header
     Private pnlHeader As BorderedPanel
@@ -34,7 +29,6 @@ Public Class ProductPageControl
     Private avatar As AvatarCircle
     Private lblUserName As Label
     Private lblUserRole As Label
-    Private btnLogout As RoundedButton
 
     ' toolbar
     Private pnlToolbar As Panel
@@ -42,12 +36,13 @@ Public Class ProductPageControl
     Private txtSearch As TextBox
     Private lblSearchHint As Label
     Private btnCategory As RoundedButton
-    Private btnPricing As RoundedButton
+    Private btnInventory As RoundedButton
+    Private btnStatus As RoundedButton
 
     ' card
     Private pnlCardHeader As Panel
     Private lblCardSub As Label
-    Private badgeSync As Badge
+    Private badgeStock As Badge
     Private pnlRows As Panel
     Private lblShowing As Label
     Private lblPrev As Label
@@ -58,24 +53,46 @@ Public Class ProductPageControl
     Private _page As Integer = 0
     Private _totalPages As Integer = 1
     Private _category As String = ""
-    Private _pricing As String = "All"
-    Private _lastChange As DateTime? = Nothing
-
-    ''' <summary>Raised when the user clicks the logout icon in the header.</summary>
-    Public Event LogoutRequested()
+    Private _inventory As String = "All"
+    Private _status As String = "All"
 
     Public Sub New()
         DoubleBuffered = True
         BackColor = Theme.PageBg
         Font = Theme.UiFont(9.0F)
         BuildUi()
-        SetUser(Environment.UserName, "Administrator")
-        RefreshList()
+        RefreshUser()
+
+        If Not DesignMode AndAlso System.ComponentModel.LicenseManager.UsageMode <> System.ComponentModel.LicenseUsageMode.Designtime Then
+            AddHandler DataStore.ProductsChanged, AddressOf OnProductsChanged
+            RefreshList()
+        End If
+    End Sub
+
+    Protected Overrides Sub Dispose(disposing As Boolean)
+        If disposing Then
+            RemoveHandler DataStore.ProductsChanged, AddressOf OnProductsChanged
+        End If
+        MyBase.Dispose(disposing)
+    End Sub
+
+    Private Sub OnProductsChanged(sender As Object, e As EventArgs)
+        If IsDisposed Then Return
+        If InvokeRequired Then
+            BeginInvoke(New MethodInvoker(AddressOf RefreshList))
+        Else
+            RefreshList()
+        End If
     End Sub
 
     ' ------------------------------------------------------------
     '  Public API
     ' ------------------------------------------------------------
+    ''' <summary>Shows the logged-in user (from CurrentSession) in the header.</summary>
+    Public Sub RefreshUser()
+        SetUser(SessionInfo.DisplayName(), SessionInfo.DisplayRole())
+    End Sub
+
     Public Sub SetUser(fullName As String, role As String)
         lblUserName.Text = fullName
         lblUserRole.Text = role
@@ -88,7 +105,7 @@ Public Class ProductPageControl
         avatar.Initials = ini
     End Sub
 
-    ''' <summary>Rebuilds the table from ProductStore. Call after loading data.</summary>
+    ''' <summary>Rebuilds the table from DataStore.Products.</summary>
     Public Sub RefreshList()
         Dim items As List(Of Product) = GetFiltered()
 
@@ -114,7 +131,7 @@ Public Class ProductPageControl
 
         If pageItems.Count = 0 Then
             Dim empty As New Label()
-            empty.Text = If(ProductStore.Products.Count = 0,
+            empty.Text = If(DataStore.Products.Count = 0,
                             "No products yet. Click ""Add product"" to create your first one.",
                             "No products match your search / filters.")
             empty.ForeColor = Theme.TextMuted
@@ -124,7 +141,7 @@ Public Class ProductPageControl
         End If
         pnlRows.ResumeLayout()
 
-        ' footer text
+        ' footer
         Dim firstNo As Integer = If(items.Count = 0, 0, _page * PageSize + 1)
         Dim lastNo As Integer = _page * PageSize + pageItems.Count
         lblShowing.Text = "Showing " & firstNo.ToString() & ChrW(&H2013).ToString() & lastNo.ToString() &
@@ -133,12 +150,18 @@ Public Class ProductPageControl
         lblPrev.ForeColor = If(_page > 0, Theme.TextDark, Theme.TextMuted)
         lblNext.ForeColor = If(_page < _totalPages - 1, Theme.TextDark, Theme.TextMuted)
 
-        ' card subtitle
-        Dim activeCount As Integer = ProductStore.Products.Where(
-            Function(x) Not String.Equals(x.Status, "Inactive", StringComparison.OrdinalIgnoreCase)).Count()
-        Dim dynCount As Integer = ProductStore.Products.Where(Function(x) ProductStore.IsDynamic(x)).Count()
-        lblCardSub.Text = activeCount.ToString() & " active products " & ChrW(&HB7).ToString() & " " &
-                          dynCount.ToString() & " use dynamic pricing"
+        ' card subtitle + stock badge
+        Dim total As Integer = DataStore.Products.Count
+        Dim available As Integer = DataStore.Products.Where(Function(x) String.Equals(x.Status, "Available", StringComparison.OrdinalIgnoreCase)).Count()
+        lblCardSub.Text = total.ToString() & " products " & ChrW(&HB7).ToString() & " " & available.ToString() & " available"
+
+        Dim low As Integer = DataStore.GetLowStockCount()
+        If low = 0 Then
+            badgeStock.Setup("All items in stock", Theme.GreenSoft, Theme.Green)
+        Else
+            badgeStock.Setup(low.ToString() & " low / out of stock", Theme.RedSoft, Theme.Red)
+        End If
+        badgeStock.Left = pnlCardHeader.Width - badgeStock.Width - 20
     End Sub
 
     ' ------------------------------------------------------------
@@ -147,7 +170,6 @@ Public Class ProductPageControl
     Private Sub BuildUi()
         SuspendLayout()
 
-        ' root: header (fixed) + body (fill)
         Dim root As New TableLayoutPanel()
         root.Dock = DockStyle.Fill
         root.ColumnCount = 1
@@ -234,6 +256,7 @@ Public Class ProductPageControl
         btnBell.Glyph = Theme.GlyphBell
         btnBell.GlyphColor = Theme.TextMuted
         btnBell.GlyphFont = Theme.IconFont(10.0F)
+        AddHandler btnBell.Click, Sub(s, e) ShowLowStock()
         pnlHeader.Controls.Add(btnBell)
 
         divider = New Panel()
@@ -250,7 +273,7 @@ Public Class ProductPageControl
         lblUserName.Font = Theme.UiFont(9.0F, FontStyle.Bold)
         lblUserName.ForeColor = Theme.TextDark
         lblUserName.AutoEllipsis = True
-        lblUserName.Size = New Size(130, 18)
+        lblUserName.Size = New Size(150, 18)
         lblUserName.Top = 21
         pnlHeader.Controls.Add(lblUserName)
 
@@ -258,20 +281,9 @@ Public Class ProductPageControl
         lblUserRole.Font = Theme.UiFont(7.5F)
         lblUserRole.ForeColor = Theme.TextMuted
         lblUserRole.AutoEllipsis = True
-        lblUserRole.Size = New Size(130, 16)
+        lblUserRole.Size = New Size(150, 16)
         lblUserRole.Top = 39
         pnlHeader.Controls.Add(lblUserRole)
-
-        btnLogout = New RoundedButton()
-        btnLogout.Size = New Size(32, 36)
-        btnLogout.Top = 19
-        btnLogout.FillColor = Color.Transparent
-        btnLogout.HoverColor = Theme.RedSoft
-        btnLogout.Glyph = Theme.GlyphLogout
-        btnLogout.GlyphColor = Theme.Red
-        btnLogout.GlyphFont = Theme.IconFont(10.0F)
-        AddHandler btnLogout.Click, Sub(s, e) RaiseEvent LogoutRequested()
-        pnlHeader.Controls.Add(btnLogout)
 
         AddHandler pnlHeader.Resize, Sub(s, e) LayoutHeader()
         LayoutHeader()
@@ -279,12 +291,25 @@ Public Class ProductPageControl
 
     Private Sub LayoutHeader()
         Dim x As Integer = pnlHeader.Width - 24
-        x -= btnLogout.Width : btnLogout.Left = x
-        x -= 8 + lblUserName.Width : lblUserName.Left = x : lblUserRole.Left = x
+        x -= lblUserName.Width : lblUserName.Left = x : lblUserRole.Left = x
         x -= 10 + avatar.Width : avatar.Left = x
         x -= 16 + divider.Width : divider.Left = x
         x -= 16 + btnBell.Width : btnBell.Left = x
         x -= 12 + btnAdd.Width : btnAdd.Left = x
+    End Sub
+
+    Private Sub ShowLowStock()
+        Dim low As List(Of Product) = DataStore.GetLowStockProducts()
+        If low.Count = 0 Then
+            MessageBox.Show(FindForm(), "All products are well stocked.", "Stock alerts", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+        Dim sb As New System.Text.StringBuilder()
+        For Each p As Product In low.Take(15)
+            sb.AppendLine(p.Name & "  (" & p.Stock.ToString() & " left)")
+        Next
+        If low.Count > 15 Then sb.AppendLine("... and " & (low.Count - 15).ToString() & " more")
+        MessageBox.Show(FindForm(), sb.ToString(), "Low / out of stock", MessageBoxButtons.OK, MessageBoxIcon.Warning)
     End Sub
 
     ' ---------------- toolbar (search + filters) ----------------
@@ -338,9 +363,13 @@ Public Class ProductPageControl
         AddHandler btnCategory.Click, Sub(s, e) ShowCategoryMenu()
         pnlToolbar.Controls.Add(btnCategory)
 
-        btnPricing = MakeFilterButton("Pricing: All", Theme.GlyphFilter)
-        AddHandler btnPricing.Click, Sub(s, e) ShowPricingMenu()
-        pnlToolbar.Controls.Add(btnPricing)
+        btnInventory = MakeFilterButton("Inventory: All", Theme.GlyphFilter)
+        AddHandler btnInventory.Click, Sub(s, e) ShowInventoryMenu()
+        pnlToolbar.Controls.Add(btnInventory)
+
+        btnStatus = MakeFilterButton("Status: All", Theme.GlyphFilter)
+        AddHandler btnStatus.Click, Sub(s, e) ShowStatusMenu()
+        pnlToolbar.Controls.Add(btnStatus)
 
         AddHandler pnlToolbar.Resize, Sub(s, e) LayoutToolbar()
         LayoutToolbar()
@@ -369,8 +398,9 @@ Public Class ProductPageControl
     End Sub
 
     Private Sub LayoutToolbar()
-        btnPricing.Left = pnlToolbar.Width - btnPricing.Width
-        btnCategory.Left = btnPricing.Left - 10 - btnCategory.Width
+        btnStatus.Left = pnlToolbar.Width - btnStatus.Width
+        btnInventory.Left = btnStatus.Left - 10 - btnInventory.Width
+        btnCategory.Left = btnInventory.Left - 10 - btnCategory.Width
     End Sub
 
     ' ---------------- card (table) ----------------
@@ -391,7 +421,7 @@ Public Class ProductPageControl
         t.BackColor = Color.Transparent
         t.Margin = New Padding(0)
 
-        ' -- card header: title, subtitle, sync badge --
+        ' -- card header --
         pnlCardHeader = New Panel()
         pnlCardHeader.Dock = DockStyle.Fill
         pnlCardHeader.Margin = New Padding(0)
@@ -412,12 +442,12 @@ Public Class ProductPageControl
         lblCardSub.Location = New Point(15, 36)
         pnlCardHeader.Controls.Add(lblCardSub)
 
-        badgeSync = New Badge()
-        badgeSync.Setup("No changes yet", Theme.TealSoft, Theme.TealDark)
-        badgeSync.Top = 18
-        pnlCardHeader.Controls.Add(badgeSync)
+        badgeStock = New Badge()
+        badgeStock.Setup("All items in stock", Theme.GreenSoft, Theme.Green)
+        badgeStock.Top = 18
+        pnlCardHeader.Controls.Add(badgeStock)
 
-        AddHandler pnlCardHeader.Resize, Sub(s, e) badgeSync.Left = pnlCardHeader.Width - badgeSync.Width - 20
+        AddHandler pnlCardHeader.Resize, Sub(s, e) badgeStock.Left = pnlCardHeader.Width - badgeStock.Width - 20
         t.Controls.Add(pnlCardHeader, 0, 0)
 
         ' -- column header --
@@ -427,7 +457,7 @@ Public Class ProductPageControl
         colHeader.BackColor = Theme.HeaderRowBg
 
         Dim hdr As TableLayoutPanel = NewColumnsTable()
-        Dim titles As String() = {"Product name", "Price", "Category", "Stock", "Pricing", "Actions"}
+        Dim titles As String() = {"Product name", "Price", "Category", "Stock", "Status", "Actions"}
         For i As Integer = 0 To titles.Length - 1
             Dim l As New Label()
             l.Text = titles(i)
@@ -454,7 +484,7 @@ Public Class ProductPageControl
                                    End Sub
         t.Controls.Add(pnlRows, 0, 2)
 
-        ' -- footer: "Showing x of y" + pagination --
+        ' -- footer --
         Dim footer As New TableLayoutPanel()
         footer.Dock = DockStyle.Fill
         footer.Margin = New Padding(0)
@@ -583,41 +613,29 @@ Public Class ProductPageControl
         thumb.BringToFront()
         t.Controls.Add(cellName, 0, 0)
 
-        ' 1 - price (+ pencil icon if dynamic)
-        Dim dynamic As Boolean = ProductStore.IsDynamic(p)
-        Dim priceText As String = ProductStore.PriceText(p)
-        Dim priceFont As Font = Theme.UiFont(8.5F, FontStyle.Bold)
-        Dim cellPrice As Panel = NewCell()
-        cellPrice.Controls.Add(CellLabel(priceText, priceFont, Theme.TextDark))
-        If dynamic Then
-            Dim tw As Integer = TextRenderer.MeasureText(priceText, priceFont, New Size(1000, 100), TextFormatFlags.NoPadding).Width
-            Dim pencil As New Label()
-            pencil.Text = Theme.GlyphEdit
-            pencil.Font = Theme.IconFont(8.0F)
-            pencil.ForeColor = Theme.TealDark
-            pencil.AutoSize = False
-            pencil.Size = New Size(18, 18)
-            pencil.TextAlign = ContentAlignment.MiddleCenter
-            pencil.Location = New Point(tw + 6, (innerH - 18) \ 2)
-            cellPrice.Controls.Add(pencil)
-            pencil.BringToFront()
-        End If
-        t.Controls.Add(cellPrice, 1, 0)
+        ' 1 - price
+        t.Controls.Add(CellLabel(Peso(p.Price), Theme.UiFont(8.5F, FontStyle.Bold), Theme.TextDark), 1, 0)
 
         ' 2 - category
         t.Controls.Add(CellLabel(If(p.Category, ""), Theme.UiFont(8.0F), Theme.TextMuted), 2, 0)
 
-        ' 3 - stock (red when 0)
-        t.Controls.Add(CellLabel(p.Stock.ToString(), Theme.UiFont(8.5F),
-                                 If(p.Stock <= 0, Theme.Red, Theme.TextDark)), 3, 0)
+        ' 3 - stock (red = out, orange = low)
+        Dim invState As String = DataStore.GetProductStockStatus(p)
+        Dim stockColor As Color = Theme.TextDark
+        If p.Stock <= 0 Then
+            stockColor = Theme.Red
+        ElseIf invState = StockStatus.LowStock Then
+            stockColor = Theme.Orange
+        End If
+        t.Controls.Add(CellLabel(p.Stock.ToString(), Theme.UiFont(8.5F), stockColor), 3, 0)
 
-        ' 4 - pricing badge
+        ' 4 - status badge
         Dim cellBadge As Panel = NewCell()
         Dim pill As New Badge()
-        If dynamic Then
-            pill.Setup("Dynamic", Theme.TealSoft, Theme.TealDark)
+        If String.Equals(p.Status, "Available", StringComparison.OrdinalIgnoreCase) Then
+            pill.Setup("Available", Theme.GreenSoft, Theme.Green)
         Else
-            pill.Setup("Fixed", Theme.BadgeFixedBg, Theme.BadgeFixedText)
+            pill.Setup(If(String.IsNullOrWhiteSpace(p.Status), "Unavailable", p.Status), Theme.RedSoft, Theme.Red)
         End If
         pill.Location = New Point(0, (innerH - pill.Height) \ 2)
         cellBadge.Controls.Add(pill)
@@ -630,9 +648,9 @@ Public Class ProductPageControl
         btnEdit.Size = New Size(32, 30)
         btnEdit.Location = New Point(0, (innerH - 30) \ 2)
         btnEdit.FillColor = Theme.TealSoft
-        btnEdit.HoverColor = Color.FromArgb(186, 235, 226)
+        btnEdit.HoverColor = Color.FromArgb(225, 212, 205)
         btnEdit.Glyph = Theme.GlyphEdit
-        btnEdit.GlyphColor = Theme.TealDark
+        btnEdit.GlyphColor = Theme.Teal
         btnEdit.GlyphFont = Theme.IconFont(9.0F)
         AddHandler btnEdit.Click, Sub(s, e) EditProduct(p)
         cellActions.Controls.Add(btnEdit)
@@ -654,11 +672,11 @@ Public Class ProductPageControl
     End Function
 
     Private Sub ApplyThumbStyle(thumb As ThumbBox, category As String)
-        Dim fills As Color() = {Color.FromArgb(254, 243, 199), Color.FromArgb(226, 232, 240),
-                                Color.FromArgb(204, 251, 241), Color.FromArgb(252, 231, 243),
+        Dim fills As Color() = {Color.FromArgb(254, 243, 199), Color.FromArgb(239, 230, 225),
+                                Color.FromArgb(220, 242, 225), Color.FromArgb(252, 231, 243),
                                 Color.FromArgb(224, 231, 255)}
-        Dim fores As Color() = {Color.FromArgb(217, 119, 6), Color.FromArgb(30, 41, 59),
-                                Theme.TealDark, Color.FromArgb(190, 24, 93),
+        Dim fores As Color() = {Color.FromArgb(217, 119, 6), Color.FromArgb(62, 39, 35),
+                                Color.FromArgb(46, 125, 50), Color.FromArgb(190, 24, 93),
                                 Color.FromArgb(67, 56, 202)}
         Dim h As Integer = 0
         For Each ch As Char In category
@@ -676,127 +694,142 @@ Public Class ProductPageControl
         Dim q As String = txtSearch.Text.Trim()
         Dim result As New List(Of Product)()
 
-        For Each p As Product In ProductStore.Products
+        For Each p As Product In DataStore.Products
             If q.Length > 0 Then
-                Dim hay As String = If(p.Name, "") & " " & If(p.Category, "")
+                Dim hay As String = If(p.Name, "") & " " & If(p.Category, "") & " " & If(p.Description, "")
                 If hay.IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 Then Continue For
             End If
             If _category.Length > 0 AndAlso
                Not String.Equals(p.Category, _category, StringComparison.OrdinalIgnoreCase) Then Continue For
-
-            Dim dyn As Boolean = ProductStore.IsDynamic(p)
-            If _pricing = "Fixed" AndAlso dyn Then Continue For
-            If _pricing = "Dynamic" AndAlso Not dyn Then Continue For
+            If _inventory <> "All" AndAlso DataStore.GetProductStockStatus(p) <> _inventory Then Continue For
+            If _status <> "All" AndAlso Not String.Equals(p.Status, _status, StringComparison.OrdinalIgnoreCase) Then Continue For
 
             result.Add(p)
         Next
         Return result
     End Function
 
-    Private Sub ShowCategoryMenu()
+    Private Sub ShowMenu(anchor As Control, options As List(Of String), current As String, onPick As Action(Of String))
         Dim m As New ContextMenuStrip()
         m.Font = Theme.UiFont(9.0F)
-
-        Dim all As New ToolStripMenuItem("All categories")
-        all.Checked = (_category.Length = 0)
-        AddHandler all.Click, Sub(s, e) SetCategory("")
-        m.Items.Add(all)
-
-        For Each c As String In ProductStore.Categories()
-            Dim name As String = c
-            Dim item As New ToolStripMenuItem(name)
-            item.Checked = String.Equals(name, _category, StringComparison.OrdinalIgnoreCase)
-            AddHandler item.Click, Sub(s, e) SetCategory(name)
+        For Each opt As String In options
+            Dim value As String = opt
+            Dim item As New ToolStripMenuItem(value)
+            item.Checked = String.Equals(value, current, StringComparison.OrdinalIgnoreCase)
+            AddHandler item.Click, Sub(s, e) onPick(value)
             m.Items.Add(item)
         Next
-
         AddHandler m.Closed, Sub(s, e) BeginInvoke(New MethodInvoker(Sub() m.Dispose()))
-        m.Show(btnCategory, New Point(0, btnCategory.Height + 2))
+        m.Show(anchor, New Point(0, anchor.Height + 2))
     End Sub
 
-    Private Sub ShowPricingMenu()
-        Dim m As New ContextMenuStrip()
-        m.Font = Theme.UiFont(9.0F)
-
-        For Each opt As String In New String() {"All", "Fixed", "Dynamic"}
-            Dim name As String = opt
-            Dim item As New ToolStripMenuItem(name)
-            item.Checked = (name = _pricing)
-            AddHandler item.Click, Sub(s, e) SetPricing(name)
-            m.Items.Add(item)
+    Private Sub ShowCategoryMenu()
+        Dim opts As New List(Of String)()
+        opts.Add("All categories")
+        Dim seen As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+        For Each p As Product In DataStore.Products
+            If Not String.IsNullOrWhiteSpace(p.Category) AndAlso seen.Add(p.Category.Trim()) Then opts.Add(p.Category.Trim())
         Next
+        ShowMenu(btnCategory, opts, If(_category.Length = 0, "All categories", _category),
+                 Sub(v As String) SetCategory(If(v = "All categories", "", v)))
+    End Sub
 
-        AddHandler m.Closed, Sub(s, e) BeginInvoke(New MethodInvoker(Sub() m.Dispose()))
-        m.Show(btnPricing, New Point(0, btnPricing.Height + 2))
+    Private Sub ShowInventoryMenu()
+        Dim opts As New List(Of String) From {"All", StockStatus.InStock, StockStatus.LowStock, StockStatus.OutOfStock}
+        ShowMenu(btnInventory, opts, _inventory, Sub(v As String) SetInventory(v))
+    End Sub
+
+    Private Sub ShowStatusMenu()
+        Dim opts As New List(Of String)()
+        opts.Add("All")
+        Dim seen As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+        For Each p As Product In DataStore.Products
+            If Not String.IsNullOrWhiteSpace(p.Status) AndAlso seen.Add(p.Status.Trim()) Then opts.Add(p.Status.Trim())
+        Next
+        ShowMenu(btnStatus, opts, _status, Sub(v As String) SetStatus(v))
     End Sub
 
     Private Sub SetCategory(name As String)
         _category = name
         btnCategory.Text = If(name.Length = 0, "All categories", name)
-        FitButton(btnCategory)
+        AfterFilterChanged(btnCategory)
+    End Sub
+
+    Private Sub SetInventory(name As String)
+        _inventory = name
+        btnInventory.Text = "Inventory: " & name
+        AfterFilterChanged(btnInventory)
+    End Sub
+
+    Private Sub SetStatus(name As String)
+        _status = name
+        btnStatus.Text = "Status: " & name
+        AfterFilterChanged(btnStatus)
+    End Sub
+
+    Private Sub AfterFilterChanged(b As RoundedButton)
+        FitButton(b)
         LayoutToolbar()
         _page = 0
         RefreshList()
     End Sub
 
-    Private Sub SetPricing(name As String)
-        _pricing = name
-        btnPricing.Text = "Pricing: " & name
-        FitButton(btnPricing)
+    Private Sub ClearFilters()
+        _category = "" : btnCategory.Text = "All categories" : FitButton(btnCategory)
+        _inventory = "All" : btnInventory.Text = "Inventory: All" : FitButton(btnInventory)
+        _status = "All" : btnStatus.Text = "Status: All" : FitButton(btnStatus)
         LayoutToolbar()
-        _page = 0
-        RefreshList()
+        txtSearch.Text = ""
     End Sub
 
     ' ------------------------------------------------------------
-    '  Add / Edit / Delete
+    '  Add / Edit / Delete  (all saving is done by DataStore)
     ' ------------------------------------------------------------
     Private Sub AddProduct()
         Using dlg As New AddProductForm()
             If dlg.ShowDialog(FindForm()) <> System.Windows.Forms.DialogResult.OK Then Return
 
-            ProductStore.SaveProduct(dlg.ResultProduct, dlg.ResultVariants)
+            Dim newProduct As New Product With {
+                .Name = dlg.ProductName,
+                .Price = dlg.ProductPrice,
+                .Stock = dlg.ProductStock,
+                .Category = dlg.ProductCategory,
+                .Description = dlg.ProductDescription
+            }
 
-            ' clear filters so the new product is visible, then jump to its page
-            _category = ""
-            btnCategory.Text = "All categories"
-            FitButton(btnCategory)
-            _pricing = "All"
-            btnPricing.Text = "Pricing: All"
-            FitButton(btnPricing)
-            LayoutToolbar()
-            txtSearch.Text = ""
-
-            Dim idx As Integer = GetFiltered().IndexOf(dlg.ResultProduct)
-            _page = If(idx < 0, 0, idx \ PageSize)
-            Touch()
+            If DataStore.AddProduct(newProduct, dlg.SelectedImagePath) Then
+                ' show the new product: clear filters and jump to its page
+                ClearFilters()
+                Dim idx As Integer = GetFiltered().IndexOf(newProduct)
+                _page = If(idx < 0, 0, idx \ PageSize)
+                RefreshList()
+            End If
         End Using
     End Sub
 
     Private Sub EditProduct(p As Product)
         Using dlg As New AddProductForm(p)
             If dlg.ShowDialog(FindForm()) <> System.Windows.Forms.DialogResult.OK Then Return
-            ProductStore.SaveProduct(dlg.ResultProduct, dlg.ResultVariants)
-            Touch()
+
+            Dim oldPrice As Decimal = p.Price
+            p.Name = dlg.ProductName
+            p.Price = dlg.ProductPrice
+            p.Stock = dlg.ProductStock
+            p.Category = dlg.ProductCategory
+            p.Description = dlg.ProductDescription
+            DataStore.UpdateProduct(p, oldPrice, dlg.SelectedImagePath, CurrentSession.FullName)
         End Using
     End Sub
 
     Private Sub DeleteProduct(p As Product)
         Dim answer As System.Windows.Forms.DialogResult = MessageBox.Show(
-            FindForm(), "Delete """ & p.Name & """? This cannot be undone.", "Delete product",
-            MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+            FindForm(),
+            "Are you sure you want to delete """ & p.Name & """?" & vbCrLf &
+            "Past transactions that contain this product will be kept.",
+            "Delete Product", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
         If answer <> System.Windows.Forms.DialogResult.Yes Then Return
 
-        ProductStore.DeleteProduct(p)
-        Touch()
-    End Sub
-
-    ' refresh table + "last saved" badge after any change
-    Private Sub Touch()
-        _lastChange = DateTime.Now
-        badgeSync.Setup("Last saved " & _lastChange.Value.ToString("h:mm tt"), Theme.TealSoft, Theme.TealDark)
-        badgeSync.Left = pnlCardHeader.Width - badgeSync.Width - 20
-        RefreshList()
+        DataStore.DeleteProduct(p)
     End Sub
 
 End Class

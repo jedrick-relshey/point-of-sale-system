@@ -19,6 +19,8 @@ Public Class Admin
 
     Private history As HistoryView
     Private newProductPage As ProductPageControl      ' new Product management design
+    Private newInventoryPage As InventoryPageControl  ' new Inventory design
+    Private newHistoryPage As TransactionHistoryControl ' new Transaction history design
 
     ' ---- controls created in code (inventory screen) ----
     Private invSearch As Guna2TextBox
@@ -51,6 +53,8 @@ Public Class Admin
         BuildMessagingLayout()
         BuildCashierPage()
         InstallProductPage()
+        InstallInventoryPage()
+        InstallHistoryPage()
 
         LoadChatMessages()
         displayCashiers()
@@ -168,6 +172,38 @@ Public Class Admin
         newProductPage.Dock = DockStyle.Fill
         pnl_Products.Controls.Add(newProductPage)
         newProductPage.BringToFront()
+    End Sub
+
+    '=================================================================
+    ' NEW INVENTORY PAGE (Products stock + Ingredients). The old inventory controls stay
+    ' in pnl_Inventory (hidden) so the old code still compiles.
+    '=================================================================
+    Private Sub InstallInventoryPage()
+        For Each c As Control In pnl_Inventory.Controls
+            c.Visible = False
+        Next
+        pnl_Inventory.AutoScroll = False
+
+        newInventoryPage = New InventoryPageControl()
+        newInventoryPage.Dock = DockStyle.Fill
+        pnl_Inventory.Controls.Add(newInventoryPage)
+        newInventoryPage.BringToFront()
+    End Sub
+
+    '=================================================================
+    ' NEW TRANSACTION HISTORY PAGE (admin: can open Refund / Void). The old history controls
+    ' and HistoryView stay in pnl_History (hidden) so the old code still compiles.
+    '=================================================================
+    Private Sub InstallHistoryPage()
+        For Each c As Control In pnl_History.Controls
+            c.Visible = False
+        Next
+        pnl_History.AutoScroll = False
+
+        newHistoryPage = New TransactionHistoryControl(True)
+        newHistoryPage.Dock = DockStyle.Fill
+        pnl_History.Controls.Add(newHistoryPage)
+        newHistoryPage.BringToFront()
     End Sub
 
     '=================================================================
@@ -514,6 +550,7 @@ Public Class Admin
         ShowPanel(pnl_Products)
         FilterProducts()
         If newProductPage IsNot Nothing Then
+            newProductPage.RefreshUser()
             newProductPage.RefreshList()
         End If
     End Sub
@@ -531,11 +568,19 @@ Public Class Admin
     Private Sub btnInventory_Click(sender As Object, e As EventArgs) Handles btnInventory.Click
         ShowPanel(pnl_Inventory)
         RefreshInventory()
+        If newInventoryPage IsNot Nothing Then
+            newInventoryPage.RefreshUser()
+            newInventoryPage.RefreshList()
+        End If
     End Sub
 
     Private Sub btnHistory_Click(sender As Object, e As EventArgs) Handles btnHistory.Click
         ShowPanel(pnl_History)
         If history IsNot Nothing Then history.Reload()
+        If newHistoryPage IsNot Nothing Then
+            newHistoryPage.RefreshUser()
+            newHistoryPage.RefreshList()
+        End If
     End Sub
 
     '=================================================================

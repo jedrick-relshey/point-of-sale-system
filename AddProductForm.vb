@@ -2,68 +2,81 @@
 Option Explicit On
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Globalization
-Imports System.Linq
 Imports System.Windows.Forms
 
 ' ============================================================
 '  AddProductForm.vb
 '  "Add product" dialog (also used for Edit when you pass a product).
-'
-'    Using dlg As New AddProductForm()
-'        If dlg.ShowDialog(Me) = DialogResult.OK Then
-'            ProductStore.SaveProduct(dlg.ResultProduct, dlg.ResultVariants)
-'        End If
-'    End Using
-'
-'  Pricing:
-'    Fixed price      -> 1 ProductVariant (Size = "Regular")
-'    Price by size    -> 2+ ProductVariants (e.g. Small 100 / Large 130)
-'                        shown as "Dynamic" in the product list.
+'  It only COLLECTS the values - ProductPageControl then calls
+'  DataStore.AddProduct / DataStore.UpdateProduct.
 ' ============================================================
 Public Class AddProductForm
     Inherits Form
 
-    Private ReadOnly _product As Product
-    Private ReadOnly _isNew As Boolean
-    Private _image As Image
+    Private ReadOnly _existing As Product
 
     Private txtName As TextBox
-    Private cboCategory As ComboBox
+    Private txtPrice As TextBox
     Private numStock As NumericUpDown
-    Private cboStatus As ComboBox
+    Private cboCategory As ComboBox
     Private txtDescription As TextBox
     Private picImage As PictureBox
-    Private rdoFixed As RadioButton
-    Private rdoSizes As RadioButton
-    Private pnlFixed As Panel
-    Private pnlSizes As Panel
-    Private numPrice As NumericUpDown
-    Private gridSizes As DataGridView
     Private lblError As Label
 
-    Public ReadOnly Property ResultProduct As Product
+    Private _imagePath As String = ""
+    Private _name As String = ""
+    Private _price As Decimal
+    Private _stock As Integer
+    Private _category As String = ""
+    Private _description As String = ""
+
+    ' ---- results (read these after ShowDialog = OK) ----
+    Public ReadOnly Property ProductName As String
         Get
-            Return _product
+            Return _name
         End Get
     End Property
 
-    Public ReadOnly Property ResultVariants As New List(Of ProductVariant)()
+    Public ReadOnly Property ProductPrice As Decimal
+        Get
+            Return _price
+        End Get
+    End Property
+
+    Public ReadOnly Property ProductStock As Integer
+        Get
+            Return _stock
+        End Get
+    End Property
+
+    Public ReadOnly Property ProductCategory As String
+        Get
+            Return _category
+        End Get
+    End Property
+
+    Public ReadOnly Property ProductDescription As String
+        Get
+            Return _description
+        End Get
+    End Property
+
+    ''' <summary>Full path of a newly chosen picture, or "" when the picture was not changed.</summary>
+    Public ReadOnly Property SelectedImagePath As String
+        Get
+            Return _imagePath
+        End Get
+    End Property
 
     Public Sub New(Optional existing As Product = Nothing)
-        _isNew = (existing Is Nothing)
-        _product = If(existing, New Product())
+        _existing = existing
         BuildUi()
-        If Not _isNew Then LoadExisting()
-        UpdatePricingMode()
+        If _existing IsNot Nothing Then LoadExisting()
     End Sub
 
-    ' ------------------------------------------------------------
-    '  UI
-    ' ------------------------------------------------------------
     Private Sub BuildUi()
-        Text = If(_isNew, "Add product", "Edit product")
+        Dim isNew As Boolean = (_existing Is Nothing)
+        Text = If(isNew, "Add product", "Edit product")
         FormBorderStyle = FormBorderStyle.FixedDialog
         MaximizeBox = False
         MinimizeBox = False
@@ -71,15 +84,14 @@ Public Class AddProductForm
         StartPosition = FormStartPosition.CenterParent
         BackColor = Color.White
         Font = Theme.UiFont(9.0F)
-        ClientSize = New Size(520, 606)
+        ClientSize = New Size(520, 436)
         KeyPreview = True
         AddHandler KeyDown, Sub(s, e)
                                 If e.KeyCode = Keys.Escape Then Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
                             End Sub
 
-        ' title
         Dim lblTitle As New Label()
-        lblTitle.Text = If(_isNew, "Add product", "Edit product")
+        lblTitle.Text = If(isNew, "Add product", "Edit product")
         lblTitle.Font = Theme.UiFont(14.0F, FontStyle.Bold)
         lblTitle.ForeColor = Theme.TextDark
         lblTitle.AutoSize = True
@@ -87,63 +99,59 @@ Public Class AddProductForm
         Controls.Add(lblTitle)
 
         Dim lblSub As New Label()
-        lblSub.Text = "Fill in the details. Use ""price by size"" if the price depends on the size."
+        lblSub.Text = "Fill in the product details. All fields are required."
         lblSub.Font = Theme.UiFont(8.5F)
         lblSub.ForeColor = Theme.TextMuted
         lblSub.AutoSize = True
         lblSub.Location = New Point(24, 46)
         Controls.Add(lblSub)
 
-        ' name
-        Caption("Product name", Me, 24, 82)
+        Caption("Product name", 24, 82)
         txtName = New TextBox()
         txtName.Location = New Point(24, 102)
         txtName.Width = 472
         txtName.MaxLength = 120
         Controls.Add(txtName)
 
-        ' category / stock / status
-        Caption("Category", Me, 24, 140)
-        cboCategory = New ComboBox()
-        cboCategory.DropDownStyle = ComboBoxStyle.DropDown      ' can type a new category
-        cboCategory.Location = New Point(24, 160)
-        cboCategory.Width = 220
-        For Each c As String In ProductStore.Categories()
-            cboCategory.Items.Add(c)
-        Next
-        Controls.Add(cboCategory)
+        Caption("Price (" & ChrW(&H20B1).ToString() & ")", 24, 140)
+        txtPrice = New TextBox()
+        txtPrice.Location = New Point(24, 160)
+        txtPrice.Width = 150
+        Controls.Add(txtPrice)
 
-        Caption("Stock", Me, 256, 140)
+        Caption("Stock", 186, 140)
         numStock = New NumericUpDown()
         numStock.Minimum = 0D
         numStock.Maximum = 1000000D
-        numStock.Location = New Point(256, 160)
+        numStock.Location = New Point(186, 160)
         numStock.Width = 110
         Controls.Add(numStock)
 
-        Caption("Status", Me, 378, 140)
-        cboStatus = New ComboBox()
-        cboStatus.DropDownStyle = ComboBoxStyle.DropDownList
-        cboStatus.Items.Add("Active")
-        cboStatus.Items.Add("Inactive")
-        cboStatus.SelectedIndex = 0
-        cboStatus.Location = New Point(378, 160)
-        cboStatus.Width = 118
-        Controls.Add(cboStatus)
+        Caption("Category", 308, 140)
+        cboCategory = New ComboBox()
+        cboCategory.DropDownStyle = ComboBoxStyle.DropDown      ' can type a new category
+        cboCategory.Location = New Point(308, 160)
+        cboCategory.Width = 188
+        Dim seen As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+        For Each p As Product In DataStore.Products
+            If Not String.IsNullOrWhiteSpace(p.Category) AndAlso seen.Add(p.Category.Trim()) Then
+                cboCategory.Items.Add(p.Category.Trim())
+            End If
+        Next
+        Controls.Add(cboCategory)
 
-        ' description + picture
-        Caption("Description (optional)", Me, 24, 198)
+        Caption("Description", 24, 198)
         txtDescription = New TextBox()
         txtDescription.Multiline = True
         txtDescription.ScrollBars = ScrollBars.Vertical
         txtDescription.Location = New Point(24, 218)
-        txtDescription.Size = New Size(340, 84)
+        txtDescription.Size = New Size(340, 96)
         Controls.Add(txtDescription)
 
-        Caption("Picture", Me, 380, 198)
+        Caption("Picture", 380, 198)
         picImage = New PictureBox()
         picImage.Location = New Point(380, 218)
-        picImage.Size = New Size(116, 84)
+        picImage.Size = New Size(116, 96)
         picImage.SizeMode = PictureBoxSizeMode.Zoom
         picImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         picImage.BackColor = Theme.HeaderRowBg
@@ -159,93 +167,19 @@ Public Class AddProductForm
         Controls.Add(picImage)
 
         Dim lnkChoose As New LinkLabel()
-        lnkChoose.Text = "Choose"
+        lnkChoose.Text = "Choose image"
         lnkChoose.AutoSize = True
-        lnkChoose.Location = New Point(380, 307)
+        lnkChoose.Location = New Point(380, 320)
         AddHandler lnkChoose.LinkClicked, Sub(s, e) ChooseImage()
         Controls.Add(lnkChoose)
 
-        Dim lnkRemove As New LinkLabel()
-        lnkRemove.Text = "Remove"
-        lnkRemove.AutoSize = True
-        lnkRemove.Location = New Point(440, 307)
-        AddHandler lnkRemove.LinkClicked, Sub(s, e)
-                                              _image = Nothing
-                                              picImage.Image = Nothing
-                                              picImage.Invalidate()
-                                          End Sub
-        Controls.Add(lnkRemove)
-
-        ' pricing mode
-        Caption("Pricing", Me, 24, 334)
-        rdoFixed = New RadioButton()
-        rdoFixed.Text = "Fixed price"
-        rdoFixed.AutoSize = True
-        rdoFixed.Checked = True
-        rdoFixed.Location = New Point(24, 354)
-        Controls.Add(rdoFixed)
-
-        rdoSizes = New RadioButton()
-        rdoSizes.Text = "Price by size (dynamic)"
-        rdoSizes.AutoSize = True
-        rdoSizes.Location = New Point(140, 354)
-        Controls.Add(rdoSizes)
-
-        AddHandler rdoFixed.CheckedChanged, Sub(s, e) UpdatePricingMode()
-        AddHandler rdoSizes.CheckedChanged, Sub(s, e) UpdatePricingMode()
-
-        ' fixed price panel
-        pnlFixed = New Panel()
-        pnlFixed.Location = New Point(24, 386)
-        pnlFixed.Size = New Size(472, 56)
-        Caption("Price (" & ChrW(&H20B1).ToString() & ")", pnlFixed, 0, 0)
-        numPrice = New NumericUpDown()
-        numPrice.DecimalPlaces = 2
-        numPrice.Minimum = 0D
-        numPrice.Maximum = 1000000D
-        numPrice.Location = New Point(0, 20)
-        numPrice.Width = 140
-        pnlFixed.Controls.Add(numPrice)
-        Controls.Add(pnlFixed)
-
-        ' sizes panel
-        pnlSizes = New Panel()
-        pnlSizes.Location = New Point(24, 386)
-        pnlSizes.Size = New Size(472, 136)
-        Caption("One row per size, e.g. Small = 100, Large = 130. Select a row + press Delete to remove.", pnlSizes, 0, 0)
-
-        gridSizes = New DataGridView()
-        gridSizes.Location = New Point(0, 22)
-        gridSizes.Size = New Size(472, 112)
-        gridSizes.AllowUserToAddRows = True
-        gridSizes.AllowUserToDeleteRows = True
-        gridSizes.AllowUserToResizeRows = False
-        gridSizes.RowHeadersVisible = False
-        gridSizes.BackgroundColor = Color.White
-        gridSizes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        gridSizes.GridColor = Theme.Border
-        gridSizes.EnableHeadersVisualStyles = False
-        gridSizes.ColumnHeadersDefaultCellStyle.BackColor = Theme.HeaderRowBg
-        gridSizes.ColumnHeadersDefaultCellStyle.ForeColor = Theme.TextMuted
-        gridSizes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        gridSizes.ColumnHeadersHeight = 26
-        gridSizes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        gridSizes.DefaultCellStyle.SelectionBackColor = Theme.TealSoft
-        gridSizes.DefaultCellStyle.SelectionForeColor = Theme.TextDark
-        gridSizes.Columns.Add("colSize", "Size")
-        gridSizes.Columns.Add("colPrice", "Price")
-        pnlSizes.Controls.Add(gridSizes)
-        Controls.Add(pnlSizes)
-
-        ' error message
         lblError = New Label()
         lblError.ForeColor = Theme.Red
         lblError.AutoSize = False
-        lblError.Location = New Point(24, 530)
+        lblError.Location = New Point(24, 346)
         lblError.Size = New Size(472, 18)
         Controls.Add(lblError)
 
-        ' buttons
         Dim btnCancel As New RoundedButton()
         btnCancel.Text = "Cancel"
         btnCancel.FillColor = Color.White
@@ -253,101 +187,57 @@ Public Class AddProductForm
         btnCancel.BorderColor = Theme.Border
         btnCancel.TextColor = Theme.TextDark
         btnCancel.Size = New Size(90, 36)
-        btnCancel.Location = New Point(268, 556)
+        btnCancel.Location = New Point(268, 376)
         AddHandler btnCancel.Click, Sub(s, e) Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Controls.Add(btnCancel)
 
         Dim btnSave As New RoundedButton()
         btnSave.Text = "Save product"
         btnSave.Size = New Size(130, 36)
-        btnSave.Location = New Point(366, 556)
+        btnSave.Location = New Point(366, 376)
         AddHandler btnSave.Click, Sub(s, e) SaveClicked()
         Controls.Add(btnSave)
 
         ActiveControl = txtName
     End Sub
 
-    Private Function Caption(text As String, parent As Control, x As Integer, y As Integer) As Label
+    Private Sub Caption(text As String, x As Integer, y As Integer)
         Dim l As New Label()
         l.Text = text
         l.AutoSize = True
         l.Font = Theme.UiFont(8.0F)
         l.ForeColor = Theme.TextMuted
         l.Location = New Point(x, y)
-        parent.Controls.Add(l)
-        Return l
-    End Function
-
-    Private Sub UpdatePricingMode()
-        If pnlFixed Is Nothing OrElse pnlSizes Is Nothing Then Return
-        pnlFixed.Visible = rdoFixed.Checked
-        pnlSizes.Visible = rdoSizes.Checked
+        Controls.Add(l)
     End Sub
 
-    ' ------------------------------------------------------------
-    '  Edit mode: fill the fields from the existing product
-    ' ------------------------------------------------------------
     Private Sub LoadExisting()
-        txtName.Text = _product.Name
-        cboCategory.Text = _product.Category
-        numStock.Value = ClampTo(numStock, _product.Stock)
-        cboStatus.SelectedIndex = If(String.Equals(_product.Status, "Inactive", StringComparison.OrdinalIgnoreCase), 1, 0)
-        txtDescription.Text = _product.Description
-
-        _image = _product.Image
-        picImage.Image = _image
-
-        Dim vs As List(Of ProductVariant) = ProductStore.VariantsOf(_product.Id)
-        If vs.Count > 1 Then
-            rdoSizes.Checked = True
-            For Each v As ProductVariant In vs
-                gridSizes.Rows.Add(v.Size, v.Price.ToString("N2"))
-            Next
-        Else
-            numPrice.Value = ClampTo(numPrice, If(vs.Count = 1, vs(0).Price, _product.Price))
-        End If
+        txtName.Text = _existing.Name
+        txtPrice.Text = _existing.Price.ToString("0.00")
+        numStock.Value = Math.Min(numStock.Maximum, Math.Max(numStock.Minimum, CDec(_existing.Stock)))
+        cboCategory.Text = _existing.Category
+        txtDescription.Text = _existing.Description
+        picImage.Image = _existing.Image
     End Sub
 
-    Private Shared Function ClampTo(n As NumericUpDown, value As Decimal) As Decimal
-        Return Math.Min(n.Maximum, Math.Max(n.Minimum, value))
-    End Function
-
-    ' ------------------------------------------------------------
-    '  Picture
-    ' ------------------------------------------------------------
     Private Sub ChooseImage()
         Using dlg As New OpenFileDialog()
             dlg.Title = "Choose product picture"
-            dlg.Filter = "Images|*.png;*.jpg;*.jpeg;*.bmp;*.gif"
+            dlg.Filter = "Images|*.jpg;*.jpeg;*.png;*.bmp;*.gif"
             If dlg.ShowDialog(Me) <> System.Windows.Forms.DialogResult.OK Then Return
 
-            Try
-                Using src As Image = Image.FromFile(dlg.FileName)
-                    _image = ScaleDown(src, 512)
-                End Using
-                picImage.Image = _image
-                picImage.Invalidate()
-            Catch
-                Fail("That file could not be opened as an image.", Nothing)
-            End Try
+            Dim preview As Image = DataStore.LoadImageCopy(dlg.FileName)
+            If preview Is Nothing Then
+                Fail("That file is not a valid image.", Nothing)
+                Return
+            End If
+            _imagePath = dlg.FileName
+            picImage.Image = preview
+            picImage.Invalidate()
+            lblError.Text = ""
         End Using
     End Sub
 
-    Private Shared Function ScaleDown(src As Image, maxSide As Integer) As Image
-        Dim factor As Double = Math.Min(1.0, CDbl(maxSide) / Math.Max(src.Width, src.Height))
-        Dim w As Integer = Math.Max(1, CInt(src.Width * factor))
-        Dim h As Integer = Math.Max(1, CInt(src.Height * factor))
-        Dim bmp As New Bitmap(w, h)
-        Using g As Graphics = Graphics.FromImage(bmp)
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic
-            g.DrawImage(src, 0, 0, w, h)
-        End Using
-        Return bmp
-    End Function
-
-    ' ------------------------------------------------------------
-    '  Save
-    ' ------------------------------------------------------------
     Private Sub Fail(message As String, target As Control)
         lblError.Text = message
         If target IsNot Nothing Then target.Focus()
@@ -356,81 +246,40 @@ Public Class AddProductForm
     Private Sub SaveClicked()
         lblError.Text = ""
 
-        Dim name As String = txtName.Text.Trim()
-        If name.Length = 0 Then
-            Fail("Please enter the product name.", txtName)
+        If String.IsNullOrWhiteSpace(txtName.Text) Then
+            Fail("Product name is required.", txtName)
             Return
         End If
 
-        Dim duplicate As Boolean = ProductStore.Products.Any(
-            Function(x) Not Object.ReferenceEquals(x, _product) AndAlso
-                        String.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase))
-        If duplicate Then
-            Fail("A product with this name already exists.", txtName)
+        Dim price As Decimal
+        If String.IsNullOrWhiteSpace(txtPrice.Text) Then
+            Fail("Price is required.", txtPrice)
+            Return
+        End If
+        If Not TryParseMoney(txtPrice.Text, price) Then
+            Fail("Enter a valid price.", txtPrice)
+            Return
+        End If
+        If price < 0D Then
+            Fail("Price cannot be negative.", txtPrice)
             Return
         End If
 
-        Dim category As String = cboCategory.Text.Trim()
-        If category.Length = 0 Then
-            Fail("Please choose or type a category.", cboCategory)
+        If String.IsNullOrWhiteSpace(cboCategory.Text) Then
+            Fail("Category is required.", cboCategory)
             Return
         End If
 
-        ' ---- build the variants ----
-        Dim vars As New List(Of ProductVariant)()
-
-        If rdoFixed.Checked Then
-            If numPrice.Value <= 0D Then
-                Fail("Please enter a price greater than 0.", numPrice)
-                Return
-            End If
-            Dim v As New ProductVariant()
-            v.Size = "Regular"
-            v.Price = numPrice.Value
-            vars.Add(v)
-        Else
-            Dim seen As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
-            For Each row As DataGridViewRow In gridSizes.Rows
-                If row.IsNewRow Then Continue For
-
-                Dim sizeText As String = Convert.ToString(row.Cells(0).Value).Trim()
-                Dim priceText As String = Convert.ToString(row.Cells(1).Value).Trim()
-                If sizeText.Length = 0 AndAlso priceText.Length = 0 Then Continue For
-
-                Dim price As Decimal
-                If sizeText.Length = 0 OrElse
-                   Not Decimal.TryParse(priceText, NumberStyles.Number, CultureInfo.CurrentCulture, price) OrElse
-                   price <= 0D Then
-                    Fail("Every row needs a size name and a price greater than 0.", gridSizes)
-                    Return
-                End If
-                If Not seen.Add(sizeText) Then
-                    Fail("Size """ & sizeText & """ is listed twice.", gridSizes)
-                    Return
-                End If
-
-                Dim v As New ProductVariant()
-                v.Size = sizeText
-                v.Price = price
-                vars.Add(v)
-            Next
-
-            If vars.Count < 2 Then
-                Fail("Add at least two sizes, or choose ""Fixed price"".", gridSizes)
-                Return
-            End If
+        If String.IsNullOrWhiteSpace(txtDescription.Text) Then
+            Fail("Description is required.", txtDescription)
+            Return
         End If
 
-        ' ---- copy to the product ----
-        _product.Name = name
-        _product.Category = category
-        _product.Stock = CInt(numStock.Value)
-        _product.Status = cboStatus.Text
-        _product.Description = txtDescription.Text.Trim()
-        _product.Image = _image
-
-        ResultVariants.Clear()
-        ResultVariants.AddRange(vars)
+        _name = txtName.Text.Trim()
+        _price = Math.Round(price, 2)
+        _stock = CInt(numStock.Value)
+        _category = cboCategory.Text.Trim()
+        _description = txtDescription.Text.Trim()
 
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
     End Sub
