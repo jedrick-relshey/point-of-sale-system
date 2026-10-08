@@ -835,7 +835,7 @@ Partial Class Cashier
         Me.tileCard.BorderThickness = 1
         Me.tileCard.Cursor = System.Windows.Forms.Cursors.Hand
         Me.tileCard.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.tileCard.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tileCard.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tileCard.ForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
         Me.tileCard.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.tileCard.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
@@ -846,7 +846,6 @@ Partial Class Cashier
         Me.tileCard.Size = New System.Drawing.Size(153, 50)
         Me.tileCard.TabIndex = 928
         Me.tileCard.Text = "Card"
-        Me.tileCard.TextOffset = New System.Drawing.Point(0, 13)
         '
         'tileCash
         '
@@ -856,7 +855,7 @@ Partial Class Cashier
         Me.tileCash.BorderThickness = 1
         Me.tileCash.Cursor = System.Windows.Forms.Cursors.Hand
         Me.tileCash.FillColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(212, Byte), Integer))
-        Me.tileCash.Font = New System.Drawing.Font("Segoe UI", 8.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tileCash.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tileCash.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.tileCash.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(212, Byte), Integer))
         Me.tileCash.HoverState.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
@@ -867,7 +866,6 @@ Partial Class Cashier
         Me.tileCash.Size = New System.Drawing.Size(153, 50)
         Me.tileCash.TabIndex = 927
         Me.tileCash.Text = "Cash"
-        Me.tileCash.TextOffset = New System.Drawing.Point(0, 13)
         '
         'lblPayCap
         '
@@ -2489,7 +2487,7 @@ Partial Class Cashier
         Me.Guna2PictureBox1.FillColor = System.Drawing.Color.Transparent
         Me.Guna2PictureBox1.ImageRotate = 0!
         Me.Guna2PictureBox1.Location = New System.Drawing.Point(190, 20)
-        Me.Guna2PictureBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2PictureBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2PictureBox1.Name = "Guna2PictureBox1"
         Me.Guna2PictureBox1.Size = New System.Drawing.Size(20, 20)
         Me.Guna2PictureBox1.TabIndex = 1186
@@ -2570,7 +2568,7 @@ Partial Class Cashier
         Me.Guna2PictureBox2.FillColor = System.Drawing.Color.Transparent
         Me.Guna2PictureBox2.ImageRotate = 0!
         Me.Guna2PictureBox2.Location = New System.Drawing.Point(190, 20)
-        Me.Guna2PictureBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2PictureBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2PictureBox2.Name = "Guna2PictureBox2"
         Me.Guna2PictureBox2.Size = New System.Drawing.Size(20, 20)
         Me.Guna2PictureBox2.TabIndex = 1187
@@ -2651,7 +2649,7 @@ Partial Class Cashier
         Me.Guna2PictureBox3.FillColor = System.Drawing.Color.Transparent
         Me.Guna2PictureBox3.ImageRotate = 0!
         Me.Guna2PictureBox3.Location = New System.Drawing.Point(190, 20)
-        Me.Guna2PictureBox3.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2PictureBox3.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2PictureBox3.Name = "Guna2PictureBox3"
         Me.Guna2PictureBox3.Size = New System.Drawing.Size(20, 20)
         Me.Guna2PictureBox3.TabIndex = 1188
@@ -2732,7 +2730,7 @@ Partial Class Cashier
         Me.Guna2PictureBox4.FillColor = System.Drawing.Color.Transparent
         Me.Guna2PictureBox4.ImageRotate = 0!
         Me.Guna2PictureBox4.Location = New System.Drawing.Point(190, 20)
-        Me.Guna2PictureBox4.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2PictureBox4.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2PictureBox4.Name = "Guna2PictureBox4"
         Me.Guna2PictureBox4.Size = New System.Drawing.Size(20, 20)
         Me.Guna2PictureBox4.TabIndex = 1189
@@ -3175,7 +3173,7 @@ Partial Class Cashier
         Me.Guna2Panel15.Controls.Add(Me.Label16)
         Me.Guna2Panel15.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.Guna2Panel15.Location = New System.Drawing.Point(20, 226)
-        Me.Guna2Panel15.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2Panel15.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2Panel15.Name = "Guna2Panel15"
         Me.Guna2Panel15.Size = New System.Drawing.Size(887, 601)
         Me.Guna2Panel15.TabIndex = 2
@@ -3253,7 +3251,7 @@ Partial Class Cashier
         Me.Guna2ComboBox2.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.Guna2ComboBox2.ItemHeight = 30
         Me.Guna2ComboBox2.Location = New System.Drawing.Point(1081, 176)
-        Me.Guna2ComboBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2ComboBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2ComboBox2.Name = "Guna2ComboBox2"
         Me.Guna2ComboBox2.Size = New System.Drawing.Size(140, 36)
         Me.Guna2ComboBox2.TabIndex = 5
@@ -3274,7 +3272,7 @@ Partial Class Cashier
         Me.Guna2ComboBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(CType(CType(193, Byte), Integer), CType(CType(106, Byte), Integer), CType(CType(58, Byte), Integer))
         Me.Guna2ComboBox1.ItemHeight = 30
         Me.Guna2ComboBox1.Location = New System.Drawing.Point(931, 176)
-        Me.Guna2ComboBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Guna2ComboBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.Guna2ComboBox1.Name = "Guna2ComboBox1"
         Me.Guna2ComboBox1.Size = New System.Drawing.Size(140, 36)
         Me.Guna2ComboBox1.TabIndex = 4
