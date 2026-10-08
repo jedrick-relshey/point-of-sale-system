@@ -120,22 +120,18 @@ Partial Class Cashier
         Me.lblDashTrendSub = New System.Windows.Forms.Label()
         Me.lblDashTrendTitle = New System.Windows.Forms.Label()
         Me.pnlDK1 = New Guna.UI2.WinForms.Guna2Panel()
-        Me.picDK1 = New Guna.UI2.WinForms.Guna2PictureBox()
         Me.lblDK1S = New System.Windows.Forms.Label()
         Me.lblDK1V = New System.Windows.Forms.Label()
         Me.lblDK1T = New System.Windows.Forms.Label()
         Me.pnlDK2 = New Guna.UI2.WinForms.Guna2Panel()
-        Me.picDK2 = New Guna.UI2.WinForms.Guna2PictureBox()
         Me.lblDK2S = New System.Windows.Forms.Label()
         Me.lblDK2V = New System.Windows.Forms.Label()
         Me.lblDK2T = New System.Windows.Forms.Label()
         Me.pnlDK3 = New Guna.UI2.WinForms.Guna2Panel()
-        Me.picDK3 = New Guna.UI2.WinForms.Guna2PictureBox()
         Me.lblDK3S = New System.Windows.Forms.Label()
         Me.lblDK3V = New System.Windows.Forms.Label()
         Me.lblDK3T = New System.Windows.Forms.Label()
         Me.pnlDK4 = New Guna.UI2.WinForms.Guna2Panel()
-        Me.picDK4 = New Guna.UI2.WinForms.Guna2PictureBox()
         Me.lblDK4S = New System.Windows.Forms.Label()
         Me.lblDK4V = New System.Windows.Forms.Label()
         Me.lblDK4T = New System.Windows.Forms.Label()
@@ -291,13 +287,9 @@ Partial Class Cashier
         Me.pnlDashTrend.SuspendLayout()
         CType(Me.picDashTrend, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlDK1.SuspendLayout()
-        CType(Me.picDK1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlDK2.SuspendLayout()
-        CType(Me.picDK2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlDK3.SuspendLayout()
-        CType(Me.picDK3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlDK4.SuspendLayout()
-        CType(Me.picDK4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.pnlInvAttn.SuspendLayout()
         Me.pnlInvCat.SuspendLayout()
@@ -613,12 +605,12 @@ Partial Class Cashier
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.main_pnl.BackColor = System.Drawing.Color.WhiteSmoke
         Me.main_pnl.BorderColor = System.Drawing.Color.Black
-        Me.main_pnl.Controls.Add(Me.pnl_PointOfSale)
         Me.main_pnl.Controls.Add(Me.dashbrd_pnl)
         Me.main_pnl.Controls.Add(Me.Panel1)
         Me.main_pnl.Controls.Add(Me.pnl_History)
         Me.main_pnl.Controls.Add(Me.pnlCardDim)
         Me.main_pnl.Controls.Add(Me.pnl_CashierMessages)
+        Me.main_pnl.Controls.Add(Me.pnl_PointOfSale)
         Me.main_pnl.Location = New System.Drawing.Point(199, 0)
         Me.main_pnl.Name = "main_pnl"
         Me.main_pnl.Size = New System.Drawing.Size(1241, 844)
@@ -1884,7 +1876,6 @@ Partial Class Cashier
         Me.pnlDK1.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.pnlDK1.BorderRadius = 14
         Me.pnlDK1.BorderThickness = 1
-        Me.pnlDK1.Controls.Add(Me.picDK1)
         Me.pnlDK1.Controls.Add(Me.lblDK1S)
         Me.pnlDK1.Controls.Add(Me.lblDK1V)
         Me.pnlDK1.Controls.Add(Me.lblDK1T)
@@ -1893,20 +1884,6 @@ Partial Class Cashier
         Me.pnlDK1.Name = "pnlDK1"
         Me.pnlDK1.Size = New System.Drawing.Size(231, 84)
         Me.pnlDK1.TabIndex = 1304
-        '
-        'picDK1
-        '
-        Me.picDK1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.picDK1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.picDK1.BorderRadius = 10
-        Me.picDK1.FillColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(212, Byte), Integer))
-        Me.picDK1.ImageRotate = 0!
-        Me.picDK1.Location = New System.Drawing.Point(183, 12)
-        Me.picDK1.Name = "picDK1"
-        Me.picDK1.Size = New System.Drawing.Size(34, 34)
-        Me.picDK1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picDK1.TabIndex = 1308
-        Me.picDK1.TabStop = False
         '
         'lblDK1S
         '
@@ -1949,7 +1926,6 @@ Partial Class Cashier
         Me.pnlDK2.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.pnlDK2.BorderRadius = 14
         Me.pnlDK2.BorderThickness = 1
-        Me.pnlDK2.Controls.Add(Me.picDK2)
         Me.pnlDK2.Controls.Add(Me.lblDK2S)
         Me.pnlDK2.Controls.Add(Me.lblDK2V)
         Me.pnlDK2.Controls.Add(Me.lblDK2T)
@@ -1958,20 +1934,6 @@ Partial Class Cashier
         Me.pnlDK2.Name = "pnlDK2"
         Me.pnlDK2.Size = New System.Drawing.Size(231, 84)
         Me.pnlDK2.TabIndex = 1309
-        '
-        'picDK2
-        '
-        Me.picDK2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.picDK2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.picDK2.BorderRadius = 10
-        Me.picDK2.FillColor = System.Drawing.Color.FromArgb(CType(CType(225, Byte), Integer), CType(CType(236, Byte), Integer), CType(CType(225, Byte), Integer))
-        Me.picDK2.ImageRotate = 0!
-        Me.picDK2.Location = New System.Drawing.Point(183, 12)
-        Me.picDK2.Name = "picDK2"
-        Me.picDK2.Size = New System.Drawing.Size(34, 34)
-        Me.picDK2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picDK2.TabIndex = 1313
-        Me.picDK2.TabStop = False
         '
         'lblDK2S
         '
@@ -2014,7 +1976,6 @@ Partial Class Cashier
         Me.pnlDK3.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.pnlDK3.BorderRadius = 14
         Me.pnlDK3.BorderThickness = 1
-        Me.pnlDK3.Controls.Add(Me.picDK3)
         Me.pnlDK3.Controls.Add(Me.lblDK3S)
         Me.pnlDK3.Controls.Add(Me.lblDK3V)
         Me.pnlDK3.Controls.Add(Me.lblDK3T)
@@ -2023,20 +1984,6 @@ Partial Class Cashier
         Me.pnlDK3.Name = "pnlDK3"
         Me.pnlDK3.Size = New System.Drawing.Size(231, 84)
         Me.pnlDK3.TabIndex = 1314
-        '
-        'picDK3
-        '
-        Me.picDK3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.picDK3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.picDK3.BorderRadius = 10
-        Me.picDK3.FillColor = System.Drawing.Color.FromArgb(CType(CType(230, Byte), Integer), CType(CType(238, Byte), Integer), CType(CType(230, Byte), Integer))
-        Me.picDK3.ImageRotate = 0!
-        Me.picDK3.Location = New System.Drawing.Point(183, 12)
-        Me.picDK3.Name = "picDK3"
-        Me.picDK3.Size = New System.Drawing.Size(34, 34)
-        Me.picDK3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picDK3.TabIndex = 1318
-        Me.picDK3.TabStop = False
         '
         'lblDK3S
         '
@@ -2079,7 +2026,6 @@ Partial Class Cashier
         Me.pnlDK4.BorderColor = System.Drawing.Color.FromArgb(CType(CType(234, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(210, Byte), Integer))
         Me.pnlDK4.BorderRadius = 14
         Me.pnlDK4.BorderThickness = 1
-        Me.pnlDK4.Controls.Add(Me.picDK4)
         Me.pnlDK4.Controls.Add(Me.lblDK4S)
         Me.pnlDK4.Controls.Add(Me.lblDK4V)
         Me.pnlDK4.Controls.Add(Me.lblDK4T)
@@ -2088,20 +2034,6 @@ Partial Class Cashier
         Me.pnlDK4.Name = "pnlDK4"
         Me.pnlDK4.Size = New System.Drawing.Size(231, 84)
         Me.pnlDK4.TabIndex = 1319
-        '
-        'picDK4
-        '
-        Me.picDK4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.picDK4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
-        Me.picDK4.BorderRadius = 10
-        Me.picDK4.FillColor = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(235, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.picDK4.ImageRotate = 0!
-        Me.picDK4.Location = New System.Drawing.Point(183, 12)
-        Me.picDK4.Name = "picDK4"
-        Me.picDK4.Size = New System.Drawing.Size(34, 34)
-        Me.picDK4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picDK4.TabIndex = 1323
-        Me.picDK4.TabStop = False
         '
         'lblDK4S
         '
@@ -4133,16 +4065,12 @@ Partial Class Cashier
         CType(Me.picDashTrend, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlDK1.ResumeLayout(False)
         Me.pnlDK1.PerformLayout()
-        CType(Me.picDK1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlDK2.ResumeLayout(False)
         Me.pnlDK2.PerformLayout()
-        CType(Me.picDK2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlDK3.ResumeLayout(False)
         Me.pnlDK3.PerformLayout()
-        CType(Me.picDK3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlDK4.ResumeLayout(False)
         Me.pnlDK4.PerformLayout()
-        CType(Me.picDK4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.pnlInvAttn.ResumeLayout(False)
@@ -4383,22 +4311,18 @@ Partial Class Cashier
     Friend WithEvents lblDK1T As System.Windows.Forms.Label
     Friend WithEvents lblDK1V As System.Windows.Forms.Label
     Friend WithEvents lblDK1S As System.Windows.Forms.Label
-    Friend WithEvents picDK1 As Guna.UI2.WinForms.Guna2PictureBox
     Friend WithEvents pnlDK2 As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblDK2T As System.Windows.Forms.Label
     Friend WithEvents lblDK2V As System.Windows.Forms.Label
     Friend WithEvents lblDK2S As System.Windows.Forms.Label
-    Friend WithEvents picDK2 As Guna.UI2.WinForms.Guna2PictureBox
     Friend WithEvents pnlDK3 As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblDK3T As System.Windows.Forms.Label
     Friend WithEvents lblDK3V As System.Windows.Forms.Label
     Friend WithEvents lblDK3S As System.Windows.Forms.Label
-    Friend WithEvents picDK3 As Guna.UI2.WinForms.Guna2PictureBox
     Friend WithEvents pnlDK4 As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblDK4T As System.Windows.Forms.Label
     Friend WithEvents lblDK4V As System.Windows.Forms.Label
     Friend WithEvents lblDK4S As System.Windows.Forms.Label
-    Friend WithEvents picDK4 As Guna.UI2.WinForms.Guna2PictureBox
     Friend WithEvents pnlDashTrend As Guna.UI2.WinForms.Guna2Panel
     Friend WithEvents lblDashTrendTitle As System.Windows.Forms.Label
     Friend WithEvents lblDashTrendSub As System.Windows.Forms.Label
