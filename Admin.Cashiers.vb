@@ -493,6 +493,101 @@ Partial Public Class Admin
         dlg.Close()
     End Sub
 
+    '=================================================================
+    ' CASHIER DIALOG THEME
+    ' Recolors the Add / Edit cashier dialog (teal + slate-blue) to the
+    ' system palette (ForestUi) every time it opens.
+    '=================================================================
+    Private Function ThemeColor(c As Color, isText As Boolean) As Color
+        If c.IsEmpty OrElse c.A = 0 Then Return c
+
+        Dim h As Single = c.GetHue()
+        Dim s As Single = c.GetSaturation()
+        Dim l As Single = c.GetBrightness()
+
+        ' white surfaces -> cream card fill (white text, e.g. on the Save button, stays white)
+        If c.R >= 250 AndAlso c.G >= 250 AndAlso c.B >= 250 Then
+            If isText Then Return c
+            Return ForestUi.CardFill
+        End If
+
+        ' black text -> ink
+        If isText AndAlso l < 0.12F Then Return ForestUi.Ink
+
+        ' other neutral grays are left alone
+        If s < 0.08F Then Return c
+
+        ' teal / green  (the old accent)  -> copper accent
+        If h >= 70.0F AndAlso h <= 200.0F AndAlso s >= 0.2F Then
+            If l > 0.8F Then Return ForestUi.AccentSoft
+            Return ForestUi.Accent
+        End If
+
+        ' slate / blue-gray / navy -> system neutrals
+        If h > 200.0F AndAlso h <= 260.0F Then
+            If l > 0.94F Then Return ForestUi.Page
+            If l > 0.82F Then Return ForestUi.Border
+            If l < 0.25F Then Return ForestUi.Ink
+            Return ForestUi.Muted
+        End If
+
+        Return c
+    End Function
+
+    Private Sub RecolorProp(target As Object, propName As String, isText As Boolean, hover As Boolean)
+        If target Is Nothing Then Return
+        Try
+            Dim pi As System.Reflection.PropertyInfo = target.GetType().GetProperty(propName)
+            If pi Is Nothing OrElse Not pi.CanRead OrElse Not pi.CanWrite Then Return
+            If pi.PropertyType IsNot GetType(Color) Then Return
+            If pi.GetIndexParameters().Length > 0 Then Return
+
+            Dim cur As Color = CType(pi.GetValue(target, Nothing), Color)
+            Dim nw As Color = ThemeColor(cur, isText)
+            If hover AndAlso nw.ToArgb() = ForestUi.Accent.ToArgb() Then nw = ForestUi.AccentDark
+            If nw.ToArgb() <> cur.ToArgb() Then pi.SetValue(target, nw, Nothing)
+        Catch
+            ' a control that does not allow the change is simply skipped
+        End Try
+    End Sub
+
+    Private Sub RecolorState(target As Object, stateName As String, hover As Boolean)
+        Try
+            Dim pi As System.Reflection.PropertyInfo = target.GetType().GetProperty(stateName)
+            If pi Is Nothing Then Return
+            Dim st As Object = pi.GetValue(target, Nothing)
+            If st Is Nothing Then Return
+            RecolorProp(st, "FillColor", False, hover)
+            RecolorProp(st, "BorderColor", False, False)
+            RecolorProp(st, "ForeColor", True, False)
+        Catch
+        End Try
+    End Sub
+
+    Private Sub ThemeCashierDialog(ctl As Control)
+        If ctl Is Nothing Then Return
+
+        For Each pn As String In New String() {"BackColor", "FillColor", "BorderColor", "PressedColor"}
+            RecolorProp(ctl, pn, False, False)
+        Next
+        For Each pn As String In New String() {"ForeColor", "PlaceholderForeColor"}
+            RecolorProp(ctl, pn, True, False)
+        Next
+        RecolorState(ctl, "HoverState", True)
+        RecolorState(ctl, "FocusedState", False)
+        RecolorState(ctl, "CheckedState", False)
+
+        ' accent buttons (Save cashier) get the same darker hover as the "Add cashier" button
+        Dim gb As Guna2Button = TryCast(ctl, Guna2Button)
+        If gb IsNot Nothing AndAlso gb.FillColor.ToArgb() = ForestUi.Accent.ToArgb() AndAlso gb.HoverState.FillColor.IsEmpty Then
+            gb.HoverState.FillColor = ForestUi.AccentDark
+        End If
+
+        For Each child As Control In ctl.Controls
+            ThemeCashierDialog(child)
+        Next
+    End Sub
+
     ''' <summary>acc = Nothing opens "Add cashier", otherwise "Edit cashier".</summary>
     Private Sub OpenCashierDialog(acc As CashierAccount)
         Dim isEdit As Boolean = (acc IsNot Nothing)
@@ -500,6 +595,10 @@ Partial Public Class Admin
 
         Using dlg As New CashierDialog(isEdit, If(isEdit, acc.FullName, ""), If(isEdit, acc.Username, ""), photo)
             dlg.SaveHandler = Function(d As CashierDialog) SaveCashierFromDialog(acc, d)
+            ' recolor the dialog to the system palette (copper / cream) as soon as it opens
+            Dim themeIt As EventHandler = Sub(o As Object, ev As EventArgs) ThemeCashierDialog(dlg)
+            AddHandler dlg.Load, themeIt
+            AddHandler dlg.Shown, themeIt
             If isEdit Then
                 Dim accId As String = acc.Id
                 AddHandler dlg.Shown, Sub(o As Object, ev As EventArgs) AttachStatusButton(dlg, accId)
