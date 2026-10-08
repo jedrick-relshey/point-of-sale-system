@@ -353,6 +353,7 @@ Partial Class Cashier
         Me.dshbrd_Pnl.Controls.Add(Me.lblWorkspace)
         Me.dshbrd_Pnl.Controls.Add(Me.Guna2HtmlLabel5)
         Me.dshbrd_Pnl.Controls.Add(Me.Guna2HtmlLabel7)
+        Me.dshbrd_Pnl.Controls.Add(Me.picCartIcon)
         Me.dshbrd_Pnl.Location = New System.Drawing.Point(0, 0)
         Me.dshbrd_Pnl.Name = "dshbrd_Pnl"
         Me.dshbrd_Pnl.Size = New System.Drawing.Size(199, 844)
@@ -733,7 +734,7 @@ Partial Class Cashier
         Me.topimage.ImageRotate = 0!
         Me.topimage.Location = New System.Drawing.Point(20, 62)
         Me.topimage.Name = "topimage"
-        Me.topimage.Size = New System.Drawing.Size(850, 92)
+        Me.topimage.Size = New System.Drawing.Size(850, 100)
         Me.topimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
         Me.topimage.TabIndex = 26
         Me.topimage.TabStop = False
@@ -801,7 +802,7 @@ Partial Class Cashier
         Me.txt_Cash_Receive.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(140, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(108, Byte), Integer))
         Me.txt_Cash_Receive.PlaceholderText = "Cash received (₱)"
         Me.txt_Cash_Receive.SelectedText = ""
-        Me.txt_Cash_Receive.Size = New System.Drawing.Size(189, 32)
+        Me.txt_Cash_Receive.Size = New System.Drawing.Size(191, 32)
         Me.txt_Cash_Receive.TabIndex = 27
         '
         'lbl_Change
@@ -1027,6 +1028,7 @@ Partial Class Cashier
         Me.btnBell.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnBell.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.btnBell.HoverState.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(236, Byte), Integer))
+        Me.btnBell.Image = Global.Vb_POS.My.Resources.Resources.icons8_notification_48
         Me.btnBell.ImageSize = New System.Drawing.Size(22, 22)
         Me.btnBell.Location = New System.Drawing.Point(630, 12)
         Me.btnBell.Name = "btnBell"
@@ -1122,7 +1124,6 @@ Partial Class Cashier
         Me.Guna2Panel6.Controls.Add(Me.lblCustNameCap)
         Me.Guna2Panel6.Controls.Add(Me.lblCustInfo)
         Me.Guna2Panel6.Controls.Add(Me.Guna2HtmlLabel15)
-        Me.Guna2Panel6.Controls.Add(Me.picCartIcon)
         Me.Guna2Panel6.Dock = System.Windows.Forms.DockStyle.Right
         Me.Guna2Panel6.FillColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
         Me.Guna2Panel6.Location = New System.Drawing.Point(890, 0)
@@ -1329,7 +1330,7 @@ Partial Class Cashier
         Me.Guna2HtmlLabel15.BackColor = System.Drawing.Color.Transparent
         Me.Guna2HtmlLabel15.Font = New System.Drawing.Font("Segoe UI", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Guna2HtmlLabel15.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(34, Byte), Integer), CType(CType(28, Byte), Integer))
-        Me.Guna2HtmlLabel15.Location = New System.Drawing.Point(56, 12)
+        Me.Guna2HtmlLabel15.Location = New System.Drawing.Point(17, 20)
         Me.Guna2HtmlLabel15.Name = "Guna2HtmlLabel15"
         Me.Guna2HtmlLabel15.Size = New System.Drawing.Size(95, 30)
         Me.Guna2HtmlLabel15.TabIndex = 19
@@ -1337,13 +1338,14 @@ Partial Class Cashier
         '
         'picCartIcon
         '
-        Me.picCartIcon.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(252, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.picCartIcon.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.picCartIcon.BorderRadius = 8
         Me.picCartIcon.FillColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(226, Byte), Integer), CType(CType(212, Byte), Integer))
+        Me.picCartIcon.Image = Global.Vb_POS.My.Resources.Resources.cafe_logo
         Me.picCartIcon.ImageRotate = 0!
-        Me.picCartIcon.Location = New System.Drawing.Point(16, 10)
+        Me.picCartIcon.Location = New System.Drawing.Point(11, 17)
         Me.picCartIcon.Name = "picCartIcon"
-        Me.picCartIcon.Size = New System.Drawing.Size(34, 34)
+        Me.picCartIcon.Size = New System.Drawing.Size(37, 37)
         Me.picCartIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.picCartIcon.TabIndex = 916
         Me.picCartIcon.TabStop = False

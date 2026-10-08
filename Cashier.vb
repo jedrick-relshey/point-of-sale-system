@@ -69,6 +69,14 @@ Public Class Cashier
 
         ApplyCashierTheme()
 
+        ' the top-right chip now only SHOWS the logged-in cashier: no arrow, no dropdown menu
+        lblChevron.Visible = False
+        lblUserName.Width = 126
+        lblUserRole.Width = 126
+        For Each chipPart As Control In New Control() {pnlUserChip, picAvatar, lblUserName, lblUserRole}
+            chipPart.Cursor = Cursors.Default
+        Next
+
         navButtons = {btn_DashBoard, btn_Point_Of_Sale, btn_invtry, btn_hstry, btn_CashierMessages}
         For Each b As Guna2Button In navButtons
             originalFore(b) = b.ForeColor
@@ -1944,14 +1952,10 @@ Public Class Cashier
     End Sub
 
     Private Sub ProfileChip_Click(sender As Object, e As EventArgs) Handles pnlUserChip.Click, picAvatar.Click, lblUserName.Click, lblUserRole.Click, lblChevron.Click
-        If pnlProfileMenu.Visible Then
-            pnlProfileMenu.Visible = False
-        Else
-            LoadCurrentProfile()
-            pnlCardDim.Visible = False
-            pnlProfileMenu.Visible = True
-            pnlProfileMenu.BringToFront()
-        End If
+        ' no dropdown menu any more (Settings / View Profile / Log out removed);
+        ' the chip just keeps showing the name and photo of the logged-in cashier.
+        pnlProfileMenu.Visible = False
+        LoadCurrentProfile()
     End Sub
 
     Private Sub ClosePopups(sender As Object, e As EventArgs)
@@ -2373,6 +2377,11 @@ Public Class Cashier
 
     ''' <summary>Price of ONE cup of this product in the given size.</summary>
     Private Shared Function UnitPrice(p As Product, code As String) As Decimal
+        ' the manager set a price per size (Recipe editor): use it. Products without sizes keep the old +10 / +20 rule.
+        If DataStore.HasSizeVariants(p) Then
+            Dim v As ProductVariant = DataStore.FindVariantForSize(p, code)
+            If v IsNot Nothing Then Return v.Price
+        End If
         Return p.Price + SizeSurcharge(code)
     End Function
 
@@ -2612,6 +2621,22 @@ Public Class Cashier
                     sx += 127
                 Next
 
+                ' product with real sizes (Recipe editor): only those sizes are offered
+                If DataStore.HasSizeVariants(product) Then
+                    Dim firstSize As String = ""
+                    Dim packX As Integer = 24
+                    For Each sb As Guna2Button In sizeBtns
+                        Dim exists As Boolean = (DataStore.FindVariantForSize(product, CStr(sb.Tag)) IsNot Nothing)
+                        sb.Visible = exists
+                        If exists Then
+                            If firstSize = "" Then firstSize = CStr(sb.Tag)
+                            sb.Left = packX
+                            packX += 127
+                        End If
+                    Next
+                    If DataStore.FindVariantForSize(product, chosenSize) Is Nothing AndAlso firstSize <> "" Then chosenSize = firstSize
+                End If
+
                 Dim qtyHead As New Label With {.Text = "Quantity", .Location = New Point(24, 334), .Size = New Size(100, 18),
                     .Font = New Font("Segoe UI", 8.5F, FontStyle.Bold), .ForeColor = Muted, .BackColor = CardFill}
                 Dim minusBtn As Guna2Button = MakeStepButton("-", False)
@@ -2665,7 +2690,7 @@ Public Class Cashier
                                                Next
                                            End Sub
                 Dim refreshTotals As Action = Sub()
-                                                  Dim extra As Decimal = SizeSurcharge(chosenSize)
+                                                  Dim extra As Decimal = Math.Max(0D, UnitPrice(product, chosenSize) - UnitPrice(product, SmallCode))
                                                   sizeInfo.Text = SizeName(chosenSize) & If(extra > 0D, "  (+" & Peso(extra) & ")", "")
                                                   priceLbl.Text = Peso(UnitPrice(product, chosenSize))
                                                   totalLbl.Text = Peso(UnitPrice(product, chosenSize) * ClampQty(ReadQty(qtyBox, startQty), product.Stock))
@@ -3016,19 +3041,18 @@ Public Class Cashier
                 End If
             End If
 
-            ' NOTE: DataStore.CreateSale still receives product + quantity only (sizes are merged per product).
-            ' To SAVE the cup size and the +10 / +20 charge on the transaction, CreateSale (DataStore.vb) must be updated.
-            Dim lines As New List(Of KeyValuePair(Of Product, Integer))
+            ' every cart line goes to DataStore with the price (and recipe) of ITS size
+            Dim lines As New List(Of SaleLine)
             For Each l As CartLine In cart
-                Dim merged As Boolean = False
-                For i As Integer = 0 To lines.Count - 1
-                    If Object.Equals(lines(i).Key, l.Prod) Then
-                        lines(i) = New KeyValuePair(Of Product, Integer)(l.Prod, lines(i).Value + l.Qty)
-                        merged = True
-                        Exit For
-                    End If
-                Next
-                If Not merged Then lines.Add(New KeyValuePair(Of Product, Integer)(l.Prod, l.Qty))
+                Dim sizedProduct As Boolean = DataStore.HasSizeVariants(l.Prod)
+                Dim sizeVariant As ProductVariant = If(sizedProduct, DataStore.FindVariantForSize(l.Prod, l.CupSize), Nothing)
+                Dim sizeLabel As String = ""
+                If sizeVariant IsNot Nothing Then
+                    sizeLabel = sizeVariant.Size
+                ElseIf l.CupSize <> SmallCode Then
+                    sizeLabel = SizeName(l.CupSize)
+                End If
+                lines.Add(New SaleLine(l.Prod, sizeVariant, sizeLabel, l.Qty, UnitPrice(l.Prod, l.CupSize)))
             Next
 
             Dim errorMessage As String = ""

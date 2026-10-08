@@ -595,6 +595,8 @@ Partial Public Module DataStore
                 SavePriceLogs()
             End If
 
+            If oldPrice <> p.Price Then ApplyProductPriceToBaseVariant(p)
+            RefreshRecipeAvailability(p.ShopId)
             SaveProducts()
             RaiseEvent ProductsChanged(Nothing, EventArgs.Empty)
             Return True
@@ -907,8 +909,26 @@ Partial Public Module DataStore
     ''' Complete checkout in one safe step: validates, deducts stock, snapshots prices,
     ''' creates the transaction and saves everything. Returns Nothing + errorMessage on failure.
     ''' </summary>
+    ''' <summary>Old signature (no sizes): every line is charged the product price.</summary>
     Public Function CreateSale(cashierName As String, cashierUsername As String,
                                lines As List(Of KeyValuePair(Of Product, Integer)),
+                               paymentMethod As String, cashReceived As Decimal,
+                               ByRef errorMessage As String,
+                               Optional customerName As String = "",
+                               Optional tableName As String = "",
+                               Optional cardType As String = "") As POS_Transaction
+        Dim sized As New List(Of SaleLine)
+        If lines IsNot Nothing Then
+            For Each kv As KeyValuePair(Of Product, Integer) In lines
+                sized.Add(New SaleLine(kv.Key, Nothing, "", kv.Value, kv.Key.Price))
+            Next
+        End If
+        Return CreateSale(cashierName, cashierUsername, sized, paymentMethod, cashReceived, errorMessage, customerName, tableName, cardType)
+    End Function
+
+    ''' <summary>Sale with sizes: each line has its own price and (when it has one) the recipe of its size.</summary>
+    Public Function CreateSale(cashierName As String, cashierUsername As String,
+                               lines As List(Of SaleLine),
                                paymentMethod As String, cashReceived As Decimal,
                                ByRef errorMessage As String,
                                Optional customerName As String = "",
@@ -928,28 +948,33 @@ Partial Public Module DataStore
             errorMessage = "No shop is selected for this sale."
             Return Nothing
         End If
-        For Each ln As KeyValuePair(Of Product, Integer) In lines
-            If Not String.Equals(ln.Key.ShopId, ShopContext.CurrentShopId, StringComparison.OrdinalIgnoreCase) Then
-                errorMessage = """" & ln.Key.Name & """ belongs to another shop."
+        For Each ln As SaleLine In lines
+            If Not String.Equals(ln.Product.ShopId, ShopContext.CurrentShopId, StringComparison.OrdinalIgnoreCase) Then
+                errorMessage = """" & ln.Product.Name & """ belongs to another shop."
                 Return Nothing
             End If
         Next
 
+        ' products WITHOUT a recipe still use the old manual stock: check the total per product (all sizes together)
+        Dim legacyQty As New Dictionary(Of Product, Integer)
         Dim subtotal As Decimal = 0D
-        For Each line As KeyValuePair(Of Product, Integer) In lines
-            If Not AllProducts.Contains(line.Key) Then
-                errorMessage = """" & line.Key.Name & """ is no longer available in the product catalog."
+        For Each line As SaleLine In lines
+            If Not AllProducts.Contains(line.Product) Then
+                errorMessage = """" & line.Product.Name & """ is no longer available in the product catalog."
                 Return Nothing
             End If
-            If line.Value <= 0 Then
-                errorMessage = "Invalid quantity for " & line.Key.Name & "."
+            If line.Quantity <= 0 Then
+                errorMessage = "Invalid quantity for " & line.Product.Name & "."
                 Return Nothing
             End If
-            If RecipeVariantOf(line.Key) Is Nothing AndAlso line.Value > line.Key.Stock Then
-                errorMessage = "Not enough stock for " & line.Key.Name & " (available: " & line.Key.Stock & ")."
-                Return Nothing
+            If RecipeFor(line) Is Nothing Then
+                If legacyQty.ContainsKey(line.Product) Then legacyQty(line.Product) += line.Quantity Else legacyQty(line.Product) = line.Quantity
+                If legacyQty(line.Product) > line.Product.Stock Then
+                    errorMessage = "Not enough stock for " & line.Product.Name & " (available: " & line.Product.Stock & ")."
+                    Return Nothing
+                End If
             End If
-            subtotal += line.Key.Price * line.Value
+            subtotal += line.UnitPrice * line.Quantity          ' the price of the chosen SIZE
         Next
 
         ' ingredient-based products: every ingredient of every recipe must be enough (checked together)
@@ -982,17 +1007,17 @@ Partial Public Module DataStore
         }
 
         Dim originalStocks As New Dictionary(Of Product, Integer)
-        For Each line As KeyValuePair(Of Product, Integer) In lines
+        For Each line As SaleLine In lines
             trx.Items.Add(New TransactionItem With {
-                .ProductId = line.Key.Id,
-                .ProductName = line.Key.Name,
-                .Quantity = line.Value,
-                .Price = line.Key.Price          ' PRICE SNAPSHOT
+                .ProductId = line.Product.Id,
+                .ProductName = line.DisplayName,        ' e.g. "Latte (Large)"
+                .Quantity = line.Quantity,
+                .Price = line.UnitPrice                 ' PRICE SNAPSHOT of the chosen size
             })
-            originalStocks(line.Key) = line.Key.Stock
-            If RecipeVariantOf(line.Key) Is Nothing Then
-                line.Key.Stock -= line.Value        ' old behaviour: product without recipe
-                SyncAvailability(line.Key)
+            If Not originalStocks.ContainsKey(line.Product) Then originalStocks(line.Product) = line.Product.Stock
+            If RecipeFor(line) Is Nothing Then
+                line.Product.Stock -= line.Quantity     ' old behaviour: product without recipe
+                SyncAvailability(line.Product)
             End If
         Next
 

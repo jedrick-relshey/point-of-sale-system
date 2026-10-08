@@ -616,7 +616,10 @@ Public Class ProductPageControl
         t.Controls.Add(cellName, 0, 0)
 
         ' 1 - price
-        t.Controls.Add(CellLabel(Peso(p.Price), Theme.UiFont(8.5F, FontStyle.Bold), Theme.TextDark), 1, 0)
+        ' price: one price, or "lowest - highest" when the product has sizes with different prices
+        Dim priceLow As Decimal, priceHigh As Decimal
+        Dim priceText As String = If(DataStore.TryPriceRange(p, priceLow, priceHigh), Peso(priceLow) & " - " & Peso(priceHigh), Peso(p.Price))
+        t.Controls.Add(CellLabel(priceText, Theme.UiFont(8.5F, FontStyle.Bold), Theme.TextDark), 1, 0)
 
         ' 2 - category
         t.Controls.Add(CellLabel(If(p.Category, ""), Theme.UiFont(8.0F), Theme.TextMuted), 2, 0)

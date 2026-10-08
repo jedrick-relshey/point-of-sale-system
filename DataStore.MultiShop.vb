@@ -3,7 +3,6 @@ Option Explicit On
 
 Imports System.Globalization
 Imports System.IO
-Imports System.Security
 Imports System.Text
 
 '=====================================================================
@@ -658,6 +657,15 @@ Partial Public Module DataStore
             r.Unit = ing.Unit
         Next
         If Not AllVariants.Contains(v) Then AllVariants.Add(v)
+        If SizeCodeOf(v.Size) <> "" Then
+            ' real sizes now exist: drop the empty automatic "Regular" variant of this product
+            For i As Integer = AllVariants.Count - 1 To 0 Step -1
+                Dim other As ProductVariant = AllVariants(i)
+                If other IsNot v AndAlso other.ProductId = v.ProductId AndAlso Not other.HasRecipe AndAlso
+                   String.Equals(other.Size, "Regular", StringComparison.OrdinalIgnoreCase) Then AllVariants.RemoveAt(i)
+            Next
+        End If
+        SyncProductPriceFromVariants(v.ProductId)
         Try
             SaveRecipeData()
         Catch ex As Exception
@@ -704,16 +712,93 @@ Partial Public Module DataStore
         Next
     End Sub
 
+    '==================================================================
+    ' SIZES & PRICES  (variant price is the real price of that size)
+    '==================================================================
+    ' "S" / "Small", "M" / "Medium", "L" / "Large"  ->  S, M, L   (anything else = "")
+    Public Function SizeCodeOf(sizeName As String) As String
+        Select Case If(sizeName, "").Trim().ToLowerInvariant()
+            Case "s", "small" : Return "S"
+            Case "m", "med", "medium" : Return "M"
+            Case "l", "large" : Return "L"
+            Case Else : Return ""
+        End Select
+    End Function
+
+    ' True when the manager created size variants (Small / Medium / Large) for this product.
+    Public Function HasSizeVariants(p As Product) As Boolean
+        If p Is Nothing Then Return False
+        For Each v As ProductVariant In VariantsOf(p.Id)
+            If SizeCodeOf(v.Size) <> "" Then Return True
+        Next
+        Return False
+    End Function
+
+    ' The variant (with its price + recipe) for cup size S / M / L. Nothing = no such size.
+    Public Function FindVariantForSize(p As Product, code As String) As ProductVariant
+        If p Is Nothing Then Return Nothing
+        For Each v As ProductVariant In VariantsOf(p.Id)
+            If SizeCodeOf(v.Size) = code Then Return v
+        Next
+        Return Nothing
+    End Function
+
+    ' True when the sizes have different prices (the product page then shows "P100.00 - P130.00").
+    Public Function TryPriceRange(p As Product, ByRef lowest As Decimal, ByRef highest As Decimal) As Boolean
+        lowest = 0D : highest = 0D
+        If p Is Nothing Then Return False
+        Dim vs As List(Of ProductVariant) = VariantsOf(p.Id)
+        If vs.Count < 2 Then Return False
+        lowest = vs(0).Price
+        highest = vs(vs.Count - 1).Price          ' VariantsOf is sorted by price
+        Return highest > lowest
+    End Function
+
+    ' Product.Price = price of the cheapest (base) size, so the menu card, the product page and the
+    ' reports always agree with the variants the manager edits in the Recipe editor.
+    Public Sub SyncProductPriceFromVariants(productId As String)
+        Dim vs As List(Of ProductVariant) = VariantsOf(productId)
+        If vs.Count = 0 Then Return
+        For Each p As Product In AllProducts
+            If String.Equals(p.Id, productId, StringComparison.OrdinalIgnoreCase) Then
+                If p.Price <> vs(0).Price Then
+                    p.Price = vs(0).Price
+                    p.LastUpdated = DateTime.Now
+                End If
+                Exit For
+            End If
+        Next
+    End Sub
+
+    ' The other direction: the manager changed the product price on the Product page.
+    Private Sub ApplyProductPriceToBaseVariant(p As Product)
+        Dim vs As List(Of ProductVariant) = VariantsOf(p.Id)
+        If vs.Count = 0 Then Return
+        If vs(0).Price <> p.Price Then
+            vs(0).Price = p.Price
+            Try
+                SaveRecipeData()
+            Catch
+            End Try
+        End If
+    End Sub
+
+    ' recipe used for a sale line: the chosen size, else the cheapest size that has a recipe
+    Private Function RecipeFor(line As SaleLine) As ProductVariant
+        If line.SizeVariant IsNot Nothing AndAlso line.SizeVariant.HasRecipe Then Return line.SizeVariant
+        Return RecipeVariantOf(line.Product)
+    End Function
+
     '------------------------------------------------------------------
     ' SALE SUPPORT  (used by CreateSale / refund / void)
     '------------------------------------------------------------------
-    Private Function BuildIngredientNeeds(lines As List(Of KeyValuePair(Of Product, Integer))) As Dictionary(Of String, Decimal)
+    Private Function BuildIngredientNeeds(lines As List(Of SaleLine)) As Dictionary(Of String, Decimal)
         Dim needs As New Dictionary(Of String, Decimal)
-        For Each line As KeyValuePair(Of Product, Integer) In lines
-            Dim v As ProductVariant = RecipeVariantOf(line.Key)
+        For Each line As SaleLine In lines
+            Dim v As ProductVariant = RecipeFor(line)
             If v Is Nothing Then Continue For
             For Each r As RecipeItem In v.Recipe
-                Dim add As Decimal = r.Quantity * line.Value
+                Dim add As Decimal = r.Quantity * line.Quantity
                 If needs.ContainsKey(r.IngredientId) Then needs(r.IngredientId) += add Else needs(r.IngredientId) = add
             Next
         Next
@@ -784,3 +869,26 @@ Partial Public Module DataStore
     End Function
 
 End Module
+
+' One line of a sale: a product in a given size, with the price the customer is charged for that size.
+Public Class SaleLine
+    Public ReadOnly Product As Product
+    Public ReadOnly SizeVariant As ProductVariant      ' Nothing = product without sizes
+    Public ReadOnly SizeLabel As String            ' "" or "Large" ...
+    Public ReadOnly Quantity As Integer
+    Public ReadOnly UnitPrice As Decimal
+
+    Public Sub New(product As Product, sizeVariant As ProductVariant, sizeLabel As String, quantity As Integer, unitPrice As Decimal)
+        Me.Product = product
+        Me.SizeVariant = sizeVariant
+        Me.SizeLabel = If(sizeLabel, "")
+        Me.Quantity = quantity
+        Me.UnitPrice = unitPrice
+    End Sub
+
+    Public ReadOnly Property DisplayName As String
+        Get
+            Return Product.Name & If(SizeLabel <> "", " (" & SizeLabel & ")", "")
+        End Get
+    End Property
+End Class
