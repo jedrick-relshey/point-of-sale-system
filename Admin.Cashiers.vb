@@ -552,7 +552,6 @@ Partial Public Class Admin
         Return ""
     End Function
 
-    ''' <summary>Avatar for a cashier name (used by the Messages page): photo if set, else initials.</summary>
     Private Function CashierAvatar(name As String, size As Integer, fill As Color, fg As Color) As Control
         Dim photo As Image = Nothing
         For Each acc As CashierAccount In DataStore.Cashiers
