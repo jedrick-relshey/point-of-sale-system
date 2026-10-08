@@ -1768,7 +1768,7 @@ Public Class Cashier
     Private Function BuildProductCard(product As Product, cardW As Integer) As Control
 
         Dim card As New Guna2Panel With {
-            .Size = New Size(cardW, 190), .Margin = New Padding(0, 0, 10, 12),
+            .Size = New Size(cardW, 160), .Margin = New Padding(0, 0, 10, 12),
             .BorderRadius = 12, .FillColor = CardFill, .BorderColor = CardBorder,
             .BorderThickness = 1, .BackColor = PageBg}
 
@@ -1815,27 +1815,6 @@ Public Class Cashier
             .BorderRadius = 7, .Animated = True, .Tag = product,
             .Font = New Font("Segoe UI", 8.5F, FontStyle.Bold), .Cursor = Cursors.Hand}
 
-        ' quantity picker:  [ - ] [ editable box ] [ + ]   (type a number for bulk orders)
-        Dim minusBtn As Guna2Button = MakeStepButton("-", False)
-        minusBtn.Location = New Point(10, 157)
-        Dim plusBtn As Guna2Button = MakeStepButton("+", True)
-        plusBtn.Location = New Point(cardW - 38, 157)
-        Dim qtyBox As New TextBox With {
-            .Text = "1", .TextAlign = HorizontalAlignment.Center, .BorderStyle = BorderStyle.FixedSingle,
-            .Font = New Font("Segoe UI", 9.5F, FontStyle.Bold), .ForeColor = Ink, .BackColor = Color.White,
-            .Location = New Point(42, 158), .Size = New Size(Math.Max(30, cardW - 84), 24), .MaxLength = 6}
-        AddHandler qtyBox.KeyPress, AddressOf QtyBox_KeyPress
-        AddHandler qtyBox.Leave, Sub(s As Object, ev As EventArgs) qtyBox.Text = ClampQty(ReadQty(qtyBox, 1), product.Stock).ToString()
-        AddHandler qtyBox.KeyDown, Sub(s As Object, ev As KeyEventArgs)
-                                       If ev.KeyCode = Keys.Enter Then
-                                           qtyBox.Text = ClampQty(ReadQty(qtyBox, 1), product.Stock).ToString()
-                                           qtyBox.SelectAll()
-                                           ev.SuppressKeyPress = True
-                                       End If
-                                   End Sub
-        AddHandler minusBtn.Click, Sub(s As Object, ev As EventArgs) qtyBox.Text = ClampQty(ReadQty(qtyBox, 1) - 1, product.Stock).ToString()
-        AddHandler plusBtn.Click, Sub(s As Object, ev As EventArgs) qtyBox.Text = ClampQty(ReadQty(qtyBox, 1) + 1, product.Stock).ToString()
-
         If product.Stock > 0 Then
             addButton.Text = "+ Add"
             addButton.FillColor = AccentSoft
@@ -1849,14 +1828,9 @@ Public Class Cashier
             addButton.DisabledState.ForeColor = Muted
             addButton.DisabledState.BorderColor = Color.FromArgb(232, 226, 220)
             addButton.DisabledState.CustomBorderColor = Color.FromArgb(232, 226, 220)
-            qtyBox.Enabled = False
-            minusBtn.Enabled = False
-            plusBtn.Enabled = False
         End If
-        AddHandler addButton.Click, Sub(s As Object, ev As EventArgs)
-                                        Dim q As Integer = ClampQty(ReadQty(qtyBox, 1), product.Stock)
-                                        If AddToCart(product, q) Then qtyBox.Text = "1"
-                                    End Sub
+        ' quantity is chosen in the "View" window; the Add button adds 1 piece
+        AddHandler addButton.Click, Sub(s As Object, ev As EventArgs) AddToCart(product, 1)
 
         card.Controls.Add(pic)
         card.Controls.Add(nameLabel)
@@ -1864,9 +1838,6 @@ Public Class Cashier
         card.Controls.Add(stockLabel)
         card.Controls.Add(priceLabel)
         card.Controls.Add(addButton)
-        card.Controls.Add(minusBtn)
-        card.Controls.Add(qtyBox)
-        card.Controls.Add(plusBtn)
         Return card
     End Function
 
@@ -2652,7 +2623,7 @@ Public Class Cashier
             nameLabel.Text = product.Name
             nameLabel.AutoEllipsis = True
             nameLabel.Size = New Size(itemW - 62 - 76, 18)
-            nameLabel.Location = New Point(62, 2)
+            nameLabel.Location = New Point(62, 6)
             nameLabel.Font = New Font("Segoe UI Semibold", 9.5F)
             nameLabel.ForeColor = Ink
             nameLabel.BackColor = CardFill
@@ -2660,31 +2631,23 @@ Public Class Cashier
             Dim itemTotalLabel As New Label()
             itemTotalLabel.Text = Peso(product.Price * quantity)
             itemTotalLabel.Size = New Size(76, 18)
-            itemTotalLabel.Location = New Point(itemW - 76, 2)
+            itemTotalLabel.Location = New Point(itemW - 76, 6)
             itemTotalLabel.TextAlign = ContentAlignment.MiddleRight
             itemTotalLabel.Font = New Font("Segoe UI", 9.5F, FontStyle.Bold)
             itemTotalLabel.ForeColor = Ink
             itemTotalLabel.BackColor = CardFill
 
-            Dim viewLink As New Label()
-            viewLink.Text = "View"
-            viewLink.AutoSize = True
-            viewLink.Location = New Point(62, 21)
-            viewLink.Font = New Font("Segoe UI", 8.0F, FontStyle.Bold Or FontStyle.Underline)
-            viewLink.ForeColor = Accent
-            viewLink.BackColor = CardFill
-            viewLink.Cursor = Cursors.Hand
-
             Dim minusButton As New Guna2Button()
             minusButton.Text = "-"
-            minusButton.Size = New Size(24, 24)
-            minusButton.Location = New Point(62, 36)
+            minusButton.Size = New Size(28, 26)
+            minusButton.Location = New Point(62, 32)
             minusButton.BorderRadius = 6
             minusButton.FillColor = Color.White
             minusButton.BorderThickness = 1
             minusButton.BorderColor = CardBorder
             minusButton.ForeColor = Ink
-            minusButton.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+            minusButton.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+            minusButton.TextAlign = HorizontalAlignment.Center
             minusButton.HoverState.FillColor = AccentSoft
             minusButton.HoverState.ForeColor = Ink
             minusButton.Cursor = Cursors.Hand
@@ -2693,7 +2656,7 @@ Public Class Cashier
             Dim quantityBox As New TextBox()
             quantityBox.Text = quantity.ToString()
             quantityBox.Size = New Size(40, 24)
-            quantityBox.Location = New Point(88, 37)
+            quantityBox.Location = New Point(94, 33)
             quantityBox.TextAlign = HorizontalAlignment.Center
             quantityBox.BorderStyle = BorderStyle.FixedSingle
             quantityBox.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
@@ -2703,14 +2666,15 @@ Public Class Cashier
 
             Dim plusButton As New Guna2Button()
             plusButton.Text = "+"
-            plusButton.Size = New Size(24, 24)
-            plusButton.Location = New Point(132, 36)
+            plusButton.Size = New Size(28, 26)
+            plusButton.Location = New Point(140, 32)
             plusButton.BorderRadius = 6
             plusButton.FillColor = AccentSoft
             plusButton.BorderThickness = 1
             plusButton.BorderColor = Color.FromArgb(226, 190, 165)
             plusButton.ForeColor = Ink
-            plusButton.Font = New Font("Segoe UI", 10.0F, FontStyle.Bold)
+            plusButton.Font = New Font("Segoe UI", 12.0F, FontStyle.Bold)
+            plusButton.TextAlign = HorizontalAlignment.Center
             plusButton.HoverState.FillColor = Accent
             plusButton.HoverState.ForeColor = Color.White
             plusButton.Cursor = Cursors.Hand
@@ -2719,7 +2683,7 @@ Public Class Cashier
             Dim deleteButton As New Label()
             deleteButton.Text = "Remove"
             deleteButton.Size = New Size(64, 18)
-            deleteButton.Location = New Point(itemW - 64, 40)
+            deleteButton.Location = New Point(itemW - 64, 36)
             deleteButton.TextAlign = ContentAlignment.MiddleRight
             deleteButton.Font = New Font("Segoe UI", 8.0F, FontStyle.Bold)
             deleteButton.ForeColor = Color.FromArgb(176, 72, 48)
@@ -2729,7 +2693,6 @@ Public Class Cashier
             AddHandler minusButton.Click, Sub(s As Object, ev As EventArgs) DecreaseQuantity(product)
             AddHandler plusButton.Click, Sub(s As Object, ev As EventArgs) IncreaseQuantity(product)
             AddHandler deleteButton.Click, Sub(s As Object, ev As EventArgs) DeleteCartItem(product)
-            AddHandler viewLink.Click, Sub(s As Object, ev As EventArgs) ShowProductDetails(product, True)
             AddHandler quantityBox.KeyPress, AddressOf QtyBox_KeyPress
             AddHandler quantityBox.Leave, Sub(s As Object, ev As EventArgs) CommitCartQty(product, quantityBox)
             AddHandler quantityBox.KeyDown, Sub(s As Object, ev As KeyEventArgs)
@@ -2742,7 +2705,6 @@ Public Class Cashier
             row.Controls.Add(pic)
             row.Controls.Add(nameLabel)
             row.Controls.Add(itemTotalLabel)
-            row.Controls.Add(viewLink)
             row.Controls.Add(minusButton)
             row.Controls.Add(quantityBox)
             row.Controls.Add(plusButton)
