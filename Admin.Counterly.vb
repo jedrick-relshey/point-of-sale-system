@@ -31,7 +31,6 @@ Partial Public Class Admin
 
     Private listPane As Panel
     Private listTitleRow As Panel
-    Private listCompose As Guna2Button
     Private listSearchWrap As Panel
     Private listSearchBox As Guna2Panel
     Private convoSearch As Guna2TextBox
@@ -40,15 +39,14 @@ Partial Public Class Admin
     Private chatHeader As Panel
     Private chatAvatarHost As Panel
     Private chatStatusDot As Guna2Panel
-    Private chatCall As Guna2Button
-    Private chatMore As Guna2Button
     Private composer As Panel
 
     Private ReadOnly bubbleFont As New Font("Segoe UI", 10.0F)
     Private ReadOnly metaFont As New Font("Segoe UI", 8.0F)
     Private lastChatWidth As Integer = -1
 
-    Private composerAttach As Guna2Button
+    Private editBar As Panel
+    Private editingMessage As ChatMessage = Nothing
     Private chatRoleBadge As Guna2Panel
     Private msgRendering As Boolean = False
     Private lastAdminInitials As String = ""
@@ -333,10 +331,6 @@ Partial Public Class Admin
         Dim listTitle As Label = ForestUi.Lbl("Admin & Cashier conversations", 10.5F, FontStyle.Bold, ForestUi.Ink, 22, 22)
         listTitle.UseMnemonic = False
         listTitleRow.Controls.Add(listTitle)
-        listCompose = ForestUi.GlyphButton(ForestUi.GlyphEdit, 34, ForestUi.AccentSoft, ForestUi.Accent)
-        listCompose.Location = New Point(246, 14)
-        listTitleRow.Controls.Add(listCompose)
-        AddHandler listCompose.Click, AddressOf ListCompose_Click
         listPane.Controls.Add(listTitleRow)
 
         ' ---------- right: chat ----------
@@ -361,8 +355,18 @@ Partial Public Class Admin
         composerLine.BackColor = ForestUi.Border
         composer.Controls.Add(composerLine)
 
-        composerAttach = ForestUi.GlyphButton(ChrW(&HE723), 36, ForestUi.Page, ForestUi.Muted)
-        composer.Controls.Add(composerAttach)
+        ' "Editing message" bar (only visible while the admin corrects one of his own messages)
+        editBar = New Panel()
+        editBar.Dock = DockStyle.Top
+        editBar.Height = 30
+        editBar.BackColor = ForestUi.AccentSoft
+        editBar.Visible = False
+        editBar.Controls.Add(ForestUi.Lbl("Editing message", 8.5F, FontStyle.Bold, ForestUi.Accent, 24, 7))
+        Dim editCancel As Label = ForestUi.Lbl("Cancel", 8.5F, FontStyle.Underline, ForestUi.Muted, 140, 7)
+        editCancel.Cursor = Cursors.Hand
+        AddHandler editCancel.Click, Sub(o As Object, ev As EventArgs) CancelEdit()
+        editBar.Controls.Add(editCancel)
+        composer.Controls.Add(editBar)
 
         txtAdminChat.Anchor = AnchorStyles.Top Or AnchorStyles.Left
         txtAdminChat.BorderRadius = 20
@@ -426,11 +430,6 @@ Partial Public Class Admin
         chatStatusDot.Visible = False
         Guna2HtmlLabel60.Visible = False
 
-        chatCall = ForestUi.GlyphButton(ForestUi.GlyphPhone, 36, ForestUi.Page, ForestUi.Muted)
-        chatMore = ForestUi.GlyphButton(ForestUi.GlyphMore, 36, ForestUi.Page, ForestUi.Muted)
-        chatHeader.Controls.Add(chatCall)
-        chatHeader.Controls.Add(chatMore)
-        AddHandler chatHeader.Resize, AddressOf ChatHeader_Resize
         chatPane.Controls.Add(chatHeader)
 
         pg.Controls.Add(body)
@@ -446,11 +445,6 @@ Partial Public Class Admin
         hdrLine.BackColor = ForestUi.Border
         hdrPanel.Controls.Add(hdrLine)
 
-        Dim hdrTitle As Label = ForestUi.Lbl("Admin & Cashier Messages", 17.0F, FontStyle.Regular, ForestUi.Ink, 28, 12)
-        hdrTitle.UseMnemonic = False
-        hdrPanel.Controls.Add(hdrTitle)
-        hdrPanel.Controls.Add(ForestUi.Lbl("Restricted workspace for Admin and Cashier coordination only", 9.5F,
-                                            FontStyle.Regular, ForestUi.Muted, 29, 46))
 
         hdrBell = ForestUi.GlyphButton(ForestUi.GlyphBell, 40, ForestUi.CardFill, ForestUi.Ink)
         hdrBell.BorderColor = ForestUi.Border
@@ -479,7 +473,6 @@ Partial Public Class Admin
 
         ' initial positions (Resize may not fire for controls that never change size)
         HdrPanel_Resize(Nothing, EventArgs.Empty)
-        ChatHeader_Resize(Nothing, EventArgs.Empty)
         Composer_Resize(Nothing, EventArgs.Empty)
 
         AddHandler DataStore.ReadStatesChanged, AddressOf Admin_ReadStatesChanged
@@ -508,23 +501,21 @@ Partial Public Class Admin
         hdrBell.Location = New Point(x - 20 - hdrBell.Width, 20)
     End Sub
 
-    Private Sub ChatHeader_Resize(sender As Object, e As EventArgs)
-        If chatHeader Is Nothing Then Return
-        Dim w As Integer = chatHeader.ClientSize.Width
-        chatMore.Location = New Point(w - 24 - chatMore.Width, 20)
-        chatCall.Location = New Point(chatMore.Left - 8 - chatCall.Width, 20)
-    End Sub
-
     Private Sub Composer_Resize(sender As Object, e As EventArgs)
         If composer Is Nothing Then Return
         Dim w As Integer = composer.ClientSize.Width
-        btnAdmin.Location = New Point(w - 20 - btnAdmin.Width, 18)
-        composerAttach.Location = New Point(20, 20)
-        txtAdminChat.Location = New Point(composerAttach.Right + 10, 18)
+        Dim y0 As Integer = 18 + If(editBar IsNot Nothing AndAlso editBar.Visible, editBar.Height, 0)
+        btnAdmin.Location = New Point(w - 20 - btnAdmin.Width, y0)
+        txtAdminChat.Location = New Point(20, y0)
         txtAdminChat.Size = New Size(Math.Max(100, btnAdmin.Left - 12 - txtAdminChat.Left), 40)
     End Sub
 
     Private Sub TxtAdminChat_KeyDown(sender As Object, e As KeyEventArgs)
+        If e.KeyCode = Keys.Escape AndAlso editingMessage IsNot Nothing Then
+            e.SuppressKeyPress = True
+            CancelEdit()
+            Return
+        End If
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             btnAdmin.PerformClick()
@@ -535,9 +526,6 @@ Partial Public Class Admin
         DoLogout()
     End Sub
 
-    Private Sub ListCompose_Click(sender As Object, e As EventArgs)
-        txtAdminChat.Focus()
-    End Sub
 
     Private Sub ConvoSearch_TextChanged(sender As Object, e As EventArgs)
         RefreshConversationList()
@@ -605,6 +593,16 @@ Partial Public Class Admin
         If String.IsNullOrWhiteSpace(txtAdminChat.Text) Then Return
         If selectedConvo = "" Then Return
 
+        If editingMessage IsNot Nothing Then
+            Dim err As String = ""
+            If DataStore.EditMessage(editingMessage, txtAdminChat.Text, True, CurrentAdminName(), err) Then
+                CancelEdit()                  ' MessagesChanged already redrew the chat
+            Else
+                MessageBox.Show(err, "Edit message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+            Return
+        End If
+
         Dim newMessage As New ChatMessage With {
             .Sender = CurrentAdminName(),
             .Receiver = selectedConvo,
@@ -613,6 +611,25 @@ Partial Public Class Admin
         }
         txtAdminChat.Clear()
         DataStore.AddMessage(newMessage)      ' saved + MessagesChanged refreshes this screen
+    End Sub
+
+    ' ---- correcting a message the admin already sent ----
+    Private Sub BeginEdit(chat As ChatMessage)
+        editingMessage = chat
+        txtAdminChat.Text = chat.Message
+        txtAdminChat.SelectionStart = txtAdminChat.Text.Length
+        editBar.Visible = True
+        composer.Height = 76 + editBar.Height
+        Composer_Resize(Nothing, EventArgs.Empty)
+        txtAdminChat.Focus()
+    End Sub
+
+    Private Sub CancelEdit()
+        editingMessage = Nothing
+        txtAdminChat.Clear()
+        If editBar IsNot Nothing Then editBar.Visible = False
+        composer.Height = 76
+        Composer_Resize(Nothing, EventArgs.Empty)
     End Sub
 
     Private Sub Admin_ReadStatesChanged(sender As Object, e As EventArgs)
@@ -692,10 +709,6 @@ Partial Public Class Admin
         Next
         names = names.OrderByDescending(Function(n) LastTimeOf(n)).ThenBy(Function(n) n, StringComparer.OrdinalIgnoreCase).ToList()
 
-        Dim adminName As String = CurrentAdminName()
-        Dim showAdmin As Boolean = (query.Length = 0 OrElse adminName.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0 _
-                                    OrElse "admin".IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0)
-
         FlowLayoutPanel3.SuspendLayout()
         For i As Integer = FlowLayoutPanel3.Controls.Count - 1 To 0 Step -1
             Dim c As Control = FlowLayoutPanel3.Controls(i)
@@ -704,7 +717,7 @@ Partial Public Class Admin
         Next
 
         Dim rowH As Integer = 76
-        Dim totalH As Integer = 30 + Math.Max(1, names.Count) * rowH + If(showAdmin, 30 + rowH, 0)
+        Dim totalH As Integer = 30 + Math.Max(1, names.Count) * rowH
         Dim needsScroll As Boolean = totalH > FlowLayoutPanel3.ClientSize.Height
         Dim w As Integer = FlowLayoutPanel3.ClientSize.Width - If(needsScroll, SystemInformation.VerticalScrollBarWidth, 0)
         If w < 100 Then w = 299
@@ -721,10 +734,6 @@ Partial Public Class Admin
             FlowLayoutPanel3.Controls.Add(BuildConvoItem(nm, w, rowH))
         Next
 
-        If showAdmin Then
-            FlowLayoutPanel3.Controls.Add(MakeSectionLabel("ADMIN", w))
-            FlowLayoutPanel3.Controls.Add(BuildAdminItem(adminName, w, rowH))
-        End If
         FlowLayoutPanel3.ResumeLayout(True)
 
         ' chat header + composer follow the selection
@@ -842,38 +851,10 @@ Partial Public Class Admin
         Return p
     End Function
 
-    ' the signed-in admin (information only, not a conversation)
-    Private Function BuildAdminItem(nm As String, w As Integer, h As Integer) As Panel
-        Dim p As New Panel()
-        p.Size = New Size(w, h)
-        p.Margin = Padding.Empty
-        p.BackColor = ForestUi.CardFill
-
-        Dim av As Control = ForestUi.Avatar(InitialsOf(nm), 40, ForestUi.AvatarGray, ForestUi.Ink)
-        av.Location = New Point(16, 18)
-        p.Controls.Add(av)
-
-        Dim cur As Label = ForestUi.Lbl("Current admin", 7.5F, FontStyle.Regular, ForestUi.Muted)
-        cur.Location = New Point(w - cur.Width - 16, 15)
-        p.Controls.Add(cur)
-
-        Dim nameLbl As Label = ForestUi.Lbl(nm, 9.5F, FontStyle.Bold, ForestUi.Ink, 68, 14)
-        nameLbl.AutoSize = False
-        nameLbl.AutoEllipsis = True
-        nameLbl.UseMnemonic = False
-        nameLbl.Size = New Size(Math.Max(40, w - 68 - 16 - cur.Width - 6), 20)
-        p.Controls.Add(nameLbl)
-
-        Dim badge As Guna2Panel = MakeRoleBadge("Admin")
-        badge.Location = New Point(68, 42)
-        p.Controls.Add(badge)
-        p.Controls.Add(ForestUi.Lbl("Signed-in workspace", 8.5F, FontStyle.Regular, ForestUi.Muted, badge.Right + 6, 41))
-        Return p
-    End Function
-
     Private Sub ConvoItem_Click(sender As Object, e As EventArgs)
         Dim c As Control = TryCast(sender, Control)
         If c Is Nothing OrElse c.Tag Is Nothing Then Return
+        If editingMessage IsNot Nothing Then CancelEdit()
         selectedConvo = CStr(c.Tag)
         LoadChatMessages()          ' shows this cashier's chat and redraws the list
         txtAdminChat.Focus()
@@ -971,9 +952,13 @@ Partial Public Class Admin
             Dim readAt As DateTime = DataStore.CashierReadAt(selectedConvo)
             metaText &= " " & ChrW(&HB7) & " " & If(readAt >= chat.TimeSent, "Read", "Sent")
         End If
+        If DataStore.MessageEditedAt(chat) <> DateTime.MinValue Then metaText &= " " & ChrW(&HB7) & " Edited"
         Dim metaSize As Size = TextRenderer.MeasureText(metaText, metaFont)
 
-        Dim contentW As Integer = Math.Max(txtSize.Width, metaSize.Width) + 6
+        Dim canEdit As Boolean = fromAdmin AndAlso DataStore.CanEditMessage(chat, True, CurrentAdminName())
+        Dim editW As Integer = If(canEdit, TextRenderer.MeasureText("Edit", metaFont).Width + 14, 0)
+
+        Dim contentW As Integer = Math.Max(txtSize.Width, metaSize.Width + editW) + 6
         Dim bubbleW As Integer = contentW + 2 * padX
         Dim bubbleH As Integer = padY + txtSize.Height + 8 + metaSize.Height + padY
 
@@ -1001,6 +986,20 @@ Partial Public Class Admin
         metaLbl.Text = metaText
         metaLbl.Location = New Point(padX, padY + txtSize.Height + 8)
         bubble.Controls.Add(metaLbl)
+
+        If canEdit Then
+            Dim editLbl As New Label()
+            editLbl.AutoSize = True
+            editLbl.BackColor = Color.Transparent
+            editLbl.ForeColor = Color.FromArgb(240, 200, 165)
+            editLbl.Font = New Font("Segoe UI", 8.0F, FontStyle.Underline)
+            editLbl.Cursor = Cursors.Hand
+            editLbl.UseMnemonic = False
+            editLbl.Text = "Edit"
+            editLbl.Location = New Point(bubbleW - padX - TextRenderer.MeasureText("Edit", metaFont).Width, padY + txtSize.Height + 8)
+            AddHandler editLbl.Click, Sub(o As Object, ev As EventArgs) BeginEdit(chat)
+            bubble.Controls.Add(editLbl)
+        End If
 
         ' sent = right side, received = left side
         bubble.Margin = New Padding(If(fromAdmin, Math.Max(0, areaW - bubbleW), 0), 8, 0, 8)

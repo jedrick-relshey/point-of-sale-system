@@ -113,6 +113,9 @@
     <Compile Include="CashierDialog.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Cashier_Messages.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CounterlyUi.vb" />
     <Compile Include="DataStore.MultiShop.vb" />
     <Compile Include="DataStore.vb" />

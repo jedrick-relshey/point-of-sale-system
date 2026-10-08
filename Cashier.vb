@@ -136,7 +136,7 @@ Public Class Cashier
 
         If target Is pnl_PointOfSale Then
             AttachTopBar(pnl_PointOfSale, 20 + Guna2Panel6.Width)
-        ElseIf target Is dashbrd_pnl OrElse target Is Panel1 OrElse target Is pnl_History Then
+        ElseIf target Is dashbrd_pnl OrElse target Is Panel1 OrElse target Is pnl_History OrElse target Is pnl_CashierMessages Then
             If target Is dashbrd_pnl AndAlso lastProfileUser <> CurrentSession.Username Then LoadCurrentProfile()
             AttachTopBar(target, 20)
         End If
@@ -743,11 +743,7 @@ Public Class Cashier
     End Sub
 
     Private Sub BuildMessagingLayout()
-        CafeUi.StyleMessaging(pnl_CashierMessages, FlowLayoutPanel3, pnl_MainChat,
-                              flpMessages, CashierName, Guna2HtmlLabel60,
-                              txtChat, btnSend, "Admin Support",
-                              "Terminal Communications",
-                              "Send a message to the administrator for support or store updates.")
+        BuildForestMessaging()          ' Cashier_Messages.vb (same look as the Admin messages screen)
     End Sub
 
     '=================================================================
@@ -2728,6 +2724,16 @@ Public Class Cashier
 
         If String.IsNullOrWhiteSpace(txtChat.Text) Then Return
 
+        If chatEditing IsNot Nothing Then
+            Dim err As String = ""
+            If DataStore.EditMessage(chatEditing, txtChat.Text, False, MyChatName(), err) Then
+                CancelChatEdit()              ' MessagesChanged already reloaded the chat
+            Else
+                MessageBox.Show(err, "Edit message", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+            Return
+        End If
+
         Dim newMessage As New ChatMessage With {
             .Sender = MyChatName(),
             .Receiver = "Admin",
@@ -2746,57 +2752,6 @@ Public Class Cashier
     End Function
 
     Private Sub LoadCashierChat()
-
-        flpMessages.Controls.Clear()
-
-        For Each chat As ChatMessage In DataStore.ThreadMessages(MyChatName())
-
-            Dim isMine As Boolean = DataStore.IsFromCashier(chat)
-
-            Dim messagePanel As New RoundedPanel()
-            messagePanel.Width = flpMessages.ClientSize.Width - 120
-            messagePanel.Height = 90
-            messagePanel.Margin = New Padding(5)
-            messagePanel.Padding = New Padding(10)
-            messagePanel.BackColor = If(isMine, brown, Color.FromKnownColor(KnownColor.ControlLight))
-
-            Dim fore As Color = If(isMine, Color.White, brown)
-
-            Dim senderLabel As New Label()
-            senderLabel.Text = If(isMine, "You", chat.Sender)
-            senderLabel.AutoSize = True
-            senderLabel.Location = New Point(10, 8)
-            senderLabel.Font = New Font("Segoe UI", 9, FontStyle.Bold)
-            senderLabel.ForeColor = fore
-
-            Dim messageLabel As New Label()
-            messageLabel.Text = chat.Message
-            messageLabel.AutoSize = False
-            messageLabel.Width = messagePanel.Width - 20
-            messageLabel.Height = 40
-            messageLabel.Location = New Point(10, 28)
-            messageLabel.Font = New Font("Segoe UI", 10, FontStyle.Regular)
-            messageLabel.ForeColor = fore
-
-            Dim timeLabel As New Label()
-            timeLabel.Text = chat.TimeSent.ToString("MMM d, hh:mm tt")
-            timeLabel.AutoSize = True
-            timeLabel.Location = New Point(10, 68)
-            timeLabel.Font = New Font("Segoe UI", 8, FontStyle.Regular)
-            timeLabel.ForeColor = If(isMine, Color.LightGray, Color.Gray)
-
-            messagePanel.Controls.Add(senderLabel)
-            messagePanel.Controls.Add(messageLabel)
-            messagePanel.Controls.Add(timeLabel)
-
-            flpMessages.Controls.Add(messagePanel)
-        Next
-
-        If flpMessages.Controls.Count > 0 Then
-            flpMessages.ScrollControlIntoView(flpMessages.Controls(flpMessages.Controls.Count - 1))
-        End If
-
-        ' the admin sees "Read" once the cashier has opened the chat
-        If pnl_CashierMessages.Visible Then DataStore.MarkThreadRead(False, MyChatName())
+        RenderCashierChat()             ' Cashier_Messages.vb
     End Sub
 End Class

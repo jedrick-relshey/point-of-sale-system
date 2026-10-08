@@ -31,7 +31,7 @@ Public Class AddProductForm
     Private _description As String = ""
 
     ' ---- results (read these after ShowDialog = OK) ----
-    Public ReadOnly Property ProductName As String
+    Public Shadows ReadOnly Property ProductName As String
         Get
             Return _name
         End Get

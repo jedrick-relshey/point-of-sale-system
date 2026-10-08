@@ -135,6 +135,11 @@ Partial Public Module DataStore
         Return ReadAtOf(False, cashierName)
     End Function
 
+    ''' <summary>When the admin last opened this cashier's chat (used for the "Read" mark on the cashier's messages).</summary>
+    Public Function AdminReadAt(cashierName As String) As DateTime
+        Return ReadAtOf(True, cashierName)
+    End Function
+
     ''' <summary>Messages from this cashier that the admin has not opened yet.</summary>
     Public Function UnreadForAdmin(cashierName As String) As Integer
         Dim readAt As DateTime = ReadAtOf(True, cashierName)
@@ -178,5 +183,91 @@ Partial Public Module DataStore
         SaveReadStates()
         RaiseEvent ReadStatesChanged(Nothing, EventArgs.Empty)
     End Sub
+
+    '------------------------------------------------------------------
+    ' EDITING A MESSAGE  (a sender may correct his OWN message)
+    ' The ChatMessage class and messages.txt are unchanged: the "Edited" mark
+    ' is kept in message_edits.txt (key = time sent + sender).
+    '------------------------------------------------------------------
+    Private ReadOnly editedAtByKey As New Dictionary(Of String, DateTime)(StringComparer.Ordinal)
+    Private editsLoaded As Boolean = False
+
+    Private Function EditKey(m As ChatMessage) As String
+        Return m.TimeSent.Ticks.ToString(CultureInfo.InvariantCulture) & "#" & SafeField(If(m.Sender, ""))
+    End Function
+
+    Private Sub EnsureEditsLoaded()
+        If editsLoaded Then Return
+        editsLoaded = True
+        Try
+            Dim filePath As String = FilePathOf("message_edits.txt")
+            If Not File.Exists(filePath) Then Return
+            For Each line As String In File.ReadAllLines(filePath, Encoding.UTF8)
+                Dim f As String() = Fields(line)
+                Dim ticks As Long
+                If f.Length >= 2 AndAlso Long.TryParse(f(1), NumberStyles.Integer, CultureInfo.InvariantCulture, ticks) Then
+                    editedAtByKey(f(0)) = New DateTime(ticks)
+                End If
+            Next
+        Catch ex As Exception
+            ' unreadable file: messages simply show no "Edited" mark
+        End Try
+    End Sub
+
+    Private Sub SaveEdits()
+        File.WriteAllLines(FilePathOf("message_edits.txt"),
+                           editedAtByKey.Select(Function(kv) kv.Key & "|" & kv.Value.Ticks.ToString(CultureInfo.InvariantCulture)).ToArray(),
+                           Encoding.UTF8)
+    End Sub
+
+    ''' <summary>When the message was last edited (DateTime.MinValue = never).</summary>
+    Public Function MessageEditedAt(m As ChatMessage) As DateTime
+        If m Is Nothing Then Return DateTime.MinValue
+        EnsureEditsLoaded()
+        Dim t As DateTime
+        If editedAtByKey.TryGetValue(EditKey(m), t) Then Return t
+        Return DateTime.MinValue
+    End Function
+
+    ''' <summary>Automatic reports ("[Stock adjustment] ...", "[Ingredient Wastage] ...") are records, not chat: never editable.</summary>
+    Public Function IsSystemMessage(m As ChatMessage) As Boolean
+        Return Regex.IsMatch(If(m.Message, ""), "^\s*\[(Stock adjustment|Ingredient [^\]]*)\]", RegexOptions.IgnoreCase)
+    End Function
+
+    ''' <summary>asAdmin = True: the admin's own messages.  False: the cashier's own messages.</summary>
+    Public Function CanEditMessage(m As ChatMessage, asAdmin As Boolean, editorName As String) As Boolean
+        If m Is Nothing OrElse IsSystemMessage(m) Then Return False
+        If Not String.Equals(If(m.Sender, "").Trim(), If(editorName, "").Trim(), StringComparison.OrdinalIgnoreCase) Then Return False
+        Return IsFromCashier(m) <> asAdmin
+    End Function
+
+    Public Function EditMessage(m As ChatMessage, newText As String, asAdmin As Boolean, editorName As String,
+                                ByRef errorMessage As String) As Boolean
+        errorMessage = ""
+        If Not CanEditMessage(m, asAdmin, editorName) Then errorMessage = "You can only edit your own messages." : Return False
+        If Not AllChatMessages.Contains(m) OrElse Not ShopContext.CanAccess(m.ShopId) Then errorMessage = "Message not found." : Return False
+        If String.IsNullOrWhiteSpace(newText) Then errorMessage = "A message cannot be empty." : Return False
+        Dim cleaned As String = newText.Trim()
+        If String.Equals(cleaned, m.Message, StringComparison.Ordinal) Then Return True      ' nothing changed
+
+        EnsureEditsLoaded()
+        Dim oldText As String = m.Message
+        Dim key As String = EditKey(m)
+        Dim hadMark As Boolean = editedAtByKey.ContainsKey(key)
+        Dim oldMark As DateTime = If(hadMark, editedAtByKey(key), DateTime.MinValue)
+        m.Message = cleaned
+        editedAtByKey(key) = DateTime.Now
+        Try
+            SaveMessages()
+            SaveEdits()
+        Catch ex As Exception
+            m.Message = oldText
+            If hadMark Then editedAtByKey(key) = oldMark Else editedAtByKey.Remove(key)
+            errorMessage = "The message could not be saved: " & ex.Message
+            Return False
+        End Try
+        RaiseEvent MessagesChanged(Nothing, EventArgs.Empty)
+        Return True
+    End Function
 
 End Module
