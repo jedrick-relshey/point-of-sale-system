@@ -154,7 +154,7 @@ Partial Class LoginPage
         Me.lblHeadline.Name = "lblHeadline"
         Me.lblHeadline.Size = New System.Drawing.Size(418, 132)
         Me.lblHeadline.TabIndex = 5
-        Me.lblHeadline.Text = "A smoother shift" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "starts here."
+        Me.lblHeadline.Text = "A smoother shift" & Global.Microsoft.VisualBasic.Strings.ChrW(13) & Global.Microsoft.VisualBasic.Strings.ChrW(10) & "starts here."
         '
         'lblSub
         '
@@ -167,7 +167,7 @@ Partial Class LoginPage
         Me.lblSub.Name = "lblSub"
         Me.lblSub.Size = New System.Drawing.Size(441, 46)
         Me.lblSub.TabIndex = 6
-        Me.lblSub.Text = "From the first espresso to the last receipt, keep your café" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "running beautifully." &
+        Me.lblSub.Text = "From the first espresso to the last receipt, keep your café" & Global.Microsoft.VisualBasic.Strings.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "running beautifully." &
     ""
         '
         'lblCheck1
@@ -449,7 +449,7 @@ Partial Class LoginPage
         Me.txtPass.Location = New System.Drawing.Point(39, 296)
         Me.txtPass.Margin = New System.Windows.Forms.Padding(5)
         Me.txtPass.Name = "txtPass"
-        Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.Strings.ChrW(42)
         Me.txtPass.PlaceholderForeColor = System.Drawing.Color.FromArgb(CType(CType(150, Byte), Integer), CType(CType(135, Byte), Integer), CType(CType(125, Byte), Integer))
         Me.txtPass.PlaceholderText = "Enter your password"
         Me.txtPass.SelectedText = ""
